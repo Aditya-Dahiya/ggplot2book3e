@@ -1,0 +1,8 @@
+---
+title: "Chapter 16"
+subtitle: "Faceting"
+---
+
+::: callout-warning
+Solutions for this chapter are under construction.
+:::

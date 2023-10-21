@@ -1,0 +1,42 @@
+---
+title: "Chapter-wise Solutions"
+author: "Aditya Dahiya"
+listing:
+  type: table
+  sort: title
+  contents:
+    - "Chapter1.qmd"
+    - "Chapter2.qmd"
+    - "Chapter3.qmd"
+    - "Chapter4.qmd"
+    - "Chapter5.qmd"
+    - "Chapter6.qmd"
+    - "Chapter7.qmd"
+    - "Chapter8.qmd"
+    - "Chapter9.qmd"
+    - "Chapter10.qmd"
+    - "Chapter11.qmd"
+    - "Chapter12.qmd"
+    - "Chapter13.qmd"
+    - "Chapter14.qmd"
+    - "Chapter15.qmd"
+    - "Chapter16.qmd"
+    - "Chapter17.qmd"
+    - "Chapter18.qmd"
+    - "Chapter19.qmd"
+    - "Chapter20.qmd"
+    - "Chapter21.qmd"
+    - "Chapter22.qmd"
+    - "Chapter23.qmd"
+    - "Chapter24.qmd"
+    - "Chapter25.qmd"
+    - "Chapter26.qmd"
+    - "Chapter27.qmd"
+    - "Chapter28.qmd"
+    - "Chapter29.qmd"
+    - "Chapter30.qmd"
+  fields: [title, subtitle]
+  grid-item-border: false
+  table-hover: true
+  image-placeholder: "book-cover.jpg"
+---

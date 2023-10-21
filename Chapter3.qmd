@@ -1,0 +1,8 @@
+---
+title: "Chapter 3"
+subtitle: "Individual geoms"
+---
+
+::: callout-warning
+Solutions for this chapter are under construction.
+:::

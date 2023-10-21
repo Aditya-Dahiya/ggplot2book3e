@@ -1,0 +1,8 @@
+---
+title: "Chapter 11"
+subtitle: "Colour Scales and Legends"
+---
+
+::: callout-warning
+Solutions for this chapter are under construction.
+:::

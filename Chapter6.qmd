@@ -1,0 +1,8 @@
+---
+title: "Chapter 6"
+subtitle: "Maps"
+---
+
+::: callout-warning
+Solutions for this chapter are under construction.
+:::

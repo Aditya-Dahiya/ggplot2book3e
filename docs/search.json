@@ -1,0 +1,191 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Solutions and Beyond ggplot2: Elegant Graphics for Data Analysis (3e)",
+    "section": "",
+    "text": "Welcome to the Solutions Manual and much more for the third edition of ggplot2: Elegant Graphics for Data Analysis (3e) by Hadley Wickham, Danielle Navarro, and Thomas Lin Pedersen.\nThis manual is your indispensable companion for this amazing book on ggplot2 and R graphics.\nInside these pages, you’ll find a rich trove of techniques to extend the extra-ordinary capabilities to ggplot2 and other packages developed by amazing people all over the world to solve the exercises given in the book, and extend them beyond to improve the output.\nI emphasize not just the solving the exercises, but extending ggplot2 capabilities with add-on packages such as gganimate , ggthemes , ggplotly , patchwork , gridExtra , ggrepel , GGally , ggcorrplot , ggmap , and, the various extensions to ggplot2 at the ggplot2 extensions webpage.\nThis website is committed to fostering a collaborative learning environment and offers all it’s code and solutions for free. Happy learning!\n\n\n."
+  },
+  {
+    "objectID": "index.html#author-aditya-dahiya",
+    "href": "index.html#author-aditya-dahiya",
+    "title": "Solutions and Beyond ggplot2: Elegant Graphics for Data Analysis (3e)",
+    "section": "",
+    "text": "Welcome to the Solutions Manual and much more for the third edition of ggplot2: Elegant Graphics for Data Analysis (3e) by Hadley Wickham, Danielle Navarro, and Thomas Lin Pedersen.\nThis manual is your indispensable companion for this amazing book on ggplot2 and R graphics.\nInside these pages, you’ll find a rich trove of techniques to extend the extra-ordinary capabilities to ggplot2 and other packages developed by amazing people all over the world to solve the exercises given in the book, and extend them beyond to improve the output.\nI emphasize not just the solving the exercises, but extending ggplot2 capabilities with add-on packages such as gganimate , ggthemes , ggplotly , patchwork , gridExtra , ggrepel , GGally , ggcorrplot , ggmap , and, the various extensions to ggplot2 at the ggplot2 extensions webpage.\nThis website is committed to fostering a collaborative learning environment and offers all it’s code and solutions for free. Happy learning!\n\n\n."
+  },
+  {
+    "objectID": "solutions.html",
+    "href": "solutions.html",
+    "title": "Chapter-wise Solutions",
+    "section": "",
+    "text": "Order By\n       Default\n         \n          Title\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\nSubtitle\n\n\n\n\n\n\nChapter 1\n\n\nIntroduction\n\n\n\n\nChapter 10\n\n\nPosition Scales and axes\n\n\n\n\nChapter 11\n\n\nColour Scales and Legends\n\n\n\n\nChapter 12\n\n\nOther aesthetics\n\n\n\n\nChapter 13\n\n\nBuild a plot layer by layer\n\n\n\n\nChapter 14\n\n\nScales and guides\n\n\n\n\nChapter 15\n\n\nCoordinate Systems\n\n\n\n\nChapter 16\n\n\nFaceting\n\n\n\n\nChapter 17\n\n\nThemes\n\n\n\n\nChapter 18\n\n\nProgramming with ggplot2\n\n\n\n\nChapter 19\n\n\nInternals of ggplot2\n\n\n\n\nChapter 2\n\n\nFirst Steps\n\n\n\n\nChapter 20\n\n\nExtending ggplot2\n\n\n\n\nChapter 21\n\n\nA case study\n\n\n\n\nChapter 3\n\n\nIndividual geoms\n\n\n\n\nChapter 4\n\n\nCollective geoms\n\n\n\n\nChapter 5\n\n\nStatistical Summaries\n\n\n\n\nChapter 6\n\n\nMaps\n\n\n\n\nChapter 7\n\n\nNetworks\n\n\n\n\nChapter 8\n\n\nAnnotations\n\n\n\n\nChapter 9\n\n\nArranging Plots\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "Chapter8.html",
+    "href": "Chapter8.html",
+    "title": "Chapter 8",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter6.html",
+    "href": "Chapter6.html",
+    "title": "Chapter 6",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter4.html",
+    "href": "Chapter4.html",
+    "title": "Chapter 4",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter21.html",
+    "href": "Chapter21.html",
+    "title": "Chapter 21",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter2.html",
+    "href": "Chapter2.html",
+    "title": "Chapter 2",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter18.html",
+    "href": "Chapter18.html",
+    "title": "Chapter 18",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter16.html",
+    "href": "Chapter16.html",
+    "title": "Chapter 16",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter14.html",
+    "href": "Chapter14.html",
+    "title": "Chapter 14",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter12.html",
+    "href": "Chapter12.html",
+    "title": "Chapter 12",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter10.html",
+    "href": "Chapter10.html",
+    "title": "Chapter 10",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Welcome to the quirky realm of Aditya Dahiya, your friendly neighborhood Indian Administrative Service (IAS) officer, currently working as the Director and Special Secretary in the Government of Haryana, India. Amidst the daily avalanche of files and meetings that could rival a paper mountain, Aditya somehow manages to sneak in quality time with his true loves: data visualization and health financing data. Think of him as your data-wrangling, file-taming, bureaucracy-battling guide with a slightly skewed sense of humor. Need more bureaucratic banter or data insights? Connect with Aditya on LinkedIn or shoot him an email – he promises it won’t be as formal as a government memo!"
+  },
+  {
+    "objectID": "about.html#education",
+    "href": "about.html#education",
+    "title": "About",
+    "section": "Education",
+    "text": "Education\nHarvard University | Boston, MA MPH in Global Health | Aug 2021 - May 2022\nAll India Institute of Medical Sciences | New Delhi, India MBBS in Medicine | Aug 2005-Dec 2010"
+  },
+  {
+    "objectID": "about.html#experience",
+    "href": "about.html#experience",
+    "title": "About",
+    "section": "Experience",
+    "text": "Experience\nIndian Administrative Service | Director | Aug 2011 - present\nNeuro-Radiology, AIIMS New Delhi | Junior Resident Doctor | Jan 2011 - Aug 2011"
+  },
+  {
+    "objectID": "Chapter1.html",
+    "href": "Chapter1.html",
+    "title": "Chapter 1",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter11.html",
+    "href": "Chapter11.html",
+    "title": "Chapter 11",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter13.html",
+    "href": "Chapter13.html",
+    "title": "Chapter 13",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter15.html",
+    "href": "Chapter15.html",
+    "title": "Chapter 15",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter17.html",
+    "href": "Chapter17.html",
+    "title": "Chapter 17",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter19.html",
+    "href": "Chapter19.html",
+    "title": "Chapter 19",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter20.html",
+    "href": "Chapter20.html",
+    "title": "Chapter 20",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter3.html",
+    "href": "Chapter3.html",
+    "title": "Chapter 3",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter5.html",
+    "href": "Chapter5.html",
+    "title": "Chapter 5",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter7.html",
+    "href": "Chapter7.html",
+    "title": "Chapter 7",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  },
+  {
+    "objectID": "Chapter9.html",
+    "href": "Chapter9.html",
+    "title": "Chapter 9",
+    "section": "",
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+  }
+]

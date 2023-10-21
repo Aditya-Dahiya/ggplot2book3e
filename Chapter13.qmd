@@ -1,0 +1,8 @@
+---
+title: "Chapter 13"
+subtitle: "Build a plot layer by layer"
+---
+
+::: callout-warning
+Solutions for this chapter are under construction.
+:::

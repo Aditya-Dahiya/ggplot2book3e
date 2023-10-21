@@ -1,0 +1,75 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Solutions n Beyond ggplot2"
+  search: 
+    location: navbar
+    type: textbox
+  reader-mode: true
+  repo-url: https://github.com/Aditya-Dahiya/RfDS2solutions
+  repo-actions: [edit, issue]
+  favicon: "book-cover.jpg"
+  twitter-card: true
+  open-graph: true
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: solutions.qmd
+        text: "Chapter-wise Solutions"
+      - href: about.qmd
+        text: "About Me"
+    logo: "book-cover.jpg"
+    logo-alt: "ggplot2: Elegant Graphics for Data Analysis (3rd Edition)"
+    tools:
+      - icon: github
+        menu:
+          - text: Source Code
+            url:  https://github.com/Aditya-Dahiya/ggplot2book3e/
+          - text: Report a Bug
+            url:  https://github.com/Aditya-Dahiya/ggplot2book3e/issues
+  sidebar:
+    style: "docked"
+    search: true
+    subtitle: "Sections and Chapters"
+    contents:
+      - section: "Getting Started"
+        contents:
+          - Chapter1.qmd
+          - Chapter2.qmd
+      - section: "Layers"
+        contents:
+          - Chapter3.qmd
+          - Chapter4.qmd
+          - Chapter5.qmd
+          - Chapter6.qmd
+          - Chapter7.qmd
+          - Chapter8.qmd
+          - Chapter9.qmd
+      - section: "Scales"
+        contents:
+          - Chapter10.qmd
+          - Chapter11.qmd
+          - Chapter12.qmd
+      - section: "The Grammer"
+        contents:
+          - Chapter13.qmd
+          - Chapter14.qmd
+          - Chapter15.qmd
+          - Chapter16.qmd
+          - Chapter17.qmd
+      - section: "Advanced Topics"
+        contents:
+          - Chapter18.qmd
+          - Chapter19.qmd
+          - Chapter20.qmd
+          - Chapter21.qmd
+format:
+  html:
+    theme: flatly
+    css: styles.css
+    toc: true
+
+

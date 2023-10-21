@@ -1,0 +1,8 @@
+---
+title: "Chapter 19"
+subtitle: "Internals of ggplot2"
+---
+
+::: callout-warning
+Solutions for this chapter are under construction.
+:::

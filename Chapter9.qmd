@@ -1,0 +1,8 @@
+---
+title: "Chapter 9"
+subtitle: "Arranging Plots"
+---
+
+::: callout-warning
+Solutions for this chapter are under construction.
+:::

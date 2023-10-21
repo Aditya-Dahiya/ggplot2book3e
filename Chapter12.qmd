@@ -1,0 +1,8 @@
+---
+title: "Chapter 12"
+subtitle: "Other aesthetics"
+---
+
+::: callout-warning
+Solutions for this chapter are under construction.
+:::

@@ -1,0 +1,8 @@
+---
+title: "Chapter 18"
+subtitle: "Programming with ggplot2"
+---
+
+::: callout-warning
+Solutions for this chapter are under construction.
+:::

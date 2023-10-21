@@ -1,0 +1,8 @@
+---
+title: "Chapter 21"
+subtitle: "A case study"
+---
+
+::: callout-warning
+Solutions for this chapter are under construction.
+:::

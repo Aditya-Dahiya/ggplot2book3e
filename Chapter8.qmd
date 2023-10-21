@@ -1,0 +1,8 @@
+---
+title: "Chapter 8"
+subtitle: "Annotations"
+---
+
+::: callout-warning
+Solutions for this chapter are under construction.
+:::

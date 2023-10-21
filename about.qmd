@@ -1,0 +1,31 @@
+---
+title: "About"
+about:
+  template: solana
+  image: aditya-dahiya.jpg
+  links:
+    - icon: twitter
+      text: Twitter
+      href: "https://twitter.com/AdityaDahiyaIAS"
+    - icon: github
+      text: Github
+      href: "https://github.com/Aditya-Dahiya"
+    - icon: LinkedIn
+      text: LinkedIn
+      href: "https://www.linkedin.com/in/dr-aditya-dahiya-ias/"
+sidebar: false
+---
+
+Welcome to the quirky realm of Aditya Dahiya, your friendly neighborhood Indian Administrative Service (IAS) officer, currently working as the Director and Special Secretary in the Government of Haryana, India. Amidst the daily avalanche of files and meetings that could rival a paper mountain, Aditya somehow manages to sneak in quality time with his true loves: data visualization and health financing data. Think of him as your data-wrangling, file-taming, bureaucracy-battling guide with a slightly skewed sense of humor. Need more bureaucratic banter or data insights? Connect with Aditya on [LinkedIn](https://www.linkedin.com/in/dr-aditya-dahiya-ias/) or shoot him an [email](mailto:%20adityadahiyaaiims@proton.me) -- he promises it won't be as formal as a government memo!
+
+## Education
+
+Harvard University \| Boston, MA MPH in Global Health \| Aug 2021 - May 2022
+
+All India Institute of Medical Sciences \| New Delhi, India MBBS in Medicine \| Aug 2005-Dec 2010
+
+## Experience
+
+Indian Administrative Service \| Director \| Aug 2011 - present
+
+Neuro-Radiology, AIIMS New Delhi \| Junior Resident Doctor \| Jan 2011 - Aug 2011
