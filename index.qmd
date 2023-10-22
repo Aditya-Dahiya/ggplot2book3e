@@ -1,5 +1,5 @@
 ---
-title: "Solutions and Beyond ggplot2: Elegant Graphics for Data Analysis (3e)"
+title: "Solutions (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
 filters:
   - social-share
 share:
@@ -9,6 +9,7 @@ share:
   facebook: true
   linkedin: true
   email: true
+  mastodon: true
 website:
   search: 
     location: navbar

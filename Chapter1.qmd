@@ -1,8 +1,310 @@
 ---
 title: "Chapter 1"
 subtitle: "Introduction"
+author: "Aditya Dahiya"
+date: 2023-10-22
+format: 
+  html: 
+    code-fold: true
+    code-copy: hover
+    code-link: true
+execute: 
+  echo: true
+  warning: false
+  error: false
+  cache: true
+filters:
+  - social-share
+share:
+  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter1.html"
+  description: "Solutions: R for Data Science (2e)"
+  twitter: true
+  facebook: true
+  linkedin: true
+  email: true
+  mastodon: true
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
 ---
 
-::: callout-warning
-Solutions for this chapter are under construction.
+::: callout-note
+This chapter has no exercises, hence there are no solutions to display. Instead, we delve into various `ggplot2` add-on packages installed in [Section 1.5](https://ggplot2-book.org/introduction#sec-other-resources)
+:::
+
+# Installing packages and loading libraries
+
+```{r}
+#| label: setup
+
+library(tidyverse)
+library(nycflights13)
+```
+
+Code for installing the various packages required for this book: --
+
+```{r}
+#| eval: false
+#| echo: true
+
+install.packages(c(
+  "colorBlindness", "directlabels", "dplyr", 
+  "ggforce", "gghighlight", "ggnewscale", "ggplot2", "ggraph", 
+  "ggrepel", "ggtext", "ggthemes", "hexbin", "Hmisc", "mapproj", 
+  "maps", "munsell", "ozmaps", "paletteer", "patchwork", 
+  "rmapshaper", "scico", "seriation", "sf", "stars", "tidygraph", "tidyr", "wesanderson" 
+))
+```
+
+# Interesting `ggplot2` add-on packages
+
+Let's have a look at some important features of the packages: --
+
+## `colorBlindness` 
+
+The `colorBlindness` R package [@colorBlindness] is specifically crafted to curate a diverse array of secure color palettes suitable for various plot types like heat-maps and pie charts. Its aim is to ensure that the resulting visualizations are accessible and comprehensible to all users. Additionally, it features a Color Vision Deficiency (CVD) simulator, a tool that facilitates the emulation of color vision deficiencies for improved accessibility.
+
+@fig-hm1 shows a basic heat-map created with `geom_tile()` and `nycflights13` [@nycflights13] data-set with different colour schemes.
+
+```{r}
+#| label: fig-hm1
+#| fig-cap: "Heat-map of number of flights ever day in different months of 2013"
+#| fig-subcap: 
+#|    - "Using default ggplot2 colour scheme"
+#|    - "Using viridis colour scheme for colorblindness"
+#| layout-ncol: 2
+
+library(colorBlindness)
+g1 <- flights |> 
+  group_by(month, day) |> 
+  count() |> 
+  ggplot(aes(x = day,
+             y = month,
+             fill = n)) +
+  geom_tile() +
+  theme_minimal() +
+  labs(y = "Month", x = "Day of the month") +
+  scale_y_continuous(breaks = 1:12,
+                     labels = month.name) +
+  scale_x_continuous(breaks = seq(1, 31, 5)) +
+  theme(panel.grid = element_blank(),
+        plot.title.position = "plot")
+
+g1 + labs(title = "Default ggplot2 colours")
+
+g1 + scale_fill_viridis_c() + labs(title = "Viridis Colours")
+```
+
+Now, using `cvdPlot()` from the package `colorBlindness` to check the plot's view ( @fig-hm2 ) to different people.
+
+```{r}
+#| label: fig-hm2
+#| fig-cap: "Showing heat-map with different color blindness types using cvdPlot()"
+
+cvdPlot(g1 + scale_fill_viridis_c())
+```
+
+------------------------------------------------------------------------
+
+## `directlabels` 
+
+The `directlabels` package [@directlabels] allows us to label plots easily, using various methods listed [here](https://tdhock.github.io/directlabels/docs/index.html). An example is shown in @fig-dl1 .
+
+```{r}
+#| label: fig-dl1
+#| fig-cap: "Using direct labels in a line plot of average delay of five major airline carriers in different months over the course of 2013"
+
+
+library(directlabels)
+g2 <- flights |> 
+  filter(carrier %in% c("AA", "DL", "UA", "US", "WN")) |> 
+  group_by(month, carrier) |> 
+  summarise(avg_delay = mean(dep_delay, na.rm = TRUE)) |> 
+  ggplot(aes(x = month, y = avg_delay,
+             group = carrier, 
+             col = carrier)) +
+  geom_line() +
+  geom_point() +
+  theme_classic() +
+  labs(x = "Month", y = "Average Departure Delay (min.)") +
+  scale_x_continuous(breaks = 1:12, labels = month.abb) +
+  scale_color_viridis_d()
+
+gridExtra::grid.arrange(
+g2 |> direct.label(method = "angled.boxes"), 
+
+g2 |> direct.label(method = "last.polygons"), 
+
+g2 |> direct.label(method = "top.bumpup"), 
+
+g2 |> direct.label(method = "first.polygons"),
+nrow = 2, ncol = 2)
+```
+
+------------------------------------------------------------------------
+
+## `ggforce`
+
+The `ggforce` package [@ggforce] is, in effect, a collection of geoms and other features to add on to the `ggplot2` collection. Once particularly nice one is `facet_zoom()` as depicted in @fig-ggf1 . This feature allows you to focus on a specific portion of the data by creating a zoomed-in view, while preserving the complete dataset in a separate panel. We can zoom in on either the x-axis, the y-axis, or both simultaneously.
+
+```{r}
+#| label: fig-ggf1
+#| fig-cap: "Use of facet_zoom() to show that relation between Departure Delay and Arrival Delay of American Airlines flights holds true even for flights landing earlier than scheduled"
+#| fig-asp: 0.5
+
+library(ggforce)
+library(ggthemes)
+
+flights |> 
+  filter(carrier == "AA" & month == 1) |>
+  ggplot(aes(x = dep_delay,
+             y = arr_delay)) +
+  geom_jitter(alpha = 0.2) +
+  geom_smooth(se = FALSE, col = "red") + 
+  facet_zoom(y = arr_delay < 0,
+             x = dep_delay < 0) + 
+  labs(y = "Arrival Delay (minutes)", x = "Departure Delay (minutes)")
+
+```
+
+Another nice one is `facet_wrap_paginate()` which enables you to break down a faceted plot into multiple pages. You can specify the number of rows and columns per page, along with the page number you want to plot. The function will automatically generate only the appropriate panels. The @fig-ggf2 shows an example with a `for(){}` loop.
+
+```{r}
+#| label: fig-ggf2
+#| fig-cap: "Use of facet_wrap_paginate() to create plots of realtion between American Airlines flights' departure time and departure delay for different months"
+#| fig-subcap: 
+#|    - "First half of the year: Jan-Jun"
+#|    - "Second half of the year: Jul-Dec"
+#| layout-nrow: 2
+
+for (i in 1:2) {
+
+  print(
+    flights |> 
+      filter(carrier == "AA") |>
+      ggplot(aes(x = dep_time, 
+                 y = dep_delay)) +
+      geom_jitter(alpha = 0.1, 
+                 shape = 19) +
+      geom_smooth(col = "red") +
+      facet_wrap_paginate(~ month,
+                          nrow = 3,
+                          ncol = 2,
+                          scales = "free_y",
+                          page = i) +
+      scale_x_continuous(limits = c(500, 2400)) +
+      theme_classic() +
+      labs(x = "Departure Time (hrs)", y = "Departure delay (min.)")
+  )
+}
+
+
+
+```
+
+------------------------------------------------------------------------
+
+## `gghighlight`
+
+The `gghighlight` package [@gghighlight] is an amazing tool to highlight only types of groups in a plot, and can even be used with faceting. The @fig-gght1 shows an example with a single plot, and @fig-gght2 shows the same example with faceting.
+
+```{r}
+#| label: fig-gght1
+#| fig-cap: "Line graph showing the average departure delay (in minutes) of different airliens at different departure times during the day"
+#| fig-subcap: 
+#|   -  "Without any gghighlight: it is tough to make comparisons, say, for example of American Airlines with others"
+#|   - "With use of gghighlight: we can easily compare American Airlines to others"
+#| fig-width: 10
+#| layout-ncol: 2
+
+flights |> 
+  mutate(dep_hour = dep_time %/% 100) |> 
+  group_by(carrier, dep_hour) |> 
+  summarize(avg_delay = mean(dep_delay, na.rm = TRUE)) |> 
+  ggplot(aes(x = dep_hour,
+             y = avg_delay,
+             col = carrier,
+             group = carrier)) + 
+  geom_line(lwd = 1, alpha = 0.75) +
+  xlim(c(5, 24)) + ylim(c(-10, 300)) +
+  labs(x = "Departure Time (hr.)", y = "Average Departure Delay (min.)") + 
+  theme_minimal()
+
+flights |> 
+  mutate(dep_hour = dep_time %/% 100) |> 
+  group_by(carrier, dep_hour) |> 
+  summarize(avg_delay = mean(dep_delay, na.rm = TRUE)) |> 
+  ggplot(aes(x = dep_hour,
+             y = avg_delay,
+             col = carrier,
+             group = carrier)) + 
+  geom_line(lwd = 1, alpha = 0.75) +
+  xlim(c(5, 24)) + ylim(c(-10, 300)) +
+  labs(x = "Departure Time (hr.)", y = "Average Departure Delay (min.)") + 
+  theme_minimal() +
+  gghighlight::gghighlight(carrier == "AA")
+```
+
+```{r}
+#| label: fig-gght2
+#| fig-cap: "Using gghighlight with faceting allows use to see the average departure delay (over the course of a typical day) for 4 major airlines compared to others"
+
+flights |> 
+  mutate(dep_hour = dep_time %/% 100) |> 
+  group_by(carrier, dep_hour) |> 
+  summarize(avg_delay = mean(dep_delay, na.rm = TRUE)) |> 
+  ggplot(aes(x = dep_hour,
+             y = avg_delay,
+             col = carrier,
+             group = carrier)) + 
+  geom_line(lwd = 1, alpha = 0.75) +
+  xlim(c(5, 24)) + ylim(c(-10, 300)) +
+  theme_minimal() +
+  gghighlight::gghighlight(carrier %in% c("AA", "UA", "US", "DL")) +
+  facet_wrap(~ carrier) +
+  scale_color_brewer(palette = "Dark2") +
+  labs(x = "Departure Time (hr.)", y = "Average Departure Delay (min.)",
+       title = "Comparing depature delays of 4 major carriers with others") 
+```
+
+------------------------------------------------------------------------
+
+## `ggnewscale`
+
+The `ggnewscale` package [@ggnewscale] allows you to use two or more different color scales (or, any other scales like `fill`, `shape`, `linetype` etc. in the same plot. The @fig-ggns1 is directly copied from the website of the package, and credits to
+
+```{r}
+#| label: fig-ggns1
+#| fig-cap: "An example of using two different color scales in a single ggplot2 object with ggnewscale package"
+
+library(ggnewscale)
+# Equivalent to melt(volcano)
+topography <- expand.grid(x = 1:nrow(volcano),
+                          y = 1:ncol(volcano))
+topography$z <- c(volcano)
+
+# point measurements of something at a few locations
+set.seed(42)
+measurements <- data.frame(x = runif(30, 1, 80),
+                           y = runif(30, 1, 60),
+                           thing = rnorm(30))
+
+ggplot(mapping = aes(x, y)) +
+  geom_contour(data = topography, aes(z = z, color = stat(level))) +
+  # Color scale for topography
+  scale_color_viridis_c(option = "D") +
+  # geoms below will use another color scale
+  new_scale_color() +
+  geom_point(data = measurements, size = 3, aes(color = thing)) +
+  # Color scale applied to geoms added after new_scale_color()
+  scale_color_viridis_c(option = "A") +
+  theme_void() + 
+  labs(title = "The ggnewscale package allows use of multiple color scales") +
+  theme(legend.position = "bottom")
+```
+
+------------------------------------------------------------------------
+
+::: callout-note
+I intend to add more packages as and when I come across them. Watch out for this space in the future too.
 :::

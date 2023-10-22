@@ -13,6 +13,9 @@ about:
     - icon: LinkedIn
       text: LinkedIn
       href: "https://www.linkedin.com/in/dr-aditya-dahiya-ias/"
+    - icon: mastodon
+      text: Mastodon
+      href: "https://mastodon.social/@adityadahiya"
 sidebar: false
 ---
 

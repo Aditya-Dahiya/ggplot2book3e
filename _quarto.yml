@@ -3,12 +3,12 @@ project:
   output-dir: docs
 
 website:
-  title: "Solutions n Beyond ggplot2"
+  title: "Solutions (and Beyond): ggplot2"
   search: 
     location: navbar
     type: textbox
   reader-mode: true
-  repo-url: https://github.com/Aditya-Dahiya/RfDS2solutions
+  repo-url: https://github.com/Aditya-Dahiya/ggplot2book3e
   repo-actions: [edit, issue]
   favicon: "book-cover.jpg"
   twitter-card: true
