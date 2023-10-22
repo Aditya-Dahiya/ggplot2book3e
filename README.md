@@ -1,4 +1,4 @@
-# A solutions Manual (and beyond) for the book: ggplot2: Elegant Graphics for Data Analysis (3e)
+# A solutions Manual (and beyond) for the book: **ggplot2: Elegant Graphics for Data Analysis (3e)**
 
 Welcome to the Solutions Manual and much more for the [third edition](https://ggplot2-book.org/ "ggplot2 Book (3rd Edition)") of **ggplot2: Elegant Graphics for Data Analysis (3e)** by [Hadley Wickham](https://hadley.nz/), [Danielle Navarro](https://djnavarro.net/), and [Thomas Lin Pedersen](https://www.data-imaginist.com/).
 
