@@ -36,6 +36,7 @@ This chapter has no exercises, hence there are no solutions to display. Instead,
 
 ```{r}
 #| label: setup
+#| code-fold: false
 
 library(tidyverse)
 library(nycflights13)
@@ -46,6 +47,7 @@ Code for installing the various packages required for this book: --
 ```{r}
 #| eval: false
 #| echo: true
+#| code-fold: false
 
 install.packages(c(
   "colorBlindness", "directlabels", "dplyr", 
@@ -60,7 +62,7 @@ install.packages(c(
 
 Let's have a look at some important features of the packages: --
 
-## `colorBlindness` 
+## `colorBlindness`
 
 The `colorBlindness` R package [@colorBlindness] is specifically crafted to curate a diverse array of secure color palettes suitable for various plot types like heat-maps and pie charts. Its aim is to ensure that the resulting visualizations are accessible and comprehensible to all users. Additionally, it features a Color Vision Deficiency (CVD) simulator, a tool that facilitates the emulation of color vision deficiencies for improved accessibility.
 
@@ -106,7 +108,7 @@ cvdPlot(g1 + scale_fill_viridis_c())
 
 ------------------------------------------------------------------------
 
-## `directlabels` 
+## `directlabels`
 
 The `directlabels` package [@directlabels] allows us to label plots easily, using various methods listed [here](https://tdhock.github.io/directlabels/docs/index.html). An example is shown in @fig-dl1 .
 
@@ -128,16 +130,20 @@ g2 <- flights |>
   theme_classic() +
   labs(x = "Month", y = "Average Departure Delay (min.)") +
   scale_x_continuous(breaks = 1:12, labels = month.abb) +
-  scale_color_viridis_d()
+  scale_color_brewer(palette = "Set1")
 
 gridExtra::grid.arrange(
-g2 |> direct.label(method = "angled.boxes"), 
+g2 |> direct.label(method = "angled.boxes") + 
+  labs(title = "method = \"angled.boxes\""), 
 
-g2 |> direct.label(method = "last.polygons"), 
+g2 |> direct.label(method = "last.polygons") + 
+  labs(title = "method = \"last.polygons\""), 
 
-g2 |> direct.label(method = "top.bumpup"), 
+g2 |> direct.label(method = "top.bumpup") + 
+  labs(title = "method = \"top.bumpup\""), 
 
-g2 |> direct.label(method = "first.polygons"),
+g2 |> direct.label(method = "first.polygons") + 
+  labs(title = "method = \"first.polygons\"") ,
 nrow = 2, ncol = 2)
 ```
 
@@ -215,7 +221,7 @@ The `gghighlight` package [@gghighlight] is an amazing tool to highlight only ty
 #|   -  "Without any gghighlight: it is tough to make comparisons, say, for example of American Airlines with others"
 #|   - "With use of gghighlight: we can easily compare American Airlines to others"
 #| fig-width: 10
-#| layout-ncol: 2
+#| layout-nrow: 2
 
 flights |> 
   mutate(dep_hour = dep_time %/% 100) |> 
@@ -304,6 +310,124 @@ ggplot(mapping = aes(x, y)) +
 ```
 
 ------------------------------------------------------------------------
+
+## `magick`
+
+::: grid
+::: g-col-8
+The `magick` package [@magick] is a tool to handle and process images in `R`. It can be used to read `.png` , `.jpeg` , `.svg` and other images. While there are a plethora of features, the primary one I use are given below. Note that I have created the logo for this book solutions using [`magick`](https://cran.r-project.org/web/packages/magick/vignettes/intro.html) and [`cropcircles`](https://github.com/doehm/cropcircles) .
+
+```{r}
+#| eval: false
+
+library(magick)
+
+# Reading in the image
+book_logo <- image_read("https://ggplot2-book.org/cover.jpg")
+
+# Looking at the image in your computer's browser or default app
+image_browse(book_logo)
+
+# Editing the image to add 3rd Edition and Solutions Manual words
+book_logo <- book_logo |> 
+  image_annotate("Solutions Manual (& beyond)\nfor                   ",
+                 color = "white",
+                 location = "+80+125",
+                 size = 30,
+                 font = "helvetica",
+                 weight = 700) |> 
+  image_annotate("Third Edition",
+             strokecolor = "white",
+             color = "white",
+             boxcolor = "#EEB301",
+             location = "+75+480",
+             style = "italic",
+             size = 35)
+
+# Saving the image
+image_write(book_logo, 
+            "book_cover.jpg",
+            format = "jpeg")
+```
+:::
+
+::: g-col-4
+![Book cover for Solutions Manual (and more!) created with magick package](book_cover.jpg){width="268"}
+:::
+:::
+
+## `cropcircles`
+
+::: grid
+::: g-col-4
+We can use the `cropcircles` package [@cropcircles] to crop images into a rounded and hexagonal logo for my current book, as an example. *(Note: the package generated a transparent background for me only in `.png` format).*
+
+We can also create hexagonal logos with this, as shown here.
+:::
+
+::: g-col-4
+[![A rounded logo for the solutions website](book_logo.png){width="250"}](https://aditya-dahiya.github.io/ggplot2book3e/)
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+
+library(cropcircles)
+
+# A round logo
+round_logo <- book_logo |> 
+  image_crop("600x600+0+30")
+  
+image_read(
+  circle_crop(round_logo, 
+              just = "top",
+              border_colour = "black",
+              border_size = 7)) |> 
+  image_write("book_logo.png", 
+            format = "png")
+```
+:::
+
+::: g-col-4
+![A Hexagonal logo](hex_logo.png){width="250"}
+
+```{r}
+#| eval: false
+#| code-fold: true
+
+library(magick)
+# Creating a hex 
+book_logo <- image_read("https://ggplot2-book.org/cover.jpg")
+
+book_logo <- book_logo |> 
+  image_annotate("Solutions Manual \n  (& beyond) for",
+                 color = "white",
+                 location = "+150+105",
+                 size = 30,
+                 font = "helvetica",
+                 weight = 700) |> 
+  image_annotate("        Third Edition",
+             strokecolor = "white",
+             color = "white",
+             boxcolor = "#EEB301",
+             location = "+75+480",
+             style = "italic",
+             size = 35) |> 
+  image_crop("600x600+0+30")
+
+image_read(
+  hex_crop(
+    book_logo,
+    just = "top",
+    border_size = 8,
+    border_colour = "black"
+  )
+) |> 
+  image_write("hex_logo.png")
+```
+:::
+:::
 
 ::: callout-note
 I intend to add more packages as and when I come across them. Watch out for this space in the future too.

@@ -81,7 +81,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./book-cover.jpg" rel="icon" type="image/jpeg">
+<link href="./book_logo.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -114,11 +114,11 @@ div.csl-indent {
 }</script><link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="Solutions (and Beyond): ggplot2 - Chapter 1">
 <meta property="og:description" content="Introduction">
-<meta property="og:image" content="./book-cover.jpg">
+<meta property="og:image" content="book_cover.jpg">
 <meta property="og:site-name" content="Solutions (and Beyond): ggplot2">
 <meta name="twitter:title" content="Solutions (and Beyond): ggplot2 - Chapter 1">
 <meta name="twitter:description" content="Introduction">
-<meta name="twitter:image" content="./book-cover.jpg">
+<meta name="twitter:image" content="book_cover.jpg">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="nav-sidebar docked nav-fixed">
@@ -127,7 +127,7 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./book-cover.jpg" alt="ggplot2: Elegant Graphics for Data Analysis (3rd Edition)" class="navbar-logo"></a>
+    <img src="./book_logo.jpg" alt="" class="navbar-logo"></a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Solutions (and Beyond): ggplot2</span>
     </a>
@@ -393,6 +393,8 @@ div.csl-indent {
   <li><a href="#ggforce" id="toc-ggforce" class="nav-link" data-scroll-target="#ggforce"><code>ggforce</code></a></li>
   <li><a href="#gghighlight" id="toc-gghighlight" class="nav-link" data-scroll-target="#gghighlight"><code>gghighlight</code></a></li>
   <li><a href="#ggnewscale" id="toc-ggnewscale" class="nav-link" data-scroll-target="#ggnewscale"><code>ggnewscale</code></a></li>
+  <li><a href="#magick" id="toc-magick" class="nav-link" data-scroll-target="#magick"><code>magick</code></a></li>
+  <li><a href="#cropcircles" id="toc-cropcircles" class="nav-link" data-scroll-target="#cropcircles"><code>cropcircles</code></a></li>
   </ul>
 </li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter1.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -439,21 +441,19 @@ Note
 </div>
 </div>
 <section id="installing-packages-and-loading-libraries" class="level1"><h1>Installing packages and loading libraries</h1>
-<div class="cell" data-hash="Chapter1_cache/html/setup_e021a5f83e6a3fed2f6527e09f20628d">
-<details><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<div class="cell" data-hash="Chapter1_cache/html/setup_c96924e27df9803a16ceece45406e870">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/nycflights13">nycflights13</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 <p>Code for installing the various packages required for this book: –</p>
-<div class="cell" data-hash="Chapter1_cache/html/unnamed-chunk-2_30654ee89912eb172ff32d327eed9b4c">
-<details><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<div class="cell" data-hash="Chapter1_cache/html/unnamed-chunk-2_5b41cb07e84ff2068f9bb5c9cc5e76f1">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
 <span>  <span class="st">"colorBlindness"</span>, <span class="st">"directlabels"</span>, <span class="st">"dplyr"</span>, </span>
 <span>  <span class="st">"ggforce"</span>, <span class="st">"gghighlight"</span>, <span class="st">"ggnewscale"</span>, <span class="st">"ggplot2"</span>, <span class="st">"ggraph"</span>, </span>
 <span>  <span class="st">"ggrepel"</span>, <span class="st">"ggtext"</span>, <span class="st">"ggthemes"</span>, <span class="st">"hexbin"</span>, <span class="st">"Hmisc"</span>, <span class="st">"mapproj"</span>, </span>
 <span>  <span class="st">"maps"</span>, <span class="st">"munsell"</span>, <span class="st">"ozmaps"</span>, <span class="st">"paletteer"</span>, <span class="st">"patchwork"</span>, </span>
 <span>  <span class="st">"rmapshaper"</span>, <span class="st">"scico"</span>, <span class="st">"seriation"</span>, <span class="st">"sf"</span>, <span class="st">"stars"</span>, <span class="st">"tidygraph"</span>, <span class="st">"tidyr"</span>, <span class="st">"wesanderson"</span> </span>
 <span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
 </section><section id="interesting-ggplot2-add-on-packages" class="level1"><h1>Interesting <code>ggplot2</code> add-on packages</h1>
 <p>Let’s have a look at some important features of the packages: –</p>
@@ -511,7 +511,7 @@ Note
 </div>
 <hr></section><section id="directlabels" class="level2"><h2 class="anchored" data-anchor-id="directlabels"><code>directlabels</code></h2>
 <p>The <code>directlabels</code> package <span class="citation" data-cites="directlabels">(<a href="#ref-directlabels" role="doc-biblioref">Hocking 2023</a>)</span> allows us to label plots easily, using various methods listed <a href="https://tdhock.github.io/directlabels/docs/index.html">here</a>. An example is shown in <a href="#fig-dl1">Figure&nbsp;3</a> .</p>
-<div class="cell" data-hash="Chapter1_cache/html/fig-dl1_6cf32dc3f08b32cc8e5e4212ef615f09">
+<div class="cell" data-hash="Chapter1_cache/html/fig-dl1_82899307186610d189f2c97a171d781e">
 <details><summary>Code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tdhock/directlabels">directlabels</a></span><span class="op">)</span></span>
 <span><span class="va">g2</span> <span class="op">&lt;-</span> <span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">carrier</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AA"</span>, <span class="st">"DL"</span>, <span class="st">"UA"</span>, <span class="st">"US"</span>, <span class="st">"WN"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -525,16 +525,20 @@ Note
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Month"</span>, y <span class="op">=</span> <span class="st">"Average Departure Delay (min.)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">12</span>, labels <span class="op">=</span> <span class="va">month.abb</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_color_viridis_d</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">gridExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html">grid.arrange</a></span><span class="op">(</span></span>
-<span><span class="va">g2</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/directlabels/man/direct.label.html">direct.label</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"angled.boxes"</span><span class="op">)</span>, </span>
+<span><span class="va">g2</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/directlabels/man/direct.label.html">direct.label</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"angled.boxes"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"method = \"angled.boxes\""</span><span class="op">)</span>, </span>
 <span></span>
-<span><span class="va">g2</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/directlabels/man/direct.label.html">direct.label</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"last.polygons"</span><span class="op">)</span>, </span>
+<span><span class="va">g2</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/directlabels/man/direct.label.html">direct.label</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"last.polygons"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"method = \"last.polygons\""</span><span class="op">)</span>, </span>
 <span></span>
-<span><span class="va">g2</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/directlabels/man/direct.label.html">direct.label</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"top.bumpup"</span><span class="op">)</span>, </span>
+<span><span class="va">g2</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/directlabels/man/direct.label.html">direct.label</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"top.bumpup"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"method = \"top.bumpup\""</span><span class="op">)</span>, </span>
 <span></span>
-<span><span class="va">g2</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/directlabels/man/direct.label.html">direct.label</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"first.polygons"</span><span class="op">)</span>,</span>
+<span><span class="va">g2</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/directlabels/man/direct.label.html">direct.label</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"first.polygons"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"method = \"first.polygons\""</span><span class="op">)</span> ,</span>
 <span>nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div id="fig-dl1" class="quarto-figure quarto-figure-center anchored">
@@ -637,15 +641,17 @@ Note
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Departure Time (hr.)"</span>, y <span class="op">=</span> <span class="st">"Average Departure Delay (min.)"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">gghighlight</span><span class="fu">::</span><span class="fu"><a href="https://yutannihilation.github.io/gghighlight/reference/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="va">carrier</span> <span class="op">==</span> <span class="st">"AA"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div id="fig-gght1" class="cell quarto-layout-panel" data-hash="Chapter1_cache/html/fig-gght1_7706fa0639091de5e8602403bac9d2b9">
+</details><div id="fig-gght1" class="cell quarto-layout-panel" data-hash="Chapter1_cache/html/fig-gght1_f8b3dd84dfb1fbdd537cca76131faf6c">
 <figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
 <div id="fig-gght1-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="Chapter1_files/figure-html/fig-gght1-1.png" class="img-fluid figure-img" data-ref-parent="fig-gght1" width="960"></p>
 <figcaption class="figure-caption">(a) Without any gghighlight: it is tough to make comparisons, say, for example of American Airlines with others</figcaption></figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
 <div id="fig-gght1-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="Chapter1_files/figure-html/fig-gght1-2.png" class="img-fluid figure-img" data-ref-parent="fig-gght1" width="960"></p>
 <figcaption class="figure-caption">(b) With use of gghighlight: we can easily compare American Airlines to others</figcaption></figure>
@@ -714,7 +720,116 @@ Note
 </div>
 </div>
 </div>
-<hr>
+<hr></section><section id="magick" class="level2"><h2 class="anchored" data-anchor-id="magick"><code>magick</code></h2>
+<div class="grid">
+<div class="g-col-8">
+<p>The <code>magick</code> package <span class="citation" data-cites="magick">(<a href="#ref-magick" role="doc-biblioref">Ooms 2023</a>)</span> is a tool to handle and process images in <code>R</code>. It can be used to read <code>.png</code> , <code>.jpeg</code> , <code>.svg</code> and other images. While there are a plethora of features, the primary one I use are given below. Note that I have created the logo for this book solutions using <a href="https://cran.r-project.org/web/packages/magick/vignettes/intro.html"><code>magick</code></a> and <a href="https://github.com/doehm/cropcircles"><code>cropcircles</code></a> .</p>
+<div class="cell" data-hash="Chapter1_cache/html/unnamed-chunk-11_52662a11f67626162456336f790038ca">
+<details><summary>Code</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/magick/">magick</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Reading in the image</span></span>
+<span><span class="va">book_logo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_read</a></span><span class="op">(</span><span class="st">"https://ggplot2-book.org/cover.jpg"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Looking at the image in your computer's browser or default app</span></span>
+<span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_browse</a></span><span class="op">(</span><span class="va">book_logo</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Editing the image to add 3rd Edition and Solutions Manual words</span></span>
+<span><span class="va">book_logo</span> <span class="op">&lt;-</span> <span class="va">book_logo</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://docs.ropensci.org/magick/reference/painting.html">image_annotate</a></span><span class="op">(</span><span class="st">"Solutions Manual (&amp; beyond)\nfor                   "</span>,</span>
+<span>                 color <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>                 location <span class="op">=</span> <span class="st">"+80+125"</span>,</span>
+<span>                 size <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>                 font <span class="op">=</span> <span class="st">"helvetica"</span>,</span>
+<span>                 weight <span class="op">=</span> <span class="fl">700</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://docs.ropensci.org/magick/reference/painting.html">image_annotate</a></span><span class="op">(</span><span class="st">"Third Edition"</span>,</span>
+<span>             strokecolor <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>             color <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>             boxcolor <span class="op">=</span> <span class="st">"#EEB301"</span>,</span>
+<span>             location <span class="op">=</span> <span class="st">"+75+480"</span>,</span>
+<span>             style <span class="op">=</span> <span class="st">"italic"</span>,</span>
+<span>             size <span class="op">=</span> <span class="fl">35</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Saving the image</span></span>
+<span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_write</a></span><span class="op">(</span><span class="va">book_logo</span>, </span>
+<span>            <span class="st">"book_cover.jpg"</span>,</span>
+<span>            format <span class="op">=</span> <span class="st">"jpeg"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div class="g-col-4">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="book_cover.jpg" class="img-fluid figure-img" width="268"></p>
+<figcaption class="figure-caption">Book cover for Solutions Manual (and more!) created with magick package</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="cropcircles" class="level2"><h2 class="anchored" data-anchor-id="cropcircles"><code>cropcircles</code></h2>
+<div class="grid">
+<div class="g-col-4">
+<p>We can use the <code>cropcircles</code> package <span class="citation" data-cites="cropcircles">(<a href="#ref-cropcircles" role="doc-biblioref">Oehm 2023</a>)</span> to crop images into a rounded and hexagonal logo for my current book, as an example. <em>(Note: the package generated a transparent background for me only in <code>.png</code> format).</em></p>
+<p>We can also create hexagonal logos with this, as shown here.</p>
+</div>
+<div class="g-col-4">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="https://aditya-dahiya.github.io/ggplot2book3e/"><img src="book_logo.png" class="img-fluid figure-img" width="250"></a></p>
+<figcaption class="figure-caption">A rounded logo for the solutions website</figcaption></figure>
+</div>
+<div class="cell" data-hash="Chapter1_cache/html/unnamed-chunk-12_9a73a99a9cc4b7dbfe9ea41fbec07515">
+<details><summary>Code</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/doehm/cropcircles">cropcircles</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># A round logo</span></span>
+<span><span class="va">round_logo</span> <span class="op">&lt;-</span> <span class="va">book_logo</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://docs.ropensci.org/magick/reference/transform.html">image_crop</a></span><span class="op">(</span><span class="st">"600x600+0+30"</span><span class="op">)</span></span>
+<span>  </span>
+<span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_read</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/cropcircles/man/crop.html">circle_crop</a></span><span class="op">(</span><span class="va">round_logo</span>, </span>
+<span>              just <span class="op">=</span> <span class="st">"top"</span>,</span>
+<span>              border_colour <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>              border_size <span class="op">=</span> <span class="fl">7</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_write</a></span><span class="op">(</span><span class="st">"book_logo.png"</span>, </span>
+<span>            format <span class="op">=</span> <span class="st">"png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+<div class="g-col-4">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="hex_logo.png" class="img-fluid figure-img" width="250"></p>
+<figcaption class="figure-caption">A Hexagonal logo</figcaption></figure>
+</div>
+<div class="cell" data-hash="Chapter1_cache/html/unnamed-chunk-13_a04af673c1c5205509074423b4512ae6">
+<details><summary>Code</summary><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/magick/">magick</a></span><span class="op">)</span></span>
+<span><span class="co"># Creating a hex </span></span>
+<span><span class="va">book_logo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_read</a></span><span class="op">(</span><span class="st">"https://ggplot2-book.org/cover.jpg"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">book_logo</span> <span class="op">&lt;-</span> <span class="va">book_logo</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://docs.ropensci.org/magick/reference/painting.html">image_annotate</a></span><span class="op">(</span><span class="st">"Solutions Manual \n  (&amp; beyond) for"</span>,</span>
+<span>                 color <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>                 location <span class="op">=</span> <span class="st">"+150+105"</span>,</span>
+<span>                 size <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>                 font <span class="op">=</span> <span class="st">"helvetica"</span>,</span>
+<span>                 weight <span class="op">=</span> <span class="fl">700</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://docs.ropensci.org/magick/reference/painting.html">image_annotate</a></span><span class="op">(</span><span class="st">"        Third Edition"</span>,</span>
+<span>             strokecolor <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>             color <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>             boxcolor <span class="op">=</span> <span class="st">"#EEB301"</span>,</span>
+<span>             location <span class="op">=</span> <span class="st">"+75+480"</span>,</span>
+<span>             style <span class="op">=</span> <span class="st">"italic"</span>,</span>
+<span>             size <span class="op">=</span> <span class="fl">35</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://docs.ropensci.org/magick/reference/transform.html">image_crop</a></span><span class="op">(</span><span class="st">"600x600+0+30"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_read</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/cropcircles/man/crop.html">hex_crop</a></span><span class="op">(</span></span>
+<span>    <span class="va">book_logo</span>,</span>
+<span>    just <span class="op">=</span> <span class="st">"top"</span>,</span>
+<span>    border_size <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>    border_colour <span class="op">=</span> <span class="st">"black"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_write</a></span><span class="op">(</span><span class="st">"hex_logo.png"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -737,6 +852,12 @@ Campitelli, Elio. 2023. <span>“Ggnewscale: Multiple Fill and Colour Scales in 
 </div>
 <div id="ref-directlabels" class="csl-entry" role="listitem">
 Hocking, Toby Dylan. 2023. <span>“Directlabels: Direct Labels for Multicolor Plots.”</span> <a href="https://CRAN.R-project.org/package=directlabels">https://CRAN.R-project.org/package=directlabels</a>.
+</div>
+<div id="ref-cropcircles" class="csl-entry" role="listitem">
+Oehm, Daniel. 2023. <span>“Cropcircles: Crops an Image to a Circle.”</span> <a href="https://CRAN.R-project.org/package=cropcircles">https://CRAN.R-project.org/package=cropcircles</a>.
+</div>
+<div id="ref-magick" class="csl-entry" role="listitem">
+Ooms, Jeroen. 2023. <span>“Magick: Advanced Graphics and Image-Processing in r.”</span> <a href="https://CRAN.R-project.org/package=magick">https://CRAN.R-project.org/package=magick</a>.
 </div>
 <div id="ref-colorBlindness" class="csl-entry" role="listitem">
 Ou, Jianhong. 2021. <span>“colorBlindness: Safe Color Set for Color Blindness.”</span> <a href="https://CRAN.R-project.org/package=colorBlindness">https://CRAN.R-project.org/package=colorBlindness</a>.

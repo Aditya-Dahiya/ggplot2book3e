@@ -1,5 +1,6 @@
 ---
-title: "Solutions (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
+title: "Solutions Manual (and Beyond) for"
+subtitle: "ggplot2: Elegant Graphics for Data Analysis (3e)"
 filters:
   - social-share
 share:
@@ -33,6 +34,6 @@ This website is committed to fostering a collaborative learning environment and 
 :::
 
 ::: g-col-4
-![R for Data Science (2nd Edition)](book-cover.jpg){fig-alt="R for Data Science (2nd Edition)" fig-align="left" width="252"}.
+![R for Data Science (2nd Edition)](book_cover.jpg){fig-alt="R for Data Science (2nd Edition)" fig-align="left" width="252"}.
 :::
 :::
