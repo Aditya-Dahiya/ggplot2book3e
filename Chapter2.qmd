@@ -1,8 +1,177 @@
 ---
 title: "Chapter 2"
 subtitle: "First Steps"
+author: "Aditya Dahiya"
+date: 2023-10-25
+format: 
+  html: 
+    code-fold: true
+    code-copy: hover
+    code-link: true
+execute: 
+  echo: true
+  warning: false
+  error: false
+  cache: true
+filters:
+  - social-share
+share:
+  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter2.html"
+  description: "Solutions: R for Data Science (2e)"
+  twitter: true
+  facebook: true
+  linkedin: true
+  email: true
+  mastodon: true
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
 ---
 
 ::: callout-warning
 Solutions for this chapter are under construction.
 :::
+
+```{r}
+# Loading required libraries
+library(tidyverse)           # tidyverse and ggplot2
+data("mpg")                  # loading the "mpg" dataset
+library(gt)                  # beautiful tables in output
+library(gtExtras)            # extended beautiful tables' themes
+```
+
+# **2.2.1 Exercises**
+
+## Question 1
+
+**List five functions that you could use to get more information about the `mpg` dataset.**
+
+Here are the five functions for exploring the `mpg` dataset from the `ggplot2` package in `R`, along with example code: --
+
+1.  Use **`str(mpg)`** to display the structure of the dataset `mpg` telling what is the class of each variable.
+
+    ```{r}
+    str(mpg)
+    ```
+
+2.  Employ **`glimpse(mpg)`** to obtain a concise overview of the dataset's structure and its first few rows, offering a detailed glimpse of the data. It is similar to the previous function `str()`
+
+    ```{r}
+    glimpse(mpg)
+    ```
+
+3.  Run **`summary(mpg)`** to generate a statistical summary of the variables within the `mpg` dataset, providing measures like mean, median, and quartiles.
+
+    ```{r}
+    summary(mpg)
+    ```
+
+4.  Utilize **`dfSummary(mpg)`** from the `summarytools` package to obtain a comprehensive summary report with various statistics and visualizations for the `mpg` dataset.
+
+    ```{r}
+    #| plain.ascii: FALSE
+
+    library(summarytools)
+    st_options(plain.ascii = FALSE)
+    print(
+      summarytools::dfSummary(mpg,
+                            plain.ascii = FALSE,
+                            headings = FALSE,
+                            display.labels = FALSE,
+                            silent = TRUE),
+      method = "render")
+    ```
+
+5.  Enhance data exploration with **`vis_dat(mpg)`** from the `visdat` package, which offers interactive visualizations to better understand the data-set's contents and identify missing values.
+
+    ```{r}
+    library(visdat)
+    visdat::vis_dat(mpg) + scale_fill_brewer(palette = "Pastel1") +
+      labs(title = "A ")
+    ```
+
+## Question 2
+
+**How can you find out what other datasets are included with `ggplot2`?**
+
+To find out what datasets are included with the `ggplot2` package, you can use the `data()` function. You can use the `data()` function to list all the datasets available in the ggplot2 package.
+
+```{r}
+data(package = "ggplot2")
+```
+
+## Question 3
+
+**Apart from the US, most countries use fuel consumption (fuel consumed over fixed distance) rather than fuel economy (distance travelled with fixed amount of fuel). How could you convert `cty` and `hwy` into the European standard of l/100km?**
+
+In the `R` formula, we convert miles per gallon (mpg) to liters per 100 kilometers (L/100km). The conversion factor, 235.21, is used to perform the conversion. To convert mpg to L/100km, we divide the conversion factor by the mpg value.
+
+$$ \text{L/100km} = \frac{235.21}{\text{mpg}} $$ {#eq-1} The conversion factor of 235.21 is derived from the following logic:
+
+1.  1 mile is equal to approximately 1.609 kilometers.
+2.  1 gallon is equal to approximately 3.785 liters.
+
+To convert from miles per gallon (mpg) to liters per 100 kilometers (L/100km), we need to reverse the units. So, we divide the number of miles (1 mile) by the number of gallons (1 gallon) to get the number of kilometers per liter. This can be expressed as:
+
+$$ \text{Kilometers per Liter} = \frac{1 \text{ mile}}{1 \text{ gallon}} \times \frac{1.609 \text{ kilometers}}{1 \text{ mile}} \times \frac{1 \text{ liter}}{3.785 \text{ gallons}} \approx 0.4251 \text{ kilometers per liter} $$ {#eq-2}
+
+Now, to express fuel efficiency in liters per 100 kilometers, we need to scale up by 100:
+
+$$ \text{L/100km} = \frac{1}{0.4251} \times 100 \approx 235.21 \text{ L/100km per 1 kilometer per liter} $$ {#eq-3}
+
+So, when you divide 235.21 by miles per gallon (mpg), you are effectively converting from miles per gallon to liters per 100 kilometers, accounting for the differences in units and scaling by 100 to express the consumption over a distance of 100 kilometers.
+
+Now, you can include the `R` code and **LaTeX** explanation in an R Markdown document for a more structured presentation. When you knit the R Markdown document, it will generate a formatted document with both the code and explanations.
+
+```{r}
+#| label: tbl-q3-ex2
+#| tbl-cap: "mpg dataset with mileage in Liters per 100 km"
+
+
+# Conversion factor from mpg to L/100km
+conversion_factor <- 235.21
+
+mpg |> 
+  mutate(
+    cty = conversion_factor/cty,
+    hwy = conversion_factor/hwy
+  ) |> 
+  slice_head(n = 5) |> 
+  gt() |> gtExtras::gt_theme_538() |> 
+  fmt_number(columns = cty:hwy,
+             decimals = 2)
+```
+
+## Question 4
+
+**Which manufacturer has the most models in this dataset? Which model has the most variations? Does your answer change if you remove the redundant specification of drive train (e.g. "pathfinder 4wd", "a4 quattro") from the model name?**
+
+As we can see below in @tbl-q4a-ex2, Toyota has the most models in the data-set.
+
+```{r}
+#| label: tbl-q4a-ex2
+#| tbl-cap: "Top 5 manufacturers in mpg data-set as per number of models"
+
+# Group 'mpg' data by 'manufacturer.'
+mpg |> 
+  group_by(manufacturer) |> 
+
+  # Count distinct 'model' values for each manufacturer.
+  summarize(n_models = n_distinct(model)) |> 
+
+  # Sort in descending order based on 'n_models.'
+  arrange(desc(n_models)) |> 
+  
+  # Select the top 5 manufacturers.
+  slice_head(n = 5) |> 
+  
+  # Create a table and apply a specific theme to it.
+  gt() |> gt_theme_538()
+```
+
+The ... model has the most variations.
+
+```{r}
+mpg |> 
+  count(manufacturer, model, sort = TRUE)
+```

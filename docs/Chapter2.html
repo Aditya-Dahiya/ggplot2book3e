@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.3.433">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
-<title>Solutions n Beyond ggplot2 - Chapter 2</title>
+<meta name="author" content="Aditya Dahiya">
+<meta name="dcterms.date" content="2023-10-25">
+<title>Solutions (and Beyond): ggplot2 - Chapter 2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,8 +19,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
-
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -30,7 +62,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./book-cover.jpg" rel="icon" type="image/jpeg">
+<link href="./book_logo.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -40,7 +72,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/quarto-contrib/social-share-0.1.0/social-share.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/social-share-0.1.0/all.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -59,32 +92,25 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-
-<link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Solutions n Beyond ggplot2 - Chapter 2">
+}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="Solutions (and Beyond): ggplot2 - Chapter 2">
 <meta property="og:description" content="First Steps">
-<meta property="og:image" content="./book-cover.jpg">
-<meta property="og:site-name" content="Solutions n Beyond ggplot2">
-<meta name="twitter:title" content="Solutions n Beyond ggplot2 - Chapter 2">
+<meta property="og:image" content="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACQAAAEKBAMAAACI/+pZAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfnChcKByLXXaToAAAAmUlEQVRYw+3UwQ2AMAwDQFbICKUblP134wMhUsyncZGQnOc9SGQD28adPcxF/fAZIhaBoC1MlcLTLR0xRDQCQddLe6j7PtFSAtmXe2x5o2gxgeyLPbZI3feJeASCni7ttUdLRwwRl0DQ9B4tHTFEZAJBq7QfErvHljeKPiCQfaXHZmmjiE4g6OnScI/+eYc35/4JiFgEgmbNCfwei2o7vfPAAAAAAElFTkSuQmCC">
+<meta property="og:site-name" content="Solutions (and Beyond): ggplot2">
+<meta name="twitter:title" content="Solutions (and Beyond): ggplot2 - Chapter 2">
 <meta name="twitter:description" content="First Steps">
-<meta name="twitter:image" content="./book-cover.jpg">
+<meta name="twitter:image" content="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAACQAAAEKBAMAAACI/+pZAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfnChcKByLXXaToAAAAmUlEQVRYw+3UwQ2AMAwDQFbICKUblP134wMhUsyncZGQnOc9SGQD28adPcxF/fAZIhaBoC1MlcLTLR0xRDQCQddLe6j7PtFSAtmXe2x5o2gxgeyLPbZI3feJeASCni7ttUdLRwwRl0DQ9B4tHTFEZAJBq7QfErvHljeKPiCQfaXHZmmjiE4g6OnScI/+eYc35/4JiFgEgmbNCfwei2o7vfPAAAAAAElFTkSuQmCC">
 <meta name="twitter:card" content="summary_large_image">
 </head>
-
 <body class="nav-sidebar docked nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./book-cover.jpg" alt="ggplot2: Elegant Graphics for Data Analysis (3rd Edition)" class="navbar-logo">
-    </a>
+    <img src="./book_logo.jpg" alt="" class="navbar-logo"></a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Solutions n Beyond ggplot2</span>
+    <span class="navbar-title">Solutions (and Beyond): ggplot2</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -93,7 +119,7 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="./index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
@@ -106,11 +132,11 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">About Me</span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools ms-auto">
+<div class="quarto-navbar-tools ms-auto">
     <div class="dropdown">
       <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-github"></i></a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
-          <li>
+<li>
             <a class="dropdown-item quarto-navbar-tools ms-auto-item" href="https://github.com/Aditya-Dahiya/ggplot2book3e/">
             Source Code
             </a>
@@ -121,7 +147,7 @@ ul.task-list li input[type="checkbox"] {
             </a>
           </li>
       </ul>
-    </div>
+</div>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -130,9 +156,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -143,20 +167,16 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
-        <div class="mt-2 flex-shrink-0 align-items-center">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto"><div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item sidebar-item-section">
+<li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text">Getting Started</span></a>
@@ -164,8 +184,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Chapter1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 1</span></a>
@@ -178,7 +198,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
@@ -187,8 +207,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Chapter3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 3</span></a>
@@ -231,7 +251,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
@@ -240,8 +260,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Chapter10.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 10</span></a>
@@ -260,7 +280,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
@@ -269,8 +289,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Chapter13.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 13</span></a>
@@ -301,7 +321,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
@@ -310,8 +330,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Chapter18.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 18</span></a>
@@ -336,20 +356,28 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li>
+<a href="#exercises" id="toc-exercises" class="nav-link active" data-scroll-target="#exercises"><strong>2.2.1 Exercises</strong></a>
+  <ul class="collapse">
+<li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1">Question 1</a></li>
+  <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2">Question 2</a></li>
+  <li><a href="#question-3" id="toc-question-3" class="nav-link" data-scroll-target="#question-3">Question 3</a></li>
+  <li><a href="#question-4" id="toc-question-4" class="nav-link" data-scroll-target="#question-4">Question 4</a></li>
+  </ul>
+</li>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter2.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">Chapter 2</h1>
 <p class="subtitle lead">First Steps</p>
 </div>
@@ -358,15 +386,25 @@ ul.task-list li input[type="checkbox"] {
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Aditya Dahiya </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 25, 2023</p>
+    </div>
+  </div>
   
     
   </div>
   
 
-</header>
-
-<div class="callout callout-style-default callout-warning callout-titled">
+</header><div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -379,11 +417,1881 @@ Warning
 <p>Solutions for this chapter are under construction.</p>
 </div>
 </div>
+<div class="cell" data-hash="Chapter2_cache/html/unnamed-chunk-1_59b61f75902594c69dd9aade2bf5b048">
+<details><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Loading required libraries</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>           <span class="co"># tidyverse and ggplot2</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"mpg"</span><span class="op">)</span>                  <span class="co"># loading the "mpg" dataset</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com/">gt</a></span><span class="op">)</span>                  <span class="co"># beautiful tables in output</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jthomasmock/gtExtras">gtExtras</a></span><span class="op">)</span>            <span class="co"># extended beautiful tables' themes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="exercises" class="level1"><h1><strong>2.2.1 Exercises</strong></h1>
+<section id="question-1" class="level2"><h2 class="anchored" data-anchor-id="question-1">Question 1</h2>
+<p><strong>List five functions that you could use to get more information about the <code>mpg</code> dataset.</strong></p>
+<p>Here are the five functions for exploring the <code>mpg</code> dataset from the <code>ggplot2</code> package in <code>R</code>, along with example code: –</p>
+<ol type="1">
+<li>
+<p>Use <strong><code>str(mpg)</code></strong> to display the structure of the dataset <code>mpg</code> telling what is the class of each variable.</p>
+<div class="cell" data-hash="Chapter2_cache/html/unnamed-chunk-2_906c3374f9bc43c7df946ce48eb773ed">
+<details><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>tibble [234 × 11] (S3: tbl_df/tbl/data.frame)
+ $ manufacturer: chr [1:234] "audi" "audi" "audi" "audi" ...
+ $ model       : chr [1:234] "a4" "a4" "a4" "a4" ...
+ $ displ       : num [1:234] 1.8 1.8 2 2 2.8 2.8 3.1 1.8 1.8 2 ...
+ $ year        : int [1:234] 1999 1999 2008 2008 1999 1999 2008 1999 1999 2008 ...
+ $ cyl         : int [1:234] 4 4 4 4 6 6 6 4 4 4 ...
+ $ trans       : chr [1:234] "auto(l5)" "manual(m5)" "manual(m6)" "auto(av)" ...
+ $ drv         : chr [1:234] "f" "f" "f" "f" ...
+ $ cty         : int [1:234] 18 21 20 21 16 18 18 18 16 20 ...
+ $ hwy         : int [1:234] 29 29 31 30 26 26 27 26 25 28 ...
+ $ fl          : chr [1:234] "p" "p" "p" "p" ...
+ $ class       : chr [1:234] "compact" "compact" "compact" "compact" ...</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Employ <strong><code>glimpse(mpg)</code></strong> to obtain a concise overview of the dataset’s structure and its first few rows, offering a detailed glimpse of the data. It is similar to the previous function <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code></p>
+<div class="cell" data-hash="Chapter2_cache/html/unnamed-chunk-3_de9c3cf15f283eace9431288dea6b2a9">
+<details><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Rows: 234
+Columns: 11
+$ manufacturer &lt;chr&gt; "audi", "audi", "audi", "audi", "audi", "audi", "audi", "…
+$ model        &lt;chr&gt; "a4", "a4", "a4", "a4", "a4", "a4", "a4", "a4 quattro", "…
+$ displ        &lt;dbl&gt; 1.8, 1.8, 2.0, 2.0, 2.8, 2.8, 3.1, 1.8, 1.8, 2.0, 2.0, 2.…
+$ year         &lt;int&gt; 1999, 1999, 2008, 2008, 1999, 1999, 2008, 1999, 1999, 200…
+$ cyl          &lt;int&gt; 4, 4, 4, 4, 6, 6, 6, 4, 4, 4, 4, 6, 6, 6, 6, 6, 6, 8, 8, …
+$ trans        &lt;chr&gt; "auto(l5)", "manual(m5)", "manual(m6)", "auto(av)", "auto…
+$ drv          &lt;chr&gt; "f", "f", "f", "f", "f", "f", "f", "4", "4", "4", "4", "4…
+$ cty          &lt;int&gt; 18, 21, 20, 21, 16, 18, 18, 18, 16, 20, 19, 15, 17, 17, 1…
+$ hwy          &lt;int&gt; 29, 29, 31, 30, 26, 26, 27, 26, 25, 28, 27, 25, 25, 25, 2…
+$ fl           &lt;chr&gt; "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p", "p…
+$ class        &lt;chr&gt; "compact", "compact", "compact", "compact", "compact", "c…</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Run <strong><code>summary(mpg)</code></strong> to generate a statistical summary of the variables within the <code>mpg</code> dataset, providing measures like mean, median, and quartiles.</p>
+<div class="cell" data-hash="Chapter2_cache/html/unnamed-chunk-4_355220d581ab7494536c0a1a6c188ed3">
+<details><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code> manufacturer          model               displ            year     
+ Length:234         Length:234         Min.   :1.600   Min.   :1999  
+ Class :character   Class :character   1st Qu.:2.400   1st Qu.:1999  
+ Mode  :character   Mode  :character   Median :3.300   Median :2004  
+                                       Mean   :3.472   Mean   :2004  
+                                       3rd Qu.:4.600   3rd Qu.:2008  
+                                       Max.   :7.000   Max.   :2008  
+      cyl           trans               drv                 cty       
+ Min.   :4.000   Length:234         Length:234         Min.   : 9.00  
+ 1st Qu.:4.000   Class :character   Class :character   1st Qu.:14.00  
+ Median :6.000   Mode  :character   Mode  :character   Median :17.00  
+ Mean   :5.889                                         Mean   :16.86  
+ 3rd Qu.:8.000                                         3rd Qu.:19.00  
+ Max.   :8.000                                         Max.   :35.00  
+      hwy             fl               class          
+ Min.   :12.00   Length:234         Length:234        
+ 1st Qu.:18.00   Class :character   Class :character  
+ Median :24.00   Mode  :character   Mode  :character  
+ Mean   :23.44                                        
+ 3rd Qu.:27.00                                        
+ Max.   :44.00                                        </code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Utilize <strong><code>dfSummary(mpg)</code></strong> from the <code>summarytools</code> package to obtain a comprehensive summary report with various statistics and visualizations for the <code>mpg</code> dataset.</p>
+<div class="cell" data-plain.ascii="false" data-hash="Chapter2_cache/html/unnamed-chunk-5_c796fbccb97b365da55e75b16eec0ecd">
+<details><summary>Code</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dcomtois/summarytools">summarytools</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/summarytools/man/st_options.html">st_options</a></span><span class="op">(</span>plain.ascii <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span></span>
+<span>  <span class="fu">summarytools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/summarytools/man/dfSummary.html">dfSummary</a></span><span class="op">(</span><span class="va">mpg</span>,</span>
+<span>                        plain.ascii <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                        headings <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                        display.labels <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                        silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"render"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div class="container st-container">
+
+<table class="table table-striped table-bordered st-table st-table-striped st-table-bordered st-multiline table-sm small" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead><tr class="header">
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>No</strong></th>
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>Variable</strong></th>
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>Stats / Values</strong></th>
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>Freqs (% of Valid)</strong></th>
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>Graph</strong></th>
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>Valid</strong></th>
+<th class="st-protect-top-border" style="text-align: center;" data-quarto-table-cell-role="th"><strong>Missing</strong></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">manufacturer [character]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1. dodge</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">2. toyota</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">3. volkswagen</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">4. ford</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">5. chevrolet</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">6. audi</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">7. hyundai</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">8. subaru</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">9. nissan</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">10. honda</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">[ 5 others ]</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; padding: 0; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">37</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">15.8%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">34</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">14.5%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">27</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">11.5%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">25</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">10.7%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">19</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">8.1%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">18</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">7.7%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">14</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">6.0%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">14</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">6.0%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">13</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">5.6%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">9</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">3.8%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">24</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">10.3%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAACQAAAEKBAMAAACI/+pZAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfnChcKByLXXaToAAAAmUlEQVRYw+3UwQ2AMAwDQFbICKUblP134wMhUsyncZGQnOc9SGQD28adPcxF/fAZIhaBoC1MlcLTLR0xRDQCQddLe6j7PtFSAtmXe2x5o2gxgeyLPbZI3feJeASCni7ttUdLRwwRl0DQ9B4tHTFEZAJBq7QfErvHljeKPiCQfaXHZmmjiE4g6OnScI/+eYc35/4JiFgEgmbNCfwei2o7vfPAAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">234 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">model [character]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1. caravan 2wd</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">2. ram 1500 pickup 4wd</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">3. civic</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">4. dakota pickup 4wd</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">5. jetta</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">6. mustang</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">7. a4 quattro</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">8. grand cherokee 4wd</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">9. impreza awd</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">10. a4</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">[ 28 others ]</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; padding: 0; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">11</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">4.7%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">10</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">4.3%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">9</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">3.8%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">9</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">3.8%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">9</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">3.8%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">9</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">3.8%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">8</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">3.4%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">8</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">3.4%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">8</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">3.4%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">7</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">3.0%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">146</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">62.4%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAGoAAAEKBAMAAAAIjN1KAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfnChcKByLXXaToAAAAsklEQVRo3u3ZsQ2DMBCGUVbICOANYP/d4iKKUCruJMTZeX//mrP0FbAs827re13fR7Xj2CmKGl/lChAQQ6l+jDWu+uUpippA5QoQEA8pZaMoKqr08KzqvxdFUfcpPTyr+u9FUdQVNWvZckoPKeqflR7+XCOhWuiXFEVRVVWuABHyjFI2iqKiSg/Pqv57URR1n5q3h2tCtdAnB4qiqqpcASJkJLXF9r18ZDtFUUVVrgAz7g3FnuP2cD/JywAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">234 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">displ [numeric]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 3.5 (1.3)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1.6 ≤ 3.3 ≤ 7</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 2.2 (0.4)</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; vertical-align: middle;">35 distinct values</td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfnChcKByLXXaToAAAAn0lEQVRo3u3XYQqAIAyGYa9QNyhvUPe/W8RGTBBCtwrj/X4Oe1gwhaVEerJKJl8Uy/uZDQzsDcw5uiXm7A8MDAwMrAObW17yW6yl2e8w+eUlBpNTYGAhmJ1NN7abb8BaMN3NYrDKtICBgV33LAbLtgQGBgY2PlZZV/oxOQUGBgb2PCaPVxBmS4NgxePtxbLtD+wXmG5AMZiWFFtDkkhPDv/Km7zNvsyxAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">234 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">year [integer]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Min : 1999</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean : 2003.5</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Max : 2008</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; padding: 0; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 2px 0 7px; margin: 0; border: 0;">1999</td>
+<td style="text-align: left; padding: 0 2px; border: 0;">:</td>
+<td style="text-align: right; padding: 0 4px 0 6px; margin: 0; border: 0;">117</td>
+<td style="text-align: left; padding: 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0 2px; margin: 0; border: 0;">50.0%</td>
+<td style="text-align: left; padding: 0 4px 0 0; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 2px 0 7px; margin: 0; border: 0;">2008</td>
+<td style="text-align: left; padding: 0 2px; border: 0;">:</td>
+<td style="text-align: right; padding: 0 4px 0 6px; margin: 0; border: 0;">117</td>
+<td style="text-align: left; padding: 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0 2px; margin: 0; border: 0;">50.0%</td>
+<td style="text-align: left; padding: 0 4px 0 0; border: 0;">)</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAFcAAAA3BAMAAACLEssFAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfnChcKByOgWpR+AAAAN0lEQVRIx2NgGJpAiRigAFWsbEwEGFU8qnhUMc0Uk5RhBYkBAjRXPFrIjCoeVTyEFJOUYYcaAADDMkUfIsUAkAAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">234 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">cyl [integer]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 5.9 (1.6)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">4 ≤ 6 ≤ 8</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 4 (0.3)</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; padding: 0; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 2px 0 7px; margin: 0; border: 0;">4</td>
+<td style="text-align: left; padding: 0 2px; border: 0;">:</td>
+<td style="text-align: right; padding: 0 4px 0 6px; margin: 0; border: 0;">81</td>
+<td style="text-align: left; padding: 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0 2px; margin: 0; border: 0;">34.6%</td>
+<td style="text-align: left; padding: 0 4px 0 0; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 2px 0 7px; margin: 0; border: 0;">5</td>
+<td style="text-align: left; padding: 0 2px; border: 0;">:</td>
+<td style="text-align: right; padding: 0 4px 0 6px; margin: 0; border: 0;">4</td>
+<td style="text-align: left; padding: 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0 2px; margin: 0; border: 0;">1.7%</td>
+<td style="text-align: left; padding: 0 4px 0 0; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 2px 0 7px; margin: 0; border: 0;">6</td>
+<td style="text-align: left; padding: 0 2px; border: 0;">:</td>
+<td style="text-align: right; padding: 0 4px 0 6px; margin: 0; border: 0;">79</td>
+<td style="text-align: left; padding: 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0 2px; margin: 0; border: 0;">33.8%</td>
+<td style="text-align: left; padding: 0 4px 0 0; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 2px 0 7px; margin: 0; border: 0;">8</td>
+<td style="text-align: left; padding: 0 2px; border: 0;">:</td>
+<td style="text-align: right; padding: 0 4px 0 6px; margin: 0; border: 0;">70</td>
+<td style="text-align: left; padding: 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0 2px; margin: 0; border: 0;">29.9%</td>
+<td style="text-align: left; padding: 0 4px 0 0; border: 0;">)</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAEEAAABmBAMAAABmcOH4AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfnChcKByOgWpR+AAAAX0lEQVRIx+3UsQ0AIQwDQEYgGxAY4fff7RuEvnjLDUpS2PU1key0VicTZmyxHhQJiSjBe2ow/aKYzsSSkEgXvKdmNQQctp9r0XOQkAgTvKeZe/Hvd/g/REIiUPCeVsgL71ZtTGan6pQAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">234 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">trans [character]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1. auto(av)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">2. auto(l3)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">3. auto(l4)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">4. auto(l5)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">5. auto(l6)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">6. auto(s4)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">7. auto(s5)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">8. auto(s6)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">9. manual(m5)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">10. manual(m6)</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; padding: 0; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">5</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">2.1%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">2</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">0.9%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">83</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">35.5%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">39</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">16.7%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">6</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">2.6%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">3</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">1.3%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">3</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">1.3%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">16</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">6.8%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">58</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">24.8%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">19</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">8.1%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAEIAAADzBAMAAADA7N0LAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfnChcKByQ+PgHdAAAAp0lEQVRo3u3XwQ2EMAxEUVpwCXE6CP33hnZhJVbCzCUhRvpzfhdLM4gsS564W5RD1IZAjBW6hWY5hCMQLxCWRHic39dhjdIQiC5Ct3DCGi7F+ZaGQEwRuqcWp+teihB1RSBmC91Ti9NzL0WJikBMF7qnZk8I9oJ4g0izl0/Knfj+WyIQA4VuocV5fi9++Zo6X/uXhkB0FbqFufZSbsR+LQIxTugWZsgGAHJknZ9FKnIAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">234 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">drv [character]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1. 4</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">2. f</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">3. r</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; padding: 0; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">103</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">44.0%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">106</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">45.3%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">25</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">10.7%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAFAAAABOBAMAAABF44x1AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfnChcKByQ+PgHdAAAAS0lEQVRIx2NgGBpAiRBQhCpUNiYARhWOKhwZConOM4IEwcArJOgZJWKDx2hU4ajCoayQ6KwwlPK1IiGFsOAZVTiqcIQrJDrPDHYAAJJWX945D+eiAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">234 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">cty [integer]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 16.9 (4.3)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">9 ≤ 17 ≤ 35</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 5 (0.3)</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; vertical-align: middle;">21 distinct values</td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfnChcKByQ+PgHdAAAAdElEQVRo3u3YsQ2AIBRAQVbADdQNZP/dLPkFBgKNmnsVBVwINISUNFOubUe73K+BldpZhxcMBoPBYDAYDAaDwWAwGOzV2MC/0DhW+ruEwWAwGAwGg/0BC4/IfRkL4wYWH6zL2MOqT2PxgJaxOKVxAfMlzXQDZ1VfIQOmG7YAAAAASUVORK5CYII=" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">234 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">hwy [integer]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">Mean (sd) : 23.4 (6)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">min ≤ med ≤ max:</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">12 ≤ 24 ≤ 44</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">IQR (CV) : 9 (0.3)</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; vertical-align: middle;">27 distinct values</td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAJgAAABuBAMAAAApJ8cWAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfnChcKByVJOTFLAAAAe0lEQVRo3u3ZwQ2AIAxA0a7gCNYNYP/dvJhyaRotNWjy/4kQeCcOTRChTFuYWvG5W9jRrxoYWA02Hug+j9nFDgYGBgYGBgYGBrYAG9NtAeaswMDAwMDAwMDA/og5U2IeC4m3sPib4SFmWw0MDAxsIaZOacxbfR7TkoQynbcVWIFCv95CAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">234 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">fl [character]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1. c</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">2. d</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">3. e</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">4. p</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">5. r</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; padding: 0; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">1</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">0.4%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">5</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">2.1%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">8</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">3.4%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">52</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">22.2%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">168</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">71.8%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAAHgAAAB9BAMAAACbh7pSAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfnChcKByVJOTFLAAAAeElEQVRYw+3UsQ3AIAxEUVbICDEbwP67UaVIpEjOGQkr/F/zCq5wKXt2HkpgMBj8AyzZ9dgsgGsDg8HgpTh0wxSaAJv06WvtrswNBoPB03DohgkyA7ZnX3Dt93zbg8Fg8DQcumGut/mwSb2s7aqBwWDwNBy6Ybs1ACDuadEPURFwAAAAAElFTkSuQmCC" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">234 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">11</td>
+<td style="text-align: left;">class [character]</td>
+<td style="text-align: left; padding: 8; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">1. 2seater</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">2. compact</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">3. midsize</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">4. minivan</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">5. pickup</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">6. subcompact</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: left; padding: 0; margin: 0; border: 0;">7. suv</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; padding: 0; vertical-align: middle;"><table data-quarto-postprocess="true" class="table table-sm table-striped small"><tbody>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">5</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">2.1%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">47</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">20.1%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">41</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">17.5%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">11</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">4.7%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">33</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">14.1%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="even" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">35</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">15.0%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+<tr class="odd" style="background-color:transparent">
+<td style="text-align: right; padding: 0 5px 0 7px; margin: 0; border: 0;">62</td>
+<td style="text-align: left; padding: 0 2px 0 0; border: 0;">(</td>
+<td style="text-align: right; padding: 0; border: 0;">26.5%</td>
+<td style="text-align: left; padding: 0 4px 0 2px; border: 0;">)</td>
+</tr>
+</tbody></table></td>
+<td style="text-align: left; vertical-align: middle; padding: 0; background-color: transparent;"><img src="data:image/png;base64,%20iVBORw0KGgoAAAANSUhEUgAAADQAAACsBAMAAADGY5L2AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAAPUExURf////3+/aampvDw8P///7GHRIEAAAACdFJOUwAAdpPNOAAAAAFiS0dEAIgFHUgAAAAHdElNRQfnChcKByVJOTFLAAAAfElEQVRYw+2UsRHAIAzEWMEjQDYw++9GCo4LB3waoLBfrZovZIdwl5RkoKpHqVwr0IbIZpV64ndh7qDypkAbZzuM/aUM+6jsKRDA9th+Olyod7xSWVcgAJlw4R9OxleUyqwCAZyMLS4XZiqPCrRxssPGuLCdDJUjBdq4RQFuXpt+og7NjwAAAABJRU5ErkJggg==" class="img-fluid" style="border:none;background-color:transparent;padding:0;max-width:max-content;"></td>
+<td style="text-align: center;">234 (100.0%)</td>
+<td style="text-align: center;">0 (0.0%)</td>
+</tr>
+</tbody>
+</table>
+<p>Generated by <a href="https://github.com/dcomtois/summarytools">summarytools</a> 1.0.1 (<a href="https://www.r-project.org/">R</a> version 4.3.1)<br>2023-10-23</p>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>Enhance data exploration with <strong><code>vis_dat(mpg)</code></strong> from the <code>visdat</code> package, which offers interactive visualizations to better understand the data-set’s contents and identify missing values.</p>
+<div class="cell" data-hash="Chapter2_cache/html/unnamed-chunk-6_d772bff06d3d7e6b6c7bb4961f563bb2">
+<details><summary>Code</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/visdat/">visdat</a></span><span class="op">)</span></span>
+<span><span class="fu">visdat</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/visdat/reference/vis_dat.html">vis_dat</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Pastel1"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"A "</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="Chapter2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</li>
+</ol></section><section id="question-2" class="level2"><h2 class="anchored" data-anchor-id="question-2">Question 2</h2>
+<p><strong>How can you find out what other datasets are included with <code>ggplot2</code>?</strong></p>
+<p>To find out what datasets are included with the <code>ggplot2</code> package, you can use the <code><a href="https://rdrr.io/r/utils/data.html">data()</a></code> function. You can use the <code><a href="https://rdrr.io/r/utils/data.html">data()</a></code> function to list all the datasets available in the ggplot2 package.</p>
+<div class="cell" data-hash="Chapter2_cache/html/unnamed-chunk-7_d3abceb4b263876caa8256dad8cd8dcf">
+<details><summary>Code</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"ggplot2"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section><section id="question-3" class="level2"><h2 class="anchored" data-anchor-id="question-3">Question 3</h2>
+<p><strong>Apart from the US, most countries use fuel consumption (fuel consumed over fixed distance) rather than fuel economy (distance travelled with fixed amount of fuel). How could you convert <code>cty</code> and <code>hwy</code> into the European standard of l/100km?</strong></p>
+<p>In the <code>R</code> formula, we convert miles per gallon (mpg) to liters per 100 kilometers (L/100km). The conversion factor, 235.21, is used to perform the conversion. To convert mpg to L/100km, we divide the conversion factor by the mpg value.</p>
+<p><span id="eq-1"><span class="math display">\[ \text{L/100km} = \frac{235.21}{\text{mpg}}  \tag{1}\]</span></span> The conversion factor of 235.21 is derived from the following logic:</p>
+<ol type="1">
+<li>1 mile is equal to approximately 1.609 kilometers.</li>
+<li>1 gallon is equal to approximately 3.785 liters.</li>
+</ol>
+<p>To convert from miles per gallon (mpg) to liters per 100 kilometers (L/100km), we need to reverse the units. So, we divide the number of miles (1 mile) by the number of gallons (1 gallon) to get the number of kilometers per liter. This can be expressed as:</p>
+<p><span id="eq-2"><span class="math display">\[ \text{Kilometers per Liter} = \frac{1 \text{ mile}}{1 \text{ gallon}} \times \frac{1.609 \text{ kilometers}}{1 \text{ mile}} \times \frac{1 \text{ liter}}{3.785 \text{ gallons}} \approx 0.4251 \text{ kilometers per liter}  \tag{2}\]</span></span></p>
+<p>Now, to express fuel efficiency in liters per 100 kilometers, we need to scale up by 100:</p>
+<p><span id="eq-3"><span class="math display">\[ \text{L/100km} = \frac{1}{0.4251} \times 100 \approx 235.21 \text{ L/100km per 1 kilometer per liter}  \tag{3}\]</span></span></p>
+<p>So, when you divide 235.21 by miles per gallon (mpg), you are effectively converting from miles per gallon to liters per 100 kilometers, accounting for the differences in units and scaling by 100 to express the consumption over a distance of 100 kilometers.</p>
+<p>Now, you can include the <code>R</code> code and <strong>LaTeX</strong> explanation in an R Markdown document for a more structured presentation. When you knit the R Markdown document, it will generate a formatted document with both the code and explanations.</p>
+<div class="cell" data-hash="Chapter2_cache/html/tbl-q3-ex2_742d5ff911126a67d66eaf3aeb469a10">
+<details><summary>Code</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Conversion factor from mpg to L/100km</span></span>
+<span><span class="va">conversion_factor</span> <span class="op">&lt;-</span> <span class="fl">235.21</span></span>
+<span></span>
+<span><span class="va">mpg</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    cty <span class="op">=</span> <span class="va">conversion_factor</span><span class="op">/</span><span class="va">cty</span>,</span>
+<span>    hwy <span class="op">=</span> <span class="va">conversion_factor</span><span class="op">/</span><span class="va">hwy</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">gtExtras</span><span class="fu">::</span><span class="fu"><a href="https://jthomasmock.github.io/gtExtras/reference/gt_theme_538.html">gt_theme_538</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">cty</span><span class="op">:</span><span class="va">hwy</span>,</span>
+<span>             decimals <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="tbl-q3-ex2" class="anchored">
+
+<div id="sdjzxhdiul" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#sdjzxhdiul table {
+  font-family: Chivo, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#sdjzxhdiul thead, #sdjzxhdiul tbody, #sdjzxhdiul tfoot, #sdjzxhdiul tr, #sdjzxhdiul td, #sdjzxhdiul th {
+  border-style: none;
+}
+
+#sdjzxhdiul p {
+  margin: 0;
+  padding: 0;
+}
+
+#sdjzxhdiul .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: 300;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: none;
+  border-top-width: 3px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#sdjzxhdiul .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#sdjzxhdiul .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#sdjzxhdiul .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#sdjzxhdiul .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#sdjzxhdiul .gt_bottom_border {
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sdjzxhdiul .gt_col_headings {
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#sdjzxhdiul .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: normal;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#sdjzxhdiul .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: normal;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#sdjzxhdiul .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#sdjzxhdiul .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#sdjzxhdiul .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#sdjzxhdiul .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#sdjzxhdiul .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #000000;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#sdjzxhdiul .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #000000;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #FFFFFF;
+  vertical-align: middle;
+}
+
+#sdjzxhdiul .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#sdjzxhdiul .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#sdjzxhdiul .gt_row {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#sdjzxhdiul .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 0px;
+  border-right-color: #FFFFFF;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sdjzxhdiul .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#sdjzxhdiul .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#sdjzxhdiul .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#sdjzxhdiul .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sdjzxhdiul .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#sdjzxhdiul .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#sdjzxhdiul .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sdjzxhdiul .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sdjzxhdiul .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#sdjzxhdiul .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sdjzxhdiul .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#sdjzxhdiul .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#sdjzxhdiul .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#sdjzxhdiul .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sdjzxhdiul .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#sdjzxhdiul .gt_sourcenote {
+  font-size: 12px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#sdjzxhdiul .gt_left {
+  text-align: left;
+}
+
+#sdjzxhdiul .gt_center {
+  text-align: center;
+}
+
+#sdjzxhdiul .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#sdjzxhdiul .gt_font_normal {
+  font-weight: normal;
+}
+
+#sdjzxhdiul .gt_font_bold {
+  font-weight: bold;
+}
+
+#sdjzxhdiul .gt_font_italic {
+  font-style: italic;
+}
+
+#sdjzxhdiul .gt_super {
+  font-size: 65%;
+}
+
+#sdjzxhdiul .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#sdjzxhdiul .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#sdjzxhdiul .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#sdjzxhdiul .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#sdjzxhdiul .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#sdjzxhdiul .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#sdjzxhdiul .gt_indent_5 {
+  text-indent: 25px;
+}
+
+tbody tr:last-child {
+  border-bottom: 2px solid #ffffff00;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<caption>Table&nbsp;1:  <p>mpg dataset with mileage in Liters per 100 km</p> </caption>
+  <thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;" scope="col" id="manufacturer">manufacturer</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;" scope="col" id="model">model</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;" scope="col" id="displ">displ</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;" scope="col" id="year">year</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;" scope="col" id="cyl">cyl</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;" scope="col" id="trans">trans</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;" scope="col" id="drv">drv</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;" scope="col" id="cty">cty</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;" scope="col" id="hwy">hwy</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;" scope="col" id="fl">fl</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;" scope="col" id="class">class</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="manufacturer" class="gt_row gt_left">audi</td>
+<td headers="model" class="gt_row gt_left">a4</td>
+<td headers="displ" class="gt_row gt_right">1.8</td>
+<td headers="year" class="gt_row gt_right">1999</td>
+<td headers="cyl" class="gt_row gt_right">4</td>
+<td headers="trans" class="gt_row gt_left">auto(l5)</td>
+<td headers="drv" class="gt_row gt_left">f</td>
+<td headers="cty" class="gt_row gt_right">13.07</td>
+<td headers="hwy" class="gt_row gt_right">8.11</td>
+<td headers="fl" class="gt_row gt_left">p</td>
+<td headers="class" class="gt_row gt_left">compact</td>
+</tr>
+<tr>
+<td headers="manufacturer" class="gt_row gt_left">audi</td>
+<td headers="model" class="gt_row gt_left">a4</td>
+<td headers="displ" class="gt_row gt_right">1.8</td>
+<td headers="year" class="gt_row gt_right">1999</td>
+<td headers="cyl" class="gt_row gt_right">4</td>
+<td headers="trans" class="gt_row gt_left">manual(m5)</td>
+<td headers="drv" class="gt_row gt_left">f</td>
+<td headers="cty" class="gt_row gt_right">11.20</td>
+<td headers="hwy" class="gt_row gt_right">8.11</td>
+<td headers="fl" class="gt_row gt_left">p</td>
+<td headers="class" class="gt_row gt_left">compact</td>
+</tr>
+<tr>
+<td headers="manufacturer" class="gt_row gt_left">audi</td>
+<td headers="model" class="gt_row gt_left">a4</td>
+<td headers="displ" class="gt_row gt_right">2.0</td>
+<td headers="year" class="gt_row gt_right">2008</td>
+<td headers="cyl" class="gt_row gt_right">4</td>
+<td headers="trans" class="gt_row gt_left">manual(m6)</td>
+<td headers="drv" class="gt_row gt_left">f</td>
+<td headers="cty" class="gt_row gt_right">11.76</td>
+<td headers="hwy" class="gt_row gt_right">7.59</td>
+<td headers="fl" class="gt_row gt_left">p</td>
+<td headers="class" class="gt_row gt_left">compact</td>
+</tr>
+<tr>
+<td headers="manufacturer" class="gt_row gt_left">audi</td>
+<td headers="model" class="gt_row gt_left">a4</td>
+<td headers="displ" class="gt_row gt_right">2.0</td>
+<td headers="year" class="gt_row gt_right">2008</td>
+<td headers="cyl" class="gt_row gt_right">4</td>
+<td headers="trans" class="gt_row gt_left">auto(av)</td>
+<td headers="drv" class="gt_row gt_left">f</td>
+<td headers="cty" class="gt_row gt_right">11.20</td>
+<td headers="hwy" class="gt_row gt_right">7.84</td>
+<td headers="fl" class="gt_row gt_left">p</td>
+<td headers="class" class="gt_row gt_left">compact</td>
+</tr>
+<tr>
+<td headers="manufacturer" class="gt_row gt_left">audi</td>
+<td headers="model" class="gt_row gt_left">a4</td>
+<td headers="displ" class="gt_row gt_right">2.8</td>
+<td headers="year" class="gt_row gt_right">1999</td>
+<td headers="cyl" class="gt_row gt_right">6</td>
+<td headers="trans" class="gt_row gt_left">auto(l5)</td>
+<td headers="drv" class="gt_row gt_left">f</td>
+<td headers="cty" class="gt_row gt_right">14.70</td>
+<td headers="hwy" class="gt_row gt_right">9.05</td>
+<td headers="fl" class="gt_row gt_left">p</td>
+<td headers="class" class="gt_row gt_left">compact</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</section><section id="question-4" class="level2"><h2 class="anchored" data-anchor-id="question-4">Question 4</h2>
+<p><strong>Which manufacturer has the most models in this dataset? Which model has the most variations? Does your answer change if you remove the redundant specification of drive train (e.g.&nbsp;“pathfinder 4wd”, “a4 quattro”) from the model name?</strong></p>
+<p>As we can see below in <a href="#tbl-q4a-ex2">Table&nbsp;2</a>, Toyota has the most models in the data-set.</p>
+<div class="cell" data-hash="Chapter2_cache/html/tbl-q4a-ex2_829fff0cf231209db1a3b3b208944e7a">
+<details><summary>Code</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Group 'mpg' data by 'manufacturer.'</span></span>
+<span><span class="va">mpg</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">manufacturer</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span></span>
+<span>  <span class="co"># Count distinct 'model' values for each manufacturer.</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>n_models <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct</a></span><span class="op">(</span><span class="va">model</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span></span>
+<span>  <span class="co"># Sort in descending order based on 'n_models.'</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">n_models</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  </span>
+<span>  <span class="co"># Select the top 5 manufacturers.</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  </span>
+<span>  <span class="co"># Create a table and apply a specific theme to it.</span></span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://jthomasmock.github.io/gtExtras/reference/gt_theme_538.html">gt_theme_538</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="tbl-q4a-ex2" class="anchored">
+
+<div id="lhpeburrxd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#lhpeburrxd table {
+  font-family: Chivo, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#lhpeburrxd thead, #lhpeburrxd tbody, #lhpeburrxd tfoot, #lhpeburrxd tr, #lhpeburrxd td, #lhpeburrxd th {
+  border-style: none;
+}
+
+#lhpeburrxd p {
+  margin: 0;
+  padding: 0;
+}
+
+#lhpeburrxd .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: 300;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: none;
+  border-top-width: 3px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#lhpeburrxd .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#lhpeburrxd .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#lhpeburrxd .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#lhpeburrxd .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#lhpeburrxd .gt_bottom_border {
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lhpeburrxd .gt_col_headings {
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#lhpeburrxd .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: normal;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#lhpeburrxd .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: normal;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#lhpeburrxd .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#lhpeburrxd .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#lhpeburrxd .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#lhpeburrxd .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#lhpeburrxd .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #000000;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#lhpeburrxd .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #000000;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #FFFFFF;
+  vertical-align: middle;
+}
+
+#lhpeburrxd .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#lhpeburrxd .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#lhpeburrxd .gt_row {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#lhpeburrxd .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 0px;
+  border-right-color: #FFFFFF;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lhpeburrxd .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#lhpeburrxd .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#lhpeburrxd .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#lhpeburrxd .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lhpeburrxd .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#lhpeburrxd .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#lhpeburrxd .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lhpeburrxd .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lhpeburrxd .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#lhpeburrxd .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lhpeburrxd .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#lhpeburrxd .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#lhpeburrxd .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#lhpeburrxd .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lhpeburrxd .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#lhpeburrxd .gt_sourcenote {
+  font-size: 12px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#lhpeburrxd .gt_left {
+  text-align: left;
+}
+
+#lhpeburrxd .gt_center {
+  text-align: center;
+}
+
+#lhpeburrxd .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#lhpeburrxd .gt_font_normal {
+  font-weight: normal;
+}
+
+#lhpeburrxd .gt_font_bold {
+  font-weight: bold;
+}
+
+#lhpeburrxd .gt_font_italic {
+  font-style: italic;
+}
+
+#lhpeburrxd .gt_super {
+  font-size: 65%;
+}
+
+#lhpeburrxd .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#lhpeburrxd .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#lhpeburrxd .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#lhpeburrxd .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#lhpeburrxd .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#lhpeburrxd .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#lhpeburrxd .gt_indent_5 {
+  text-indent: 25px;
+}
+
+tbody tr:last-child {
+  border-bottom: 2px solid #ffffff00;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<caption>Table&nbsp;2:  <p>Top 5 manufacturers in mpg data-set as per number of models</p> </caption>
+  <thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;" scope="col" id="manufacturer">manufacturer</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;" scope="col" id="n_models">n_models</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="manufacturer" class="gt_row gt_left">toyota</td>
+<td headers="n_models" class="gt_row gt_right">6</td>
+</tr>
+<tr>
+<td headers="manufacturer" class="gt_row gt_left">chevrolet</td>
+<td headers="n_models" class="gt_row gt_right">4</td>
+</tr>
+<tr>
+<td headers="manufacturer" class="gt_row gt_left">dodge</td>
+<td headers="n_models" class="gt_row gt_right">4</td>
+</tr>
+<tr>
+<td headers="manufacturer" class="gt_row gt_left">ford</td>
+<td headers="n_models" class="gt_row gt_right">4</td>
+</tr>
+<tr>
+<td headers="manufacturer" class="gt_row gt_left">volkswagen</td>
+<td headers="n_models" class="gt_row gt_right">4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<p>The … model has the most variations.</p>
+<div class="cell" data-hash="Chapter2_cache/html/unnamed-chunk-10_826727691781093315da4c529e3f4cff">
+<details><summary>Code</summary><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mpg</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">manufacturer</span>, <span class="va">model</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 38 × 3
+   manufacturer model                   n
+   &lt;chr&gt;        &lt;chr&gt;               &lt;int&gt;
+ 1 dodge        caravan 2wd            11
+ 2 dodge        ram 1500 pickup 4wd    10
+ 3 dodge        dakota pickup 4wd       9
+ 4 ford         mustang                 9
+ 5 honda        civic                   9
+ 6 volkswagen   jetta                   9
+ 7 audi         a4 quattro              8
+ 8 jeep         grand cherokee 4wd      8
+ 9 subaru       impreza awd             8
+10 audi         a4                      7
+# ℹ 28 more rows</code></pre>
+</div>
+</div>
 
 
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -617,7 +2525,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<div class="page-columns page-rows-contents page-layout-article"><div class="social-share">
+<a href="https://twitter.com/share?url=https://aditya-dahiya.github.io/ggplot2book3e/Chapter2.html&amp;text=Solutions:%20R%20for%20Data%20Science%20(2e)" target="_blank" class="twitter"><i class="fab fa-twitter fa-fw fa-lg"></i></a><a href="https://www.linkedin.com/shareArticle?url=https://aditya-dahiya.github.io/ggplot2book3e/Chapter2.html&amp;title=Solutions:%20R%20for%20Data%20Science%20(2e)" target="_blank" class="linkedin"><i class="fa-brands fa-linkedin-in fa-fw fa-lg"></i></a>  <a href="mailto:?subject=Solutions:%20R%20for%20Data%20Science%20(2e)&amp;body=Check%20out%20this%20link:https://aditya-dahiya.github.io/ggplot2book3e/Chapter2.html" target="_blank" class="email"><i class="fa-solid fa-envelope fa-fw fa-lg"></i></a><a href="https://www.facebook.com/sharer.php?u=https://aditya-dahiya.github.io/ggplot2book3e/Chapter2.html" target="_blank" class="facebook"><i class="fab fa-facebook-f fa-fw fa-lg"></i></a><a href="javascript:void(0);" onclick="var mastodon_instance=prompt('Mastodon Instance / Server Name?'); if(typeof mastodon_instance==='string' &amp;&amp; mastodon_instance.length){this.href='https://'+mastodon_instance+'/share?text=Solutions: R for Data Science (2e) https://aditya-dahiya.github.io/ggplot2book3e/Chapter2.html'}else{return false;}" target="_blank" class="mastodon"><i class="fa-brands fa-mastodon fa-fw fa-lg"></i></a>
+</div></div>
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/RfDS2solutions/edit/main/Chapter2.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/RfDS2solutions/issues/new" class="toc-action">Report an issue</a></p></div></div></div></div></footer></body></html>
+</body></html>
