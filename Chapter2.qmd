@@ -38,6 +38,7 @@ library(tidyverse)           # tidyverse and ggplot2
 data("mpg")                  # loading the "mpg" dataset
 library(gt)                  # beautiful tables in output
 library(gtExtras)            # extended beautiful tables' themes
+library(ggthemes)            # ggplot2 themes
 ```
 
 # **2.2.1 Exercises**
@@ -86,8 +87,9 @@ Here are the five functions for exploring the `mpg` dataset from the `ggplot2` p
 
     ```{r}
     library(visdat)
+
     visdat::vis_dat(mpg) + scale_fill_brewer(palette = "Pastel1") +
-      labs(title = "A ")
+      labs(title = "An overview of the data using vis_dat() from visdat package")
     ```
 
 ## Question 2
@@ -157,10 +159,10 @@ mpg |>
   group_by(manufacturer) |> 
 
   # Count distinct 'model' values for each manufacturer.
-  summarize(n_models = n_distinct(model)) |> 
+  summarize(models = n_distinct(model)) |> 
 
   # Sort in descending order based on 'n_models.'
-  arrange(desc(n_models)) |> 
+  arrange(desc(models)) |> 
   
   # Select the top 5 manufacturers.
   slice_head(n = 5) |> 
@@ -169,9 +171,137 @@ mpg |>
   gt() |> gt_theme_538()
 ```
 
-The ... model has the most variations.
+And, as we can see in the @tbl-q4b-ex2 below, the Dodge Caravan (2 wheel drive) model has the most variations, i.e., 11 in number.
 
 ```{r}
+#| label: tbl-q4b-ex2
+#| tbl-cap: "Number of variations in the different models of cars - top 5"
+
 mpg |> 
-  count(manufacturer, model, sort = TRUE)
+  count(manufacturer, model, sort = TRUE) |> 
+  slice_head(n = 5) |> 
+  rename(variations = n) |> 
+  gt() |> gt_theme_538()
 ```
+
+# **2.3.1 Exercises**
+
+## Question 1
+
+**How would you describe the relationship between `cty` and `hwy`? Do you have any concerns about drawing conclusions from that plot?**
+
+There is a positive correlation between `cty` and `hwy` , as shown in @fig-q1-ex3. However, one concern we have is whether this correlation is causative in nature, or is it a direct correlation, or is it caused by a third unknown variable, i.e. confounding.
+
+Confounding is **a distortion of the association between independent and dependent variables**. It occurs when a third variable is independently associated with both. This can happen when the primary exposure of interest is mixed up with some other factor that is associated with the outcome.
+
+For example, perhaps it is the engine displacement that determines both city and highway mileage, and both have a common link, rather than a direct association.
+
+Note: I am using `theme_ipsum()` from the `hrbrthemes` package [@hrbrthemes].
+
+```{r}
+#| label: fig-q1-ex3
+#| fig-cap: "A Scatter-plot of city and highway milea for the mpg dataset"
+
+mpg |> 
+  ggplot(aes(x = cty, y = hwy)) +
+  geom_point() +
+  labs(x = "City mileage (cty)", 
+       y = "Highway mileage (hwy)",
+       title = "Scatter-plot: hwy vs. cty",
+       caption = "Data-set: mpg from ggplot2") +
+  hrbrthemes::theme_ipsum()
+```
+
+## Question 2
+
+**What does `ggplot(mpg, aes(model, manufacturer)) + geom_point()` show? Is it useful? How could you modify the data to make it more informative?**
+
+The code `ggplot(mpg, aes(model, manufacturer)) + geom_point()` is used to create a scatter plot, where the `mpg` dataset is being used, and it's mapping the `model` variable to the x-axis and the `manufacturer` variable to the y-axis. The `geom_point()` function is responsible for adding points to the plot.
+
+```{r}
+#| label: fig-q2a-ex3
+#| fig-cap: "Plot produced by the code given in Question 2"
+
+ggplot(mpg, aes(model, manufacturer)) + geom_point()
+```
+
+Here's a detailed explanation of why this code and its resulting @fig-q2a-ex3 isn't useful:
+
+1.  **Data Mapping**:
+
+    -   `model` is mapped to the x-axis: The car models don't have a specific order, i.e. it is a categorical variable, not an ordinal or continuous variable.
+    -   `manufacturer` is mapped to the y-axis: Again, manufacturer is a categorical variable with no specific order. Thus, representing it on y-axis is not advisable.
+
+2.  **Visualization**:
+
+    -   The plot will consist of multiple points where each point represents a combination of a car model and its manufacturer. As, we can expect, each observation will have a unique model. There is no specific information or pattern being displayed as scatter plot doesn't connect the points.
+    -   The plot suffers from over-plotting if there are many data points when a single model has many variants (`alpha` aesthetic has not been defined here). Further, since each unique model and manufacturer combination will be displayed as a separate point, it is difficult to discern patterns or relationships.
+    -   Thus, this plot has very limited usefulness is identifying trends or make specific insights.
+
+**Modifications for More Informativeness**: To make the plot more informative, you can consider the following modifications:
+
+a.  **Changing the plot geom:** If our purpose is to show the number of model variants for each manufacturer, we might shift to a bar plot, with faceting on the manufacturer as shown in
+
+    ```{r}
+    #| label: fig-q2b-ex3
+    #| fig-cap: "Faceted horizontal bar plot showing number of variants for different car models in mpg dataset"
+
+    mpg |> 
+      count(manufacturer, model) |> 
+      ggplot(aes(x = n,
+                 y = model)) +
+      geom_bar(stat = "identity") +
+      facet_wrap(~ manufacturer, scales = "free_y") +
+      theme_clean() +
+      labs(x = "Number of variants of the model",
+           y = NULL,
+           title = "Number of model variants with different manufacturers",
+           subtitle = "Dodge Caravan 2wd has the most variants, Lincoln Navigator has the least")
+    ```
+
+b.  **Labels, Title, Color and Size Aesthetics**: If we insist on using the same plot as given in the question, we can use additional aesthetics like color or point size to encode more information. For instance, you could use color to represent a third variable, such as "class" (economy, midsize, compact, etc.), and point size to represent another variable, like "displacement." We can further sort the manufacturers and models alphabetically.
+
+    ```{r}
+    #| label: fig-q2c-ex3
+    #| fig-cap: "Adding other informative aesthetics to the points in given plot"
+
+    man_lev <- mpg |> 
+      distinct(manufacturer) |> pull(manufacturer)
+
+    mod_lev <- mpg |> 
+      group_by(manufacturer) |> 
+      arrange(manufacturer, model) |> pull(model) |> unique()
+
+    mpg |> 
+      
+      # reorder the manufacturers by alphabetically and models by numbers
+      
+      mutate(
+        manufacturer = fct(manufacturer, levels = man_lev),
+        model = fct(model, levels = mod_lev)
+      ) |> 
+      ggplot(aes(x = model,
+                 y = manufacturer,
+                 size = displ,
+                 col = manufacturer)) +
+      geom_point(alpha = 0.3,
+                  width = 0,
+                  height = 1) +
+      # geom_text(aes(label = paste0(model, ":", year))) +
+      theme_classic()
+
+    ```
+
+These modifications can help you gain more insight from your data and make your visualization more informative. The choice of modifications should depend on the specific questions you want to answer and the nature of your dataset.
+
+## Question 3
+
+**Describe the data, aesthetic mappings and layers used for each of the following plots. You'll need to guess a little because you haven't seen all the datasets and functions yet, but use your common sense! See if you can predict what the plot will look like before running the code.**
+
+1.  **`ggplot(mpg, aes(cty, hwy)) + geom_point()`**
+
+2.  **`ggplot(diamonds, aes(carat, price)) + geom_point()`**
+
+3.  **`ggplot(economics, aes(date, unemploy)) + geom_line()`**
+
+4.  **`ggplot(mpg, aes(cty)) + geom_histogram()`**
