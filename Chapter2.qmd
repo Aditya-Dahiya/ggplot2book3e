@@ -2,7 +2,7 @@
 title: "Chapter 2"
 subtitle: "First Steps"
 author: "Aditya Dahiya"
-date: 2023-10-25
+date: 2023-10-26
 format: 
   html: 
     code-fold: true
@@ -17,7 +17,7 @@ filters:
   - social-share
 share:
   permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter2.html"
-  description: "Solutions: R for Data Science (2e)"
+  description: "Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
   twitter: true
   facebook: true
   linkedin: true
@@ -33,6 +33,8 @@ Solutions for this chapter are under construction.
 :::
 
 ```{r}
+#| label: setup
+
 # Loading required libraries
 library(tidyverse)           # tidyverse and ggplot2
 data("mpg")                  # loading the "mpg" dataset
@@ -240,23 +242,44 @@ Here's a detailed explanation of why this code and its resulting @fig-q2a-ex3 is
 
 **Modifications for More Informativeness**: To make the plot more informative, you can consider the following modifications:
 
-a.  **Changing the plot geom:** If our purpose is to show the number of model variants for each manufacturer, we might shift to a bar plot, with faceting on the manufacturer as shown in
+a.  **Changing the plot geom:** If our purpose is to show the number of model variants for each manufacturer, we might shift to a bar plot, with faceting on the manufacturer as shown in @fig-q2b-ex3 .
 
     ```{r}
     #| label: fig-q2b-ex3
-    #| fig-cap: "Faceted horizontal bar plot showing number of variants for different car models in mpg dataset"
+    #| fig-cap: "Grouped horizontal bar plot showing number of variants for different car models in mpg dataset"
+    #| fig-asp: 1.5
+    #| fig-width: 10
 
     mpg |> 
+      
+      # Counting number of variants for each model
       count(manufacturer, model) |> 
-      ggplot(aes(x = n,
-                 y = model)) +
-      geom_bar(stat = "identity") +
-      facet_wrap(~ manufacturer, scales = "free_y") +
-      theme_clean() +
-      labs(x = "Number of variants of the model",
-           y = NULL,
-           title = "Number of model variants with different manufacturers",
-           subtitle = "Dodge Caravan 2wd has the most variants, Lincoln Navigator has the least")
+      
+      # Nicer looking names
+      mutate(manufacturer = snakecase::to_title_case(manufacturer),
+             model = snakecase::to_title_case(model, numerals = "left")) |> 
+      
+      # Plot
+      ggplot(aes(x = n, 
+                 y = manufacturer,
+                 group = model, 
+                 fill = manufacturer)) +
+      
+      # Grouped bar chart
+      geom_bar(position = "dodge2",
+               stat = "identity") +
+      
+      # Adding names of models
+      geom_text(aes(label = model,
+                    x = 0),
+                position = position_dodge2(width = 1),
+                hjust = "left") +
+      theme_minimal() +
+      theme(panel.grid.major.y = element_blank(),
+            legend.position = "none",
+            plot.title.position = "plot") +
+      labs(y = NULL, x = NULL,
+           title = "Number of model variants for manufacturers in mpg dataset")
     ```
 
 b.  **Labels, Title, Color and Size Aesthetics**: If we insist on using the same plot as given in the question, we can use additional aesthetics like color or point size to encode more information. For instance, you could use color to represent a third variable, such as "class" (economy, midsize, compact, etc.), and point size to represent another variable, like "displacement." We can further sort the manufacturers and models alphabetically.
@@ -265,6 +288,7 @@ b.  **Labels, Title, Color and Size Aesthetics**: If we insist on using the same
     #| label: fig-q2c-ex3
     #| fig-cap: "Adding other informative aesthetics to the points in given plot"
 
+    # Create some factors to order the manufacturers and model names in a specific order
     man_lev <- mpg |> 
       distinct(manufacturer) |> pull(manufacturer)
 
@@ -272,23 +296,36 @@ b.  **Labels, Title, Color and Size Aesthetics**: If we insist on using the same
       group_by(manufacturer) |> 
       arrange(manufacturer, model) |> pull(model) |> unique()
 
+    # Start the plot
     mpg |> 
       
       # reorder the manufacturers by alphabetically and models by numbers
-      
-      mutate(
+        mutate(
         manufacturer = fct(manufacturer, levels = man_lev),
         model = fct(model, levels = mod_lev)
       ) |> 
-      ggplot(aes(x = model,
+      
+      # Create the same scatter plot, adding size and color aesthetic
+        ggplot(aes(x = model,
                  y = manufacturer,
                  size = displ,
                  col = manufacturer)) +
-      geom_point(alpha = 0.3,
+      
+      # A geom_jitter instead of geom_point to avoid overlap of variants of a model
+      geom_jitter(alpha = 0.3,
                   width = 0,
                   height = 1) +
-      # geom_text(aes(label = paste0(model, ":", year))) +
-      theme_classic()
+      
+      # Plot beautification and customization
+      
+      labs(x = NULL, y = NULL) +
+      theme_minimal() +
+      theme(legend.position = "none",
+            panel.grid.minor.x = element_blank(),
+            panel.grid.major.x = element_blank(),
+            axis.text.x = element_text(angle = 90, 
+                                       hjust = 1,
+                                       vjust = 0.5))
 
     ```
 
@@ -305,3 +342,167 @@ These modifications can help you gain more insight from your data and make your 
 3.  **`ggplot(economics, aes(date, unemploy)) + geom_line()`**
 
 4.  **`ggplot(mpg, aes(cty)) + geom_histogram()`**
+
+Let's break down each of the provided ggplot2 code snippets and describe the data, aesthetic mappings, and layers used for the plots:
+
+1.  **`ggplot(mpg, aes(cty, hwy)) + geom_point()`**
+    -   **Data**: The data for this plot comes from the 'mpg' dataset, which is typically included in the ggplot2 package. This dataset contains information about the fuel efficiency of various car models.
+    -   **Aesthetic Mappings**: It uses aesthetic mappings to represent the 'cty' (city miles per gallon) variable on the x-axis and the 'hwy' (highway miles per gallon) variable on the y-axis.
+    -   **Layers**: This plot consists of a single layer represented by `geom_point()`, which adds points to the plot, creating a scatter plot of 'cty' against 'hwy'.
+2.  **`ggplot(diamonds, aes(carat, price)) + geom_point()`**
+    -   **Data**: The data for this plot comes from the '`diamonds`' dataset, another built-in dataset in `ggplot2`, containing information about diamonds, including their carat weight and price.
+    -   **Aesthetic Mappings**: It uses aesthetic mappings to represent the '`carat`' variable on the x-axis and the '`price`' variable on the y-axis.
+    -   **Layers**: This plot also consists of a single layer represented by `geom_point()`, which adds points to the plot, creating a scatter plot of diamond carat weight against their prices.
+3.  **`ggplot(economics, aes(date, unemploy)) + geom_line()`**
+    -   **Data**: The data for this plot comes from the 'economics' dataset, which is included in the ggplot2 package. This dataset contains economic data, including the '`date`' and '`unemploy`' (number of unemployed individuals) variables.
+    -   **Aesthetic Mappings**: It uses aesthetic mappings to represent the '`date`' variable on the x-axis and the '`unemploy`' variable on the y-axis.
+    -   **Layers**: This plot consists of a single layer represented by `geom_line()`, which connects points with lines, creating a time series line plot of the number of unemployed individuals over time.
+4.  **`ggplot(mpg, aes(cty)) + geom_histogram()`**
+    -   **Data**: The data for this plot also comes from the '`mpg`' dataset.
+    -   **Aesthetic Mappings**: It uses an aesthetic mapping to represent only the '`cty`' variable, which will be plotted on the x-axis. Since it's a histogram, the y-axis represents the count of observations in each bin.
+    -   **Layers**: This plot consists of a single layer represented by `geom_histogram()`, which creates a histogram of the `cty` variable, showing the distribution of city miles per gallon in the dataset.
+
+Each of these plots uses different datasets and aesthetic mappings, and they employ different types of geoms (layers) to represent the data in various ways, such as scatter plots, line plots, and histograms, depending on the specific data and the analysis or visualization goals.
+
+# **2.4.1 Exercises**
+
+## Question 1
+
+**Experiment with the colour, shape and size aesthetics. What happens when you map them to continuous values? What about categorical values? What happens when you use more than one aesthetic in a plot?**
+
+We can experiment with the `colour`, `shape`, and `size` aesthetics using both continuous and categorical variables in the `mpg` dataset. @fig-q1-ex4 shows six separate scatter plots using different combinations of `colour`, `shape`, and `size` aesthetics, with both continuous and categorical variables: --
+
+```{r}
+#| label: fig-q1-ex4
+#| fig-cap: "Using continuous and categorical variables on the three aesthetics - colour, shape and size"
+#| fig-subcap: 
+#|   - "Continuous Variable with Color Aesthetic"
+#|   - "Continuous Variable with Shape Aesthetic"
+#|   - "Continuous Variable with Size Aesthetic"
+#|   - "Categorical Variable with Color Aesthetic"
+#|   - "Categorical Variable with Shape Aesthetic"
+#|   - "Categorical Variable with Size Aesthetic"
+#| fig-width: 4
+#| fig-asp: 0.6
+#| layout-ncol: 2
+#| layout-nrow: 3
+
+# Create a ggplot2 plot with 'mpg' dataset
+p <- ggplot(mpg, aes(x = cty, y = hwy)) + theme_minimal()
+
+# Continuous variable with color, shape, and size aesthetics
+p + geom_point(aes(color = displ))
+  
+p + geom_text(aes(x = 20, y = 30),
+    label = "Error: Shape aesthetic does not \nwork with a continuous variable")
+
+p + geom_point(aes(size = displ), alpha = 0.2)
+
+# Categorical variable with color, shape, and size aesthetics
+p + geom_point(aes(color = factor(class)))
+
+p + geom_point(aes(shape = factor(class)))
+
+p + geom_point(aes(size = factor(class)), alpha = 0.2)
+```
+
+Insights:
+
+-   `size` aesthetic works well with continuous variable (or, at worse, an ordinal variable). It should not be used with categorical variable.
+
+-   `shape` aesthetic works only with categorical variable. It simply does not work with a continuous variable.
+
+-   `color` works well with categorical and continuous variables.
+
+When you use more than one aesthetic in a plot, you can create a plot that contains multiple layers of information, with each aesthetic conveying a different aspect of the data. While this can provide a rich and detailed representation of your data, it can also lead to a plot that becomes too complex and difficult to perceive for several reasons:
+
+1.  **Clutter**: Multiple aesthetics, such as color, shape, size, and others, can lead to visual clutter, especially when you have a large dataset. This can make it challenging for viewers to discern patterns and relationships within the data.
+
+2.  **Cognitive Overload**: When a plot contains too many aesthetics, viewers may struggle to process the information efficiently. It requires more cognitive effort to interpret the various aesthetic mappings, leading to information overload.
+
+3.  **Reduced Clarity**: Complex plots can reduce the clarity and simplicity that is often desirable in data visualization. Clutter and complexity can obscure the main message you want to convey, making it harder for the audience to understand the key insights.
+
+4.  **Color Confusion**: Overusing color can be particularly problematic. If multiple categories or variables are assigned distinct colors, it can be challenging to differentiate between them, especially if some colors are similar or hard to distinguish.
+
+5.  **Interference**: When multiple aesthetics are used, there's a potential for interference or overlap between different visual elements. For example, if you use both color and size aesthetics, larger points with different colors may overlap, making it challenging to discern individual points.
+
+6.  **Ineffectiveness**: Sometimes, adding multiple aesthetics may not actually enhance the plot's effectiveness or communicative power. Instead, it might complicate the plot without providing significant additional insights.
+
+To avoid making a plot too complex and difficult to perceive, it's essential to carefully consider the goals of your visualization and the message you want to convey. It's often better to use a limited number of aesthetics thoughtfully, or using faceting.
+
+## Question 2
+
+**What happens if you map a continuous variable to shape? Why? What happens if you map `trans` to shape? Why?**
+
+Mapping a continuous variable to the `shape` aesthetic in `ggplot2`, it throws up an error, because, the `shape` aesthetic is designed for categorical variables, not continuous ones. When you attempt to deliberately map a continuous variable to `shape`, ggplot2 will, at best, treat it as a categorical variable, which can lead to unintended and potentially confusing results.
+
+Let's consider both scenarios using the `mpg` dataset:
+
+1.  **Mapping a Continuous Variable (e.g., `displ`) to Shape Aesthetic:**
+
+    ``` r
+    ggplot(mpg, aes(x = cty, y = hwy, shape = displ)) + geom_point()
+
+    # Error in `geom_point()`:
+    # ! Problem while computing aesthetics.
+    # ℹ Error occurred in the 1st layer.
+    # Caused by error in `scale_f()`:
+    # ! A continuous variable cannot be mapped to the shape aesthetic
+    # ℹ choose a different aesthetic or use `scale_shape_binned()`
+    # Run `rlang::last_trace()` to see where the error occurred.
+    ```
+
+    When you map a continuous variable like `displ` (engine displacement) to the `shape` aesthetic, ggplot2 will treat each unique value of 'displ' as a separate category and assign a different shape to each value. This can result in a plot with many unique shapes, which can be difficult to interpret. Thus, `ggplot2` throws up an error. The shapes do not have any inherent order or meaning in this context, so the plot may not provide clear insights.
+
+2.  **Mapping a Categorical Variable (e.g., `trans`) to Shape:**
+
+    ```{r}
+    #| label: fig-q2-ex4
+    #| fig-cap: "Mapping a Categorical Variable: Transmission (trans) to Shape aesthetic"
+
+    ggplot(mpg, aes(x = cty, y = hwy, shape = trans)) + geom_point()
+    ```
+
+    When you map a categorical variable like 'trans' (transmission type) to the `shape` aesthetic, ggplot2 assigns a unique shape to each category in the 'trans' variable. However, there are a limited number of shapes in `ggplot2` and thus many shapes (like `auto(s5)` , `auto(s6)` , `manual(m5)` and `manual(m6)` ) go un-plotted thus leading to missing data. In any case, it is generally not advisable to plot more than 4-5 shapes in a plot to keep it nice and simple.
+
+In summary, mapping a continuous variable to the `shape` aesthetic may not be possible. However, mapping a categorical variable to `shape` can be useful, provided the number of categories is not too much.
+
+## Question 3
+
+**How is drive train related to fuel economy? How is drive train related to engine size and class?**
+
+To understand the relationship between drive train, fuel economy, engine size, and class in the `mpg` dataset, you can create a series of plots. We'll use scatter plots and bar plots to visualize these relationships: --
+
+1.  **Investigating how drive train (variable '`drv`') is related to fuel economy (variables '`cty`' and '`hwy`'):** In the figure below, we find that vehicles with "Front-Wheel" drive-train are more fuel efficient, as compared to rear and 4-wheel drive train: --
+
+    ```{r}
+    #| layout-ncol: 2
+
+    ggplot(mpg, aes(x = drv, y = cty, fill = drv)) +
+      geom_boxplot() +
+      labs(title = "City MPG by Drive Train Type", x = "Drive Train", y = "City MPG") +
+      theme_minimal()
+
+    ggplot(mpg, aes(x = drv, y = hwy, fill = drv)) +
+      geom_boxplot() +
+      labs(title = "Highway MPG by Drive Train Type", x = "Drive Train", y = "Highway MPG") +
+      theme_minimal()
+    ```
+
+2.  **Investigating how drive train is related to engine size (variable '`displ`') and vehicle class (variable '`class`'):** In the figure below, we observe that front-wheel drive vehicles have smallest engines, while rear-wheel drive vehicles have largest engines. This also partly explains the fuel economy of these vehicle classes. Further, we observe that front-wheel drive cars are 2-seaters, sub-compact or compact class. However, SUVs dominate the 4-wheel drive and rear-wheel drive cars.
+
+    ```{r}
+    #| layout-ncol: 2
+
+    ggplot(mpg, aes(x = drv, y = displ, fill = drv)) +
+      geom_boxplot() +
+      labs(title = "Engine Size by Drive Train Type", x = "Drive Train", y = "Engine Size") +
+      theme_minimal()
+
+    ggplot(mpg, aes(x = drv, fill = class)) +
+      geom_bar(position = "fill") +
+      labs(title = "Vehicle Class Distribution by Drive Train Type", x = "Drive Train", y = "Proportion") +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+      scale_fill_brewer(palette = "Pastel2") + 
+      theme_minimal()
+    ```

@@ -17,7 +17,7 @@ filters:
   - social-share
 share:
   permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter1.html"
-  description: "Solutions: R for Data Science (2e)"
+  description: "Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
   twitter: true
   facebook: true
   linkedin: true

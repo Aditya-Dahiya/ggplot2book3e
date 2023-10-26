@@ -67,7 +67,7 @@ website:
           - Chapter21.qmd
 format:
   html:
-    theme: simplex
+    theme: united
     css: styles.css
     toc: true
 
