@@ -506,3 +506,196 @@ To understand the relationship between drive train, fuel economy, engine size, a
       scale_fill_brewer(palette = "Pastel2") + 
       theme_minimal()
     ```
+
+# **2.5.1 Exercises**
+
+## Question 1
+
+**What happens if you try to facet by a continuous variable like `hwy`? What about `cyl`? What's the key difference?**
+
+In `ggplot2`, faceting is a way to create small multiples, or a grid of plots, based on the values of a categorical variable. When you try to facet by a continuous variable like "hwy" or a discrete (but not necessarily categorical) variable like "cyl" using the `facet_grid()` or `facet_wrap()` functions, there are some key differences in how the faceting works:
+
+-   **Faceting by a Continuous Variable (e.g., `hwy`):**
+    -   Ideally, faceting by a continuous variable should not be attempted and should throw up an error, simply because a continuous variable can theoretically have an infinite number of levels. However, if ggplot2 finds that the continuous variable we have supplied to `facet_wrap()` has many values, it still tries and produces a facet for each unique value as shown in @fig-q1a-ex5.
+
+    -   Hence, we see in @fig-q1a-ex5 that if you try to facet by a continuous variable like "`hwy`", ggplot2 will attempt to treat each unique value of the continuous variable as a separate facet. This can lead to a large number of facets, making the resulting plot potentially difficult to interpret or too cluttered.
+
+    -   Lastly, faceting by a continuous variable is generally not very useful, and it's usually better to use continuous variables as aesthetic mappings for scales or other plot features.
+
+```{r}
+#| label: fig-q1a-ex5
+#| fig-cap: "Faceting on a continuous variable hwy in the mpg dataset"
+#| fig-width: 10
+
+
+mpg |> 
+  ggplot(aes(x = displ,
+             y = hwy)) +
+  geom_point() +
+  theme_minimal() + 
+  facet_wrap(~ hwy, nrow = 4)
+```
+
+-   **Faceting by a Discrete Variable (e.g., "`cyl`"):**
+    -   When you facet by a discrete variable like "`cyl`" ggplot2 will create one facet for each unique value of the discrete variable, as shown in @fig-q1b-ex5 .
+    -   Faceting by discrete variables is a common and useful way to explore the relationships between variables based on different categories. It helps you create a grid of plots where each facet represents a distinct category, allowing for easy visual comparison.
+    -   The key difference is that *discrete variables are intended for faceting, while continuous variables are not*. Faceting by a discrete variable is a fundamental and powerful aspect of ggplot2, enabling you to create informative small multiples.
+
+```{r}
+#| label: fig-q1b-ex5
+#| fig-cap: "Faceting on a continuous variable hwy in the mpg dataset"
+
+# A list of custom labels
+label_displ <-  list(
+  "4" = "4 cylinders", 
+  "5" = "5 cylinders", 
+  "6" = "6 cylinders",
+  "8" = "8 cylinders"
+)
+
+# A custom function for labeller argument in facet_wrap()
+displ_labeller <- function(variable,value){
+  return(label_displ[value])
+}  
+
+# The actual plot
+mpg |> 
+  ggplot(aes(x = displ,
+             y = hwy)) +
+  geom_point() +
+  theme_minimal() + 
+  facet_wrap(~ cyl, nrow = 4,
+             labeller = displ_labeller) +
+  labs(y = "Fuel Economy, Highway (miles per gallon)",
+       x = "Engine displacement, in litres",
+       title = "Faceting is best used for discrete variables")
+
+```
+
+## Question 2
+
+**Use faceting to explore the 3-way relationship between fuel economy, engine size, and number of cylinders. How does faceting by number of cylinders change your assessement of the relationship between engine size and fuel economy?**
+
+As observed in the @fig-q2-ex5, a three-way connection exists between fuel efficiency, the number of cylinders, and engine size. It's evident that as the engine displacement in liters rises, fuel economy declines, indicating an inverse relationship. This correlation remains consistent for both city and highway mileage across 4, 5, and 6-cylinder engines.
+
+In contrast, when considering **8-cylinder engines**, the relationship is different. Notably, for 8-cylinder engines, mileage improves as engine size increases (possibly due to the enhanced quality of larger engines).
+
+```{r}
+#| label: fig-q2-ex5
+#| fig-cap: "Exploring the 3-way relationship between fuel economy, engine size, and number of cylinders"
+#| fig-subcap: 
+#|   - "Using Highway fuel economy"
+#|   - "Using City fuel economy"
+
+
+mpg |> 
+  ggplot(aes(x = displ,
+             y = hwy)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  facet_wrap(~ cyl) +
+  theme_minimal() +
+  labs(x = "Engine Displacement, in litres",
+       y = "Fuel Economy, Highway (miles per gallon)")
+
+mpg |> 
+  ggplot(aes(x = displ,
+             y = cty)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  facet_wrap(~ cyl) +
+  theme_minimal() +
+  labs(x = "Engine Displacement, in litres",
+       y = "Fuel Economy, City (miles per gallon)")
+```
+
+## Question 3
+
+**Read the documentation for [`facet_wrap()`](https://ggplot2.tidyverse.org/reference/facet_wrap.html). What arguments can you use to control how many rows and columns appear in the output?**
+
+In ggplot2, you can use the `ncol` and `nrow` arguments to control how many rows and columns appear in the output when using the `facet_wrap()` function.
+
+1.  `ncol`: This argument specifies the number of columns in which the facets should be arranged. It determines how many facets are displayed horizontally in each row.
+
+2.  `nrow`: This argument specifies the number of rows in which the facets should be arranged. It determines how many facets are displayed vertically in each column.
+
+You can use these arguments to control the layout of the facet grid and customize how your facets are arranged in the output, allowing you to create the desired organization of plots. For example, if you want a 2x3 grid of facets, you can set `ncol = 3` and `nrow = 2`.
+
+As a demonstration, let's create a facetted plot with a 4 X 1 grid and 1 X 4 grid of facets:
+
+```{r}
+#| label: fig-q3-ex5
+#| fig-cap: "A scatter plot of highway mileage vs. engine displacement, faceted by number of cylinders"
+#| fig-subcap: 
+#|   - "Using facet_wrap(~ cyl, ncol = 4)"
+#|   - "Using facet_wrap(~ cyl, nrow = 4)"
+
+p <- mpg |> 
+  ggplot(aes(x = displ,
+             y = hwy)) +
+  geom_point() +
+  theme_classic() +
+  labs(x = "Engine Displacement, in litres",
+       y = "Fuel Economy, Highway (miles per gallon)")
+
+p + facet_wrap(~ cyl, ncol = 4) +
+  labs(title = "Using 4 columns in facet_wrap layout")
+
+p + facet_wrap(~ cyl, nrow = 4) +
+  labs(title = "Using 4 rows in facet_wrap layout")
+
+```
+
+## Question 4
+
+**What does the `scales` argument to [`facet_wrap()`](https://ggplot2.tidyverse.org/reference/facet_wrap.html) do? When might you use it?**
+
+The `scales` argument in the `facet_wrap()` function in `ggplot2` is used to control how the scales for the facets are handled. It allows you to specify how the axes (x and y scales) should be shared or scaled among the facets in the grid. The `scales` argument can take one of the following values:
+
+1.  `"fixed"`: This is the default behavior. It means that the scales for each facet are shared, and they are based on the range of data overall across facets. This results in a common scale across facets.
+
+2.  `"free_x"`: This option allows the x-axis (horizontal scale) to vary independently for each facet, but the y-axis (vertical scale) is shared among all facets. This is useful when you want to compare different facets on a common y-axis scale while allowing the x-axis to adjust to the data in each facet.
+
+3.  `"free_y"`: This option allows the y-axis (vertical scale) to vary independently for each facet, but the x-axis (horizontal scale) is shared among all facets. This is useful when you want to compare different facets on a common x-axis scale while allowing the y-axis to adjust to the data in each facet.
+
+4.  `"free"`: This option allows both the x-axis and y-axis to vary independently for each facet, meaning that neither axis is shared among facets. This is useful when you want complete independence in scaling for both axes across facets.
+
+You might use the `scales` argument when you have facets that contain different data ranges, and you want to control how the scales are shared or adjusted among those facets. It's particularly useful when creating faceted plots with facets that have different data distributions, and you want to ensure that certain facets share a common scale for meaningful visual comparisons while allowing other scales to adjust independently.
+
+For example, if you have different facets representing data for various products and you want to compare their sales over time, you might use `"free_y"` to have a common time scale (x-axis) while allowing the y-axis scale for sales to adapt to each product's data range. This way, you can easily compare sales trends across products over the same time period.
+
+Here's an example using plots from previous question: --
+
+```{r}
+#| label: fig-q4-ex5
+#| fig-cap: "A scatter plot of highway mileage vs. engine displacement, faceted by number of cylinders - to demonstrate the purpose of scales argument to facet_wrap()"
+#| fig-subcap: 
+#|   - "Using facet_wrap(~ cyl, ncol = 4)"
+#|   - "Using facet_wrap(~ cyl, ncol = 4, scales = free_x)"
+#|   - "Using facet_wrap(~ cyl, nrow = 4)"
+#|   - "Using facet_wrap(~ cyl, nrow = 4, scales = free_y)"
+#| layout-ncol: 2
+#| layout-nrow: 2
+
+p <- mpg |> 
+  ggplot(aes(x = displ,
+             y = hwy)) +
+  geom_point() +
+  theme_classic() +
+  labs(x = "Engine Displacement, in litres",
+       y = "Fuel Economy, Highway (miles per gallon)")
+
+p + facet_wrap(~ cyl, ncol = 4) +
+  labs(title = "Fixed scales with 4 columns")
+
+p + facet_wrap(~ cyl, ncol = 4,
+               scales = "free_x") +
+  labs(title = "Using scales as \"free_x\" with 4 columns")
+
+p + facet_wrap(~ cyl, nrow = 4) +
+  labs(title = "Fixed scales with 4 rows")
+
+p + facet_wrap(~ cyl, nrow = 4,
+               scales = "free_y") +
+  labs(title = "Using scales as \"free_y\" with 4 rows")
+```
