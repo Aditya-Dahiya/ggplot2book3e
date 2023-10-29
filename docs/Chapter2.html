@@ -418,6 +418,18 @@ div.csl-indent {
   <li><a href="#question-4-1" id="toc-question-4-1" class="nav-link" data-scroll-target="#question-4-1">Question 4</a></li>
   </ul>
 </li>
+  <li>
+<a href="#exercises-4" id="toc-exercises-4" class="nav-link" data-scroll-target="#exercises-4"><strong>2.6.6 Exercises</strong></a>
+  <ul class="collapse">
+<li><a href="#question-1-4" id="toc-question-1-4" class="nav-link" data-scroll-target="#question-1-4">Question 1</a></li>
+  <li><a href="#question-2-4" id="toc-question-2-4" class="nav-link" data-scroll-target="#question-2-4">Question 2</a></li>
+  <li><a href="#question-3-4" id="toc-question-3-4" class="nav-link" data-scroll-target="#question-3-4">Question 3</a></li>
+  <li><a href="#question-4-2" id="toc-question-4-2" class="nav-link" data-scroll-target="#question-4-2">Question 4</a></li>
+  <li><a href="#question-5" id="toc-question-5" class="nav-link" data-scroll-target="#question-5">Question 5</a></li>
+  <li><a href="#question-6" id="toc-question-6" class="nav-link" data-scroll-target="#question-6">Question 6</a></li>
+  <li><a href="#question-7" id="toc-question-7" class="nav-link" data-scroll-target="#question-7">Question 7</a></li>
+  </ul>
+</li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter2.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -3257,6 +3269,7 @@ tbody tr:last-child {
 <p><strong>Use faceting to explore the 3-way relationship between fuel economy, engine size, and number of cylinders. How does faceting by number of cylinders change your assessement of the relationship between engine size and fuel economy?</strong></p>
 <p>As observed in the <a href="#fig-q2-ex5">Figure&nbsp;9</a>, a three-way connection exists between fuel efficiency, the number of cylinders, and engine size. It’s evident that as the engine displacement in liters rises, fuel economy declines, indicating an inverse relationship. This correlation remains consistent for both city and highway mileage across 4, 5, and 6-cylinder engines.</p>
 <p>In contrast, when considering <strong>8-cylinder engines</strong>, the relationship is different. Notably, for 8-cylinder engines, mileage improves as engine size increases (possibly due to the enhanced quality of larger engines).</p>
+<p>Thus, faceting by number of cylinders changed our assessment of the relationship between engine size and fuel economy by bringing out the different relation when seeing the facet of 8-cylinder cars. If we had not faceted, we would have missed this different relation.</p>
 <div id="fig-q2-ex5" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><details><summary>Code</summary><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mpg</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>,</span>
@@ -3395,6 +3408,252 @@ tbody tr:last-child {
 </figure>
 </div>
 </div>
+</section></section><section id="exercises-4" class="level1"><h1><strong>2.6.6 Exercises</strong></h1>
+<section id="question-1-4" class="level2"><h2 class="anchored" data-anchor-id="question-1-4">Question 1</h2>
+<p><strong>What’s the problem with the plot created by <code>ggplot(mpg, aes(cty, hwy)) + geom_point()</code>? Which of the geoms described above is most effective at remedying the problem?</strong></p>
+<p>The problem with the plot, as shown in <a href="#fig-q1-ex6">Figure&nbsp;12</a> sub-plot (a) is overplotting. Overplotting is a common issue in data visualization, especially when creating scatter plots in <code>ggplot2</code>. It occurs when multiple data points are plotted at the same (or very similar) coordinates on a plot, making it difficult to distinguish individual points. This often happens when you have a large dataset, or when the data points are highly concentrated in a small area.</p>
+<p>When you use <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> to plot data points that overlap or cluster together, the result can be a plot that shows points stacked on top of each other, as in <a href="#fig-q1-ex6">Figure&nbsp;12</a> sub-plot (a), making it hard to see the density and distribution of the data.</p>
+<p>The two possible solutions to overplotting are: –</p>
+<ul>
+<li><p><code><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter()</a></code> - better when there are fewer observations, and exact data distribution is not important.</p></li>
+<li><p><code>alpha</code> argument with <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> - better when there are many observations; and, when data distribution is important.</p></li>
+<li><p>density plots (<code><a href="https://ggplot2.tidyverse.org/reference/geom_bin_2d.html">stat_bin2d()</a></code>) or hexbin plots (<code><a href="https://ggplot2.tidyverse.org/reference/geom_hex.html">stat_binhex()</a></code>)- when there are just too many observations, say more than 1000 or so.</p></li>
+</ul>
+<p>The most most effective at remedying the problem here is <code><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter()</a></code> . The <code><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter()</a></code> adds a small amount of random noise to the x and y coordinates of each data point, which helps spread out the points and make them more distinguishable. Here’s how <code><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter()</a></code> works:</p>
+<ol type="1">
+<li><p>It takes the original data points and adds random variations to their positions. By default, the random noise is drawn from a uniform distribution.</p></li>
+<li><p>You can control the amount of jitter (spread) by adjusting the <code>width</code> argument, which specifies the maximum distance the points can be jittered.</p></li>
+</ol>
+<div>
+<details><summary>Code</summary><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cty</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"City Mileage (miles per gallon)"</span>,</span>
+<span>                         y <span class="op">=</span> <span class="st">"Highway mileage (miles per gallon)"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cty</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"City Mileage (miles per gallon)"</span>,</span>
+<span>                         y <span class="op">=</span> <span class="st">"Highway mileage (miles per gallon)"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-q1-ex6" class="cell quarto-layout-panel" data-hash="Chapter2_cache/html/fig-q1-ex6_e7e83e1bb26316e618407c96092178a1">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-q1-ex6-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter2_files/figure-html/fig-q1-ex6-1.png" class="img-fluid figure-img" data-ref-parent="fig-q1-ex6" width="672"></p>
+<figcaption class="figure-caption">(a) The plot using code given in the question</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-q1-ex6-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter2_files/figure-html/fig-q1-ex6-2.png" class="img-fluid figure-img" data-ref-parent="fig-q1-ex6" width="672"></p>
+<figcaption class="figure-caption">(b) Improved plot using geom_jitter()</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;12: A figure depicting the problem of overplotting and how to resolve it</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section><section id="question-2-4" class="level2"><h2 class="anchored" data-anchor-id="question-2-4">Question 2</h2>
+<p><strong>One challenge with <code>ggplot(mpg, aes(class, hwy)) + geom_boxplot()</code> is that the ordering of <code>class</code> is alphabetical, which is not terribly useful. How could you change the factor levels to be more informative?</strong></p>
+<p>Yes, the ordering of <code>class</code> is alphabetical, and this is not useful because as we observe in sub-plot (a) of <a href="#fig-q2-ex6">Figure&nbsp;13</a> the un-ordered class of vehicles on x-axis make it tough to discern a pattern in the highway mileage. We could change the factor levels by increasing values of mean of <code>hwy</code> (highway miles per gallon).</p>
+<p><strong>Rather than reordering the factor by hand, you can do it automatically based on the data: <code>ggplot(mpg, aes(reorder(class, hwy), hwy)) + geom_boxplot()</code>. What does <a href="https://rdrr.io/r/stats/reorder.factor.html"><code>reorder()</code></a> do? Read the documentation.</strong></p>
+<p>An improved version of the plot, much easier to interpret and observe the trends is shown in sub-plot (b) of <a href="#fig-q2-ex6">Figure&nbsp;13</a> . Ordering the categorical variable <code>class</code> on x-axis by increasing <code>hwy</code> allows us to easily see which cars are most fuel efficient and which are not.</p>
+<p>In R, the <code><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder()</a></code> function is used to reorder the levels of a factor or to reorder the categories of a discrete variable within a data frame or a vector based on the values of another variable. It is a handy function for controlling the order in which categorical variables are displayed in plots, tables, and other visualizations.</p>
+<p>The typical usage of <code><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder()</a></code> is as follows:</p>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">X</span>, FUN <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>
+<code>x</code>: This is the factor or vector whose levels you want to reorder.</li>
+<li>
+<code>X</code>: This is the variable that you want to use to determine the new order of the levels of <code>x</code>.</li>
+<li>
+<code>FUN</code>: This is an optional argument that specifies a summary function to be applied to <code>X</code>. It is used to calculate a summary value of <code>X</code> for each level of <code>x</code>, and then reorder the levels based on these summary values. If <code>FUN</code> is not specified, <code>X</code> is assumed to be a single numeric or integer variable.</li>
+</ul>
+<p>A reordered factor can be useful when creating plots, such as bar charts or box plots, where you want the categories to be sorted based on a particular variable, making it easier to see the relationships between variables, as shown in <a href="#fig-q2-ex6">Figure&nbsp;13</a> .</p>
+<div>
+<details><summary>Code</summary><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">class</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Class of vehicle"</span>, </span>
+<span>                         y <span class="op">=</span> <span class="st">"Highway mileage (miles per gallon)"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">class</span>, <span class="va">hwy</span><span class="op">)</span>, <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Class of vehicle"</span>, </span>
+<span>                         y <span class="op">=</span> <span class="st">"Highway mileage (miles per gallon)"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-q2-ex6" class="cell quarto-layout-panel" data-hash="Chapter2_cache/html/fig-q2-ex6_3f2c2bef9e28a000bf54a19dc3e083f2">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-q2-ex6-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter2_files/figure-html/fig-q2-ex6-1.png" class="img-fluid figure-img" data-ref-parent="fig-q2-ex6" width="672"></p>
+<figcaption class="figure-caption">(a) Box-plot without ordering the x-axis variable</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-q2-ex6-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter2_files/figure-html/fig-q2-ex6-2.png" class="img-fluid figure-img" data-ref-parent="fig-q2-ex6" width="672"></p>
+<figcaption class="figure-caption">(b) Box-plot with ordered x-axis variable, based on values of y-axis variable</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;13: Ordering a categorical variable to make the plot easier to visualize and interpret</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section><section id="question-3-4" class="level2"><h2 class="anchored" data-anchor-id="question-3-4">Question 3</h2>
+<p><strong>Explore the distribution of the carat variable in the <code>diamonds</code> dataset. What binwidth reveals the most interesting patterns?</strong></p>
+<p>To explore the distribution of the “<code>carat</code>” variable in the “<code>diamonds</code>” dataset, you can create a histogram and experiment with different bin widths to reveal interesting patterns. The choice of bin width can affect how the data is visualized. A smaller bin width can reveal finer details, while a larger bin width can provide a smoother overview of the distribution. Let’s create a histogram and try different bin widths to find the most interesting pattern:</p>
+<div id="fig-q3-ex6" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><details><summary>Code</summary><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">diamonds</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">carat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-q3-ex6-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter2_files/figure-html/fig-q3-ex6-1.png" class="img-fluid figure-img" data-ref-parent="fig-q3-ex6" width="672"></p>
+<figcaption class="figure-caption">(a) binwidth = 1</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-q3-ex6-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter2_files/figure-html/fig-q3-ex6-2.png" class="img-fluid figure-img" data-ref-parent="fig-q3-ex6" width="672"></p>
+<figcaption class="figure-caption">(b) binwidth = 0.5</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-q3-ex6-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter2_files/figure-html/fig-q3-ex6-3.png" class="img-fluid figure-img" data-ref-parent="fig-q3-ex6" width="672"></p>
+<figcaption class="figure-caption">(c) binwidth = 0.1</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-q3-ex6-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter2_files/figure-html/fig-q3-ex6-4.png" class="img-fluid figure-img" data-ref-parent="fig-q3-ex6" width="672"></p>
+<figcaption class="figure-caption">(d) binwidth = 0.05</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-q3-ex6-5" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter2_files/figure-html/fig-q3-ex6-5.png" class="img-fluid figure-img" data-ref-parent="fig-q3-ex6" width="672"></p>
+<figcaption class="figure-caption">(e) binwidth = 0.01</figcaption></figure>
+</div>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;14: Using different bin widths on the histogram of carat in diamonds dataset</figcaption></figure>
+</div>
+<p>After experimenting with different bin widths (e.g., 0.01, 0.05, 0.1, 0.5, 1 etc.), we find that the bin-width 0.01 reveals a very interesting pattern - many diamonds are clustered around rounded values like 1, 1.5, 1.25 etc. reveal a bias in recording the observations. This means that observation recorders have used rounding off while noting the carat of the diamonds.</p>
+</section><section id="question-4-2" class="level2"><h2 class="anchored" data-anchor-id="question-4-2">Question 4</h2>
+<p><strong>Explore the distribution of the price variable in the <code>diamonds</code> data. How does the distribution vary by cut?</strong></p>
+<p>The distribution of <code>price</code> for different types of <code>cut</code> is shown in <a href="#fig-q4-ex6">Figure&nbsp;15</a> . We observe that the <code>price</code> distribution if right-skewed for all <code>cut</code> types, but the skewness is much more for Ideal and Premium types of <code>cut</code>.</p>
+<div class="cell" data-hash="Chapter2_cache/html/fig-q4-ex6_60eb1e304291d13c13ee40d7b1f3f647">
+<details><summary>Code</summary><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># geom_freqpoly() +</span></span>
+<span>  <span class="co"># geom_histogram(binwidth = 10) +</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">cut</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-q4-ex6" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter2_files/figure-html/fig-q4-ex6-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;15: Distribution of price of diamonds faceted by various cut types</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="question-5" class="level2"><h2 class="anchored" data-anchor-id="question-5">Question 5</h2>
+<p><strong>You now know (at least) three ways to compare the distributions of subgroups: <a href="https://ggplot2.tidyverse.org/reference/geom_violin.html"><code>geom_violin()</code></a>, <a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html"><code>geom_freqpoly()</code></a> and the colour aesthetic, or <a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html"><code>geom_histogram()</code></a> and faceting. What are the strengths and weaknesses of each approach? What other approaches could you try?</strong></p>
+<p>Comparing the distributions of subgroups in a dataset can be done using <code><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin()</a></code>, <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly()</a></code> and the <code>colour</code> aesthetic, and <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code> with faceting. Each has its own strengths and weaknesses. Let’s discuss these approaches, along with their pros and cons: —</p>
+<ol type="1">
+<li>
+<strong><code><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin()</a></code></strong>:
+<ul>
+<li>
+<strong>Strengths</strong>:
+<ul>
+<li>Provides a compact representation of the data distribution, showing not only the central tendency but also the spread and shape of the distribution.</li>
+<li>Suitable for comparing multiple subgroups within a single plot.</li>
+<li>Useful for identifying modes, asymmetry, and outliers.</li>
+</ul>
+</li>
+<li>
+<strong>Weaknesses</strong>:
+<ul>
+<li><p>May not be as intuitive to interpret for those unfamiliar with violin plots.</p></li>
+<li><p>Limited to visualizing unimodal distributions, and it can be less effective for highly multimodal data.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong><code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly()</a></code> and the <code>colour</code> aesthetic</strong>:
+<ul>
+<li>
+<strong>Strengths</strong>:
+<ul>
+<li>
+<code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly()</a></code>: Allows you to create overlaid histograms for multiple subgroups, making it easy to compare their shapes and positions.</li>
+<li>Using the <code>colour</code> aesthetic: You can assign different colors to subgroups within a single plot, making it visually clear which data points belong to which subgroup.</li>
+</ul>
+</li>
+<li>
+<strong>Weaknesses</strong>:
+<ul>
+<li>Overlapping can make it difficult to distinguish individual histograms when comparing many subgroups.</li>
+<li>Requires a good choice of color palettes for clarity and accessibility.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong><code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code> with faceting</strong>:
+<ul>
+<li>
+<strong>Strengths</strong>:
+<ul>
+<li>Faceting allows you to create separate histograms for each subgroup, making it easy to compare their individual distributions.</li>
+<li>Useful when there are many subgroups, as it avoids visual clutter and allows for detailed examination.</li>
+</ul>
+</li>
+<li>
+<strong>Weaknesses</strong>:
+<ul>
+<li>It may not be as effective in highlighting differences between subgroups in a single, unified view.</li>
+<li>Requires additional space, which can be a disadvantage when trying to visualize many subgroups in a limited display area.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>Some alternative approaches for comparing the distributions of subgroups include:</p>
+<ol start="4" type="1">
+<li>
+<strong>Box plots (<code><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot()</a></code>)</strong>:
+<ul>
+<li>Strengths: Effective for comparing the central tendency, spread, and presence of outliers for multiple subgroups.</li>
+<li>Weaknesses: May not provide as much detail about the shape of the distribution.</li>
+</ul>
+</li>
+<li>
+<strong>ECDF plots (<code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_step()</a></code> or <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> with cumulative frequency)</strong>:
+<ul>
+<li>Strengths: Shows the cumulative distribution of each subgroup, which can be insightful for comparing percentiles and distribution shapes.</li>
+<li>Weaknesses: Not as common as other approaches, so interpretation may not be as intuitive for some users.</li>
+</ul>
+</li>
+<li>
+<strong>Density plots (<code><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density()</a></code>)</strong>:
+<ul>
+<li>Strengths: Provides a smooth estimate of the distribution for comparing multiple subgroups.</li>
+<li>Weaknesses: May require a larger area, and the choice of smoothing parameters can affect the result.</li>
+</ul>
+</li>
+</ol>
+<p>The choice of approach depends on the nature of the data, the number of subgroups, and the specific insights you want to gain.</p>
+</section><section id="question-6" class="level2"><h2 class="anchored" data-anchor-id="question-6">Question 6</h2>
+<p><strong>Read the documentation for <a href="https://ggplot2.tidyverse.org/reference/geom_bar.html"><code>geom_bar()</code></a>. What does the <code>weight</code> aesthetic do?</strong></p>
+</section><section id="question-7" class="level2"><h2 class="anchored" data-anchor-id="question-7">Question 7</h2>
+<p><strong>Using the techniques already discussed in this chapter, come up with three ways to visualise a 2d categorical distribution. Try them out by visualising the distribution of <code>model</code> and <code>manufacturer</code>, <code>trans</code> and <code>class</code>, and <code>cyl</code> and <code>trans</code>.</strong></p>
 
 
 

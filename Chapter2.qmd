@@ -580,6 +580,8 @@ As observed in the @fig-q2-ex5, a three-way connection exists between fuel effic
 
 In contrast, when considering **8-cylinder engines**, the relationship is different. Notably, for 8-cylinder engines, mileage improves as engine size increases (possibly due to the enhanced quality of larger engines).
 
+Thus, faceting by number of cylinders changed our assessment of the relationship between engine size and fuel economy by bringing out the different relation when seeing the facet of 8-cylinder cars. If we had not faceted, we would have missed this different relation.
+
 ```{r}
 #| label: fig-q2-ex5
 #| fig-cap: "Exploring the 3-way relationship between fuel economy, engine size, and number of cylinders"
@@ -699,3 +701,187 @@ p + facet_wrap(~ cyl, nrow = 4,
                scales = "free_y") +
   labs(title = "Using scales as \"free_y\" with 4 rows")
 ```
+
+# **2.6.6 Exercises**
+
+## Question 1
+
+**What's the problem with the plot created by `ggplot(mpg, aes(cty, hwy)) + geom_point()`? Which of the geoms described above is most effective at remedying the problem?**
+
+The problem with the plot, as shown in @fig-q1-ex6 sub-plot (a) is overplotting. Overplotting is a common issue in data visualization, especially when creating scatter plots in `ggplot2`. It occurs when multiple data points are plotted at the same (or very similar) coordinates on a plot, making it difficult to distinguish individual points. This often happens when you have a large dataset, or when the data points are highly concentrated in a small area.
+
+When you use `geom_point()` to plot data points that overlap or cluster together, the result can be a plot that shows points stacked on top of each other, as in @fig-q1-ex6 sub-plot (a), making it hard to see the density and distribution of the data.
+
+The two possible solutions to overplotting are: --
+
+-   `geom_jitter()` - better when there are fewer observations, and exact data distribution is not important.
+
+-   `alpha` argument with `geom_point()` - better when there are many observations; and, when data distribution is important.
+
+-   density plots (`stat_bin2d()`) or hexbin plots (`stat_binhex()`)- when there are just too many observations, say more than 1000 or so.
+
+The most most effective at remedying the problem here is `geom_jitter()` . The `geom_jitter()` adds a small amount of random noise to the x and y coordinates of each data point, which helps spread out the points and make them more distinguishable. Here's how `geom_jitter()` works:
+
+1.  It takes the original data points and adds random variations to their positions. By default, the random noise is drawn from a uniform distribution.
+
+2.  You can control the amount of jitter (spread) by adjusting the `width` argument, which specifies the maximum distance the points can be jittered.
+
+```{r}
+#| label: fig-q1-ex6
+#| fig-cap: "A figure depicting the problem of overplotting and how to resolve it"
+#| fig-subcap: 
+#|   - "The plot using code given in the question"
+#|   - "Improved plot using geom_jitter()"
+#| layout-ncol: 2
+
+ggplot(mpg, aes(cty, hwy)) + geom_point() + 
+  theme_minimal() + labs(x = "City Mileage (miles per gallon)",
+                         y = "Highway mileage (miles per gallon)")
+
+ggplot(mpg, aes(cty, hwy)) + geom_jitter() + 
+  theme_minimal() + labs(x = "City Mileage (miles per gallon)",
+                         y = "Highway mileage (miles per gallon)")
+
+```
+
+## Question 2
+
+**One challenge with `ggplot(mpg, aes(class, hwy)) + geom_boxplot()` is that the ordering of `class` is alphabetical, which is not terribly useful. How could you change the factor levels to be more informative?**
+
+Yes, the ordering of `class` is alphabetical, and this is not useful because as we observe in sub-plot (a) of @fig-q2-ex6 the un-ordered class of vehicles on x-axis make it tough to discern a pattern in the highway mileage. We could change the factor levels by increasing values of mean of `hwy` (highway miles per gallon).
+
+**Rather than reordering the factor by hand, you can do it automatically based on the data: `ggplot(mpg, aes(reorder(class, hwy), hwy)) + geom_boxplot()`. What does [`reorder()`](https://rdrr.io/r/stats/reorder.factor.html) do? Read the documentation.**
+
+An improved version of the plot, much easier to interpret and observe the trends is shown in sub-plot (b) of @fig-q2-ex6 . Ordering the categorical variable `class` on x-axis by increasing `hwy` allows us to easily see which cars are most fuel efficient and which are not.
+
+In R, the `reorder()` function is used to reorder the levels of a factor or to reorder the categories of a discrete variable within a data frame or a vector based on the values of another variable. It is a handy function for controlling the order in which categorical variables are displayed in plots, tables, and other visualizations.
+
+The typical usage of `reorder()` is as follows:
+
+``` r
+reorder(x, X, FUN = NULL)
+```
+
+-   `x`: This is the factor or vector whose levels you want to reorder.
+-   `X`: This is the variable that you want to use to determine the new order of the levels of `x`.
+-   `FUN`: This is an optional argument that specifies a summary function to be applied to `X`. It is used to calculate a summary value of `X` for each level of `x`, and then reorder the levels based on these summary values. If `FUN` is not specified, `X` is assumed to be a single numeric or integer variable.
+
+A reordered factor can be useful when creating plots, such as bar charts or box plots, where you want the categories to be sorted based on a particular variable, making it easier to see the relationships between variables, as shown in @fig-q2-ex6 .
+
+```{r}
+#| label: fig-q2-ex6
+#| fig-cap: "Ordering a categorical variable to make the plot easier to visualize and interpret"
+#| fig-subcap: 
+#|   - "Box-plot without ordering the x-axis variable"
+#|   - "Box-plot with ordered x-axis variable, based on values of y-axis variable"
+#| layout-ncol: 2
+ggplot(mpg, aes(class, hwy)) + geom_boxplot() + 
+  theme_minimal() + labs(x = "Class of vehicle", 
+                         y = "Highway mileage (miles per gallon)")
+
+ggplot(mpg, aes(reorder(class, hwy), hwy)) + geom_boxplot() +
+    theme_minimal() + labs(x = "Class of vehicle", 
+                         y = "Highway mileage (miles per gallon)")
+```
+
+## Question 3
+
+**Explore the distribution of the carat variable in the `diamonds` dataset. What binwidth reveals the most interesting patterns?**
+
+To explore the distribution of the "`carat`" variable in the "`diamonds`" dataset, you can create a histogram and experiment with different bin widths to reveal interesting patterns. The choice of bin width can affect how the data is visualized. A smaller bin width can reveal finer details, while a larger bin width can provide a smoother overview of the distribution. Let's create a histogram and try different bin widths to find the most interesting pattern:
+
+```{r}
+#| label: fig-q3-ex6
+#| fig-cap: "Using different bin widths on the histogram of carat in diamonds dataset"
+#| fig-subcap: 
+#|   - "binwidth = 1"
+#|   - "binwidth = 0.5"
+#|   - "binwidth = 0.1"
+#|   - "binwidth = 0.05"
+#|   - "binwidth = 0.01"
+
+g <- diamonds |> ggplot(aes(carat)) + 
+  theme_minimal()
+
+g + geom_histogram(binwidth = 1)
+
+g + geom_histogram(binwidth = 0.5)
+
+g + geom_histogram(binwidth = 0.1)
+
+g + geom_histogram(binwidth = 0.05)
+
+g + geom_histogram(binwidth = 0.01)
+```
+
+After experimenting with different bin widths (e.g., 0.01, 0.05, 0.1, 0.5, 1 etc.), we find that the bin-width 0.01 reveals a very interesting pattern - many diamonds are clustered around rounded values like 1, 1.5, 1.25 etc. reveal a bias in recording the observations. This means that observation recorders have used rounding off while noting the carat of the diamonds.
+
+## Question 4
+
+**Explore the distribution of the price variable in the `diamonds` data. How does the distribution vary by cut?**
+
+The distribution of `price` for different types of `cut` is shown in @fig-q4-ex6 . We observe that the `price` distribution if right-skewed for all `cut` types, but the skewness is much more for Ideal and Premium types of `cut`.
+
+```{r}
+#| label: fig-q4-ex6
+#| fig-cap: "Distribution of price of diamonds faceted by various cut types"
+
+diamonds |> 
+  ggplot(aes(price)) +
+  geom_density() +
+  # geom_freqpoly() +
+  # geom_histogram(binwidth = 10) +
+  facet_wrap(~ cut)
+```
+
+## Question 5
+
+**You now know (at least) three ways to compare the distributions of subgroups: [`geom_violin()`](https://ggplot2.tidyverse.org/reference/geom_violin.html), [`geom_freqpoly()`](https://ggplot2.tidyverse.org/reference/geom_histogram.html) and the colour aesthetic, or [`geom_histogram()`](https://ggplot2.tidyverse.org/reference/geom_histogram.html) and faceting. What are the strengths and weaknesses of each approach? What other approaches could you try?**
+
+Comparing the distributions of subgroups in a dataset can be done using `geom_violin()`, `geom_freqpoly()` and the `colour` aesthetic, and `geom_histogram()` with faceting. Each has its own strengths and weaknesses. Let's discuss these approaches, along with their pros and cons: ---
+
+1.  **`geom_violin()`**:
+    -   **Strengths**:
+        -   Provides a compact representation of the data distribution, showing not only the central tendency but also the spread and shape of the distribution.
+        -   Suitable for comparing multiple subgroups within a single plot.
+        -   Useful for identifying modes, asymmetry, and outliers.
+    -   **Weaknesses**:
+        -   May not be as intuitive to interpret for those unfamiliar with violin plots.
+
+        -   Limited to visualizing unimodal distributions, and it can be less effective for highly multimodal data.
+2.  **`geom_freqpoly()` and the `colour` aesthetic**:
+    -   **Strengths**:
+        -   `geom_freqpoly()`: Allows you to create overlaid histograms for multiple subgroups, making it easy to compare their shapes and positions.
+        -   Using the `colour` aesthetic: You can assign different colors to subgroups within a single plot, making it visually clear which data points belong to which subgroup.
+    -   **Weaknesses**:
+        -   Overlapping can make it difficult to distinguish individual histograms when comparing many subgroups.
+        -   Requires a good choice of color palettes for clarity and accessibility.
+3.  **`geom_histogram()` with faceting**:
+    -   **Strengths**:
+        -   Faceting allows you to create separate histograms for each subgroup, making it easy to compare their individual distributions.
+        -   Useful when there are many subgroups, as it avoids visual clutter and allows for detailed examination.
+    -   **Weaknesses**:
+        -   It may not be as effective in highlighting differences between subgroups in a single, unified view.
+        -   Requires additional space, which can be a disadvantage when trying to visualize many subgroups in a limited display area.
+
+Some alternative approaches for comparing the distributions of subgroups include:
+
+4.  **Box plots (`geom_boxplot()`)**:
+    -   Strengths: Effective for comparing the central tendency, spread, and presence of outliers for multiple subgroups.
+    -   Weaknesses: May not provide as much detail about the shape of the distribution.
+5.  **ECDF plots (`geom_step()` or `geom_point()` with cumulative frequency)**:
+    -   Strengths: Shows the cumulative distribution of each subgroup, which can be insightful for comparing percentiles and distribution shapes.
+    -   Weaknesses: Not as common as other approaches, so interpretation may not be as intuitive for some users.
+6.  **Density plots (`geom_density()`)**:
+    -   Strengths: Provides a smooth estimate of the distribution for comparing multiple subgroups.
+    -   Weaknesses: May require a larger area, and the choice of smoothing parameters can affect the result.
+
+The choice of approach depends on the nature of the data, the number of subgroups, and the specific insights you want to gain.
+
+## Question 6
+
+**Read the documentation for [`geom_bar()`](https://ggplot2.tidyverse.org/reference/geom_bar.html). What does the `weight` aesthetic do?**
+
+## Question 7
+
+**Using the techniques already discussed in this chapter, come up with three ways to visualise a 2d categorical distribution. Try them out by visualising the distribution of `model` and `manufacturer`, `trans` and `class`, and `cyl` and `trans`.**
