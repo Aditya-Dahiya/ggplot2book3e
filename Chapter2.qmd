@@ -748,7 +748,7 @@ ggplot(mpg, aes(cty, hwy)) + geom_jitter() +
 
 **One challenge with `ggplot(mpg, aes(class, hwy)) + geom_boxplot()` is that the ordering of `class` is alphabetical, which is not terribly useful. How could you change the factor levels to be more informative?**
 
-Yes, the ordering of `class` is alphabetical, and this is not useful because as we observe in sub-plot (a) of @fig-q2-ex6 the un-ordered class of vehicles on x-axis make it tough to discern a pattern in the highway mileage. We could change the factor levels by increasing values of mean of `hwy` (highway miles per gallon).
+Yes, the ordering of `class` is alphabetical, and this is not useful because as we observe in sub-plot (a) of @fig-q2-ex6 the un-ordered class of vehicles on x-axis make it tough to discern a pattern in the highway mileage. We could change the factor levels by increasing values of mean of `hwy` (highway miles per gallon). This can be done with `fct_relevel()` manually.
 
 **Rather than reordering the factor by hand, you can do it automatically based on the data: `ggplot(mpg, aes(reorder(class, hwy), hwy)) + geom_boxplot()`. What does [`reorder()`](https://rdrr.io/r/stats/reorder.factor.html) do? Read the documentation.**
 
@@ -786,7 +786,7 @@ ggplot(mpg, aes(reorder(class, hwy), hwy)) + geom_boxplot() +
 
 ## Question 3
 
-**Explore the distribution of the carat variable in the `diamonds` dataset. What binwidth reveals the most interesting patterns?**
+**Explore the distribution of the carat variable in the `diamonds` dataset. What bin-width reveals the most interesting patterns?**
 
 To explore the distribution of the "`carat`" variable in the "`diamonds`" dataset, you can create a histogram and experiment with different bin widths to reveal interesting patterns. The choice of bin width can affect how the data is visualized. A smaller bin width can reveal finer details, while a larger bin width can provide a smoother overview of the distribution. Let's create a histogram and try different bin widths to find the most interesting pattern:
 
@@ -838,9 +838,9 @@ diamonds |>
 
 **You now know (at least) three ways to compare the distributions of subgroups: [`geom_violin()`](https://ggplot2.tidyverse.org/reference/geom_violin.html), [`geom_freqpoly()`](https://ggplot2.tidyverse.org/reference/geom_histogram.html) and the colour aesthetic, or [`geom_histogram()`](https://ggplot2.tidyverse.org/reference/geom_histogram.html) and faceting. What are the strengths and weaknesses of each approach? What other approaches could you try?**
 
-Comparing the distributions of subgroups in a dataset can be done using `geom_violin()`, `geom_freqpoly()` and the `colour` aesthetic, and `geom_histogram()` with faceting. Each has its own strengths and weaknesses. Let's discuss these approaches, along with their pros and cons: ---
+Comparing the distributions of sub-groups in a dataset can be done using `geom_violin()`, `geom_freqpoly()` and the `colour` aesthetic, and `geom_histogram()` with faceting. Each has its own strengths and weaknesses. Let's discuss these approaches, along with their pros and cons: ---
 
-1.  **`geom_violin()`**:
+1.  **`geom_violin()`**: [@fig-q5a-ex6]
     -   **Strengths**:
         -   Provides a compact representation of the data distribution, showing not only the central tendency but also the spread and shape of the distribution.
         -   Suitable for comparing multiple subgroups within a single plot.
@@ -848,15 +848,44 @@ Comparing the distributions of subgroups in a dataset can be done using `geom_vi
     -   **Weaknesses**:
         -   May not be as intuitive to interpret for those unfamiliar with violin plots.
 
-        -   Limited to visualizing unimodal distributions, and it can be less effective for highly multimodal data.
-2.  **`geom_freqpoly()` and the `colour` aesthetic**:
+        -   Limited to visualizing uni-modal distributions, and it can be less effective for highly multi-modal data.
+
+```{r}
+#| label: fig-q5a-ex6
+#| fig-cap: "Using geom_violin() to compare price distribution across diamonds of different cuts"
+
+diamonds |> 
+  ggplot(aes(x = cut, 
+             y = price)) +
+  geom_violin(fill = "lightblue") +
+  theme_minimal() +
+  labs(x = "Cut", y = "Price",
+       title = "Violin Plots: comparing multiple subgroups within a single plot")
+```
+
+2.  **`geom_freqpoly()` and the `colour` aesthetic**: [@fig-q5b-ex6]
     -   **Strengths**:
         -   `geom_freqpoly()`: Allows you to create overlaid histograms for multiple subgroups, making it easy to compare their shapes and positions.
         -   Using the `colour` aesthetic: You can assign different colors to subgroups within a single plot, making it visually clear which data points belong to which subgroup.
     -   **Weaknesses**:
         -   Overlapping can make it difficult to distinguish individual histograms when comparing many subgroups.
         -   Requires a good choice of color palettes for clarity and accessibility.
-3.  **`geom_histogram()` with faceting**:
+
+```{r}
+#| label: fig-q5b-ex6
+#| fig-cap: "Using geom_freqpoly() and the colour aesthetic to compare price distribution across diamonds of different cuts"
+
+diamonds |> 
+  ggplot(aes(x = price,
+             col = cut)) +
+  geom_freqpoly(lwd = 1.2) +
+  scale_color_brewer(palette = "Set1") +
+  theme_minimal() +
+  labs(x = "Price", y = "Number of Diamonds",
+       title = "Using geom_freqpoly() and the colour aesthetic")
+```
+
+3.  **`geom_histogram()` with faceting**: [@fig-q5c-ex6]
     -   **Strengths**:
         -   Faceting allows you to create separate histograms for each subgroup, making it easy to compare their individual distributions.
         -   Useful when there are many subgroups, as it avoids visual clutter and allows for detailed examination.
@@ -864,23 +893,127 @@ Comparing the distributions of subgroups in a dataset can be done using `geom_vi
         -   It may not be as effective in highlighting differences between subgroups in a single, unified view.
         -   Requires additional space, which can be a disadvantage when trying to visualize many subgroups in a limited display area.
 
+```{r}
+#| label: fig-q5c-ex6
+#| fig-cap: "Using geom_histogram() with faceting to compare price distribution across diamonds of different cuts"
+#| fig-width: 6
+#| fig-asp: 0.8
+
+diamonds |> 
+  ggplot(aes(x = price)) +
+  geom_histogram(bins = 60) +
+  facet_wrap(~ cut, scales = "free_y", dir = "v", nrow = 5) +
+  theme_minimal() +
+  scale_x_continuous(labels = scales::comma_format(prefix = "$")) +
+  labs(x = "Price", y = "Number of Diamonds",
+       title = "Using geom_histogram() with faceting",
+       subtitle = "Using free scales on y-axis to enable easy comparison visually ")
+```
+
 Some alternative approaches for comparing the distributions of subgroups include:
 
-4.  **Box plots (`geom_boxplot()`)**:
+4.  **Box plots (`geom_boxplot()`)**: [@fig-q5d-ex6]
     -   Strengths: Effective for comparing the central tendency, spread, and presence of outliers for multiple subgroups.
     -   Weaknesses: May not provide as much detail about the shape of the distribution.
-5.  **ECDF plots (`geom_step()` or `geom_point()` with cumulative frequency)**:
-    -   Strengths: Shows the cumulative distribution of each subgroup, which can be insightful for comparing percentiles and distribution shapes.
+
+```{r}
+#| label: fig-q5d-ex6
+#| fig-cap: "Using box-plots to compare price distribution across diamonds of different cuts"
+
+diamonds |> 
+  ggplot(aes(x = cut, y = price)) +
+  geom_boxplot(fill = "lightblue",
+               outlier.shape = NA) +
+  theme_minimal() +
+  labs(
+    x = "Cut", 
+    y = "Price",
+    title = "Box-plots: comparing multiple subgroups within a single plot"
+  )
+```
+
+5.  **ECDF plots (`geom_step()` or `geom_point()` with cumulative frequency)**: [@fig-q5e-ex6]
+    -   Strengths: Empirical Cumulative Distribution Function Plots show the cumulative distribution of each subgroup, which can be insightful for comparing percentiles and distribution shapes.
     -   Weaknesses: Not as common as other approaches, so interpretation may not be as intuitive for some users.
-6.  **Density plots (`geom_density()`)**:
+
+```{r}
+#| label: fig-q5e-ex6
+#| fig-cap: "Using Empirical Cumulative Distribution Function Plots (ECDF) plots to compare price distribution across diamonds of different cuts"
+
+
+g <- diamonds |> 
+  ggplot(aes(x = price, col = cut)) +
+  stat_ecdf() +
+  scale_color_brewer(palette = "Set1") +
+  theme_minimal() +
+  labs(x = "Price", y = "Number of Diamonds",
+       title = "Using geom_freqpoly() and the colour aesthetic") +
+  scale_x_continuous(labels = scales::comma_format(prefix = "$"))
+
+g |> directlabels::direct.label(method = "angled.boxes")
+
+```
+
+6.  **Density plots (`geom_density()`)**: [@fig-q5f-ex6]
     -   Strengths: Provides a smooth estimate of the distribution for comparing multiple subgroups.
     -   Weaknesses: May require a larger area, and the choice of smoothing parameters can affect the result.
+
+```{r}
+#| label: fig-q5f-ex6
+#| fig-cap: "Using geom_density() and the colour aesthetic to compare price distribution across diamonds of different cuts"
+
+diamonds |> 
+  ggplot(aes(x = price,
+             col = cut)) +
+  geom_density(lwd = 1.2) +
+  scale_color_brewer(palette = "Set1") +
+  theme_minimal() +
+  labs(x = "Price", y = "Number of Diamonds",
+       title = "Using geom_density() and the colour aesthetic") +
+  scale_x_continuous(labels = scales::comma_format(prefix = "$"))
+```
 
 The choice of approach depends on the nature of the data, the number of subgroups, and the specific insights you want to gain.
 
 ## Question 6
 
 **Read the documentation for [`geom_bar()`](https://ggplot2.tidyverse.org/reference/geom_bar.html). What does the `weight` aesthetic do?**
+
+In ggplot2, the `weight` aesthetic in `geom_bar` serves the purpose of facilitating the creation of bar charts that display counts or sums of weights rather than the traditional count of observations. When you use `geom_bar()` with the `weight` aesthetic, it modifies the height of the bars to be proportional to the sum of the supplied weights for each group. This allows you to create bar charts where the bar height represents the accumulated sum of a specific variable, rather than just the count of instances. The @fig-q6-ex6 is an excellent example usign both methods - `dplyr` data wrangling [@fig-q6-ex6-1] and the `geom_bar()` with `weight` aesthetic [@fig-q6-ex6-2] - both witht he same result to explain the purpose.
+
+In essence, the weight aesthetic in `geom_bar()` offers the flexibility to create weighted histograms and barcharts, where the bar heights no longer represent a simple count of observations but instead reflect the cumulative sum of a different variable.
+
+This functionality is particularly useful when you want to visualize data with varying weights or magnitudes, emphasizing the overall importance of a particular variable within each group.
+
+```{r}
+#| label: fig-q6-ex6
+#| fig-cap: "Demonstrating the total prices of all diamonds of each cut in the diamonds data-set"
+#| fig-subcap: 
+#|   - "Using the dplyr data wrangling to find sum of prices and then plotting"
+#|   - "Using the weight aesthetic in geom_bar()"
+#| layout-ncol: 2
+
+diamonds |> 
+  group_by(cut) |> 
+  summarise(price_total = sum(price),
+            n = n()) |> 
+  ggplot(aes(x = cut, y = price_total)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Cut",
+       y = "Sum of prices of all diamonds of that cut",
+       title = "Plot using dplyr wrangling") +
+  theme_minimal()
+
+diamonds |> 
+  ggplot(aes(x = cut, 
+             weight = price)) +
+  geom_bar() +
+  labs(x = "Cut",
+       y = "geom_bar with weight aesthetic set to price",
+       title = "Plot using geom_bar and weight aesthetic") +
+  theme_minimal()
+  
+```
 
 ## Question 7
 

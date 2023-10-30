@@ -3453,7 +3453,7 @@ tbody tr:last-child {
 </div>
 </section><section id="question-2-4" class="level2"><h2 class="anchored" data-anchor-id="question-2-4">Question 2</h2>
 <p><strong>One challenge with <code>ggplot(mpg, aes(class, hwy)) + geom_boxplot()</code> is that the ordering of <code>class</code> is alphabetical, which is not terribly useful. How could you change the factor levels to be more informative?</strong></p>
-<p>Yes, the ordering of <code>class</code> is alphabetical, and this is not useful because as we observe in sub-plot (a) of <a href="#fig-q2-ex6">Figure&nbsp;13</a> the un-ordered class of vehicles on x-axis make it tough to discern a pattern in the highway mileage. We could change the factor levels by increasing values of mean of <code>hwy</code> (highway miles per gallon).</p>
+<p>Yes, the ordering of <code>class</code> is alphabetical, and this is not useful because as we observe in sub-plot (a) of <a href="#fig-q2-ex6">Figure&nbsp;13</a> the un-ordered class of vehicles on x-axis make it tough to discern a pattern in the highway mileage. We could change the factor levels by increasing values of mean of <code>hwy</code> (highway miles per gallon). This can be done with <code><a href="https://forcats.tidyverse.org/reference/fct_relevel.html">fct_relevel()</a></code> manually.</p>
 <p><strong>Rather than reordering the factor by hand, you can do it automatically based on the data: <code>ggplot(mpg, aes(reorder(class, hwy), hwy)) + geom_boxplot()</code>. What does <a href="https://rdrr.io/r/stats/reorder.factor.html"><code>reorder()</code></a> do? Read the documentation.</strong></p>
 <p>An improved version of the plot, much easier to interpret and observe the trends is shown in sub-plot (b) of <a href="#fig-q2-ex6">Figure&nbsp;13</a> . Ordering the categorical variable <code>class</code> on x-axis by increasing <code>hwy</code> allows us to easily see which cars are most fuel efficient and which are not.</p>
 <p>In R, the <code><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder()</a></code> function is used to reorder the levels of a factor or to reorder the categories of a discrete variable within a data frame or a vector based on the values of another variable. It is a handy function for controlling the order in which categorical variables are displayed in plots, tables, and other visualizations.</p>
@@ -3496,7 +3496,7 @@ tbody tr:last-child {
 </div>
 </div>
 </section><section id="question-3-4" class="level2"><h2 class="anchored" data-anchor-id="question-3-4">Question 3</h2>
-<p><strong>Explore the distribution of the carat variable in the <code>diamonds</code> dataset. What binwidth reveals the most interesting patterns?</strong></p>
+<p><strong>Explore the distribution of the carat variable in the <code>diamonds</code> dataset. What bin-width reveals the most interesting patterns?</strong></p>
 <p>To explore the distribution of the “<code>carat</code>” variable in the “<code>diamonds</code>” dataset, you can create a histogram and experiment with different bin widths to reveal interesting patterns. The choice of bin width can affect how the data is visualized. A smaller bin width can reveal finer details, while a larger bin width can provide a smoother overview of the distribution. Let’s create a histogram and try different bin widths to find the most interesting pattern:</p>
 <div id="fig-q3-ex6" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><details><summary>Code</summary><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">diamonds</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">carat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -3563,10 +3563,10 @@ tbody tr:last-child {
 </div>
 </section><section id="question-5" class="level2"><h2 class="anchored" data-anchor-id="question-5">Question 5</h2>
 <p><strong>You now know (at least) three ways to compare the distributions of subgroups: <a href="https://ggplot2.tidyverse.org/reference/geom_violin.html"><code>geom_violin()</code></a>, <a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html"><code>geom_freqpoly()</code></a> and the colour aesthetic, or <a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html"><code>geom_histogram()</code></a> and faceting. What are the strengths and weaknesses of each approach? What other approaches could you try?</strong></p>
-<p>Comparing the distributions of subgroups in a dataset can be done using <code><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin()</a></code>, <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly()</a></code> and the <code>colour</code> aesthetic, and <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code> with faceting. Each has its own strengths and weaknesses. Let’s discuss these approaches, along with their pros and cons: —</p>
+<p>Comparing the distributions of sub-groups in a dataset can be done using <code><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin()</a></code>, <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly()</a></code> and the <code>colour</code> aesthetic, and <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code> with faceting. Each has its own strengths and weaknesses. Let’s discuss these approaches, along with their pros and cons: —</p>
 <ol type="1">
 <li>
-<strong><code><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin()</a></code></strong>:
+<strong><code><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin()</a></code></strong>: <a href="#fig-q5a-ex6">Figure&nbsp;16</a>
 <ul>
 <li>
 <strong>Strengths</strong>:
@@ -3580,13 +3580,30 @@ tbody tr:last-child {
 <strong>Weaknesses</strong>:
 <ul>
 <li><p>May not be as intuitive to interpret for those unfamiliar with violin plots.</p></li>
-<li><p>Limited to visualizing unimodal distributions, and it can be less effective for highly multimodal data.</p></li>
+<li><p>Limited to visualizing uni-modal distributions, and it can be less effective for highly multi-modal data.</p></li>
 </ul>
 </li>
 </ul>
 </li>
+</ol>
+<div class="cell" data-hash="Chapter2_cache/html/fig-q5a-ex6_60fe4f9dd1d0e88a380fffc421958131">
+<details><summary>Code</summary><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, </span>
+<span>             y <span class="op">=</span> <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"lightblue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Cut"</span>, y <span class="op">=</span> <span class="st">"Price"</span>,</span>
+<span>       title <span class="op">=</span> <span class="st">"Violin Plots: comparing multiple subgroups within a single plot"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-q5a-ex6" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter2_files/figure-html/fig-q5a-ex6-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;16: Using geom_violin() to compare price distribution across diamonds of different cuts</figcaption></figure>
+</div>
+</div>
+</div>
+<ol start="2" type="1">
 <li>
-<strong><code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly()</a></code> and the <code>colour</code> aesthetic</strong>:
+<strong><code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly()</a></code> and the <code>colour</code> aesthetic</strong>: <a href="#fig-q5b-ex6">Figure&nbsp;17</a>
 <ul>
 <li>
 <strong>Strengths</strong>:
@@ -3605,8 +3622,26 @@ tbody tr:last-child {
 </li>
 </ul>
 </li>
+</ol>
+<div class="cell" data-hash="Chapter2_cache/html/fig-q5b-ex6_56c5ce1def7a65dbd850f87b9cb263cc">
+<details><summary>Code</summary><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">price</span>,</span>
+<span>             col <span class="op">=</span> <span class="va">cut</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Price"</span>, y <span class="op">=</span> <span class="st">"Number of Diamonds"</span>,</span>
+<span>       title <span class="op">=</span> <span class="st">"Using geom_freqpoly() and the colour aesthetic"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-q5b-ex6" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter2_files/figure-html/fig-q5b-ex6-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;17: Using geom_freqpoly() and the colour aesthetic to compare price distribution across diamonds of different cuts</figcaption></figure>
+</div>
+</div>
+</div>
+<ol start="3" type="1">
 <li>
-<strong><code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code> with faceting</strong>:
+<strong><code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code> with faceting</strong>: <a href="#fig-q5c-ex6">Figure&nbsp;18</a>
 <ul>
 <li>
 <strong>Strengths</strong>:
@@ -3625,33 +3660,149 @@ tbody tr:last-child {
 </ul>
 </li>
 </ol>
+<div class="cell" data-fig.asp="0.8" data-hash="Chapter2_cache/html/fig-q5c-ex6_9b1c91611ca0d44e56ed9c30cf35f6db">
+<details><summary>Code</summary><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">60</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">cut</span>, scales <span class="op">=</span> <span class="st">"free_y"</span>, dir <span class="op">=</span> <span class="st">"v"</span>, nrow <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/comma.html">comma_format</a></span><span class="op">(</span>prefix <span class="op">=</span> <span class="st">"$"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Price"</span>, y <span class="op">=</span> <span class="st">"Number of Diamonds"</span>,</span>
+<span>       title <span class="op">=</span> <span class="st">"Using geom_histogram() with faceting"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Using free scales on y-axis to enable easy comparison visually "</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-q5c-ex6" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter2_files/figure-html/fig-q5c-ex6-1.png" class="img-fluid figure-img" width="576"></p>
+<figcaption class="figure-caption">Figure&nbsp;18: Using geom_histogram() with faceting to compare price distribution across diamonds of different cuts</figcaption></figure>
+</div>
+</div>
+</div>
 <p>Some alternative approaches for comparing the distributions of subgroups include:</p>
 <ol start="4" type="1">
 <li>
-<strong>Box plots (<code><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot()</a></code>)</strong>:
+<strong>Box plots (<code><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot()</a></code>)</strong>: <a href="#fig-q5d-ex6">Figure&nbsp;19</a>
 <ul>
 <li>Strengths: Effective for comparing the central tendency, spread, and presence of outliers for multiple subgroups.</li>
 <li>Weaknesses: May not provide as much detail about the shape of the distribution.</li>
 </ul>
 </li>
+</ol>
+<div class="cell" data-hash="Chapter2_cache/html/fig-q5d-ex6_6cfe34d4d184062cd4522bb96141384a">
+<details><summary>Code</summary><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"lightblue"</span>,</span>
+<span>               outlier.shape <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="st">"Cut"</span>, </span>
+<span>    y <span class="op">=</span> <span class="st">"Price"</span>,</span>
+<span>    title <span class="op">=</span> <span class="st">"Box-plots: comparing multiple subgroups within a single plot"</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-q5d-ex6" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter2_files/figure-html/fig-q5d-ex6-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;19: Using box-plots to compare price distribution across diamonds of different cuts</figcaption></figure>
+</div>
+</div>
+</div>
+<ol start="5" type="1">
 <li>
-<strong>ECDF plots (<code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_step()</a></code> or <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> with cumulative frequency)</strong>:
+<strong>ECDF plots (<code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_step()</a></code> or <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> with cumulative frequency)</strong>: <a href="#fig-q5e-ex6">Figure&nbsp;20</a>
 <ul>
-<li>Strengths: Shows the cumulative distribution of each subgroup, which can be insightful for comparing percentiles and distribution shapes.</li>
+<li>Strengths: Empirical Cumulative Distribution Function Plots show the cumulative distribution of each subgroup, which can be insightful for comparing percentiles and distribution shapes.</li>
 <li>Weaknesses: Not as common as other approaches, so interpretation may not be as intuitive for some users.</li>
 </ul>
 </li>
+</ol>
+<div class="cell" data-hash="Chapter2_cache/html/fig-q5e-ex6_e88eed3804bf2870d284ac7fd9b59a9a">
+<details><summary>Code</summary><div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">price</span>, col <span class="op">=</span> <span class="va">cut</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_ecdf.html">stat_ecdf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Price"</span>, y <span class="op">=</span> <span class="st">"Number of Diamonds"</span>,</span>
+<span>       title <span class="op">=</span> <span class="st">"Using geom_freqpoly() and the colour aesthetic"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/comma.html">comma_format</a></span><span class="op">(</span>prefix <span class="op">=</span> <span class="st">"$"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g</span> <span class="op">|&gt;</span> <span class="fu">directlabels</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/directlabels/man/direct.label.html">direct.label</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"angled.boxes"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-q5e-ex6" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter2_files/figure-html/fig-q5e-ex6-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;20: Using Empirical Cumulative Distribution Function Plots (ECDF) plots to compare price distribution across diamonds of different cuts</figcaption></figure>
+</div>
+</div>
+</div>
+<ol start="6" type="1">
 <li>
-<strong>Density plots (<code><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density()</a></code>)</strong>:
+<strong>Density plots (<code><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density()</a></code>)</strong>: <a href="#fig-q5f-ex6">Figure&nbsp;21</a>
 <ul>
 <li>Strengths: Provides a smooth estimate of the distribution for comparing multiple subgroups.</li>
 <li>Weaknesses: May require a larger area, and the choice of smoothing parameters can affect the result.</li>
 </ul>
 </li>
 </ol>
+<div class="cell" data-hash="Chapter2_cache/html/fig-q5f-ex6_1e0da271408c4b78c571f56185ba5af9">
+<details><summary>Code</summary><div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">price</span>,</span>
+<span>             col <span class="op">=</span> <span class="va">cut</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span>lwd <span class="op">=</span> <span class="fl">1.2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Price"</span>, y <span class="op">=</span> <span class="st">"Number of Diamonds"</span>,</span>
+<span>       title <span class="op">=</span> <span class="st">"Using geom_density() and the colour aesthetic"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/comma.html">comma_format</a></span><span class="op">(</span>prefix <span class="op">=</span> <span class="st">"$"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-q5f-ex6" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter2_files/figure-html/fig-q5f-ex6-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;21: Using geom_density() and the colour aesthetic to compare price distribution across diamonds of different cuts</figcaption></figure>
+</div>
+</div>
+</div>
 <p>The choice of approach depends on the nature of the data, the number of subgroups, and the specific insights you want to gain.</p>
 </section><section id="question-6" class="level2"><h2 class="anchored" data-anchor-id="question-6">Question 6</h2>
 <p><strong>Read the documentation for <a href="https://ggplot2.tidyverse.org/reference/geom_bar.html"><code>geom_bar()</code></a>. What does the <code>weight</code> aesthetic do?</strong></p>
+<p>In ggplot2, the <code>weight</code> aesthetic in <code>geom_bar</code> serves the purpose of facilitating the creation of bar charts that display counts or sums of weights rather than the traditional count of observations. When you use <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> with the <code>weight</code> aesthetic, it modifies the height of the bars to be proportional to the sum of the supplied weights for each group. This allows you to create bar charts where the bar height represents the accumulated sum of a specific variable, rather than just the count of instances. The <a href="#fig-q6-ex6">Figure&nbsp;22</a> is an excellent example usign both methods - <code>dplyr</code> data wrangling <a href="#fig-q6-ex6-1">Figure&nbsp;22 (a)</a> and the <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> with <code>weight</code> aesthetic <a href="#fig-q6-ex6-2">Figure&nbsp;22 (b)</a> - both witht he same result to explain the purpose.</p>
+<p>In essence, the weight aesthetic in <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> offers the flexibility to create weighted histograms and barcharts, where the bar heights no longer represent a simple count of observations but instead reflect the cumulative sum of a different variable.</p>
+<p>This functionality is particularly useful when you want to visualize data with varying weights or magnitudes, emphasizing the overall importance of a particular variable within each group.</p>
+<div>
+<details><summary>Code</summary><div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cut</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>price_total <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span>,</span>
+<span>            n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="va">price_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Cut"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"Sum of prices of all diamonds of that cut"</span>,</span>
+<span>       title <span class="op">=</span> <span class="st">"Plot using dplyr wrangling"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, </span>
+<span>             weight <span class="op">=</span> <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Cut"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"geom_bar with weight aesthetic set to price"</span>,</span>
+<span>       title <span class="op">=</span> <span class="st">"Plot using geom_bar and weight aesthetic"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-q6-ex6" class="cell quarto-layout-panel" data-hash="Chapter2_cache/html/fig-q6-ex6_cab765a689457af51c9ed96d4449d548">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-q6-ex6-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter2_files/figure-html/fig-q6-ex6-1.png" class="img-fluid figure-img" data-ref-parent="fig-q6-ex6" width="672"></p>
+<figcaption class="figure-caption">(a) Using the dplyr data wrangling to find sum of prices and then plotting</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-q6-ex6-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter2_files/figure-html/fig-q6-ex6-2.png" class="img-fluid figure-img" data-ref-parent="fig-q6-ex6" width="672"></p>
+<figcaption class="figure-caption">(b) Using the weight aesthetic in geom_bar()</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;22: Demonstrating the total prices of all diamonds of each cut in the diamonds data-set</figcaption><p></p>
+</figure>
+</div>
+</div>
 </section><section id="question-7" class="level2"><h2 class="anchored" data-anchor-id="question-7">Question 7</h2>
 <p><strong>Using the techniques already discussed in this chapter, come up with three ways to visualise a 2d categorical distribution. Try them out by visualising the distribution of <code>model</code> and <code>manufacturer</code>, <code>trans</code> and <code>class</code>, and <code>cyl</code> and <code>trans</code>.</strong></p>
 
