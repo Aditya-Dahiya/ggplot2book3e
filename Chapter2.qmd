@@ -28,12 +28,9 @@ editor_options:
 bibliography: references.bib
 ---
 
-::: callout-warning
-Solutions for this chapter are under construction.
-:::
-
 ```{r}
 #| label: setup
+#| echo: false
 
 # Loading required libraries
 library(tidyverse)           # tidyverse and ggplot2
@@ -799,6 +796,7 @@ To explore the distribution of the "`carat`" variable in the "`diamonds`" datase
 #|   - "binwidth = 0.1"
 #|   - "binwidth = 0.05"
 #|   - "binwidth = 0.01"
+#| layout-ncol: 3
 
 g <- diamonds |> ggplot(aes(carat)) + 
   theme_minimal()
@@ -1018,3 +1016,324 @@ diamonds |>
 ## Question 7
 
 **Using the techniques already discussed in this chapter, come up with three ways to visualise a 2d categorical distribution. Try them out by visualising the distribution of `model` and `manufacturer`, `trans` and `class`, and `cyl` and `trans`.**
+
+You can visualize a 2D categorical distribution using stacked or clustered bar plots, mosaic plots, or heatmaps. Let's use the `mpg` dataset from the `ggplot2` package and visualize the distribution of the mentioned categorical pairs: `model` vs. `manufacturer`, `trans` vs. `class`, and `cyl` vs. `trans`.
+
+1.  Clustered Bar Chart
+
+2.  Stacked Bar Chart
+
+3.  Heat-map
+
+4.  
+
+-   **Clustered Bar Chart: [@fig-q7a-ex6]**
+    -   A clustered bar chart is a simple and effective way to show the distribution of two categorical variables. Each category of one variable is represented by a group of bars, and within each group, the bars represent the categories of the second variable. This allows you to compare the distribution of one variable within each category of the other variable.
+    -   **Strengths:**
+        -   Shows the relationship between two categorical variables.
+
+        -   Easy to interpret and compare categories within each variable.
+    -   **Weaknesses:**
+        -   Limited to a small number of categories to avoid clutter.
+
+        -   Doesn't display individual data points.
+
+```{r}
+#| label: fig-q7a-ex6
+#| fig-cap: "Clustered Bar Charts"
+#| fig-subcap: 
+#|   - "Manufacturer vs. Model"
+#|   - "Class vs. Transmission"
+#|   - "Cylinders vs. Transmission"
+#| layout-ncol: 3
+
+mpg |> 
+  ggplot(aes(y = manufacturer, 
+             group = model,
+             label = model)) +
+  geom_bar(position = "dodge2",
+           fill = "lightgrey",
+           col = "black",
+           lwd = 0.1) +
+  labs(title = "Clustered bar chart: Manufacturer vs. Model") + 
+  theme_minimal() +
+  theme(legend.position = "none")
+
+ggplot(mpg, aes(fill = trans, y = class)) +
+  geom_bar(position = "dodge2") + 
+  scale_fill_brewer(palette = "Set3") +
+  labs(title = "Clustered Bar Chart: Class vs. Transmission") + 
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+ggplot(mpg, aes(fill = trans, y = cyl)) +
+  geom_bar(position = "dodge2") + 
+  scale_fill_brewer(palette = "Set3") +
+  labs(title = "Clustered Bar Chart: Cylinders vs. Transmission") + 
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+-   **Stacked Bar Chart: [@fig-q7b-ex6]**
+    -   Stacked bar charts are useful when you want to show the total composition of one categorical variable across the categories of another variable. The bars are stacked on top of each other, and the height of each segment in a bar represents the proportion of the first variable's categories within the second variable's categories.
+    -   **Strengths:**
+        -   Allows comparison of two categorical variables side by side.
+
+        -   Suitable for larger datasets with more categories.
+    -   **Weaknesses:**
+        -   May become complex with many categories.
+
+        -   Can be less intuitive for some viewers.
+
+```{r}
+#| label: fig-q7b-ex6
+#| fig-cap: "Stacked Bar Charts"
+#| fig-subcap: 
+#|   - "Manufacturer vs. Model"
+#|   - "Class vs. Transmission"
+#|   - "Cylinders vs. Transmission"
+#| layout-ncol: 3
+
+mpg |> 
+  count(manufacturer, model) |> 
+  ggplot(aes(y = manufacturer, 
+           x = n,
+           fill = model,
+           label = model)) +
+  geom_bar(stat = "identity", position = "stack", col = "white") +
+  geom_text(position = position_stack(vjust = 0.2)) +
+  labs(title = "Stacked bar chart: Manufacturer vs. Model",
+       subtitle = "Too many variants. Tough to read") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+ggplot(mpg, aes(y = trans, fill = class)) +
+  geom_bar(position = "stack") + 
+  scale_fill_brewer(palette = "Set3") +
+  labs(title = "Stacked Bar Chart: Class vs. Transmission",
+       fill = "Class") + 
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+ggplot(mpg, aes(fill = trans, y = cyl)) +
+  geom_bar(position = "stack") + 
+  scale_fill_brewer(palette = "Set3") +
+  labs(title = "Stacked Bar Chart: Cylinders vs. Transmission",
+       fill = "Transmission") + 
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+-   **Heatmap: [@fig-q7c-ex6]**
+    -   A heat map can be used to visualize the relationship between two categorical variables by coloring the cells of a grid with different shades based on the frequency, percentage, or another measure. It is especially useful when you have a large dataset.
+    -   **Strengths:**
+        -   Displays the frequency or proportion of combinations.
+
+        -   Suitable for larger datasets and many categories.
+    -   **Weaknesses:**
+        -   Color encoding might not be as intuitive as other methods.
+
+        -   Doesn't show individual data points.
+
+```{r}
+#| label: fig-q7c-ex6
+#| fig-cap: "Heatmaps"
+#| fig-subcap: 
+#|   - "Manufacturer vs. Model"
+#|   - "Class vs. Transmission"
+#|   - "Cylinders vs. Transmission"
+#| layout-ncol: 3
+
+mpg |> 
+  count(manufacturer, model) |> 
+  ggplot(aes(manufacturer, model, fill = n)) +
+  geom_tile() +
+  labs(title = "Heatmap: Manufacturer vs. Model",
+       subtitle = "Too few combinations") +
+  theme_minimal() +
+  scale_fill_viridis_c() +
+  theme(legend.position = "right",
+        axis.text.x = element_text(angle = 90)) +
+  labs(x = "Manufacturer", 
+       y = "Model",
+       fill = "Number")
+mpg |> 
+  count(trans, class) |> 
+  ggplot(aes(trans, class, fill = n)) +
+  geom_tile() +
+  scale_fill_viridis_c() +
+  labs(title = "Heatmap: Class vs. Transmission",
+       fill = "Number") + 
+  theme_minimal() +
+  theme(legend.position = "right")
+
+mpg |> 
+  count(trans, cyl) |>
+  mutate(cyl = as.character(cyl)) |> 
+  ggplot(aes(trans, cyl, fill = n)) +
+  geom_tile() +
+  scale_fill_viridis_c() +
+  labs(title = "Heatmap: Transmission vs. Cylinders",
+       fill = "Number") + 
+  theme_minimal() +
+  theme(legend.position = "right")
+```
+
+-   **Jittered Scattered Plot with transparency [@fig-q7d-ex6]**
+    -   A jittered scatter plot is a data visualization technique used to compare the distribution of two categorical variables. It's a variation of a standard scatter plot, typically used for comparing two continuous variables. In this case, it's adapted to handle categorical data. The main idea is to introduce a small amount of random noise to the data points to prevent overlapping, making it easier to observe the distribution of the categorical variables.
+    -   **Strengths:**
+        -   Allows you to see individual data points clearly.
+
+        -   Gives an overall idea of where the points are scattered.
+    -   **Weaknesses:**
+        -   Even with jittering, if there are too many data points or the categories have significant overlap
+
+        -   Jittered scatter plots work better with categorical variables that have relatively low cardinality (few unique categories).
+
+```{r}
+#| label: fig-q7d-ex6
+#| fig-cap: "Jittered Scatterplots"
+#| fig-subcap: 
+#|   - "Manufacturer vs. Model"
+#|   - "Class vs. Transmission"
+#|   - "Cylinders vs. Transmission"
+#| layout-ncol: 3
+
+mpg |> 
+  ggplot(aes(manufacturer, model)) +
+  geom_jitter() +
+  labs(title = "Jittered Scatterplot: Manufacturer vs. Model") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90)) +
+  labs(x = "Manufacturer", 
+       y = "Model")
+
+mpg |> 
+  ggplot(aes(trans, class)) +
+  geom_jitter() +
+  labs(title = "Jittered Scatterplot: Class vs. Transmission") + 
+  theme_minimal()
+
+mpg |> 
+  ggplot(aes(trans, cyl)) +
+  geom_jitter() +
+  labs(title = "Jittered Scatterplot: Transmission vs. Cylinders") + 
+  theme_minimal()
+```
+
+-   **Mosaic Plot: [@fig-q7e-ex6]**
+    -   A mosaic plot is a graphical display of the joint distribution of two categorical variables. It divides a rectangle into smaller rectangles, with the area of each smaller rectangle proportional to the frequency or proportion of data points falling into that combination of categories.
+    -   **Strengths:**
+        -   Visualizes the relationship and proportions of two categorical variables.
+
+        -   Useful for detecting associations or dependencies.
+    -   **Weaknesses:**
+        -   May become intricate with many categories.
+
+        -   Less common and might be unfamiliar to some audiences.
+
+```{r}
+#| label: fig-q7e-ex6
+#| fig-cap: "Mosaic Plot"
+#| fig-subcap: 
+#|   - "Manufacturer vs. Model"
+#|   - "Class vs. Transmission"
+#|   - "Cylinders vs. Transmission"
+#| layout-ncol: 3
+
+library(ggmosaic)
+
+ggplot(mpg) +
+  geom_mosaic(aes(x = product(manufacturer), 
+                  fill = model),
+              show.legend = FALSE) +
+  theme_mosaic() +
+  labs(title = "Mosaic-plot: Manufacturer vs. Model") +
+  theme(axis.text.x = element_text(angle = 90)) +
+  labs(x = "Manufacturer", 
+       y = "Model")
+
+ggplot(mpg) +
+  geom_mosaic(aes(x = product(class), 
+                  fill = trans),
+              show.legend = FALSE) +
+  theme_mosaic() +
+  labs(title = "Mosaic-plot: Class vs. Transmission") +
+  theme(axis.text.x = element_text(angle = 90)) +
+  scale_fill_brewer(palette = "Set3") 
+
+
+ggplot(mpg) +
+  geom_mosaic(aes(x = product(cyl), 
+                  fill = trans),
+              show.legend = FALSE) +
+  theme_mosaic() +
+  labs(title = "Mosaic-plot: Cylinders vs. Transmission") +
+  scale_fill_brewer(palette = "Set3") +
+  labs(x = "Cylinders", y = "Transmission")
+```
+
+**Other Options:**
+
+-   **Venn Diagram:**
+    -   Venn diagrams can be used when you want to visualize the overlap or commonality between two categorical variables.
+    -   Venn diagrams are typically used for categorical variables with a very few number of categories.
+-   **Joint Distribution Table** (an example at @fig-q7f-ex6) :
+    -   A joint distribution table is a simple way to display the counts or percentages of each combination of categories for two variables. This tabular format can provide a clear summary of the distribution.
+
+```{r}
+#| label: fig-q7f-ex6
+#| fig-cap: "Joint Distribution Table: Transmission vs. Cylinders"
+
+mpg |> 
+  count(trans, cyl) |> 
+  mutate(trans = snakecase::to_title_case(trans, numerals = "asis")) |> 
+  rename(cylinders = cyl) |> 
+  pivot_wider(id_cols = cylinders,
+              names_from = trans,
+              values_from = n) |> 
+  gt() |> 
+  sub_missing(missing_text = "") |> 
+  gt_theme_nytimes()
+```
+
+-   **Multiple Pie Charts: [@fig-q7g-ex6]**
+    -   When you have a limited number of categories for both variables, you can create multiple pie charts, one for each category of the second variable, to show how the first variable is distributed within each category.
+
+```{r}
+#| label: fig-q7g-ex6
+#| fig-cap: "Multiple Pie Charts for depicting Transmission vs. Cylinders"
+#| fig-width: 10
+#| fig-asp: 0.5
+
+
+# A fix for free scales not working with coord_polar)()
+# https://github.com/tidyverse/ggplot2/issues/2815
+cp <- coord_polar(theta = "y")
+cp$is_free <- function() TRUE
+
+mpg |> 
+  count(cyl, trans) |> 
+  ggplot(aes(x = "", 
+             y = n,
+             fill = trans)) +
+  geom_col(position = "stack", col = "white")  +
+  cp +
+  facet_wrap(~ cyl, nrow = 1, scales = "free") +
+  scale_fill_brewer(palette = "Set3") +
+  theme_classic() + 
+  theme(legend.position = "bottom",
+        axis.text = element_blank(),
+        axis.line = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title = element_blank(),
+        aspect.ratio = 1) +
+  labs(title = "Multiple pie charts for Cylinders vs. Transmission",
+       fill = "Transmission")
+```
+
+-   **Scatter-plot with Categories:**
+    -   If one of the categorical variables has a natural ordering, you can create a scatterplot and use colors or symbols to represent the categories of the other variable. This allows you to see how the data points are distributed.
+    -   This is not applicable here as `manufacturer` , `model` , `trans` and `class` do not follow any specific order.
+
+The choice of method depends on the specific characteristics of your data and the insights you want to extract. You should consider the data structure, the number of categories in each variable, and the relationships you want to explore when selecting the most appropriate visualization technique.

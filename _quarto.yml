@@ -10,7 +10,7 @@ website:
   reader-mode: true
   repo-url: https://github.com/Aditya-Dahiya/ggplot2book3e
   repo-actions: [edit, issue]
-  favicon: "book_logo.jpg"
+  favicon: "book_cover.jpg"
   twitter-card: true
   open-graph: true
   navbar:
