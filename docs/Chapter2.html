@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.3.433">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Aditya Dahiya">
-<meta name="dcterms.date" content="2023-10-26">
+<meta name="dcterms.date" content="2023-10-31">
 <title>Solutions (and Beyond): ggplot2 - Chapter 2</title>
 <style>
 code{white-space: pre-wrap;}
@@ -452,7 +452,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 26, 2023</p>
+      <p class="date">October 31, 2023</p>
     </div>
   </div>
   
@@ -3757,19 +3757,21 @@ tbody tr:last-child {
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="va">price_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_bar</span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Cut"</span>,</span>
-<span>       y <span class="op">=</span> <span class="st">"Sum of prices of all diamonds of that cut"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"Price (in million $)"</span>,</span>
 <span>       title <span class="op">=</span> <span class="st">"Plot using dplyr wrangling"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu">theme_minimal_hgrid</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number_si.html">label_number_si</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, </span>
 <span>             weight <span class="op">=</span> <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Cut"</span>,</span>
-<span>       y <span class="op">=</span> <span class="st">"geom_bar with weight aesthetic set to price"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"Price (in million $)"</span>,</span>
 <span>       title <span class="op">=</span> <span class="st">"Plot using geom_bar and weight aesthetic"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div id="fig-q6-ex6" class="cell quarto-layout-panel" data-hash="Chapter2_cache/html/fig-q6-ex6_cab765a689457af51c9ed96d4449d548">
+<span>  <span class="fu">theme_minimal_hgrid</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number_si.html">label_number_si</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-q6-ex6" class="cell quarto-layout-panel" data-hash="Chapter2_cache/html/fig-q6-ex6_fc8364aa6d9fbbaffa7ee2f50d58a888">
 <figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
 <div id="fig-q6-ex6-1" class="quarto-figure quarto-figure-center anchored">

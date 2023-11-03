@@ -2,7 +2,7 @@
 title: "Chapter 2"
 subtitle: "First Steps"
 author: "Aditya Dahiya"
-date: 2023-10-26
+date: 2023-10-31
 format: 
   html: 
     code-fold: true
@@ -38,6 +38,7 @@ data("mpg")                  # loading the "mpg" dataset
 library(gt)                  # beautiful tables in output
 library(gtExtras)            # extended beautiful tables' themes
 library(ggthemes)            # ggplot2 themes
+library(cowplot)             # nice themes and add-ons
 ```
 
 # **2.2.1 Exercises**
@@ -998,18 +999,20 @@ diamonds |>
   ggplot(aes(x = cut, y = price_total)) +
   geom_bar(stat = "identity") +
   labs(x = "Cut",
-       y = "Sum of prices of all diamonds of that cut",
+       y = "Price (in million $)",
        title = "Plot using dplyr wrangling") +
-  theme_minimal()
+  theme_minimal_hgrid() +
+  scale_y_continuous(labels = scales::label_number_si())
 
 diamonds |> 
   ggplot(aes(x = cut, 
              weight = price)) +
   geom_bar() +
   labs(x = "Cut",
-       y = "geom_bar with weight aesthetic set to price",
+       y = "Price (in million $)",
        title = "Plot using geom_bar and weight aesthetic") +
-  theme_minimal()
+  theme_minimal_hgrid() +
+  scale_y_continuous(labels = scales::label_number_si())
   
 ```
 

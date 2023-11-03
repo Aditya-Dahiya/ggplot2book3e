@@ -429,6 +429,39 @@ image_read(
 :::
 :::
 
+## `cowplot`
+
+We can use a very popular add-on `cowplot` [@cowplot] for some interesting and nice themes like `theme_minimal_hgrid()`, for keeping only particular lines in a ggplot. Further, it allows to place plots in a grid with joint labels.
+
+```{r}
+#| label: fig-cowplot
+#| fig-cap: "Different nice themes from the cowplot package arranged in a grid"
+#| fig-subcap:
+#|   - "theme_minimal_hgrid()"
+#|   - "theme_half_open()"
+#| layout-ncol: 2
+
+library(cowplot) 
+
+diamonds |> 
+  count(cut) |> 
+  ggplot(aes(x = cut, y = n)) +
+  geom_col(fill = "#c51b8a") +
+  theme_minimal_hgrid() +
+  scale_y_continuous(labels = scales::label_number_si()) +
+  labs(x = "Cut of the Diamond", 
+       y = "Number of diamonds (in thousands)")
+
+diamonds |> 
+  count(cut) |> 
+  ggplot(aes(x = cut, y = n)) +
+  geom_col(fill = "pink") +
+  scale_y_continuous(labels = scales::label_number_si()) +
+  labs(x = "Cut of the Diamond", 
+       y = "Number of diamonds (in thousands)") +
+  theme_half_open()
+```
+
 ::: callout-note
 I intend to add more packages as and when I come across them. Watch out for this space in the future too.
 :::

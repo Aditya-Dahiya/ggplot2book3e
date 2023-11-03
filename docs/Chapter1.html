@@ -179,7 +179,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Chapter1.html">Getting Started</a></li><li class="breadcrumb-item"><a href="./Chapter2.html">Chapter 2</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Chapter1.html">Getting Started</a></li><li class="breadcrumb-item"><a href="./Chapter1.html">Chapter 1</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -395,6 +395,7 @@ div.csl-indent {
   <li><a href="#ggnewscale" id="toc-ggnewscale" class="nav-link" data-scroll-target="#ggnewscale"><code>ggnewscale</code></a></li>
   <li><a href="#magick" id="toc-magick" class="nav-link" data-scroll-target="#magick"><code>magick</code></a></li>
   <li><a href="#cropcircles" id="toc-cropcircles" class="nav-link" data-scroll-target="#cropcircles"><code>cropcircles</code></a></li>
+  <li><a href="#cowplot" id="toc-cowplot" class="nav-link" data-scroll-target="#cowplot"><code>cowplot</code></a></li>
   </ul>
 </li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter1.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -830,6 +831,47 @@ Note
 </div>
 </div>
 </div>
+</section><section id="cowplot" class="level2"><h2 class="anchored" data-anchor-id="cowplot"><code>cowplot</code></h2>
+<p>We can use a very popular add-on <code>cowplot</code> <span class="citation" data-cites="cowplot">(<a href="#ref-cowplot" role="doc-biblioref">Wilke 2020</a>)</span> for some interesting and nice themes like <code><a href="https://wilkelab.org/cowplot/reference/theme_minimal_grid.html">theme_minimal_hgrid()</a></code>, for keeping only particular lines in a ggplot. Further, it allows to place plots in a grid with joint labels.</p>
+<div>
+<details><summary>Code</summary><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/cowplot/">cowplot</a></span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">cut</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#c51b8a"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://wilkelab.org/cowplot/reference/theme_minimal_grid.html">theme_minimal_hgrid</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number_si.html">label_number_si</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Cut of the Diamond"</span>, </span>
+<span>       y <span class="op">=</span> <span class="st">"Number of diamonds (in thousands)"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">cut</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"pink"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number_si.html">label_number_si</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Cut of the Diamond"</span>, </span>
+<span>       y <span class="op">=</span> <span class="st">"Number of diamonds (in thousands)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://wilkelab.org/cowplot/reference/theme_cowplot.html">theme_half_open</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-cowplot" class="cell quarto-layout-panel" data-hash="Chapter1_cache/html/fig-cowplot_cd482aad6ea538222c94911ce0708bb2">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-cowplot-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter1_files/figure-html/fig-cowplot-1.png" class="img-fluid figure-img" data-ref-parent="fig-cowplot" width="672"></p>
+<figcaption class="figure-caption">(a) theme_minimal_hgrid()</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-cowplot-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter1_files/figure-html/fig-cowplot-2.png" class="img-fluid figure-img" data-ref-parent="fig-cowplot" width="672"></p>
+<figcaption class="figure-caption">(b) theme_half_open()</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;9: Different nice themes from the cowplot package arranged in a grid</figcaption><p></p>
+</figure>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -867,6 +909,9 @@ Pedersen, Thomas Lin. 2022. <span>“Ggforce: Accelerating ’Ggplot2’.”</sp
 </div>
 <div id="ref-nycflights13" class="csl-entry" role="listitem">
 Wickham, Hadley. 2021. <span>“Nycflights13: Flights That Departed NYC in 2013.”</span> <a href="https://CRAN.R-project.org/package=nycflights13">https://CRAN.R-project.org/package=nycflights13</a>.
+</div>
+<div id="ref-cowplot" class="csl-entry" role="listitem">
+Wilke, Claus O. 2020. <span>“Cowplot: Streamlined Plot Theme and Plot Annotations for ’Ggplot2’.”</span> <a href="https://CRAN.R-project.org/package=cowplot">https://CRAN.R-project.org/package=cowplot</a>.
 </div>
 <div id="ref-gghighlight" class="csl-entry" role="listitem">
 Yutani, Hiroaki. 2022. <span>“Gghighlight: Highlight Lines and Points in ’Ggplot2’.”</span> <a href="https://CRAN.R-project.org/package=gghighlight">https://CRAN.R-project.org/package=gghighlight</a>.
