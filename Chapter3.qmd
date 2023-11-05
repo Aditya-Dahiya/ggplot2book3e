@@ -36,42 +36,42 @@ bibliography: references.bib
 
 Here's a table that shows the geoms you would use in `ggplot2` to create each of the named plots, along with example code using the `mpg` dataset:
 
-+---------------+--------------------+-----------------------------------+
-| Plot Type     | **ggplot2** Geom   | Example Code                      |
-+===============+====================+===================================+
-| Scatterplot   | `geom_point()`     | ``` r                             |
-|               |                    | ggplot(mpg,                       |
-|               |                    |        aes(x = displ,             |
-|               |                    |            y = hwy)) +            |
-|               |                    |   geom_point()                    |
-|               |                    | ```                               |
-+---------------+--------------------+-----------------------------------+
-| Line chart    | `geom_line()`      | ``` r                             |
-|               |                    | ggplot(mpg,                       |
-|               |                    |        aes(x = displ,             |
-|               |                    |            y = hwy)) +            |
-|               |                    |   geom_line()                     |
-|               |                    | ```                               |
-+---------------+--------------------+-----------------------------------+
-| Histogram     | `geom_histogram()` | ``` r                             |
-|               |                    | ggplot(mpg,                       |
-|               |                    |        aes(x = hwy)) +            |
-|               |                    |   geom_histogram()                |
-|               |                    | ```                               |
-+---------------+--------------------+-----------------------------------+
-| Bar chart     | `geom_bar()`       | ``` r                             |
-|               |                    | ggplot(mpg,                       |
-|               |                    |        aes(x = class)) +          |
-|               |                    |   geom_bar()                      |
-|               |                    | ```                               |
-+---------------+--------------------+-----------------------------------+
-| Pie chart     | `geom_bar()` `+`   | ``` r                             |
-|               |                    | ggplot(mpg,                       |
-|               | `coord_polar()`    |        aes(x = class)) +          |
-|               |                    |   geom_bar(position = "stack") +  |
-|               |                    |   coord_polar(theta = "y")        |
-|               |                    | ```                               |
-+---------------+--------------------+-----------------------------------+
++-------------+--------------------+----------------------------------+
+| Plot Type   | **ggplot2** Geom   | Example Code                     |
++=============+====================+==================================+
+| Scatterplot | `geom_point()`     | ``` r                            |
+|             |                    | ggplot(mpg,                      |
+|             |                    |        aes(x = displ,            |
+|             |                    |            y = hwy)) +           |
+|             |                    |   geom_point()                   |
+|             |                    | ```                              |
++-------------+--------------------+----------------------------------+
+| Line chart  | `geom_line()`      | ``` r                            |
+|             |                    | ggplot(mpg,                      |
+|             |                    |        aes(x = displ,            |
+|             |                    |            y = hwy)) +           |
+|             |                    |   geom_line()                    |
+|             |                    | ```                              |
++-------------+--------------------+----------------------------------+
+| Histogram   | `geom_histogram()` | ``` r                            |
+|             |                    | ggplot(mpg,                      |
+|             |                    |        aes(x = hwy)) +           |
+|             |                    |   geom_histogram()               |
+|             |                    | ```                              |
++-------------+--------------------+----------------------------------+
+| Bar chart   | `geom_bar()`       | ``` r                            |
+|             |                    | ggplot(mpg,                      |
+|             |                    |        aes(x = class)) +         |
+|             |                    |   geom_bar()                     |
+|             |                    | ```                              |
++-------------+--------------------+----------------------------------+
+| Pie chart   | `geom_bar()` `+`   | ``` r                            |
+|             |                    | ggplot(mpg,                      |
+|             | `coord_polar()`    |        aes(x = class)) +         |
+|             |                    |   geom_bar(position = "stack") + |
+|             |                    |   coord_polar(theta = "y")       |
+|             |                    | ```                              |
++-------------+--------------------+----------------------------------+
 
 ## Question 2
 
