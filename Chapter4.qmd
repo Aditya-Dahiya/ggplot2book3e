@@ -193,7 +193,7 @@ ggplot(hadley, aes(year, n)) +
 
 Once you run the code, you can see a saw-toothed graph shown in @fig-q5-ex4-1. To detect the problem, we can plot a scatter-plot where we see some observations lie very close to azero. These ust be of a separate sex. The scatter plot is in @fig-q5-ex4-2 . Finally, the corrected code is one where we add the `group` and/or `color` aesthetic mapped to variable `sex` which produces the correct plot in @fig-q4a-ex4-3 .
 
-The graph might make one unhappy because the name "Hadley" has been falling in popularity over time.
+The graph might make one unhappy because the name "Hadley" has been falling in popularity in the last few years.
 
 ```{r}
 #| label: fig-q5-ex4
