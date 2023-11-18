@@ -405,7 +405,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-</header><div class="cell" data-hash="Chapter4_cache/html/setup_7daffd16408c7592d7cf44b8ce468d4b">
+</header><div class="cell" data-hash="Chapter4_cache/html/setup_9a928407eadf739014cd05425fa4309b">
 <details><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
@@ -413,7 +413,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="question-1" class="level2"><h2 class="anchored" data-anchor-id="question-1">Question 1</h2>
 <p><strong>Draw a boxplot of <code>hwy</code> for each value of <code>cyl</code>, without turning <code>cyl</code> into a factor. What extra aesthetic do you need to set?</strong></p>
 <p>The <a href="#fig-q1-ex4">Figure&nbsp;1</a> depicts the boxplot of <code>hwy</code> for each value of <code>cyl</code>, without turning <code>cyl</code> into a factor. The extra factor you need to set is the aesthetic <code>group = cyl</code> .</p>
-<div class="cell" data-hash="Chapter4_cache/html/fig-q1-ex4_e5be5bd1d26ab75b662af2a6e37779b6">
+<div class="cell" data-hash="Chapter4_cache/html/fig-q1-ex4_cfff6c10a371347e9a697dd775cfa43a">
 <details><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mpg</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">hwy</span>, group <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -435,7 +435,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
        aes(displ, cty)) +    
   geom_boxplot()</code></pre>
 <p>The following code modifies the code and produces one boxplot per integer value of <code>displ</code>. Importantly, we make <code>displ</code> a group aesthetic, so that one box-plot per value of displacement.</p>
-<div class="cell" data-hash="Chapter4_cache/html/fig-q2-ex4_4f9ce7395db1611546eb58f1f3716ace">
+<div class="cell" data-hash="Chapter4_cache/html/fig-q2-ex4_cadd8e4a9c1d3049c48c5fd3c297dc56">
 <details><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, </span>
 <span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">cty</span>,</span>
 <span>           group <span class="op">=</span> <span class="va">displ</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>    </span>
@@ -473,7 +473,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>group <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, </span>
 <span>            linewidth <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div id="fig-q3-ex4" class="cell quarto-layout-panel" data-hash="Chapter4_cache/html/fig-q3-ex4_4fb754a91c7859abf0b9772030f9c76b">
+</details><div id="fig-q3-ex4" class="cell quarto-layout-panel" data-hash="Chapter4_cache/html/fig-q3-ex4_847d5e3ff9c9c56d4448445ef3cfa7cd">
 <figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
 <div id="fig-q3-ex4-1" class="quarto-figure quarto-figure-center anchored">
@@ -525,7 +525,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="va">mpg2</span> <span class="op">&lt;-</span> <span class="va">mpg</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">hwy</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">hwy</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">drv</span>, fill <span class="op">=</span> <span class="va">hwy</span>, group <span class="op">=</span> <span class="va">id</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div id="fig-q4-ex4" class="cell quarto-layout-panel" data-hash="Chapter4_cache/html/fig-q4-ex4_583b082b77a7dd0b8cdf65bac2bb2711">
+</details><div id="fig-q4-ex4" class="cell quarto-layout-panel" data-hash="Chapter4_cache/html/fig-q4-ex4_b67af792baeb2291dc48c7030c99f523">
 <figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
 <div id="fig-q4-ex4-1" class="quarto-figure quarto-figure-center anchored">
@@ -559,7 +559,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="va">mpg2</span> <span class="op">&lt;-</span> <span class="va">mpg</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">hwy</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">hwy</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">drv</span>, fill <span class="op">=</span> <span class="va">hwy</span>, group <span class="op">=</span> <span class="va">id</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div id="fig-q4a-ex4" class="cell quarto-layout-panel" data-hash="Chapter4_cache/html/fig-q4a-ex4_e4c8d1892588632409b405bdd930b035">
+</details><div id="fig-q4a-ex4" class="cell quarto-layout-panel" data-hash="Chapter4_cache/html/fig-q4a-ex4_0ea199f3c8c4aec33b05fc1ea614ad58">
 <figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
 <div id="fig-q4a-ex4-1" class="quarto-figure quarto-figure-center anchored">
@@ -591,7 +591,7 @@ hadley &lt;- dplyr::filter(babynames, name == "Hadley")
 ggplot(hadley, aes(year, n)) + 
   geom_line()</a></code></pre>
 <p>Once you run the code, you can see a saw-toothed graph shown in <a href="#fig-q5-ex4-1">Figure&nbsp;6 (a)</a>. To detect the problem, we can plot a scatter-plot where we see some observations lie very close to azero. These ust be of a separate sex. The scatter plot is in <a href="#fig-q5-ex4-2">Figure&nbsp;6 (b)</a> . Finally, the corrected code is one where we add the <code>group</code> and/or <code>color</code> aesthetic mapped to variable <code>sex</code> which produces the correct plot in <a href="#fig-q4a-ex4-3">Figure&nbsp;5 (c)</a> .</p>
-<p>The graph might make one unhappy because the name “Hadley” has been falling in popularity over time.</p>
+<p>The graph might make one unhappy because the name “Hadley” has been falling in popularity in the last few years.</p>
 <div>
 <details><summary>Code</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/babynames">babynames</a></span><span class="op">)</span></span>
 <span><span class="va">hadley</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">babynames</span>, <span class="va">name</span> <span class="op">==</span> <span class="st">"Hadley"</span><span class="op">)</span></span>
@@ -607,7 +607,7 @@ ggplot(hadley, aes(year, n)) +
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"magenta"</span>, <span class="st">"blue"</span><span class="op">)</span>,</span>
 <span>                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div id="fig-q5-ex4" class="cell quarto-layout-panel" data-hash="Chapter4_cache/html/fig-q5-ex4_c9efdf1ecf103a7df8503e57268722ce">
+</details><div id="fig-q5-ex4" class="cell quarto-layout-panel" data-hash="Chapter4_cache/html/fig-q5-ex4_2fa10d8244c47556e8271b8301a33bcc">
 <figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
 <div id="fig-q5-ex4-1" class="quarto-figure quarto-figure-center anchored">

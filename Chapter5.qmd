@@ -1,8 +1,215 @@
 ---
 title: "Chapter 5"
 subtitle: "Statistical Summaries"
+author: "Aditya Dahiya"
+date: 2023-11-18
+format: 
+  html: 
+    code-fold: true
+    code-copy: hover
+    code-link: true
+execute: 
+  echo: true
+  warning: false
+  error: false
+  cache: true
+filters:
+  - social-share
+share:
+  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter5.html"
+  description: "Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
+  twitter: true
+  facebook: true
+  linkedin: true
+  email: true
+  mastodon: true
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
 ---
 
-::: callout-warning
-Solutions for this chapter are under construction.
-:::
+```{r}
+#| label: setup
+library(tidyverse)
+library(ggtext)
+```
+
+# 5.4.1 Exercises
+
+## Question 1
+
+**What bin-width tells you the most interesting story about the distribution of `carat`?**
+
+The @fig-q1-ex4 presented below illustrates various distribution histograms for the variable "`carat`" in the `diamonds` dataset, created using `ggplot2` and `geom_histogram()`.
+
+The bin width of 0.01 reveals the most interesting narrative and pattern:
+
+1.  Diamonds exhibit an overall right-skewed distribution, based on their carat.
+
+2.  Diamonds tend to cluster around specific values such as 1, 1.25, 1.5, 1.75, 2 and so on indicating observer bias in recording the carat of diamonds. There is a tendency to round off values during the recording process.
+
+```{r}
+#| fig-cap: "Different bin-widths for histogram of diamonds' carat distribution"
+#| label: fig-q1-ex4
+#| fig-subcap: 
+#|   - "Default bin-width with number of bins = 30"
+#|   - "Bin-width of 0.1"
+#|   - "Bin-width of 0.02"
+#|   - "Bin-width of 0.01"
+#| layout-ncol: 2
+
+
+ggplot(diamonds, aes(carat)) +
+  geom_histogram() +
+  cowplot::theme_minimal_vgrid()
+
+ggplot(diamonds, aes(carat)) +
+  geom_histogram(binwidth = 0.1) +
+  cowplot::theme_minimal_vgrid()
+
+ggplot(diamonds, aes(carat)) +
+  geom_histogram(binwidth = 0.02) +
+  cowplot::theme_minimal_vgrid()
+
+ggplot(diamonds, aes(carat)) +
+  geom_histogram(binwidth = 0.01) +
+  cowplot::theme_minimal_vgrid()
+```
+
+## Question 2
+
+**Draw a histogram of `price`. What interesting patterns do you see?**
+
+The histogram presented @fig-q2-ex4 illustrates the distribution of the `price` variable, derived from the `diamonds` dataset within the `ggplot2` package of `R`. Notably, we have utilized a lower bin width of 10 to discern intricate patterns.
+
+-   Upon examination, it becomes evident that the distribution of prices is highly right-skewed.
+
+-   Another intriguing observation is the conspicuous gap in the distribution, particularly around the \$1500 mark. Within the interval spanning \$1450 to \$1550, there is a notable absence of diamonds. This anomaly raises the possibility of inadvertent deletion of certain observations within the dataset or, alternatively, could be attributed to errors in data recording. Further investigation may shed light on the cause of this unexpected pattern.
+
+```{r}
+#| fig-cap: "Histogram of price distribution for the diamonds"
+#| label: fig-q2-ex4
+#| fig-subcap: 
+#|   - "Default bin-width with number of bins = 30"
+#|   - "Histogram with Bin-width = 10"
+#| layout-ncol: 2
+
+
+diamonds |> 
+  ggplot(aes(price)) + 
+  geom_histogram() +
+  cowplot::theme_minimal_vgrid() +
+  scale_x_continuous(labels = scales::label_number_si(prefix = "$"),
+                     breaks = seq(0, 20000, 2000))
+
+diamonds |> 
+  ggplot(aes(price)) + 
+  geom_histogram(binwidth = 10) +
+  cowplot::theme_minimal_vgrid() +
+  scale_x_continuous(labels = scales::label_number_si(prefix = "$"),
+                     breaks = seq(0, 20000, 2000))
+```
+
+## Question 3
+
+**How does the distribution of `price` vary with `clarity`?**
+
+The @fig-q3-ex4 depicts the distribution of `price` versus `clarity` for the diamond dataset. Given that `price` is a continuous variable and `clarity` is a categorical / discrete variable, various graphical representations can be employed for analysis. These include:
+
+1.  **Multiple Box-plots (depicted below in @fig-q3-ex4-1 ):** The use of multiple boxplots allows us to visually compare the distribution of prices across different clarity levels.
+
+2.  **Violin Plots (depicted below in @fig-q3-ex4-2 ):** The inclusion of violin plots provides a nuanced view of the price distribution.
+
+    The observed box-plots and violin plots reveal that the distribution of prices is right-skewed for all clarity levels. Furthermore, at higher clarity levels, the right-skewness becomes more pronounced, indicating a scarcity of highly priced diamonds within each clarity tier.
+
+    The data suggests a consistent right-skewed pattern across all clarity levels, with a notable intensification of skewness at higher clarity levels. This implies a scarcity of diamonds with exceptionally high prices within each clarity category.
+
+The other methods which can be employed include: ---
+
+1.  **Histograms with Faceting:** Employing histograms with faceting can offer additional insights into the distribution of prices within each clarity category, allowing for a more detailed examination.
+
+2.  **Density Plots with Different Colors for Different Clarity Levels:** Utilizing density plots with distinct colors for each clarity level enhances the clarity of the distribution patterns. This approach is less useful here as there many clarity levels, resulting in over-crowded density plots.
+
+```{r}
+#| fig-cap: "Distribution of price varying with clarity for the diamonds dataset"
+#| label: fig-q3-ex4
+#| layout-ncol: 2
+#| fig-subcap: 
+#|   - "Multiple Boxplots"
+#|   - "Multiple Violin Plots"
+
+ggplot(diamonds, aes(clarity, 
+                     price,
+                     fill = clarity)) +
+  geom_boxplot(outlier.alpha = 0.1,
+               varwidth = TRUE,
+               outlier.shape = 20) +
+  cowplot::theme_minimal_hgrid() +
+  theme(axis.line.x = element_blank(),
+        legend.position = "none")
+
+ggplot(diamonds, aes(clarity, 
+                     price,
+                     fill = clarity)) +
+  geom_violin() + 
+  cowplot::theme_minimal_hgrid() +
+  theme(axis.line.x = element_blank(),
+        legend.position = "none")
+```
+
+## Question 4
+
+**Overlay a frequency polygon and density plot of `depth`. What computed variable do you need to map to `y` to make the two plots comparable? (You can either modify `geom_freqpoly()` or `geom_density()`.)**
+
+As we can see in the @fig-q4-ex4, we can overlay a frequency ploygon and a density plot of `depth` variable as follows:
+
+1.  Compute count on the y-axis in `geom_density()` using `geom_density(aes(y = ..count..)` to display counts on y-axis for both plots and overlay them, as shown in @fig-q4-ex4-1 .
+
+2.  Compute density on the y-axis in `geom_freqpoly()` using `geom_freqpoly(aes(y = ..density..)` to display densities on y-axis for both plots and overlay them, as shown in @fig-q4-ex4-2 .
+
+```{r}
+#| label: fig-q4-ex4
+#| fig-cap: "Overlay a frequency polygon and density plot of depth"
+#| fig-subcap: 
+#|   - "Modifying geom_density to display count"
+#|   - "Modifying geom_freqpoly to display density"
+
+title = "Overlay of <span style='color: blue;'>Frequency Polygon</span> and <span style='color: orange;'>Density Plot</span> of Depth" 
+
+ggplot(diamonds, aes(x = depth)) +
+  
+  # Overlay frequency polygon
+  geom_freqpoly(color = "blue", lwd = 1) +
+  
+  # Overlay density plot
+  geom_density(aes(y = ..count..), 
+               col = "orange", lwd = 1) +
+  
+  # Add labels and title
+  labs(title = title,
+       x = "Depth",
+       y = "Count") +
+  
+  # Adjust theme for markdown element in the title
+  theme_minimal() +
+  theme(plot.title = element_markdown())
+
+
+ggplot(diamonds, aes(x = depth)) +
+  
+  # Overlay frequency polygon
+  geom_freqpoly(aes(y = ..density..),
+                color = "blue", lwd = 1) +
+  
+  # Overlay density plot
+  geom_density(col = "orange", lwd = 1) +
+  
+  # Add labels and title
+  labs(title = title,
+       x = "Depth",
+       y = "Density") +
+  
+  # Adjust theme for markdown element in the title
+  theme_minimal() +
+  theme(plot.title = element_markdown())
+```
