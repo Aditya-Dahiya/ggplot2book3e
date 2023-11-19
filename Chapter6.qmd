@@ -1,8 +1,156 @@
 ---
 title: "Chapter 6"
 subtitle: "Maps"
+author: "Aditya Dahiya"
+date: 2023-11-18
+format: 
+  html: 
+    code-fold: true
+    code-copy: hover
+    code-link: true
+execute: 
+  echo: true
+  warning: false
+  error: false
+  cache: true
+filters:
+  - social-share
+share:
+  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter5.html"
+  description: "Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
+  twitter: true
+  facebook: true
+  linkedin: true
+  email: true
+  mastodon: true
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
 ---
 
 ::: callout-warning
-Solutions for this chapter are under construction.
+This Chapter does not have Exercises. The code and examples below show map plotting in `R` with `tidyverse` and `sf` with examples from India.
 :::
+
+```{r}
+#| label: setup
+
+library(tidyverse)     # everything and ggplot2
+library(sf)            # sf and shape files
+library(ggthemes)      # for theme_map
+library(ggspatial)     # map annotations
+```
+
+## **6.2 Simple features maps**
+
+First, we download a shape file of India's map (from [here](https://github.com/AnujTiwari/India-State-and-Country-Shapefile-Updated-Jan-2020)) and plot a map of India with latest state and Union Territory boundaries. The code below shows a simple example of ease of plotting with `ggplot()` and `geom_sf()` along with **labeling** [official names](https://knowindia.india.gov.in/states-uts/) of States and Union Territories.
+
+```{r}
+#| fig-width: 10
+#| fig-asp: 1
+
+
+# Reading in the shape file
+india_map <- read_sf(here::here("data", 
+                                "india_map", 
+                                "India_State_Boundary.shp")) |> 
+  # tidy names of variables
+  rename(state = State_Name) |> 
+  # Renaming to official names. Official names taken from Government:
+  # https://knowindia.india.gov.in/states-uts/
+  mutate(state = case_when(
+    state == "Andaman & Nicobar" ~ "Andaman and Nicobar Islands",
+    state == "Daman and Diu and Dadra and Nagar Haveli" ~ "Dadra and Nagar Haveli and Daman & Diu",
+    state == "Jammu and Kashmir" ~ "Jammu & Kashmir",
+    state == "Telengana" ~ "Telangana",
+    .default = state
+  ))
+
+# Add names of Union Territories
+union_territories <- c(
+  "Andaman and Nicobar Islands",
+  "Chandigarh",
+  "Dadra and Nagar Haveli and Daman & Diu",
+  "Delhi",
+  "Jammu & Kashmir",
+  "Ladakh",
+  "Lakshadweep",
+  "Puducherry"
+)
+
+
+india_map |> 
+  mutate(type = if_else(state %in% union_territories,
+                        "Union Territory",
+                        "State")) |> 
+  ggplot(aes(geometry = geometry,
+             col = type)) + 
+  geom_sf(col = "darkgrey", fill = "white") +
+  geom_sf_text(aes(label = state,
+                size = type)) +
+  scale_color_manual(values = c("darkblue", "darkred")) +
+  scale_size_discrete(range = c(3.5, 2.5)) +
+  theme_map() +
+  theme(legend.position = "bottom") +
+  labs(col = NULL) +
+  annotation_scale(bar_cols = c("darkgrey", "white"),
+                   location = "br") +
+  annotation_north_arrow(location = "tr", 
+                         which_north = "true") +
+  guides(size = "none")
+```
+
+## **6.4 Working with `sf` data**
+
+Plotting a specific state from i..e, Haryana, and its districts along with their area (in thousand sq. km.) using official data from [Survey of India](https://onlinemaps.surveyofindia.gov.in/), and adding geoms from other metadata - area and length of district borders: --
+
+```{r}
+#| fig-width: 10
+#| fig-asp: 1
+
+haryana_map <- read_sf(here::here("data",
+                                  "haryana_map",
+                                  "HARYANA_DISTRICT_BDY.shp")) |> 
+  janitor::clean_names() |> 
+  mutate(
+    district = str_replace_all(district,
+                               pattern = ">",
+                               replacement = "A"),
+    state = str_replace_all(state,
+                            pattern = ">",
+                            replacement = "A"),
+    district = case_when(
+      district == "FAR|DABAD" ~ "FARIDABAD",
+      district == "J|ND" ~ "JIND",
+      district == "PAN|PAT" ~ "PANIPAT",
+      district == "SON|PAT" ~ "SONIPAT",
+      .default = district
+    )
+      )
+
+haryana_map |>
+  select(-c(remarks, state_lgd, district_l)) |> 
+  arrange(desc(shape_area)) |> 
+  mutate(
+    rank = row_number(),
+    area = round(shape_area/1e9, 2),
+    district = snakecase::to_title_case(district),
+    font_col = district %in% c("Hisar", "Sirsa")
+  ) |> 
+  
+  ggplot(aes(geometry = geometry,
+             label = paste0(district),
+             fill = shape_area/1e6)) +
+  geom_sf(col = "white") +
+  geom_sf_text(aes(col = font_col),
+               size = 5) +
+  theme_map() +
+  annotation_scale(location = "br") +
+  annotation_north_arrow(location = "tr") +
+  labs(fill = "District Area\n(in sq. km.)",
+       title = "Haryana: Districts (with area)") +
+  scale_fill_viridis_c(labels = scales::label_comma(),
+                       option = "G") +
+  scale_color_manual(values = c("white", "black")) +
+  guides(col = "none")
+```
