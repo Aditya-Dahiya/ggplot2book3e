@@ -11,3 +11,5 @@ lubridate
 sf
 ggthemes
 ggspatial
+tmap
+leaflet

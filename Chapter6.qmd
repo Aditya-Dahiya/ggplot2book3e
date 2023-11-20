@@ -28,7 +28,7 @@ editor_options:
 bibliography: references.bib
 ---
 
-::: callout-warning
+::: callout-note
 This Chapter does not have Exercises. The code and examples below show map plotting in `R` with `tidyverse` and `sf` with examples from India.
 :::
 
@@ -125,7 +125,8 @@ haryana_map <- read_sf(here::here("data",
       district == "PAN|PAT" ~ "PANIPAT",
       district == "SON|PAT" ~ "SONIPAT",
       .default = district
-    )
+    ),
+    district = snakecase::to_title_case(district)
       )
 
 haryana_map |>
@@ -134,7 +135,6 @@ haryana_map |>
   mutate(
     rank = row_number(),
     area = round(shape_area/1e9, 2),
-    district = snakecase::to_title_case(district),
     font_col = district %in% c("Hisar", "Sirsa")
   ) |> 
   
@@ -143,7 +143,7 @@ haryana_map |>
              fill = shape_area/1e6)) +
   geom_sf(col = "white") +
   geom_sf_text(aes(col = font_col),
-               size = 5) +
+               size = 4) +
   theme_map() +
   annotation_scale(location = "br") +
   annotation_north_arrow(location = "tr") +
@@ -153,4 +153,85 @@ haryana_map |>
                        option = "G") +
   scale_color_manual(values = c("white", "black")) +
   guides(col = "none")
+```
+
+## Chloropleth with `tmap`
+
+A package to create chloropleths very easily is the `tmap` package [@tmap] of `R` . However, is uses a very different syntax than `ggplot2` .
+
+```{r}
+library(tmap)
+tm_hy <- haryana_map |> 
+  mutate(area = shape_area/1e6)
+
+t_hy <- tm_shape(tm_hy) +
+  tm_polygons(col = "area",
+              title = "District Area\n(in sq. km.)",
+              border.col = "black",
+              interactive = TRUE,
+              style = "pretty")
+t_hy
+```
+
+An interesting feature is the ability to plot interactive maps: --
+
+```{r}
+tmap_mode("view")
+tmap_last()
+
+tmap_mode("plot")
+```
+
+## Adding `leaflet` maps to Chloropleths
+
+```{r}
+library(leaflet)
+
+# Create a quantile of colours' palette to be used
+pal_hy <- colorQuantile("Blues", 
+                        domain = NULL,
+                        n = 5)
+
+# Create vector of text to display on pop-ups in leaflet map
+p_popup <- paste0(haryana_map$district, 
+                  " District.  Area: ", 
+                  round(haryana_map$shape_area/1e6, 0),
+                  " sq. km.")
+
+# Create leaflet map
+# Data set
+haryana_map |> 
+  
+  # Transform polygons into CRS=4326 since leaflet only understand that
+  st_transform(crs = 4326) |> 
+  
+  # Begin leaflet map
+  leaflet() |> 
+  
+  # Add polygons from the geometry column of the data-set
+  addPolygons(
+    stroke = FALSE,                       # remove polygon borders
+    fillColor = ~ pal_hy(shape_area/1e6), # set fill color with function
+    fillOpacity = 0.6,                    # translucent to see background map
+    smoothFactor = 0.5,                   # make it nicer
+    popup = p_popup,                      # add popup
+    group = "District Area"               # a Group label for leaflet options
+  ) |> 
+  
+  # Add base map from leaflet; default is Open Street Maps
+  addTiles() |>                           # Adding Base Map
+  
+  # Adding a legend
+  addLegend(
+    position = "bottomright",  # location
+    pal = pal_hy,              # palette function
+    values = ~shape_area/1e6,  # value to be passed to palette function
+    title = "District Area (sq. km.)" # legend title
+    ) |> 
+  
+  # Adding an option to view different base maps
+  addLayersControl(
+    baseGroups = c("OSM", "Carto"),
+    overlayGroups = c("District Area")
+  )
 ```
