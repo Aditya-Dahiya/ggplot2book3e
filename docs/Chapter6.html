@@ -479,7 +479,7 @@ Note
 <span><span class="va">haryana_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html">read_sf</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>,</span>
 <span>                                  <span class="st">"haryana_map"</span>,</span>
 <span>                                  <span class="st">"HARYANA_DISTRICT_BDY.shp"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>    district <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">district</span>,</span>
 <span>                               pattern <span class="op">=</span> <span class="st">"&gt;"</span>,</span>
@@ -678,7 +678,7 @@ Note
 </div>
 </div>
 </section></section><section id="working-with-sf-data" class="level2"><h2 class="anchored" data-anchor-id="working-with-sf-data"><strong>6.4 Working with <code>sf</code> data</strong></h2>
-<p>We can even drawn out different pieces of polygons, i.e.&nbsp;islands, enclaves or exclaves using <code>sf</code> data. Here’s an example for India’s island chains: –</p>
+<p>We can even drawn out different pieces of polygons, i.e.&nbsp;islands, enclaves or exclaves using <code>sf</code> data. The beauty of multi-polygon <code>sf</code> objects <em>(i.e., geographic administrative units with more than one polygon, or, in simpler terms, groups of islands or non-contiguous areas)</em> is that we can use <a href="https://r-spatial.github.io/sf/reference/st_cast.html"><code>st_cast</code></a><code>(&lt;object_name&gt;, "POLYGON")</code> to separate out each polygon (contiguous area unit) and order them by size using <code><a href="https://r-spatial.github.io/sf/reference/geos_measures.html">st_area()</a></code> . We can pick out single polygons, even ordered by size, as we can see in <a href="#fig-sf-poly-2">Figure&nbsp;1 (b)</a> and <a href="#fig-sf-poly-3">Figure&nbsp;1 (c)</a> from an example using India’s Andaman and Nicobar Islands: –</p>
 <div>
 <details><summary>Code</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Pull out the geometry of Andaman and Nicobar Islands as "ani"</span></span>
 <span><span class="va">ani</span> <span class="op">&lt;-</span> <span class="va">india_map</span> <span class="op">|&gt;</span> </span>
@@ -688,6 +688,7 @@ Note
 <span><span class="co"># Bounding Box of ani</span></span>
 <span><span class="va">lims</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html">st_bbox</a></span><span class="op">(</span><span class="va">ani</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># Create different polygon objects from a single multi-polygon </span></span>
 <span><span class="va">ani_islands</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_cast.html">st_cast</a></span><span class="op">(</span><span class="va">ani</span>, <span class="st">"POLYGON"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Checking order: We see that islands are listed in decreasing order of size</span></span>
@@ -713,6 +714,7 @@ Note
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">lims</span><span class="op">[</span><span class="st">"xmin"</span><span class="op">]</span>, <span class="va">lims</span><span class="op">[</span><span class="st">"xmax"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">lims</span><span class="op">[</span><span class="st">"ymin"</span><span class="op">]</span>, <span class="va">lims</span><span class="op">[</span><span class="st">"ymax"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="va">theme_islands</span></span>
+<span></span>
 <span><span class="co"># Drawing the largest of the Andaman and Nicobar Islands</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">ani_islands</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -720,6 +722,7 @@ Note
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">lims</span><span class="op">[</span><span class="st">"xmin"</span><span class="op">]</span>, <span class="va">lims</span><span class="op">[</span><span class="st">"xmax"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">lims</span><span class="op">[</span><span class="st">"ymin"</span><span class="op">]</span>, <span class="va">lims</span><span class="op">[</span><span class="st">"ymax"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="va">theme_islands</span></span>
+<span></span>
 <span><span class="co"># Drawing the second largest of the Andaman and Nicobar Islands</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">ani_islands</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -727,22 +730,34 @@ Note
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">lims</span><span class="op">[</span><span class="st">"xmin"</span><span class="op">]</span>, <span class="va">lims</span><span class="op">[</span><span class="st">"xmax"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">lims</span><span class="op">[</span><span class="st">"ymin"</span><span class="op">]</span>, <span class="va">lims</span><span class="op">[</span><span class="st">"ymax"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="va">theme_islands</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell quarto-layout-panel" data-fig.asp="3" data-hash="Chapter6_cache/html/unnamed-chunk-7_36abbdca7cd3b2f5dd943f8d9d118e98">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><img src="Chapter6_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><img src="Chapter6_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid" width="672"></p>
-</div>
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><img src="Chapter6_files/figure-html/unnamed-chunk-7-3.png" class="img-fluid" width="672"></p>
+</details><div id="fig-sf-poly" class="cell quarto-layout-panel" data-fig.asp="3" data-hash="Chapter6_cache/html/fig-sf-poly_48002ca70654135bfa896936641bc60d">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-sf-poly-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter6_files/figure-html/fig-sf-poly-1.png" class="img-fluid figure-img" data-ref-parent="fig-sf-poly" width="672"></p>
+<figcaption class="figure-caption">(a) Complete Islands’ Chain</figcaption></figure>
 </div>
 </div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-sf-poly-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter6_files/figure-html/fig-sf-poly-2.png" class="img-fluid figure-img" data-ref-parent="fig-sf-poly" width="672"></p>
+<figcaption class="figure-caption">(b) Largest Island</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-sf-poly-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter6_files/figure-html/fig-sf-poly-3.png" class="img-fluid figure-img" data-ref-parent="fig-sf-poly" width="672"></p>
+<figcaption class="figure-caption">(c) Second Largest Island</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Plotting islands from India’s Andaman and Nicobar Islands</figcaption><p></p>
+</figure>
 </div>
 </div>
 </section><section id="data-sources" class="level2"><h2 class="anchored" data-anchor-id="data-sources">6.6 Data Sources</h2>
-<p>The official source for maps of India, shape files is <a href="https://onlinemaps.surveyofindia.gov.in/Digital_Product_Show.aspx">here</a></p>
+<p>To obtain shapefiles for various states and administrative units of India from the Survey of India, you can visit their official website at <a href="https://onlinemaps.surveyofindia.gov.in/Digital_Product_Show.aspx." class="uri">https://onlinemaps.surveyofindia.gov.in/Digital_Product_Show.aspx.</a> The Survey of India provides digital products, including shapefiles, and many of them are available free of cost.</p>
+<p>Another valuable source for obtaining administrative boundary shapefiles is <a href="https://gadm.org/." class="uri">https://gadm.org/.</a> GADM (Global Administrative Areas) offers global administrative maps and data, including those for India. Both Survey of India and GADM are reputable platforms that cater to the geographical data needs of researchers, analysts, and the public, making it convenient to access accurate and up-to-date spatial information.</p>
 
 
 

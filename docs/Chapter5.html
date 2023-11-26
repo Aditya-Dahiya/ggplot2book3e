@@ -1,17 +1,12 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-
-<head>
-
-<meta charset="utf-8" />
-<meta name="generator" content="quarto-1.3.433" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-
-<meta name="author" content="Aditya Dahiya" />
-<meta name="dcterms.date" content="2023-11-18" />
-
-<title>Solutions (and Beyond): ggplot2 – Chapter 5</title>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Aditya Dahiya">
+<meta name="dcterms.date" content="2023-11-18">
+<title>Solutions (and Beyond): ggplot2 - Chapter 5</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -60,8 +55,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-<!-- htmldependencies:E3FAD763 -->
-<script id="quarto-search-options" type="application/json">{
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./book_cover.jpg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/quarto-contrib/social-share-0.1.0/social-share.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/social-share-0.1.0/all.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -80,52 +92,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-
-<link rel="stylesheet" href="styles.css" />
+}</script><link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="Solutions (and Beyond): ggplot2 - Chapter 5">
+<meta property="og:description" content="Statistical Summaries">
+<meta property="og:image" content="Chapter5_files/figure-html/fig-q1-ex4-1.png">
+<meta property="og:site-name" content="Solutions (and Beyond): ggplot2">
+<meta name="twitter:title" content="Solutions (and Beyond): ggplot2 - Chapter 5">
+<meta name="twitter:description" content="Statistical Summaries">
+<meta name="twitter:image" content="Chapter5_files/figure-html/fig-q1-ex4-1.png">
+<meta name="twitter:card" content="summary_large_image">
 </head>
-
-<body>
+<body class="nav-sidebar docked nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a href="/index.html" class="navbar-brand navbar-brand-logo">
-    <img src="/book_logo.jpg" alt="" class="navbar-logo" />
-    </a>
-    <a class="navbar-brand" href="/index.html">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <img src="./book_logo.jpg" alt="" class="navbar-logo"></a>
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Solutions (and Beyond): ggplot2</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-  aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
-  onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="/index.html" rel="" target="">
+<li class="nav-item">
+    <a class="nav-link" href="./index.html" rel="" target="">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="/solutions.html" rel="" target="">
+    <a class="nav-link" href="./solutions.html" rel="" target="">
  <span class="menu-text">Chapter-wise Solutions</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="/about.html" rel="" target="">
+    <a class="nav-link" href="./about.html" rel="" target="">
  <span class="menu-text">About Me</span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools ms-auto">
+<div class="quarto-navbar-tools ms-auto">
     <div class="dropdown">
       <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-github"></i></a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
-          <li>
+<li>
             <a class="dropdown-item quarto-navbar-tools ms-auto-item" href="https://github.com/Aditya-Dahiya/ggplot2book3e/">
             Source Code
             </a>
@@ -136,7 +147,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             </a>
           </li>
       </ul>
-    </div>
+</div>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -145,38 +156,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn"
-      data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" 
-      aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation"
-      onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <h1 class="quarto-secondary-nav-title"></h1>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" 
-      aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation"
-      onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Chapter3.html">Layers</a></li><li class="breadcrumb-item"><a href="./Chapter5.html">Chapter 5</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
-        <div class="mt-2 flex-shrink-0 align-items-center">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto"><div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item sidebar-item-section">
+<li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text">Getting Started</span></a>
@@ -184,21 +184,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter1.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 1</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter2.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 2</span></a>
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
@@ -207,51 +207,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter3.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 3</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter4.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter4.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 4</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter5.html" class="sidebar-item-text sidebar-link active">
+  <a href="./Chapter5.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Chapter 5</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter6.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter6.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 6</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter7.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter7.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 7</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter8.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter8.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 8</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter9.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter9.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 9</span></a>
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
@@ -260,27 +260,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter10.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter10.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 10</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter11.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter11.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 11</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter12.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter12.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 12</span></a>
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
@@ -289,39 +289,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter13.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter13.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 13</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter14.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter14.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 14</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter15.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter15.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 15</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter16.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter16.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 16</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter17.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter17.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 17</span></a>
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
@@ -330,46 +330,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter18.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter18.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 18</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter19.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter19.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 19</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter20.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter20.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 20</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="/Chapter21.html" class="sidebar-item-text sidebar-link">
+  <a href="./Chapter21.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 21</span></a>
   </div>
 </li>
       </ul>
-  </li>
+</li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" ></div>
+</div>
+</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <div id="quarto-toc-target"></div>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li>
+<a href="#exercises" id="toc-exercises" class="nav-link active" data-scroll-target="#exercises">5.4.1 Exercises</a>
+  <ul class="collapse">
+<li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1">Question 1</a></li>
+  <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2">Question 2</a></li>
+  <li><a href="#question-3" id="toc-question-3" class="nav-link" data-scroll-target="#question-3">Question 3</a></li>
+  <li><a href="#question-4" id="toc-question-4" class="nav-link" data-scroll-target="#question-4">Question 4</a></li>
+  </ul>
+</li>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter5.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">Chapter 5</h1>
 <p class="subtitle lead">Statistical Summaries</p>
 </div>
@@ -396,159 +404,119 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-</header>
-<nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#exercises" id="toc-exercises">5.4.1 Exercises</a>
-  <ul>
-  <li><a href="#question-1" id="toc-question-1">Question 1</a></li>
-  <li><a href="#question-2" id="toc-question-2">Question 2</a></li>
-  <li><a href="#question-3" id="toc-question-3">Question 3</a></li>
-  <li><a href="#question-4" id="toc-question-4">Question 4</a></li>
-  </ul></li>
-  </ul>
-</nav>
-<div class="cell" data-hash="Chapter5_cache/html/setup_87e8baeaf9d756dc8da5706ae8e2879b">
-<details>
-<summary>Code</summary>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtext)</span></code></pre></div>
+</header><div class="cell" data-hash="Chapter5_cache/html/setup_87e8baeaf9d756dc8da5706ae8e2879b">
+<details><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/ggtext/">ggtext</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="exercises" class="level1">
-<h1>5.4.1 Exercises</h1>
-<section id="question-1" class="level2">
-<h2>Question 1</h2>
+<section id="exercises" class="level1"><h1>5.4.1 Exercises</h1>
+<section id="question-1" class="level2"><h2 class="anchored" data-anchor-id="question-1">Question 1</h2>
 <p><strong>What bin-width tells you the most interesting story about the distribution of <code>carat</code>?</strong></p>
-<p>The <a href="#fig-q1-ex4">Figure 1</a> presented below illustrates various distribution histograms for the variable “<code>carat</code>” in the <code>diamonds</code> dataset, created using <code>ggplot2</code> and <code>geom_histogram()</code>.</p>
+<p>The <a href="#fig-q1-ex4">Figure&nbsp;1</a> presented below illustrates various distribution histograms for the variable “<code>carat</code>” in the <code>diamonds</code> dataset, created using <code>ggplot2</code> and <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code>.</p>
 <p>The bin width of 0.01 reveals the most interesting narrative and pattern:</p>
 <ol type="1">
 <li><p>Diamonds exhibit an overall right-skewed distribution, based on their carat.</p></li>
 <li><p>Diamonds tend to cluster around specific values such as 1, 1.25, 1.5, 1.75, 2 and so on indicating observer bias in recording the carat of diamonds. There is a tendency to round off values during the recording process.</p></li>
 </ol>
 <div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(carat)) <span class="sc">+</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">theme_minimal_vgrid</span>()</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(carat)) <span class="sc">+</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">theme_minimal_vgrid</span>()</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(carat)) <span class="sc">+</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.02</span>) <span class="sc">+</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">theme_minimal_vgrid</span>()</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(carat)) <span class="sc">+</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.01</span>) <span class="sc">+</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">theme_minimal_vgrid</span>()</span></code></pre></div>
-</details>
-<div id="fig-q1-ex4" class="cell quarto-layout-panel" data-hash="Chapter5_cache/html/fig-q1-ex4_93c1fef8ec81df07d9df60862b95f073">
-<figure>
-<div class="quarto-layout-row quarto-layout-valign-top">
+<details><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">carat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/theme_minimal_grid.html">theme_minimal_vgrid</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">carat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/theme_minimal_grid.html">theme_minimal_vgrid</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">carat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.02</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/theme_minimal_grid.html">theme_minimal_vgrid</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">carat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/theme_minimal_grid.html">theme_minimal_vgrid</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-q1-ex4" class="cell quarto-layout-panel" data-hash="Chapter5_cache/html/fig-q1-ex4_93c1fef8ec81df07d9df60862b95f073">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-q1-ex4-1" class="quarto-figure quarto-figure-center">
-<figure>
-<p><img src="Chapter5_files/figure-html/fig-q1-ex4-1.png" class="img-fluid" data-ref-parent="fig-q1-ex4" width="672" /></p>
-<figcaption>(a) Default bin-width with number of bins = 30</figcaption>
-</figure>
+<div id="fig-q1-ex4-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter5_files/figure-html/fig-q1-ex4-1.png" class="img-fluid figure-img" data-ref-parent="fig-q1-ex4" width="672"></p>
+<figcaption class="figure-caption">(a) Default bin-width with number of bins = 30</figcaption></figure>
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-q1-ex4-2" class="quarto-figure quarto-figure-center">
-<figure>
-<p><img src="Chapter5_files/figure-html/fig-q1-ex4-2.png" class="img-fluid" data-ref-parent="fig-q1-ex4" width="672" /></p>
-<figcaption>(b) Bin-width of 0.1</figcaption>
-</figure>
+<div id="fig-q1-ex4-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter5_files/figure-html/fig-q1-ex4-2.png" class="img-fluid figure-img" data-ref-parent="fig-q1-ex4" width="672"></p>
+<figcaption class="figure-caption">(b) Bin-width of 0.1</figcaption></figure>
 </div>
 </div>
 </div>
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-q1-ex4-3" class="quarto-figure quarto-figure-center">
-<figure>
-<p><img src="Chapter5_files/figure-html/fig-q1-ex4-3.png" class="img-fluid" data-ref-parent="fig-q1-ex4" width="672" /></p>
-<figcaption>(c) Bin-width of 0.02</figcaption>
-</figure>
+<div id="fig-q1-ex4-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter5_files/figure-html/fig-q1-ex4-3.png" class="img-fluid figure-img" data-ref-parent="fig-q1-ex4" width="672"></p>
+<figcaption class="figure-caption">(c) Bin-width of 0.02</figcaption></figure>
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-q1-ex4-4" class="quarto-figure quarto-figure-center">
-<figure>
-<p><img src="Chapter5_files/figure-html/fig-q1-ex4-4.png" class="img-fluid" data-ref-parent="fig-q1-ex4" width="672" /></p>
-<figcaption>(d) Bin-width of 0.01</figcaption>
+<div id="fig-q1-ex4-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter5_files/figure-html/fig-q1-ex4-4.png" class="img-fluid figure-img" data-ref-parent="fig-q1-ex4" width="672"></p>
+<figcaption class="figure-caption">(d) Bin-width of 0.01</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: Different bin-widths for histogram of diamonds’ carat distribution</figcaption><p></p>
 </figure>
 </div>
 </div>
-</div>
-<p><figcaption>Figure 1: Different bin-widths for histogram of diamonds’ carat distribution</figcaption></p>
-</figure>
-</div>
-</div>
-</section>
-<section id="question-2" class="level2">
-<h2>Question 2</h2>
+</section><section id="question-2" class="level2"><h2 class="anchored" data-anchor-id="question-2">Question 2</h2>
 <p><strong>Draw a histogram of <code>price</code>. What interesting patterns do you see?</strong></p>
-<p>The histogram presented <a href="#fig-q2-ex4">Figure 2</a> illustrates the distribution of the <code>price</code> variable, derived from the <code>diamonds</code> dataset within the <code>ggplot2</code> package of <code>R</code>. Notably, we have utilized a lower bin width of 10 to discern intricate patterns.</p>
+<p>The histogram presented <a href="#fig-q2-ex4">Figure&nbsp;2</a> illustrates the distribution of the <code>price</code> variable, derived from the <code>diamonds</code> dataset within the <code>ggplot2</code> package of <code>R</code>. Notably, we have utilized a lower bin width of 10 to discern intricate patterns.</p>
 <ul>
 <li><p>Upon examination, it becomes evident that the distribution of prices is highly right-skewed.</p></li>
 <li><p>Another intriguing observation is the conspicuous gap in the distribution, particularly around the $1500 mark. Within the interval spanning $1450 to $1550, there is a notable absence of diamonds. This anomaly raises the possibility of inadvertent deletion of certain observations within the dataset or, alternatively, could be attributed to errors in data recording. Further investigation may shed light on the cause of this unexpected pattern.</p></li>
 </ul>
 <div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">|&gt;</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(price)) <span class="sc">+</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">theme_minimal_vgrid</span>() <span class="sc">+</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_number_si</span>(<span class="at">prefix =</span> <span class="st">&quot;$&quot;</span>),</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">20000</span>, <span class="dv">2000</span>))</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>diamonds <span class="sc">|&gt;</span> </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(price)) <span class="sc">+</span> </span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">10</span>) <span class="sc">+</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">theme_minimal_vgrid</span>() <span class="sc">+</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_number_si</span>(<span class="at">prefix =</span> <span class="st">&quot;$&quot;</span>),</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">20000</span>, <span class="dv">2000</span>))</span></code></pre></div>
-</details>
-<div id="fig-q2-ex4" class="cell quarto-layout-panel" data-hash="Chapter5_cache/html/fig-q2-ex4_bbe62241967f05bb18249c6951b4f957">
-<figure>
-<div class="quarto-layout-row quarto-layout-valign-top">
+<details><summary>Code</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/theme_minimal_grid.html">theme_minimal_vgrid</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number_si.html">label_number_si</a></span><span class="op">(</span>prefix <span class="op">=</span> <span class="st">"$"</span><span class="op">)</span>,</span>
+<span>                     breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20000</span>, <span class="fl">2000</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/theme_minimal_grid.html">theme_minimal_vgrid</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number_si.html">label_number_si</a></span><span class="op">(</span>prefix <span class="op">=</span> <span class="st">"$"</span><span class="op">)</span>,</span>
+<span>                     breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20000</span>, <span class="fl">2000</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-q2-ex4" class="cell quarto-layout-panel" data-hash="Chapter5_cache/html/fig-q2-ex4_bbe62241967f05bb18249c6951b4f957">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-q2-ex4-1" class="quarto-figure quarto-figure-center">
-<figure>
-<p><img src="Chapter5_files/figure-html/fig-q2-ex4-1.png" class="img-fluid" data-ref-parent="fig-q2-ex4" width="672" /></p>
-<figcaption>(a) Default bin-width with number of bins = 30</figcaption>
-</figure>
+<div id="fig-q2-ex4-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter5_files/figure-html/fig-q2-ex4-1.png" class="img-fluid figure-img" data-ref-parent="fig-q2-ex4" width="672"></p>
+<figcaption class="figure-caption">(a) Default bin-width with number of bins = 30</figcaption></figure>
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-q2-ex4-2" class="quarto-figure quarto-figure-center">
-<figure>
-<p><img src="Chapter5_files/figure-html/fig-q2-ex4-2.png" class="img-fluid" data-ref-parent="fig-q2-ex4" width="672" /></p>
-<figcaption>(b) Histogram with Bin-width = 10</figcaption>
+<div id="fig-q2-ex4-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter5_files/figure-html/fig-q2-ex4-2.png" class="img-fluid figure-img" data-ref-parent="fig-q2-ex4" width="672"></p>
+<figcaption class="figure-caption">(b) Histogram with Bin-width = 10</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: Histogram of price distribution for the diamonds</figcaption><p></p>
 </figure>
 </div>
 </div>
-</div>
-<p><figcaption>Figure 2: Histogram of price distribution for the diamonds</figcaption></p>
-</figure>
-</div>
-</div>
-</section>
-<section id="question-3" class="level2">
-<h2>Question 3</h2>
+</section><section id="question-3" class="level2"><h2 class="anchored" data-anchor-id="question-3">Question 3</h2>
 <p><strong>How does the distribution of <code>price</code> vary with <code>clarity</code>?</strong></p>
-<p>The <a href="#fig-q3-ex4">Figure 3</a> depicts the distribution of <code>price</code> versus <code>clarity</code> for the diamond dataset. Given that <code>price</code> is a continuous variable and <code>clarity</code> is a categorical / discrete variable, various graphical representations can be employed for analysis. These include:</p>
+<p>The <a href="#fig-q3-ex4">Figure&nbsp;3</a> depicts the distribution of <code>price</code> versus <code>clarity</code> for the diamond dataset. Given that <code>price</code> is a continuous variable and <code>clarity</code> is a categorical / discrete variable, various graphical representations can be employed for analysis. These include:</p>
 <ol type="1">
-<li><p><strong>Multiple Box-plots (depicted below in <a href="#fig-q3-ex4-1">Figure 3 (a)</a> ):</strong> The use of multiple boxplots allows us to visually compare the distribution of prices across different clarity levels.</p></li>
-<li><p><strong>Violin Plots (depicted below in <a href="#fig-q3-ex4-2">Figure 3 (b)</a> ):</strong> The inclusion of violin plots provides a nuanced view of the price distribution.</p>
+<li><p><strong>Multiple Box-plots (depicted below in <a href="#fig-q3-ex4-1">Figure&nbsp;3 (a)</a> ):</strong> The use of multiple boxplots allows us to visually compare the distribution of prices across different clarity levels.</p></li>
+<li>
+<p><strong>Violin Plots (depicted below in <a href="#fig-q3-ex4-2">Figure&nbsp;3 (b)</a> ):</strong> The inclusion of violin plots provides a nuanced view of the price distribution.</p>
 <p>The observed box-plots and violin plots reveal that the distribution of prices is right-skewed for all clarity levels. Furthermore, at higher clarity levels, the right-skewness becomes more pronounced, indicating a scarcity of highly priced diamonds within each clarity tier.</p>
-<p>The data suggests a consistent right-skewed pattern across all clarity levels, with a notable intensification of skewness at higher clarity levels. This implies a scarcity of diamonds with exceptionally high prices within each clarity category.</p></li>
+<p>The data suggests a consistent right-skewed pattern across all clarity levels, with a notable intensification of skewness at higher clarity levels. This implies a scarcity of diamonds with exceptionally high prices within each clarity category.</p>
+</li>
 </ol>
 <p>The other methods which can be employed include: —</p>
 <ol type="1">
@@ -556,132 +524,105 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong>Density Plots with Different Colors for Different Clarity Levels:</strong> Utilizing density plots with distinct colors for each clarity level enhances the clarity of the distribution patterns. This approach is less useful here as there many clarity levels, resulting in over-crowded density plots.</p></li>
 </ol>
 <div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(clarity, </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                     price,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fill =</span> clarity)) <span class="sc">+</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.alpha =</span> <span class="fl">0.1</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">varwidth =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">outlier.shape =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">theme_minimal_hgrid</span>() <span class="sc">+</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.line.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(clarity, </span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                     price,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fill =</span> clarity)) <span class="sc">+</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>() <span class="sc">+</span> </span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">theme_minimal_hgrid</span>() <span class="sc">+</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.line.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-</details>
-<div id="fig-q3-ex4" class="cell quarto-layout-panel" data-hash="Chapter5_cache/html/fig-q3-ex4_7fde42d6e6a7f736b8e0453d0ed8fd86">
-<figure>
-<div class="quarto-layout-row quarto-layout-valign-top">
+<details><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">clarity</span>, </span>
+<span>                     <span class="va">price</span>,</span>
+<span>                     fill <span class="op">=</span> <span class="va">clarity</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>outlier.alpha <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>               varwidth <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>               outlier.shape <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/theme_minimal_grid.html">theme_minimal_hgrid</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.line.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">clarity</span>, </span>
+<span>                     <span class="va">price</span>,</span>
+<span>                     fill <span class="op">=</span> <span class="va">clarity</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/theme_minimal_grid.html">theme_minimal_hgrid</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.line.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-q3-ex4" class="cell quarto-layout-panel" data-hash="Chapter5_cache/html/fig-q3-ex4_7fde42d6e6a7f736b8e0453d0ed8fd86">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-q3-ex4-1" class="quarto-figure quarto-figure-center">
-<figure>
-<p><img src="Chapter5_files/figure-html/fig-q3-ex4-1.png" class="img-fluid" data-ref-parent="fig-q3-ex4" width="672" /></p>
-<figcaption>(a) Multiple Boxplots</figcaption>
-</figure>
+<div id="fig-q3-ex4-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter5_files/figure-html/fig-q3-ex4-1.png" class="img-fluid figure-img" data-ref-parent="fig-q3-ex4" width="672"></p>
+<figcaption class="figure-caption">(a) Multiple Boxplots</figcaption></figure>
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-q3-ex4-2" class="quarto-figure quarto-figure-center">
-<figure>
-<p><img src="Chapter5_files/figure-html/fig-q3-ex4-2.png" class="img-fluid" data-ref-parent="fig-q3-ex4" width="672" /></p>
-<figcaption>(b) Multiple Violin Plots</figcaption>
+<div id="fig-q3-ex4-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter5_files/figure-html/fig-q3-ex4-2.png" class="img-fluid figure-img" data-ref-parent="fig-q3-ex4" width="672"></p>
+<figcaption class="figure-caption">(b) Multiple Violin Plots</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: Distribution of price varying with clarity for the diamonds dataset</figcaption><p></p>
 </figure>
 </div>
 </div>
-</div>
-<p><figcaption>Figure 3: Distribution of price varying with clarity for the diamonds dataset</figcaption></p>
-</figure>
-</div>
-</div>
-</section>
-<section id="question-4" class="level2">
-<h2>Question 4</h2>
-<p><strong>Overlay a frequency polygon and density plot of <code>depth</code>. What computed variable do you need to map to <code>y</code> to make the two plots comparable? (You can either modify <code>geom_freqpoly()</code> or <code>geom_density()</code>.)</strong></p>
-<p>As we can see in the <a href="#fig-q4-ex4">Figure 4</a>, we can overlay a frequency ploygon and a density plot of <code>depth</code> variable as follows:</p>
+</section><section id="question-4" class="level2"><h2 class="anchored" data-anchor-id="question-4">Question 4</h2>
+<p><strong>Overlay a frequency polygon and density plot of <code>depth</code>. What computed variable do you need to map to <code>y</code> to make the two plots comparable? (You can either modify <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly()</a></code> or <code><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density()</a></code>.)</strong></p>
+<p>As we can see in the <a href="#fig-q4-ex4">Figure&nbsp;4</a>, we can overlay a frequency ploygon and a density plot of <code>depth</code> variable as follows:</p>
 <ol type="1">
-<li><p>Compute count on the y-axis in <code>geom_density()</code> using <code>geom_density(aes(y = ..count..)</code> to display counts on y-axis for both plots and overlay them, as shown in <a href="#fig-q4-ex4-1">Figure 4 (a)</a> .</p></li>
-<li><p>Compute density on the y-axis in <code>geom_freqpoly()</code> using <code>geom_freqpoly(aes(y = ..density..)</code> to display densities on y-axis for both plots and overlay them, as shown in <a href="#fig-q4-ex4-2">Figure 4 (b)</a> .</p></li>
+<li><p>Compute count on the y-axis in <code><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density()</a></code> using <code>geom_density(aes(y = ..count..)</code> to display counts on y-axis for both plots and overlay them, as shown in <a href="#fig-q4-ex4-1">Figure&nbsp;4 (a)</a> .</p></li>
+<li><p>Compute density on the y-axis in <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly()</a></code> using <code>geom_freqpoly(aes(y = ..density..)</code> to display densities on y-axis for both plots and overlay them, as shown in <a href="#fig-q4-ex4-2">Figure&nbsp;4 (b)</a> .</p></li>
 </ol>
-<div id="fig-q4-ex4" class="quarto-figure quarto-figure-center">
-<figure>
-<details>
-<summary>Code</summary>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r cell-code"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>title <span class="ot">=</span> <span class="st">&quot;Overlay of &lt;span style=&#39;color: blue;&#39;&gt;Frequency Polygon&lt;/span&gt; and &lt;span style=&#39;color: orange;&#39;&gt;Density Plot&lt;/span&gt; of Depth&quot;</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(<span class="at">x =</span> depth)) <span class="sc">+</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Overlay frequency polygon</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_freqpoly</span>(<span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Overlay density plot</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..count..), </span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">col =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">lwd =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add labels and title</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> title,</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Depth&quot;</span>,</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Count&quot;</span>) <span class="sc">+</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Adjust theme for markdown element in the title</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_markdown</span>())</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(<span class="at">x =</span> depth)) <span class="sc">+</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Overlay frequency polygon</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_freqpoly</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..),</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lwd =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Overlay density plot</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">col =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">lwd =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add labels and title</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> title,</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Depth&quot;</span>,</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="sc">+</span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Adjust theme for markdown element in the title</span></span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_markdown</span>())</span></code></pre></div>
-</details>
-<div class="cell-output-display">
-<div id="fig-q4-ex4-1" class="quarto-figure quarto-figure-center">
-<figure>
-<p><img src="Chapter5_files/figure-html/fig-q4-ex4-1.png" class="img-fluid" data-ref-parent="fig-q4-ex4" width="672" /></p>
-<figcaption>(a) Modifying geom_density to display count</figcaption>
-</figure>
+<div id="fig-q4-ex4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><details><summary>Code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">title</span> <span class="op">=</span> <span class="st">"Overlay of &lt;span style='color: blue;'&gt;Frequency Polygon&lt;/span&gt; and &lt;span style='color: orange;'&gt;Density Plot&lt;/span&gt; of Depth"</span> </span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">depth</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Overlay frequency polygon</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span>, lwd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Overlay density plot</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">..count..</span><span class="op">)</span>, </span>
+<span>               col <span class="op">=</span> <span class="st">"orange"</span>, lwd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Add labels and title</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="va">title</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"Depth"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"Count"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Adjust theme for markdown element in the title</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html">element_markdown</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">depth</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Overlay frequency polygon</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">..density..</span><span class="op">)</span>,</span>
+<span>                color <span class="op">=</span> <span class="st">"blue"</span>, lwd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Overlay density plot</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"orange"</span>, lwd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Add labels and title</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="va">title</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"Depth"</span>,</span>
+<span>       y <span class="op">=</span> <span class="st">"Density"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Adjust theme for markdown element in the title</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html">element_markdown</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-q4-ex4-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter5_files/figure-html/fig-q4-ex4-1.png" class="img-fluid figure-img" data-ref-parent="fig-q4-ex4" width="672"></p>
+<figcaption class="figure-caption">(a) Modifying geom_density to display count</figcaption></figure>
 </div>
 </div>
 <div class="cell-output-display">
-<div id="fig-q4-ex4-2" class="quarto-figure quarto-figure-center">
-<figure>
-<p><img src="Chapter5_files/figure-html/fig-q4-ex4-2.png" class="img-fluid" data-ref-parent="fig-q4-ex4" width="672" /></p>
-<figcaption>(b) Modifying geom_freqpoly to display density</figcaption>
-</figure>
+<div id="fig-q4-ex4-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter5_files/figure-html/fig-q4-ex4-2.png" class="img-fluid figure-img" data-ref-parent="fig-q4-ex4" width="672"></p>
+<figcaption class="figure-caption">(b) Modifying geom_freqpoly to display density</figcaption></figure>
 </div>
 </div>
-<figcaption>Figure 4: Overlay a frequency polygon and density plot of depth</figcaption>
-</figure>
+<figcaption class="figure-caption">Figure&nbsp;4: Overlay a frequency polygon and density plot of depth</figcaption></figure>
 </div>
-<div id="quarto-navigation-envelope" class="hidden">
-<p><span class="hidden" data-render-id="quarto-int-sidebar-title">Solutions (and Beyond): ggplot2</span> <span class="hidden" data-render-id="quarto-int-navbar-title">Solutions (and Beyond): ggplot2</span> <span class="hidden" data-render-id="quarto-int-next">Chapter 6</span> <span class="hidden" data-render-id="quarto-int-prev">Chapter 4</span> <span class="hidden" data-render-id="quarto-int-sidebar:quarto-sidebar-section-1">Getting Started</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter1.html">Chapter 1</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter2.html">Chapter 2</span> <span class="hidden" data-render-id="quarto-int-sidebar:quarto-sidebar-section-2">Layers</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter3.html">Chapter 3</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter4.html">Chapter 4</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter5.html">Chapter 5</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter6.html">Chapter 6</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter7.html">Chapter 7</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter8.html">Chapter 8</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter9.html">Chapter 9</span> <span class="hidden" data-render-id="quarto-int-sidebar:quarto-sidebar-section-3">Scales</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter10.html">Chapter 10</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter11.html">Chapter 11</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter12.html">Chapter 12</span> <span class="hidden" data-render-id="quarto-int-sidebar:quarto-sidebar-section-4">The Grammer</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter13.html">Chapter 13</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter14.html">Chapter 14</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter15.html">Chapter 15</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter16.html">Chapter 16</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter17.html">Chapter 17</span> <span class="hidden" data-render-id="quarto-int-sidebar:quarto-sidebar-section-5">Advanced Topics</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter18.html">Chapter 18</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter19.html">Chapter 19</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter20.html">Chapter 20</span> <span class="hidden" data-render-id="quarto-int-sidebar:/Chapter21.html">Chapter 21</span> <span class="hidden" data-render-id="quarto-int-navbar:Home">Home</span> <span class="hidden" data-render-id="quarto-int-navbar:/index.html">/index.html</span> <span class="hidden" data-render-id="quarto-int-navbar:Chapter-wise Solutions">Chapter-wise Solutions</span> <span class="hidden" data-render-id="quarto-int-navbar:/solutions.html">/solutions.html</span> <span class="hidden" data-render-id="quarto-int-navbar:About Me">About Me</span> <span class="hidden" data-render-id="quarto-int-navbar:/about.html">/about.html</span> <span class="hidden" data-render-id="quarto-breadcrumbs-87bfda183c4f851a101e97bbb1bbace7">Layers</span> <span class="hidden" data-render-id="quarto-breadcrumbs-950ea1f503e1cd799db23f6e5aff5117">Chapter 5</span></p>
-</div>
-<div id="quarto-meta-markdown" class="hidden">
-<p><span class="hidden" data-render-id="quarto-metatitle">Solutions (and Beyond): ggplot2 - Chapter 5</span> <span class="hidden" data-render-id="quarto-twittercardtitle">Solutions (and Beyond): ggplot2 - Chapter 5</span> <span class="hidden" data-render-id="quarto-ogcardtitle">Solutions (and Beyond): ggplot2 - Chapter 5</span> <span class="hidden" data-render-id="quarto-metasitename">Solutions (and Beyond): ggplot2</span> <span class="hidden" data-render-id="quarto-twittercarddesc">Statistical Summaries</span> <span class="hidden" data-render-id="quarto-ogcardddesc">Statistical Summaries</span></p>
-</div>
-</section>
-</section>
 
-</main> <!-- /main -->
-<script id = "quarto-html-after-body" type="application/javascript">
+
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -915,8 +856,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<div class= "page-columns page-rows-contents page-layout-article"><div class="social-share"><a href="https://twitter.com/share?url=https://aditya-dahiya.github.io/ggplot2book3e/Chapter5.html&text=Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)" target="_blank" class="twitter"><i class="fab fa-twitter fa-fw fa-lg"></i></a><a href="https://www.linkedin.com/shareArticle?url=https://aditya-dahiya.github.io/ggplot2book3e/Chapter5.html&title=Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)" target="_blank" class="linkedin"><i class="fa-brands fa-linkedin-in fa-fw fa-lg"></i></a>  <a href="mailto:?subject=Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)&body=Check out this link:https://aditya-dahiya.github.io/ggplot2book3e/Chapter5.html" target="_blank" class="email"><i class="fa-solid fa-envelope fa-fw fa-lg"></i></a><a href="https://www.facebook.com/sharer.php?u=https://aditya-dahiya.github.io/ggplot2book3e/Chapter5.html" target="_blank" class="facebook"><i class="fab fa-facebook-f fa-fw fa-lg"></i></a><a href="javascript:void(0);" onclick="var mastodon_instance=prompt('Mastodon Instance / Server Name?'); if(typeof mastodon_instance==='string' &amp;&amp; mastodon_instance.length){this.href='https://'+mastodon_instance+'/share?text=Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e) https://aditya-dahiya.github.io/ggplot2book3e/Chapter5.html'}else{return false;}" target="_blank" class="mastodon"><i class="fa-brands fa-mastodon fa-fw fa-lg"></i></a></div></div>
+<div class="page-columns page-rows-contents page-layout-article"><div class="social-share">
+<a href="https://twitter.com/share?url=https://aditya-dahiya.github.io/ggplot2book3e/Chapter5.html&amp;text=Solutions%20Manual%20(and%20Beyond)%20for%20ggplot2:%20Elegant%20Graphics%20for%20Data%20Analysis%20(3e)" target="_blank" class="twitter"><i class="fab fa-twitter fa-fw fa-lg"></i></a><a href="https://www.linkedin.com/shareArticle?url=https://aditya-dahiya.github.io/ggplot2book3e/Chapter5.html&amp;title=Solutions%20Manual%20(and%20Beyond)%20for%20ggplot2:%20Elegant%20Graphics%20for%20Data%20Analysis%20(3e)" target="_blank" class="linkedin"><i class="fa-brands fa-linkedin-in fa-fw fa-lg"></i></a>  <a href="mailto:?subject=Solutions%20Manual%20(and%20Beyond)%20for%20ggplot2:%20Elegant%20Graphics%20for%20Data%20Analysis%20(3e)&amp;body=Check%20out%20this%20link:https://aditya-dahiya.github.io/ggplot2book3e/Chapter5.html" target="_blank" class="email"><i class="fa-solid fa-envelope fa-fw fa-lg"></i></a><a href="https://www.facebook.com/sharer.php?u=https://aditya-dahiya.github.io/ggplot2book3e/Chapter5.html" target="_blank" class="facebook"><i class="fab fa-facebook-f fa-fw fa-lg"></i></a><a href="javascript:void(0);" onclick="var mastodon_instance=prompt('Mastodon Instance / Server Name?'); if(typeof mastodon_instance==='string' &amp;&amp; mastodon_instance.length){this.href='https://'+mastodon_instance+'/share?text=Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e) https://aditya-dahiya.github.io/ggplot2book3e/Chapter5.html'}else{return false;}" target="_blank" class="mastodon"><i class="fa-brands fa-mastodon fa-fw fa-lg"></i></a>
+</div></div>
 
-</body>
 
-</html>
+
+</body></html>

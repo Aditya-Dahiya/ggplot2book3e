@@ -281,11 +281,17 @@ haryana_map |>
 
 ## **6.4 Working with `sf` data**
 
-We can even drawn out different pieces of polygons, i.e. islands, enclaves or exclaves using `sf` data. Here's an example for India's island chains: --
+We can even drawn out different pieces of polygons, i.e. islands, enclaves or exclaves using `sf` data. The beauty of multi-polygon `sf` objects *(i.e., geographic administrative units with more than one polygon, or, in simpler terms, groups of islands or non-contiguous areas)* is that we can use [`st_cast`](https://r-spatial.github.io/sf/reference/st_cast.html)`(<object_name>, "POLYGON")` to separate out each polygon (contiguous area unit) and order them by size using `st_area()` . We can pick out single polygons, even ordered by size, as we can see in @fig-sf-poly-2 and @fig-sf-poly-3 from an example using India's Andaman and Nicobar Islands: --
 
 ```{r}
 #| layout-ncol: 3
 #| fig-asp: 3 
+#| label: fig-sf-poly
+#| fig-cap: "Plotting islands from India's Andaman and Nicobar Islands"
+#| fig-subcap: 
+#|   - "Complete Islands' Chain"
+#|   - "Largest Island"
+#|   - "Second Largest Island"
 
 # Pull out the geometry of Andaman and Nicobar Islands as "ani"
 ani <- india_map |> 
@@ -295,6 +301,7 @@ ani <- india_map |>
 # Bounding Box of ani
 lims <- st_bbox(ani)
 
+# Create different polygon objects from a single multi-polygon 
 ani_islands <- st_cast(ani, "POLYGON")
 
 # Checking order: We see that islands are listed in decreasing order of size
@@ -340,4 +347,6 @@ ggplot(ani_islands[2]) +
 
 ## 6.6 Data Sources
 
-The official source for maps of India, shape files is [here](https://onlinemaps.surveyofindia.gov.in/Digital_Product_Show.aspx)
+To obtain shapefiles for various states and administrative units of India from the Survey of India, you can visit their official website at <https://onlinemaps.surveyofindia.gov.in/Digital_Product_Show.aspx.> The Survey of India provides digital products, including shapefiles, and many of them are available free of cost.
+
+Another valuable source for obtaining administrative boundary shapefiles is <https://gadm.org/.> GADM (Global Administrative Areas) offers global administrative maps and data, including those for India. Both Survey of India and GADM are reputable platforms that cater to the geographical data needs of researchers, analysts, and the public, making it convenient to access accurate and up-to-date spatial information.
