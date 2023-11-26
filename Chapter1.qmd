@@ -462,6 +462,59 @@ diamonds |>
   theme_half_open()
 ```
 
+## `ggspatial`
+
+The `ggspatial` package [@ggspatial] provides some nice add-on features to `ggplot2` maps like map scale (using `annotation_scale()` ) and a north arrow (using `annotation_north_arrow()` ). An example is shown below: --
+
+```{r}
+library(tidyverse)
+library(ggspatial)
+library(sf)
+
+# Reading in the Haryana Map Data
+read_sf(here::here("data",
+                                  "haryana_map",
+                                  "HARYANA_DISTRICT_BDY.shp")) |> 
+  janitor::clean_names() |> 
+  mutate(
+    district = str_replace_all(district,
+                               pattern = ">",
+                               replacement = "A"),
+    state = str_replace_all(state,
+                            pattern = ">",
+                            replacement = "A"),
+    district = case_when(
+      district == "FAR|DABAD" ~ "FARIDABAD",
+      district == "J|ND" ~ "JIND",
+      district == "PAN|PAT" ~ "PANIPAT",
+      district == "SON|PAT" ~ "SONIPAT",
+      .default = district
+    ),
+    district = snakecase::to_title_case(district)
+      ) |> 
+  
+  # Plot the State of Haryana in India
+  ggplot(aes(geometry = geometry,
+             label = district)) +
+  geom_sf(fill = "lightgrey", 
+          col = "white") +
+  geom_sf_text(size = 3) +
+  
+  # Add a north arrow
+  annotation_north_arrow(location = "tl") + 
+  
+  # Add a scale
+  annotation_scale(bar_cols = c("lightgrey", 
+                                "darkgrey"),
+                   location = "bl") +
+  # Theme & Labels
+  labs(x = NULL, y = NULL, 
+       title = "Map of the State of Haryana (India)",
+       subtitle = "Adding North arrow and Scale using `ggspatial`") +
+  theme_minimal()
+
+```
+
 ::: callout-note
 I intend to add more packages as and when I come across them. Watch out for this space in the future too.
 :::

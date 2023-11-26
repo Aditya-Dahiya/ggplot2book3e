@@ -39,18 +39,8 @@ library(tidyverse)     # everything and ggplot2
 library(sf)            # sf and shape files
 library(ggthemes)      # for theme_map
 library(ggspatial)     # map annotations
-```
 
-## **6.2 Simple features maps**
-
-First, we download a shape file of India's map (from [here](https://github.com/AnujTiwari/India-State-and-Country-Shapefile-Updated-Jan-2020)) and plot a map of India with latest state and Union Territory boundaries. The code below shows a simple example of ease of plotting with `ggplot()` and `geom_sf()` along with **labeling** [official names](https://knowindia.india.gov.in/states-uts/) of States and Union Territories.
-
-```{r}
-#| fig-width: 10
-#| fig-asp: 1
-
-
-# Reading in the shape file
+# Reading in the shape file of the map of India
 india_map <- read_sf(here::here("data", 
                                 "india_map", 
                                 "India_State_Boundary.shp")) |> 
@@ -78,36 +68,7 @@ union_territories <- c(
   "Puducherry"
 )
 
-
-india_map |> 
-  mutate(type = if_else(state %in% union_territories,
-                        "Union Territory",
-                        "State")) |> 
-  ggplot(aes(geometry = geometry,
-             col = type)) + 
-  geom_sf(col = "darkgrey", fill = "white") +
-  geom_sf_text(aes(label = state,
-                size = type)) +
-  scale_color_manual(values = c("darkblue", "darkred")) +
-  scale_size_discrete(range = c(3.5, 2.5)) +
-  theme_map() +
-  theme(legend.position = "bottom") +
-  labs(col = NULL) +
-  annotation_scale(bar_cols = c("darkgrey", "white"),
-                   location = "br") +
-  annotation_north_arrow(location = "tr", 
-                         which_north = "true") +
-  guides(size = "none")
-```
-
-## **6.4 Working with `sf` data**
-
-Plotting a specific state from i..e, Haryana, and its districts along with their area (in thousand sq. km.) using official data from [Survey of India](https://onlinemaps.surveyofindia.gov.in/), and adding geoms from other metadata - area and length of district borders: --
-
-```{r}
-#| fig-width: 10
-#| fig-asp: 1
-
+# Getting in a dataframe with map of State of Haryana in India
 haryana_map <- read_sf(here::here("data",
                                   "haryana_map",
                                   "HARYANA_DISTRICT_BDY.shp")) |> 
@@ -128,6 +89,91 @@ haryana_map <- read_sf(here::here("data",
     ),
     district = snakecase::to_title_case(district)
       )
+
+```
+
+## **6.2 Simple features maps**
+
+First, we download a shape file of India's map (from [here](https://github.com/AnujTiwari/India-State-and-Country-Shapefile-Updated-Jan-2020)) and plot a map of India with latest state and Union Territory boundaries. The code below shows a simple example of ease of plotting with `ggplot()` and `geom_sf()` along with **labeling** [official names](https://knowindia.india.gov.in/states-uts/) of States and Union Territories.
+
+```{r}
+#| fig-width: 10
+#| fig-asp: 1
+
+# Plotting the actual map
+india_map |> 
+  
+  # A variable to use for different font colour for States vs. Union Territories
+  mutate(type = if_else(state %in% union_territories,
+                        "Union Territory",
+                        "State")) |> 
+  # Start Plot
+  ggplot(aes(geometry = geometry,
+             col = type)) + 
+  geom_sf(col = "darkgrey", fill = "white") +
+  geom_sf_text(aes(label = state,
+                size = type)) +
+  
+  # Colour and Size Scales
+  scale_color_manual(values = c("darkblue", "darkred")) +
+  scale_size_discrete(range = c(3.5, 2.5)) +
+  
+  # Themes
+  theme_map() +
+  theme(legend.position = "bottom") +
+  labs(col = NULL) +
+  
+  # Adding Scale and North Arrow
+  annotation_scale(bar_cols = c("darkgrey", "white"),
+                   location = "br") +
+  annotation_north_arrow(location = "tr", 
+                         which_north = "true") +
+  guides(size = "none")
+```
+
+## **6.2.1 Layered maps and 6.2.2 Labelled maps**
+
+We can use data from multiple data-frames and add them as layers to a single map using `ggplot2` as shown below: --
+
+```{r}
+
+# Names of Bordering states of Haryana
+bordering_states = c("Punjab",
+                     "Delhi",
+                     "Himachal Pradesh",
+                     "Rajasthan",
+                     "Uttar Pradesh",
+                     "Uttarakhand")
+
+# Start plotting with India Map showing only bordering states
+ggplot(data = india_map |> 
+         filter(state %in% bordering_states),
+       mapping = aes(geometry = geometry,
+                     label = state)) +
+  
+  geom_sf(fill = "white",
+          col = "darkgrey",
+          alpha = 0.5) +
+  geom_sf_text(col = "darkgrey") +
+  
+  # Map of Haryana with Districts
+  geom_sf(data = haryana_map,
+          fill = "lightgrey",
+          col = "black") +
+  
+  # Labels and theme
+  labs(x = NULL, y = NULL,
+       title = "Combining two sf data-frames into a single map") +
+  theme_minimal()
+```
+
+## **6.2.3 Adding other geoms**
+
+Plotting a specific state from i..e, Haryana, and its districts along with their area (in thousand sq. km.) using official data from [Survey of India](https://onlinemaps.surveyofindia.gov.in/), and adding geoms from other metadata - area and length of district borders: --
+
+```{r}
+#| fig-width: 10
+#| fig-asp: 1
 
 haryana_map |>
   select(-c(remarks, state_lgd, district_l)) |> 
@@ -155,11 +201,13 @@ haryana_map |>
   guides(col = "none")
 ```
 
-## Chloropleth with `tmap`
+### Chloropleth with `tmap`
 
-A package to create chloropleths very easily is the `tmap` package [@tmap] of `R` . However, is uses a very different syntax than `ggplot2` .
+A package to create chloropleths very easily is the `tmap` package [@tmap] of `R` . However, is uses a very different syntax than `ggplot2` . An interesting feature is the ability to plot interactive maps. However, since it is outside `ggplot2` grammar and syntax, I do not use it here.
 
 ```{r}
+#| eval: false
+
 library(tmap)
 tm_hy <- haryana_map |> 
   mutate(area = shape_area/1e6)
@@ -171,18 +219,13 @@ t_hy <- tm_shape(tm_hy) +
               interactive = TRUE,
               style = "pretty")
 t_hy
-```
-
-An interesting feature is the ability to plot interactive maps: --
-
-```{r}
 tmap_mode("view")
 tmap_last()
 
 tmap_mode("plot")
 ```
 
-## Adding `leaflet` maps to Chloropleths
+### Adding `leaflet` maps to Chloropleths
 
 ```{r}
 library(leaflet)
@@ -235,3 +278,66 @@ haryana_map |>
     overlayGroups = c("District Area")
   )
 ```
+
+## **6.4 Working with `sf` data**
+
+We can even drawn out different pieces of polygons, i.e. islands, enclaves or exclaves using `sf` data. Here's an example for India's island chains: --
+
+```{r}
+#| layout-ncol: 3
+#| fig-asp: 3 
+
+# Pull out the geometry of Andaman and Nicobar Islands as "ani"
+ani <- india_map |> 
+  filter(state == "Andaman and Nicobar Islands") |> 
+  pull(geometry)
+
+# Bounding Box of ani
+lims <- st_bbox(ani)
+
+ani_islands <- st_cast(ani, "POLYGON")
+
+# Checking order: We see that islands are listed in decreasing order of size
+# order(st_area(ani_islands), decreasing = TRUE)
+
+# A common theme to use in all Island Maps
+theme_islands <- theme_map() +
+  theme(axis.text.x = element_text(angle = 90, 
+                                   vjust = 0.5,
+                                   size = 25),
+        axis.text.y = element_text(vjust = 0.5,
+                                   size = 25),
+        plot.title.position = "plot",
+        panel.background = element_rect(fill = "lightblue"),
+        plot.title = element_text(size = 25))
+
+# Drawing the complete Andaman and Nicobar Islands
+india_map |> 
+  filter(state == "Andaman and Nicobar Islands") |> 
+  ggplot() +
+  geom_sf(fill = "white") +
+  labs(title = "Andaman and Nicobar Islands") +
+  scale_x_continuous(limits = c(lims["xmin"], lims["xmax"])) +
+  scale_y_continuous(limits = c(lims["ymin"], lims["ymax"])) +
+  theme_islands
+
+# Drawing the largest of the Andaman and Nicobar Islands
+ggplot(ani_islands[1]) +
+  geom_sf(fill = "white") +
+  labs(title = "Largest Island: Middle Andaman") +
+  scale_x_continuous(limits = c(lims["xmin"], lims["xmax"])) +
+  scale_y_continuous(limits = c(lims["ymin"], lims["ymax"])) +
+  theme_islands
+
+# Drawing the second largest of the Andaman and Nicobar Islands
+ggplot(ani_islands[2]) +
+  geom_sf(fill = "white") +
+  labs(title = "2nd Largest: North Andaman") +
+  scale_x_continuous(limits = c(lims["xmin"], lims["xmax"])) +
+  scale_y_continuous(limits = c(lims["ymin"], lims["ymax"])) +
+  theme_islands
+```
+
+## 6.6 Data Sources
+
+The official source for maps of India, shape files is [here](https://onlinemaps.surveyofindia.gov.in/Digital_Product_Show.aspx)

@@ -396,6 +396,7 @@ div.csl-indent {
   <li><a href="#magick" id="toc-magick" class="nav-link" data-scroll-target="#magick"><code>magick</code></a></li>
   <li><a href="#cropcircles" id="toc-cropcircles" class="nav-link" data-scroll-target="#cropcircles"><code>cropcircles</code></a></li>
   <li><a href="#cowplot" id="toc-cowplot" class="nav-link" data-scroll-target="#cowplot"><code>cowplot</code></a></li>
+  <li><a href="#ggspatial" id="toc-ggspatial" class="nav-link" data-scroll-target="#ggspatial"><code>ggspatial</code></a></li>
   </ul>
 </li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter1.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -442,7 +443,7 @@ Note
 </div>
 </div>
 <section id="installing-packages-and-loading-libraries" class="level1"><h1>Installing packages and loading libraries</h1>
-<div class="cell" data-hash="Chapter1_cache/html/setup_c96924e27df9803a16ceece45406e870">
+<div class="cell" data-hash="Chapter1_cache/html/setup_0f94965a80166a058b850ba6e2a67d46">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/nycflights13">nycflights13</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -481,7 +482,7 @@ Note
 <span><span class="va">g1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Default ggplot2 colours"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">g1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_fill_viridis_c</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Viridis Colours"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div id="fig-hm1" class="cell quarto-layout-panel" data-hash="Chapter1_cache/html/fig-hm1_c9adac9164c9c49d1f984b0aba642348">
+</details><div id="fig-hm1" class="cell quarto-layout-panel" data-hash="Chapter1_cache/html/fig-hm1_7622895ee382cc18dace33492d50b87f">
 <figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
 <div id="fig-hm1-1" class="quarto-figure quarto-figure-center anchored">
@@ -501,7 +502,7 @@ Note
 </div>
 </div>
 <p>Now, using <code><a href="https://rdrr.io/pkg/colorBlindness/man/cvdPlot.html">cvdPlot()</a></code> from the package <code>colorBlindness</code> to check the plot’s view ( <a href="#fig-hm2">Figure&nbsp;2</a> ) to different people.</p>
-<div class="cell" data-hash="Chapter1_cache/html/fig-hm2_3a933c3c5735b0115a342db804b1495d">
+<div class="cell" data-hash="Chapter1_cache/html/fig-hm2_41c461fd39320a10ba6081d65a600b0d">
 <details><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/colorBlindness/man/cvdPlot.html">cvdPlot</a></span><span class="op">(</span><span class="va">g1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">scale_fill_viridis_c</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div id="fig-hm2" class="quarto-figure quarto-figure-center anchored">
@@ -512,7 +513,7 @@ Note
 </div>
 <hr></section><section id="directlabels" class="level2"><h2 class="anchored" data-anchor-id="directlabels"><code>directlabels</code></h2>
 <p>The <code>directlabels</code> package <span class="citation" data-cites="directlabels">(<a href="#ref-directlabels" role="doc-biblioref">Hocking 2023</a>)</span> allows us to label plots easily, using various methods listed <a href="https://tdhock.github.io/directlabels/docs/index.html">here</a>. An example is shown in <a href="#fig-dl1">Figure&nbsp;3</a> .</p>
-<div class="cell" data-hash="Chapter1_cache/html/fig-dl1_82899307186610d189f2c97a171d781e">
+<div class="cell" data-hash="Chapter1_cache/html/fig-dl1_53cd72f3a419a922734c0080d9d12e07">
 <details><summary>Code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tdhock/directlabels">directlabels</a></span><span class="op">)</span></span>
 <span><span class="va">g2</span> <span class="op">&lt;-</span> <span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">carrier</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AA"</span>, <span class="st">"DL"</span>, <span class="st">"UA"</span>, <span class="st">"US"</span>, <span class="st">"WN"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -550,7 +551,7 @@ Note
 </div>
 <hr></section><section id="ggforce" class="level2"><h2 class="anchored" data-anchor-id="ggforce"><code>ggforce</code></h2>
 <p>The <code>ggforce</code> package <span class="citation" data-cites="ggforce">(<a href="#ref-ggforce" role="doc-biblioref">Pedersen 2022</a>)</span> is, in effect, a collection of geoms and other features to add on to the <code>ggplot2</code> collection. Once particularly nice one is <code><a href="https://ggforce.data-imaginist.com/reference/facet_zoom.html">facet_zoom()</a></code> as depicted in <a href="#fig-ggf1">Figure&nbsp;4</a> . This feature allows you to focus on a specific portion of the data by creating a zoomed-in view, while preserving the complete dataset in a separate panel. We can zoom in on either the x-axis, the y-axis, or both simultaneously.</p>
-<div class="cell" data-fig.asp="0.5" data-hash="Chapter1_cache/html/fig-ggf1_1ed4a7817ec382b3e9b9f6ed888bb347">
+<div class="cell" data-fig.asp="0.5" data-hash="Chapter1_cache/html/fig-ggf1_774a73ec706db9c3bbec63b80938ecd6">
 <details><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggforce.data-imaginist.com">ggforce</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jrnold/ggthemes">ggthemes</a></span><span class="op">)</span></span>
 <span></span>
@@ -592,7 +593,7 @@ Note
 <span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Departure Time (hrs)"</span>, y <span class="op">=</span> <span class="st">"Departure delay (min.)"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div id="fig-ggf2" class="cell quarto-layout-panel" data-hash="Chapter1_cache/html/fig-ggf2_e2dcb1d57baf0e9acd8b3f82ecce47c6">
+</details><div id="fig-ggf2" class="cell quarto-layout-panel" data-hash="Chapter1_cache/html/fig-ggf2_ba21bf13001b730d8f86da660c98dd93">
 <figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
 <div id="fig-ggf2-1" class="quarto-figure quarto-figure-center anchored">
@@ -642,7 +643,7 @@ Note
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Departure Time (hr.)"</span>, y <span class="op">=</span> <span class="st">"Average Departure Delay (min.)"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">gghighlight</span><span class="fu">::</span><span class="fu"><a href="https://yutannihilation.github.io/gghighlight/reference/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="va">carrier</span> <span class="op">==</span> <span class="st">"AA"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div id="fig-gght1" class="cell quarto-layout-panel" data-hash="Chapter1_cache/html/fig-gght1_f8b3dd84dfb1fbdd537cca76131faf6c">
+</details><div id="fig-gght1" class="cell quarto-layout-panel" data-hash="Chapter1_cache/html/fig-gght1_8a8170fc9b33b8fc230fee5705e820ae">
 <figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
 <div id="fig-gght1-1" class="quarto-figure quarto-figure-center anchored">
@@ -663,7 +664,7 @@ Note
 </figure>
 </div>
 </div>
-<div class="cell" data-hash="Chapter1_cache/html/fig-gght2_a01c488abb09d319115ce6c223e0da33">
+<div class="cell" data-hash="Chapter1_cache/html/fig-gght2_754eaccfe41b9f95ef42c7556c917a89">
 <details><summary>Code</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>dep_hour <span class="op">=</span> <span class="va">dep_time</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%/%</a></span> <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">carrier</span>, <span class="va">dep_hour</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -689,7 +690,7 @@ Note
 </div>
 <hr></section><section id="ggnewscale" class="level2"><h2 class="anchored" data-anchor-id="ggnewscale"><code>ggnewscale</code></h2>
 <p>The <code>ggnewscale</code> package <span class="citation" data-cites="ggnewscale">(<a href="#ref-ggnewscale" role="doc-biblioref">Campitelli 2023</a>)</span> allows you to use two or more different color scales (or, any other scales like <code>fill</code>, <code>shape</code>, <code>linetype</code> etc. in the same plot. The <a href="#fig-ggns1">Figure&nbsp;8</a> is directly copied from the website of the package, and credits to</p>
-<div class="cell" data-hash="Chapter1_cache/html/fig-ggns1_e4679389b5a275e5ffe98ad93527dd24">
+<div class="cell" data-hash="Chapter1_cache/html/fig-ggns1_1b4adb2a9e1752803aabc449f28986a6">
 <details><summary>Code</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://eliocamp.github.io/ggnewscale/">ggnewscale</a></span><span class="op">)</span></span>
 <span><span class="co"># Equivalent to melt(volcano)</span></span>
 <span><span class="va">topography</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">volcano</span><span class="op">)</span>,</span>
@@ -853,7 +854,7 @@ Note
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Cut of the Diamond"</span>, </span>
 <span>       y <span class="op">=</span> <span class="st">"Number of diamonds (in thousands)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://wilkelab.org/cowplot/reference/theme_cowplot.html">theme_half_open</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div id="fig-cowplot" class="cell quarto-layout-panel" data-hash="Chapter1_cache/html/fig-cowplot_cd482aad6ea538222c94911ce0708bb2">
+</details><div id="fig-cowplot" class="cell quarto-layout-panel" data-hash="Chapter1_cache/html/fig-cowplot_d6fecb1b13ed79e1556e5852a8f1f908">
 <figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
 <div id="fig-cowplot-1" class="quarto-figure quarto-figure-center anchored">
@@ -870,6 +871,58 @@ Note
 </div>
 <p></p><figcaption class="figure-caption">Figure&nbsp;9: Different nice themes from the cowplot package arranged in a grid</figcaption><p></p>
 </figure>
+</div>
+</div>
+</section><section id="ggspatial" class="level2"><h2 class="anchored" data-anchor-id="ggspatial"><code>ggspatial</code></h2>
+<p>The <code>ggspatial</code> package <span class="citation" data-cites="ggspatial">(<a href="#ref-ggspatial" role="doc-biblioref">Dunnington 2023</a>)</span> provides some nice add-on features to <code>ggplot2</code> maps like map scale (using <code><a href="https://paleolimbot.github.io/ggspatial/reference/annotation_scale.html">annotation_scale()</a></code> ) and a north arrow (using <code><a href="https://paleolimbot.github.io/ggspatial/reference/annotation_north_arrow.html">annotation_north_arrow()</a></code> ). An example is shown below: –</p>
+<div class="cell" data-hash="Chapter1_cache/html/unnamed-chunk-15_c1da9a9dd4473c5fac3dd48ea5db9b4c">
+<details><summary>Code</summary><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://paleolimbot.github.io/ggspatial/">ggspatial</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Reading in the Haryana Map Data</span></span>
+<span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html">read_sf</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>,</span>
+<span>                                  <span class="st">"haryana_map"</span>,</span>
+<span>                                  <span class="st">"HARYANA_DISTRICT_BDY.shp"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/clean_names.html">clean_names</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    district <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">district</span>,</span>
+<span>                               pattern <span class="op">=</span> <span class="st">"&gt;"</span>,</span>
+<span>                               replacement <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span>,</span>
+<span>    state <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html">str_replace_all</a></span><span class="op">(</span><span class="va">state</span>,</span>
+<span>                            pattern <span class="op">=</span> <span class="st">"&gt;"</span>,</span>
+<span>                            replacement <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span>,</span>
+<span>    district <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>      <span class="va">district</span> <span class="op">==</span> <span class="st">"FAR|DABAD"</span> <span class="op">~</span> <span class="st">"FARIDABAD"</span>,</span>
+<span>      <span class="va">district</span> <span class="op">==</span> <span class="st">"J|ND"</span> <span class="op">~</span> <span class="st">"JIND"</span>,</span>
+<span>      <span class="va">district</span> <span class="op">==</span> <span class="st">"PAN|PAT"</span> <span class="op">~</span> <span class="st">"PANIPAT"</span>,</span>
+<span>      <span class="va">district</span> <span class="op">==</span> <span class="st">"SON|PAT"</span> <span class="op">~</span> <span class="st">"SONIPAT"</span>,</span>
+<span>      .default <span class="op">=</span> <span class="va">district</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    district <span class="op">=</span> <span class="fu">snakecase</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/snakecase/man/caseconverter.html">to_title_case</a></span><span class="op">(</span><span class="va">district</span><span class="op">)</span></span>
+<span>      <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  </span>
+<span>  <span class="co"># Plot the State of Haryana in India</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>geometry <span class="op">=</span> <span class="va">geometry</span>,</span>
+<span>             label <span class="op">=</span> <span class="va">district</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"lightgrey"</span>, </span>
+<span>          col <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Add a north arrow</span></span>
+<span>  <span class="fu"><a href="https://paleolimbot.github.io/ggspatial/reference/annotation_north_arrow.html">annotation_north_arrow</a></span><span class="op">(</span>location <span class="op">=</span> <span class="st">"tl"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  </span>
+<span>  <span class="co"># Add a scale</span></span>
+<span>  <span class="fu"><a href="https://paleolimbot.github.io/ggspatial/reference/annotation_scale.html">annotation_scale</a></span><span class="op">(</span>bar_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"lightgrey"</span>, </span>
+<span>                                <span class="st">"darkgrey"</span><span class="op">)</span>,</span>
+<span>                   location <span class="op">=</span> <span class="st">"bl"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># Theme &amp; Labels</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span>, </span>
+<span>       title <span class="op">=</span> <span class="st">"Map of the State of Haryana (India)"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Adding North arrow and Scale using `ggspatial`"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="Chapter1_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -891,6 +944,9 @@ Note
 </section></section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-ggnewscale" class="csl-entry" role="listitem">
 Campitelli, Elio. 2023. <span>“Ggnewscale: Multiple Fill and Colour Scales in ’Ggplot2’.”</span> <a href="https://CRAN.R-project.org/package=ggnewscale">https://CRAN.R-project.org/package=ggnewscale</a>.
+</div>
+<div id="ref-ggspatial" class="csl-entry" role="listitem">
+Dunnington, Dewey. 2023. <span>“Ggspatial: Spatial Data Framework for Ggplot2.”</span> <a href="https://CRAN.R-project.org/package=ggspatial">https://CRAN.R-project.org/package=ggspatial</a>.
 </div>
 <div id="ref-directlabels" class="csl-entry" role="listitem">
 Hocking, Toby Dylan. 2023. <span>“Directlabels: Direct Labels for Multicolor Plots.”</span> <a href="https://CRAN.R-project.org/package=directlabels">https://CRAN.R-project.org/package=directlabels</a>.

@@ -15,3 +15,5 @@ ggforce
 ggthemes
 ggnewscale
 cowplot
+ggspatial
+sf
