@@ -39,6 +39,7 @@ library(tidyverse)     # everything and ggplot2
 library(sf)            # sf and shape files
 library(ggthemes)      # for theme_map
 library(ggspatial)     # map annotations
+library(ggmap)         # to get base raster tiles for maps
 
 # Reading in the shape file of the map of India
 india_map <- read_sf(here::here("data", 
