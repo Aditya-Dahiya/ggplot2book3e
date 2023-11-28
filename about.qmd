@@ -19,7 +19,7 @@ about:
 sidebar: false
 ---
 
-Welcome to the quirky realm of Aditya Dahiya, your friendly neighborhood Indian Administrative Service (IAS) officer, currently working as the Director and Special Secretary in the Government of Haryana, India. Amidst the daily avalanche of files and meetings that could rival a paper mountain, Aditya somehow manages to sneak in quality time with his true loves: data visualization and health financing data. Think of him as your data-wrangling, file-taming, bureaucracy-battling guide with a slightly skewed sense of humor. Need more bureaucratic banter or data insights? Connect with Aditya on [LinkedIn](https://www.linkedin.com/in/dr-aditya-dahiya-ias/) or shoot him an [email](mailto:%20adityadahiyaaiims@proton.me) -- he promises it won't be as formal as a government memo!
+Welcome to the [quirky realm](https://aditya-dahiya.github.io/) of Aditya Dahiya, your friendly neighborhood Indian Administrative Service (IAS) officer, currently working as the Director and Special Secretary in the Government of Haryana, India. Amidst the daily avalanche of files and meetings that could rival a paper mountain, Aditya somehow manages to sneak in quality time with his true loves: data visualization and health financing data. Think of him as your data-wrangling, file-taming, bureaucracy-battling guide with a slightly skewed sense of humor. Need more bureaucratic banter or data insights? Connect with Aditya on [LinkedIn](https://www.linkedin.com/in/dr-aditya-dahiya-ias/) or shoot him an [email](mailto:%20adityadahiyaaiims@proton.me) -- he promises it won't be as formal as a government memo!
 
 ## Education
 

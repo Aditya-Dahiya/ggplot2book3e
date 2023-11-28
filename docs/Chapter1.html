@@ -397,8 +397,11 @@ div.csl-indent {
   <li><a href="#cropcircles" id="toc-cropcircles" class="nav-link" data-scroll-target="#cropcircles"><code>cropcircles</code></a></li>
   <li><a href="#cowplot" id="toc-cowplot" class="nav-link" data-scroll-target="#cowplot"><code>cowplot</code></a></li>
   <li><a href="#ggspatial" id="toc-ggspatial" class="nav-link" data-scroll-target="#ggspatial"><code>ggspatial</code></a></li>
+  <li><a href="#ggfittext" id="toc-ggfittext" class="nav-link" data-scroll-target="#ggfittext"><code>ggfittext</code></a></li>
+  <li><a href="#gganimate" id="toc-gganimate" class="nav-link" data-scroll-target="#gganimate"><code>gganimate</code></a></li>
   </ul>
 </li>
+  <li><a href="#themes-for-ggplot2" id="toc-themes-for-ggplot2" class="nav-link" data-scroll-target="#themes-for-ggplot2">Themes for <code>ggplot2</code></a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter1.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -925,6 +928,231 @@ Note
 <p><img src="Chapter1_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section><section id="ggfittext" class="level2"><h2 class="anchored" data-anchor-id="ggfittext"><code>ggfittext</code></h2>
+<p>The <code>ggfittext</code> package <span class="citation" data-cites="ggfittext">(<a href="#ref-ggfittext" role="doc-biblioref">Wilkins 2023</a>)</span> offers a versatile solution for incorporating text (instead of <code><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text()</a></code>) into plots with automated handling of resizing, rescaling, and color adaptation to fit within polygons or boxes. Its key functions include:</p>
+<ol type="1">
+<li><p><strong><code><a href="https://wilkox.org/ggfittext/reference/geom_fit_text.html">geom_fit_text()</a></code>:</strong> This function dynamically resizes text to fit within a specified box. By automatically inferring the width and height of the designated box, <code><a href="https://wilkox.org/ggfittext/reference/geom_fit_text.html">geom_fit_text()</a></code> reduces the size of text that exceeds these dimensions. Noteworthy parameters such as <code>reflow = TRUE</code> and <code>grow = TRUE</code> enable text warping and size incrementation, respectively. Additionally, the <code>contrast = TRUE</code> feature automatically adjusts the text color to complement varying backgrounds, as commonly encountered in heatmaps.</p></li>
+<li><p><strong><code><a href="https://wilkox.org/ggfittext/reference/geom_fit_text.html">geom_bar_text()</a></code>:</strong> Serving a similar purpose, this function extends its capabilities to bar plots, stacked bar plots, and dodged/side-by-side bar plots. It encompasses the same functionalities as <code><a href="https://wilkox.org/ggfittext/reference/geom_fit_text.html">geom_fit_text()</a></code>, providing seamless integration of text within these specific plot types.</p></li>
+</ol>
+<p>Two examples are shown in <a href="#fig-ggfittext">Figure&nbsp;10</a> .</p>
+<div>
+<details><summary>Code</summary><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkox.org/ggfittext/">ggfittext</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-11-21/rladies_chapters.csv'</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">location</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html">year</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span>,</span>
+<span>         month <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">date</span>, label <span class="op">=</span> <span class="cn">TRUE</span>, abbr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Actual Plots------------------------------------------------------------------</span></span>
+<span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">year</span>, wt <span class="op">=</span> <span class="va">n</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">n</span>, </span>
+<span>             y <span class="op">=</span> <span class="va">year</span>, </span>
+<span>             label <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span>col <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://wilkox.org/ggfittext/reference/geom_fit_text.html">geom_bar_text</a></span><span class="op">(</span>contrast <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>       title <span class="op">=</span> <span class="st">"Number of R-Ladies Chapter Events over the years"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        panel.grid <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">df</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">month</span>, </span>
+<span>             y <span class="op">=</span> <span class="va">year</span>,</span>
+<span>             fill <span class="op">=</span> <span class="va">n</span>,</span>
+<span>             label <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://wilkox.org/ggfittext/reference/geom_fit_text.html">geom_fit_text</a></span><span class="op">(</span>contrast <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradient</a></span><span class="op">(</span>low <span class="op">=</span> <span class="st">"#e6e6e6"</span>, high <span class="op">=</span> <span class="st">"#171717"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.grid <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>        axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        plot.margin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">10</span>,<span class="fl">10</span><span class="op">)</span>, <span class="st">"pt"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"R-Ladies Chapter events - months and year-wise - A heatmap"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-ggfittext" class="cell quarto-layout-panel" data-hash="Chapter1_cache/html/fig-ggfittext_d2eba1e4cab9033794f4c58e99a67d5e">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-ggfittext-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter1_files/figure-html/fig-ggfittext-1.png" class="img-fluid figure-img" data-ref-parent="fig-ggfittext" width="672"></p>
+<figcaption class="figure-caption">(a) geom_bar_text() places labels inside and outside bars automatically</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-ggfittext-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter1_files/figure-html/fig-ggfittext-2.png" class="img-fluid figure-img" data-ref-parent="fig-ggfittext" width="672"></p>
+<figcaption class="figure-caption">(b) geom_fit_text() places text inside heatmap or geom_tile with automatic contrasting</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;10: Displaying bar-charts and heat maps using labels from ggfittext</figcaption><p></p>
+</figure>
+</div>
+</div>
+</section><section id="gganimate" class="level2"><h2 class="anchored" data-anchor-id="gganimate"><code>gganimate</code></h2>
+<p>The <code>gganimate</code> package <span class="citation" data-cites="gganimate-2">(<a href="#ref-gganimate-2" role="doc-biblioref">Pedersen and Robinson 2022</a>)</span> in R stands as a powerful tool for transforming static <code>ggplot2</code> visualizations into dynamic and animated graphics. By seamlessly integrating with the <code>ggplot2</code> ecosystem, <code>gganimate</code> enables users to breathe life into their plots, adding a temporal dimension to the presentation of data trends and patterns. L</p>
+<p>Whether visualizing changes over time, showcasing transitions between different states, or animating the evolution of data-driven narratives, gganimate opens up new avenues for exploration and communication in the realm of data visualization. An example is shown in the <a href="#fig-gganimate">animation</a> below.</p>
+<div class="cell" data-hash="Chapter1_cache/html/unnamed-chunk-17_7fb334936f0c03a275eec5484078f672">
+<details><summary>Code</summary><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gganim2</span> <span class="op">&lt;-</span> <span class="va">flights</span> <span class="op">|&gt;</span></span>
+<span> </span>
+<span>   <span class="co"># Filter the flights dataset to include only the top 9 carriers</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">carrier</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">carriers_to_plot</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  </span>
+<span>  <span class="co"># Create new columns: 'date' by combining year, month, and day, and </span></span>
+<span>  <span class="co"># 'month' to represent the month as a label</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>date <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/make_datetime.html">make_date</a></span><span class="op">(</span>year <span class="op">=</span> <span class="va">year</span>, month <span class="op">=</span> <span class="va">month</span>, day <span class="op">=</span> <span class="va">day</span><span class="op">)</span>,</span>
+<span>         month <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">date</span>, label <span class="op">=</span> <span class="cn">TRUE</span>, abbr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  </span>
+<span>  <span class="co"># Select specific columns for the subsequent analysis</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">month</span>, <span class="va">carrier</span>, <span class="va">arr_delay</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span> </span>
+<span>  <span class="co"># Group the data by 'month' and 'carrier', and calculate the average arrival delay</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">month</span>, <span class="va">carrier</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span></span>
+<span>    avg_delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">arr_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  </span>
+<span>  <span class="co"># Join the full names of airlines for the annotations in the animated plot</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="fu">nycflights13</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nycflights13/man/airlines.html">airlines</a></span>, by <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">carrier</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  </span>
+<span>  <span class="co"># Remove the 'carrier' column after joining and rename 'name' to 'carrier'</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">carrier</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>carrier <span class="op">=</span> <span class="va">name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  </span>
+<span>  <span class="co"># Calculate the rank of average delay, considering ties</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>delay_rank <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rank.html">rank</a></span><span class="op">(</span><span class="va">avg_delay</span>, ties.method <span class="op">=</span> <span class="st">"first"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  </span>
+<span>  <span class="co"># Create a ggplot object with specific aesthetics for the rectangles</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>             xmax <span class="op">=</span> <span class="va">avg_delay</span>,</span>
+<span>             y <span class="op">=</span> <span class="va">delay_rank</span>,</span>
+<span>             ymin <span class="op">=</span> <span class="va">delay_rank</span> <span class="op">-</span> <span class="fl">0.45</span>,</span>
+<span>             ymax <span class="op">=</span> <span class="va">delay_rank</span> <span class="op">+</span> <span class="fl">0.45</span>,</span>
+<span>             fill <span class="op">=</span> <span class="va">carrier</span></span>
+<span>             <span class="op">)</span></span>
+<span>         <span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Add filled rectangles with transparency</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_rect</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Add text labels for average delay values</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">avg_delay</span>, </span>
+<span>                label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">avg_delay</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>            hjust <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Add text labels for carriers</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, label <span class="op">=</span> <span class="va">carrier</span><span class="op">)</span>, hjust <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Add a label indicating the month</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_label</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">month</span><span class="op">)</span>,</span>
+<span>             x <span class="op">=</span> <span class="fl">4500</span>, y <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>             fill <span class="op">=</span> <span class="st">"white"</span>, col <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>             size <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>             label.padding <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="st">"lines"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Customize labels and titles</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>       title <span class="op">=</span> <span class="st">"Average flight arrival delay (in minutes) during {closest_state}"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Apply a classic theme</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span> </span>
+<span>  <span class="co"># Customize plot appearance</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>        axis.line.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        axis.text.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        axis.line.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span>, hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Create multiple subplots for each month</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">month</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Remove facet labels</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_null.html">facet_null</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Transition the plot by 'month'</span></span>
+<span>  <span class="fu">transition_states</span><span class="op">(</span><span class="va">month</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Animate the ggplot object with specified settings</span></span>
+<span><span class="fu">animate</span><span class="op">(</span><span class="va">gganim2</span>,</span>
+<span>        duration <span class="op">=</span> <span class="fl">40</span>,</span>
+<span>        fps <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>        width <span class="op">=</span> <span class="fl">800</span>,</span>
+<span>        height <span class="op">=</span> <span class="fl">500</span>,</span>
+<span>        start_pause <span class="op">=</span> <span class="fl">10</span>, </span>
+<span>        end_pause <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><img src="images/fig-anim3-1.gif" id="fig-gganimate" class="figure img-fluid"></p>
+</section></section><section id="themes-for-ggplot2" class="level1"><h1>Themes for <code>ggplot2</code>
+</h1>
+<table class="table">
+<thead><tr class="header">
+<th></th>
+<th>Source</th>
+<th>Description / Link</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>1.</td>
+<td>Extensive List of <code>ggplot2</code> Themes</td>
+<td><a href="https://yutannihilation.github.io/allYourFigureAreBelongToUs/1/" class="uri">https://yutannihilation.github.io/allYourFigureAreBelongToUs/1/</a></td>
+</tr>
+<tr class="even">
+<td>2.</td>
+<td>
+<code>ggtech</code> Package</td>
+<td>Themes inspired by big tech companies (AirBnb, Facebook, Google). GitHub Repository: <a href="https://github.com/ricardo-bion/ggtech" class="uri">https://github.com/ricardo-bion/ggtech</a>
+</td>
+</tr>
+<tr class="odd">
+<td>3.</td>
+<td>
+<code>hrbrthemes</code> Package</td>
+<td>Typography-centric themes and components for ggplot2. GitHub Repository: <a href="https://github.com/hrbrmstr/hrbrthemes" class="uri">https://github.com/hrbrmstr/hrbrthemes</a>
+</td>
+</tr>
+<tr class="even">
+<td>4.</td>
+<td>
+<code>tvthemes</code> Package</td>
+<td>Themes based on popular TV shows (The Simpsons, Game of Thrones). GitHub Repository: <a href="https://github.com/Ryo-N7/tvthemes" class="uri">https://github.com/Ryo-N7/tvthemes</a>
+</td>
+</tr>
+<tr class="odd">
+<td>5.</td>
+<td>Other Packages with Themes</td>
+<td>
+<code>cowplot</code> Package, <code>ggthemes</code> Package</td>
+</tr>
+<tr class="even">
+<td>6.</td>
+<td>
+<code>ggplot2</code> Extensions</td>
+<td>Gallery webpage <a href="https://exts.ggplot2.tidyverse.org/gallery/" class="uri">https://exts.ggplot2.tidyverse.org/gallery/</a>
+</td>
+</tr>
+<tr class="odd">
+<td>7.</td>
+<td><code>ggiraph</code></td>
+<td>Create interactive ggplots. Website: <a href="https://davidgohel.github.io/ggiraph/" class="uri">https://davidgohel.github.io/ggiraph/</a>
+</td>
+</tr>
+<tr class="even">
+<td>8.</td>
+<td>Interactive Data Visualization Resources by Carson Sievert</td>
+<td>“Interactive web-based data visualization with R, plotly, and shiny.” Website: <a href="https://plotly-r.com/index.html" class="uri">https://plotly-r.com/index.html</a>
+</td>
+</tr>
+</tbody>
+</table>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -941,7 +1169,7 @@ Note
 
 
 
-</section></section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-ggnewscale" class="csl-entry" role="listitem">
 Campitelli, Elio. 2023. <span>“Ggnewscale: Multiple Fill and Colour Scales in ’Ggplot2’.”</span> <a href="https://CRAN.R-project.org/package=ggnewscale">https://CRAN.R-project.org/package=ggnewscale</a>.
 </div>
@@ -963,11 +1191,17 @@ Ou, Jianhong. 2021. <span>“colorBlindness: Safe Color Set for Color Blindness.
 <div id="ref-ggforce" class="csl-entry" role="listitem">
 Pedersen, Thomas Lin. 2022. <span>“Ggforce: Accelerating ’Ggplot2’.”</span> <a href="https://CRAN.R-project.org/package=ggforce">https://CRAN.R-project.org/package=ggforce</a>.
 </div>
+<div id="ref-gganimate-2" class="csl-entry" role="listitem">
+Pedersen, Thomas Lin, and David Robinson. 2022. <span>“Gganimate: A Grammar of Animated Graphics.”</span> <a href="https://CRAN.R-project.org/package=gganimate">https://CRAN.R-project.org/package=gganimate</a>.
+</div>
 <div id="ref-nycflights13" class="csl-entry" role="listitem">
 Wickham, Hadley. 2021. <span>“Nycflights13: Flights That Departed NYC in 2013.”</span> <a href="https://CRAN.R-project.org/package=nycflights13">https://CRAN.R-project.org/package=nycflights13</a>.
 </div>
 <div id="ref-cowplot" class="csl-entry" role="listitem">
 Wilke, Claus O. 2020. <span>“Cowplot: Streamlined Plot Theme and Plot Annotations for ’Ggplot2’.”</span> <a href="https://CRAN.R-project.org/package=cowplot">https://CRAN.R-project.org/package=cowplot</a>.
+</div>
+<div id="ref-ggfittext" class="csl-entry" role="listitem">
+Wilkins, David. 2023. <span>“Ggfittext: Fit Text Inside a Box in ’Ggplot2’.”</span> <a href="https://CRAN.R-project.org/package=ggfittext">https://CRAN.R-project.org/package=ggfittext</a>.
 </div>
 <div id="ref-gghighlight" class="csl-entry" role="listitem">
 Yutani, Hiroaki. 2022. <span>“Gghighlight: Highlight Lines and Points in ’Ggplot2’.”</span> <a href="https://CRAN.R-project.org/package=gghighlight">https://CRAN.R-project.org/package=gghighlight</a>.

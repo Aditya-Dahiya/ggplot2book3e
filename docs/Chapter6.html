@@ -441,11 +441,12 @@ Note
 <p>This Chapter does not have Exercises. The code and examples below show map plotting in <code>R</code> with <code>tidyverse</code> and <code>sf</code> with examples from India.</p>
 </div>
 </div>
-<div class="cell" data-hash="Chapter6_cache/html/setup_8452bfd18731b2c6943a345d1e1ba454">
+<div class="cell" data-hash="Chapter6_cache/html/setup_4d396fe9dc84b6ceb751469435a276af">
 <details><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>     <span class="co"># everything and ggplot2</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span>            <span class="co"># sf and shape files</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jrnold/ggthemes">ggthemes</a></span><span class="op">)</span>      <span class="co"># for theme_map</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://paleolimbot.github.io/ggspatial/">ggspatial</a></span><span class="op">)</span>     <span class="co"># map annotations</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dkahle/ggmap">ggmap</a></span><span class="op">)</span>         <span class="co"># to get base raster tiles for maps</span></span>
 <span></span>
 <span><span class="co"># Reading in the shape file of the map of India</span></span>
 <span><span class="va">india_map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html">read_sf</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, </span>
