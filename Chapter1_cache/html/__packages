@@ -18,3 +18,6 @@ cowplot
 ggspatial
 sf
 ggfittext
+ggiraph
+gt
+patchwork

@@ -2,7 +2,7 @@
 title: "Chapter 1"
 subtitle: "Introduction"
 author: "Aditya Dahiya"
-date: 2023-10-23
+date: "last-modified"
 format: 
   html: 
     code-fold: true
@@ -677,10 +677,116 @@ animate(gganim2,
 
 ![](images/fig-anim3-1.gif){#fig-gganimate .figure}
 
+## Dynamic Plots: `ggiraph`
+
+The `ggiraph` package [@ggiraph] in `R` enhances the capabilities of traditional `ggplot2` visualizations by introducing interactivity. This package allows us to create **interactive** (with `shiny`) and **dynamic** (as shown below) ggplot2 visualizations, primarily through the incorporation of HTML and JavaScript elements.
+
+With `ggiraph`, you can add interactivity to various ggplot2 charts, such as scatter plots, bar charts, and maps, enabling users to hover over elements for additional information, click on points of interest, and explore data in a more engaging manner. The interactivity is achieved by leveraging the capabilities of web technologies, making it particularly useful for creating interactive graphics for online presentations or dashboards. You can customize tooltips, add hyperlinks, and create interactive legends, providing a versatile tool for data exploration and communication. The package is explained amazing well in ***ggiraph-book*** at <https://www.ardata.fr/ggiraph-book/>
+
+```{r}
+# Loading Libraries
+library(tidyverse)
+library(ggiraph)
+library(gt)
+library(patchwork)
+library(sf)
+
+# Loading and Cleaning Tehsil (Sub-Districts) Map of Haryana
+haryana_map <- read_sf(here::here("data", "haryana_map", "HARYANA_SUBDISTRICT_BDY.shp")) |> 
+  janitor::clean_names() |> 
+  mutate(
+    district = str_replace_all(district, ">", "A"),
+    tehsil = str_replace_all(tehsil, ">", "A"),
+    tehsil = str_replace_all(tehsil, "@", "U"),
+    tehsil = str_replace_all(tehsil, "\\|", "I"),
+    district = str_replace_all(district, "\\|", "I")
+  ) |> 
+  mutate(
+    district = snakecase::to_title_case(district),
+    tehsil = snakecase::to_title_case(tehsil),
+    shape_area = round(shape_area/1e6, 2)
+  )
+  
+# Interactive Map 
+g1 <- haryana_map |> 
+  ggplot(aes(geometry = geometry,
+             data_id = tehsil,
+             tooltip = paste0("Tehsil: ", tehsil, 
+                              "\nDistrict: ", district,
+                              "\nArea: ", shape_area, "sq. km."),
+             fill = shape_area)) +
+  geom_sf_interactive() +
+  ggthemes::theme_map() +
+  ggspatial::annotation_north_arrow(location = "tl") +
+  ggspatial::annotation_scale(location = "bl") +
+  scale_fill_gradient_interactive(low = "yellow", high = "red", 
+                      name = "Tehsil Area (in sq. km.)",
+                      trans = "log10") +
+  theme(legend.position = "bottom") 
+
+# Interactive Horizontal Bar Plot
+g2 <- haryana_map |> 
+  group_by(district) |> 
+  mutate(district_area = sum(shape_area)) |> 
+  arrange(desc(district_area)) |> 
+  ungroup() |> 
+  mutate(id = row_number()) |> 
+  ggplot(aes(y = reorder(district, -id),
+             x = shape_area,
+             group = tehsil,
+             fill = shape_area,
+             label = district,
+             data_id = tehsil,
+             tooltip = paste0("Tehsil: ", tehsil, 
+                              "\nDistrict: ", district,
+                              "\nArea: ", shape_area, "sq. km."))) +
+  geom_col_interactive(position = "stack", col = "white") +
+  scale_fill_gradient_interactive(low = "yellow", high = "red", 
+                                  name = "Tehsil Area (in sq. km.)",
+                                  trans = "log10") +
+  scale_x_continuous(labels = scales::label_number_si()) +
+  labs(y = "District", x = "Area (in sq. km.)") +
+  theme_minimal() +
+  theme(panel.grid = element_blank(),
+        axis.ticks.y = element_blank(),
+        legend.position = "none",
+        axis.text.y = element_text(margin = margin(r = 0)),
+        axis.title = element_text(hjust = 1))
+
+my_layout <- "
+AAB
+AAB
+"
+
+css_default_hover <- girafe_css_bicolor(primary = "#4f0882", 
+                                        secondary = "#4f0882")
+
+set_girafe_defaults(
+  opts_hover = opts_hover(css = css_default_hover),
+  opts_zoom = opts_zoom(min = 1, 
+                        max = 4),
+  opts_tooltip = opts_tooltip(css = "padding:3px;background-color:#333333;color:white;"),
+  opts_sizing = opts_sizing(rescale = TRUE),
+  opts_toolbar = opts_toolbar(saveaspng = FALSE, position = "bottom", delay_mouseout = 5000)
+)
+
+girafe(
+  code = print(g1 + g2 +
+           plot_layout(design = my_layout) +
+           plot_annotation(
+             title = "Tehsils of Haryana",
+             subtitle = "An interactive plot with Tehsil-wise area",
+             caption = "Data: Survey of India. | Graphics by: Aditya Dahiya using {ggiraph} R package"
+           ) &
+           theme(plot.title = element_text(hjust = 0.5),
+                 plot.subtitle = element_text(hjust = 0.5)))
+  )
+```
+
 # Themes for `ggplot2`
 
 |     | Source                                                     | Description / Link                                                                                                            |
-|------|--------------|--------------------------------------------|
+|-----------------|-----------------|--------------------------------------|
 | 1\. | Extensive List of `ggplot2` Themes                         | <https://yutannihilation.github.io/allYourFigureAreBelongToUs/1/>                                                             |
 | 2\. | `ggtech` Package                                           | Themes inspired by big tech companies (AirBnb, Facebook, Google). GitHub Repository: <https://github.com/ricardo-bion/ggtech> |
 | 3\. | `hrbrthemes` Package                                       | Typography-centric themes and components for ggplot2. GitHub Repository: <https://github.com/hrbrmstr/hrbrthemes>             |
