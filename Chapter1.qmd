@@ -711,16 +711,16 @@ haryana_map <- read_sf(here::here("data", "haryana_map", "HARYANA_SUBDISTRICT_BD
 g1 <- haryana_map |> 
   ggplot(aes(geometry = geometry,
              data_id = tehsil,
-             tooltip = paste0("Tehsil: ", tehsil, 
+             tooltip = paste0("Sub-Division: ", tehsil, 
                               "\nDistrict: ", district,
-                              "\nArea: ", shape_area, "sq. km."),
+                              "\nArea: ", shape_area, " sq. km."),
              fill = shape_area)) +
   geom_sf_interactive() +
   ggthemes::theme_map() +
   ggspatial::annotation_north_arrow(location = "tl") +
   ggspatial::annotation_scale(location = "bl") +
   scale_fill_gradient_interactive(low = "yellow", high = "red", 
-                      name = "Tehsil Area (in sq. km.)",
+                      name = "Sub-Division Area (in sq. km.)",
                       trans = "log10") +
   theme(legend.position = "bottom") 
 
@@ -737,12 +737,12 @@ g2 <- haryana_map |>
              fill = shape_area,
              label = district,
              data_id = tehsil,
-             tooltip = paste0("Tehsil: ", tehsil, 
+             tooltip = paste0("Sub-Division: ", tehsil, 
                               "\nDistrict: ", district,
-                              "\nArea: ", shape_area, "sq. km."))) +
+                              "\nArea: ", shape_area, " sq. km."))) +
   geom_col_interactive(position = "stack", col = "white") +
   scale_fill_gradient_interactive(low = "yellow", high = "red", 
-                                  name = "Tehsil Area (in sq. km.)",
+                                  name = "Sub-Division Area (in sq. km.)",
                                   trans = "log10") +
   scale_x_continuous(labels = scales::label_number_si()) +
   labs(y = "District", x = "Area (in sq. km.)") +
@@ -774,8 +774,8 @@ girafe(
   code = print(g1 + g2 +
            plot_layout(design = my_layout) +
            plot_annotation(
-             title = "Tehsils of Haryana",
-             subtitle = "An interactive plot with Tehsil-wise area",
+             title = "Sub-Divisions of Haryana",
+             subtitle = "An interactive plot with Sub-Division-wise area",
              caption = "Data: Survey of India. | Graphics by: Aditya Dahiya using {ggiraph} R package"
            ) &
            theme(plot.title = element_text(hjust = 0.5),
@@ -786,7 +786,7 @@ girafe(
 # Themes for `ggplot2`
 
 |     | Source                                                     | Description / Link                                                                                                            |
-|-----------------|-----------------|--------------------------------------|
+|------------------|------------------|-------------------------------------|
 | 1\. | Extensive List of `ggplot2` Themes                         | <https://yutannihilation.github.io/allYourFigureAreBelongToUs/1/>                                                             |
 | 2\. | `ggtech` Package                                           | Themes inspired by big tech companies (AirBnb, Facebook, Google). GitHub Repository: <https://github.com/ricardo-bion/ggtech> |
 | 3\. | `hrbrthemes` Package                                       | Typography-centric themes and components for ggplot2. GitHub Repository: <https://github.com/hrbrmstr/hrbrthemes>             |
