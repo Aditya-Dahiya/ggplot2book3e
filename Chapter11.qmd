@@ -6,3 +6,36 @@ subtitle: "Colour Scales and Legends"
 ::: callout-warning
 Solutions for this chapter are under construction.
 :::
+
+## Packages for colour palettes in `R`
+
+-   **`RColorBrewer`:**
+    -   Description: This package sources color palettes from ColorBrewer, delivering a diverse range of qualitative, sequential, and diverging color schemes for ggplot.
+    -   Example:
+-   **`viridis`:**
+    -   Description: Designed for both colorblind individuals and black-and-white printing, viridis provides perceptually uniform color maps that enhance data visualization.
+    -   Example:
+-   **`viridisLite`:**
+    -   Description: A streamlined version of viridis, viridisLite offers the same high-quality color maps with reduced dependencies for efficient use in ggplot.
+    -   Example:
+-   **`wesanderson`:**
+    -   Description: Inspired by Wes Anderson films, this package provides a unique and aesthetically pleasing set of color palettes, adding a distinctive touch to ggplot visuals.
+    -   Example:
+-   **`ggsci`:**
+    -   Description: Drawing inspiration from scientific journals like Nature and Science, ggsci offers color palettes that lend a professional and research-oriented look to ggplot visualizations.
+    -   Example:
+-   **`nord`:**
+    -   Description: Inspired by the Nord color scheme, this package delivers modern and elegant color palettes for ggplot, adding a contemporary feel to data visualizations.
+    -   Example:
+-   **`iWantHue`:**
+    -   Description: Enabling users to generate and explore color palettes based on criteria such as color count and harmony, iWantHue provides flexibility and customization for ggplot visuals.
+    -   Example:
+-   **`colorspace`:**
+    -   Description: Based on the HCL (Hue-Chroma-Luminance) color space, colorspace offers perceptually uniform and visually appealing color palettes for ggplot, enhancing the aesthetic quality of visualizations.
+    -   Example:
+-   **`dichromat`:**
+    -   Description: Specifically catering to individuals with color vision deficiencies, dichromat provides color palettes that prioritize accessibility for improved data visualization experiences in ggplot.
+    -   Example:
+-   **`ggthemes`:**
+    -   Description: Inspired by popular data visualization libraries and software like Excel, Tableau, and Stata, ggthemes offers a variety of color palettes and themes to diversify ggplot visuals.
+    -   Example:

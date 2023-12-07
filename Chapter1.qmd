@@ -575,6 +575,73 @@ df |>
   labs(title = "R-Ladies Chapter events - months and year-wise - A heatmap")
 ```
 
+## `ggdist`
+
+The `ggdist` R package [@ggdist] introduces geoms like [`half_eye`](https://mjskay.github.io/ggdist/articles/slabinterval.html#roadmap-it-all-starts-with-slabinterval) (implemented with `stat_slabinterval()`) and `stat_dotsinterval()` that enable the creation of rain-cloud plots. These plots offer an effective and clear visualization of data distribution, incorporating uncertainty representation. To illustrate, here's an example in @fig-ggdist utilizing the `diamonds` dataset from ggplot2.
+
+::: grid
+::: g-col-6
+```{r}
+#| label: fig-ggdist
+#| fig-cap: "Raincloud plot to show distribution using ggdist"
+#| fig-asp: 1
+
+library(tidyverse)
+library(ggdist)
+
+
+# Data-set of diamonds priced greater than $10,000
+diamonds |> 
+  filter(price > 10000 & color == "J") |> 
+  
+  # Setting axes and aesthetics
+  ggplot(aes(x = cut, 
+             y = carat,
+             fill = cut)) +
+  
+   # Drawing the Cloud on right side of the boxplot
+  stat_slabinterval(adjust = 3,
+                    position = "dodge",
+                    justification = -0.1,
+                    alpha = 0.5,
+                    scale = 0.3,
+                    point_fill = "white",
+                    shape = 21) +
+  # Rain Drops on the left hand side
+  stat_dotsinterval(
+            side = "left", 
+            justification = 1.05,
+            dotsize = 3,
+            stackratio = 0.75,
+            layout = "hex") +
+  # Labels
+  labs(x = "Cut", y = "Carat", 
+       color = "Cut", fill = "Cut",
+       title = "Raincloud plot of Diamonds' Carat",
+       subtitle = "Distribution of Carat across Cuts in Diamonds of J Colour above $10,000 in price") +
+  
+  # Scales
+  scale_y_continuous(limits = c(1.5, 3.0)) +
+  
+  scale_fill_brewer(palette = "Set2") +
+  
+  # Theme
+  theme_classic() +
+  theme(legend.position = "none",
+        axis.title = element_text(hjust = 1,
+                                  face = "bold"))
+```
+:::
+
+::: g-col-6
+**List of geoms available in `ggdist`** : [**here**](https://mjskay.github.io/ggdist/reference/index.html)
+
+Raincloud Plots are made by combining `stat_halfeye()` + `stat_dotsinterval()`
+
+[![Credits: {ggdist} by Matthew Kay](https://mjskay.github.io/ggdist/articles/slabinterval_files/figure-html/slabinterval_family-1.png){width="473"}](https://mjskay.github.io/ggdist/index.html)
+:::
+:::
+
 ## `gganimate`
 
 The `gganimate` package [@gganimate-2] in R stands as a powerful tool for transforming static `ggplot2` visualizations into dynamic and animated graphics. By seamlessly integrating with the `ggplot2` ecosystem, `gganimate` enables users to breathe life into their plots, adding a temporal dimension to the presentation of data trends and patterns. L
@@ -786,7 +853,7 @@ girafe(
 # Themes for `ggplot2`
 
 |     | Source                                                     | Description / Link                                                                                                            |
-|------------------|------------------|-------------------------------------|
+|-----|------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
 | 1\. | Extensive List of `ggplot2` Themes                         | <https://yutannihilation.github.io/allYourFigureAreBelongToUs/1/>                                                             |
 | 2\. | `ggtech` Package                                           | Themes inspired by big tech companies (AirBnb, Facebook, Google). GitHub Repository: <https://github.com/ricardo-bion/ggtech> |
 | 3\. | `hrbrthemes` Package                                       | Typography-centric themes and components for ggplot2. GitHub Repository: <https://github.com/hrbrmstr/hrbrthemes>             |

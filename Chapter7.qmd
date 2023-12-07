@@ -1,8 +1,43 @@
 ---
 title: "Chapter 7"
 subtitle: "Networks"
+author: "Aditya Dahiya"
+date: 2023-12-06
+format: 
+  html: 
+    code-fold: true
+    code-copy: hover
+    code-link: true
+execute: 
+  echo: true
+  warning: false
+  error: false
+  cache: true
+filters:
+  - social-share
+share:
+  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter6.html"
+  description: "Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
+  twitter: true
+  facebook: true
+  linkedin: true
+  email: true
+  mastodon: true
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
 ---
 
 ::: callout-warning
 Solutions for this chapter are under construction.
 :::
+
+```{r}
+#| label: setup
+
+library(tidyverse)
+library(ggraph)
+library(tidygraph)
+```
+
+### 

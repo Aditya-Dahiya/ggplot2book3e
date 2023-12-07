@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Solutions n Beyond ggplot2 - Chapter 11</title>
+<title>Solutions (and Beyond): ggplot2 - Chapter 11</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./book-cover.jpg" rel="icon" type="image/jpeg">
+<link href="./book_cover.jpg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -63,14 +63,12 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Solutions n Beyond ggplot2 - Chapter 11">
+<meta property="og:title" content="Solutions (and Beyond): ggplot2 - Chapter 11">
 <meta property="og:description" content="Colour Scales and Legends">
-<meta property="og:image" content="./book-cover.jpg">
-<meta property="og:site-name" content="Solutions n Beyond ggplot2">
-<meta name="twitter:title" content="Solutions n Beyond ggplot2 - Chapter 11">
+<meta property="og:site-name" content="Solutions (and Beyond): ggplot2">
+<meta name="twitter:title" content="Solutions (and Beyond): ggplot2 - Chapter 11">
 <meta name="twitter:description" content="Colour Scales and Legends">
-<meta name="twitter:image" content="./book-cover.jpg">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-sidebar docked nav-fixed">
@@ -81,10 +79,10 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./book-cover.jpg" alt="ggplot2: Elegant Graphics for Data Analysis (3rd Edition)" class="navbar-logo">
+    <img src="./book_logo.jpg" alt="" class="navbar-logo">
     </a>
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Solutions n Beyond ggplot2</span>
+    <span class="navbar-title">Solutions (and Beyond): ggplot2</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -343,7 +341,13 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#packages-for-colour-palettes-in-r" id="toc-packages-for-colour-palettes-in-r" class="nav-link active" data-scroll-target="#packages-for-colour-palettes-in-r">Packages for colour palettes in <code>R</code></a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter11.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -379,8 +383,63 @@ Warning
 <p>Solutions for this chapter are under construction.</p>
 </div>
 </div>
+<section id="packages-for-colour-palettes-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="packages-for-colour-palettes-in-r">Packages for colour palettes in <code>R</code></h2>
+<ul>
+<li><strong><code>RColorBrewer</code>:</strong>
+<ul>
+<li>Description: This package sources color palettes from ColorBrewer, delivering a diverse range of qualitative, sequential, and diverging color schemes for ggplot.</li>
+<li>Example:</li>
+</ul></li>
+<li><strong><code>viridis</code>:</strong>
+<ul>
+<li>Description: Designed for both colorblind individuals and black-and-white printing, viridis provides perceptually uniform color maps that enhance data visualization.</li>
+<li>Example:</li>
+</ul></li>
+<li><strong><code>viridisLite</code>:</strong>
+<ul>
+<li>Description: A streamlined version of viridis, viridisLite offers the same high-quality color maps with reduced dependencies for efficient use in ggplot.</li>
+<li>Example:</li>
+</ul></li>
+<li><strong><code>wesanderson</code>:</strong>
+<ul>
+<li>Description: Inspired by Wes Anderson films, this package provides a unique and aesthetically pleasing set of color palettes, adding a distinctive touch to ggplot visuals.</li>
+<li>Example:</li>
+</ul></li>
+<li><strong><code>ggsci</code>:</strong>
+<ul>
+<li>Description: Drawing inspiration from scientific journals like Nature and Science, ggsci offers color palettes that lend a professional and research-oriented look to ggplot visualizations.</li>
+<li>Example:</li>
+</ul></li>
+<li><strong><code>nord</code>:</strong>
+<ul>
+<li>Description: Inspired by the Nord color scheme, this package delivers modern and elegant color palettes for ggplot, adding a contemporary feel to data visualizations.</li>
+<li>Example:</li>
+</ul></li>
+<li><strong><code>iWantHue</code>:</strong>
+<ul>
+<li>Description: Enabling users to generate and explore color palettes based on criteria such as color count and harmony, iWantHue provides flexibility and customization for ggplot visuals.</li>
+<li>Example:</li>
+</ul></li>
+<li><strong><code>colorspace</code>:</strong>
+<ul>
+<li>Description: Based on the HCL (Hue-Chroma-Luminance) color space, colorspace offers perceptually uniform and visually appealing color palettes for ggplot, enhancing the aesthetic quality of visualizations.</li>
+<li>Example:</li>
+</ul></li>
+<li><strong><code>dichromat</code>:</strong>
+<ul>
+<li>Description: Specifically catering to individuals with color vision deficiencies, dichromat provides color palettes that prioritize accessibility for improved data visualization experiences in ggplot.</li>
+<li>Example:</li>
+</ul></li>
+<li><strong><code>ggthemes</code>:</strong>
+<ul>
+<li>Description: Inspired by popular data visualization libraries and software like Excel, Tableau, and Stata, ggthemes offers a variety of color palettes and themes to diversify ggplot visuals.</li>
+<li>Example:</li>
+</ul></li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -620,4 +679,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/RfDS2solutions/edit/main/Chapter11.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/RfDS2solutions/issues/new" class="toc-action">Report an issue</a></p></div></div></div></div></footer></body></html>
+</body></html>
