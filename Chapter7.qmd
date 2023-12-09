@@ -2,7 +2,7 @@
 title: "Chapter 7"
 subtitle: "Networks"
 author: "Aditya Dahiya"
-date: 2023-12-06
+date: "2023-12-09"
 format: 
   html: 
     code-fold: true
@@ -28,16 +28,98 @@ editor_options:
 bibliography: references.bib
 ---
 
-::: callout-warning
-Solutions for this chapter are under construction.
+::: {.callout-note appearance="minimal"}
+## Note
+
+There are no exercises in this Chapter to generate solutions for. Instead, we create Network Graphs for Star Wars characters using [Star Wars Social Networks data](https://github.com/evelinag/star-wars-network-data).
 :::
 
 ```{r}
 #| label: setup
 
+# Loading the required libraries
 library(tidyverse)
 library(ggraph)
 library(tidygraph)
+library(jsonlite)
 ```
 
-### 
+# 7.1 Network Data
+
+Using the data from [here](https://github.com/evelinag/star-wars-network-data/) [@gabasova2016]
+
+Creating a `tidygraph` object [@tidygraph] from a *.json* file using `jsonlite` package. [@jsonlite]
+
+```{r}
+url <- "https://raw.githubusercontent.com/evelinag/star-wars-network-data/master/starwars-full-interactions.json"
+starwars <- jsonlite::read_json(url, simplifyVector = TRUE)
+
+sw_nodes <- starwars[[1]] |> 
+  as_tibble() |> 
+  # An id to match nodes and links
+  mutate(id = row_number()) |> 
+  relocate(id) |> 
+  
+  # Conventional naming
+  rename(
+    firstname = name,
+    name = id
+  )
+
+sw_links <- starwars[[2]] |> 
+  as_tibble() |> 
+  # Network Graphs Tidygraph does not recognize 0 as a node, 
+  # Hence adding 1 to all.
+  mutate(
+    source = source + 1,
+    target = target + 1
+  ) |> 
+  
+  # Conventional Naming
+  rename(
+    from = source,
+    to = target,
+    weightage = value
+  )
+
+sw_graph <- tbl_graph(
+  nodes = sw_nodes,
+  edges = sw_links,
+  node_key = "name",
+  directed = FALSE
+) 
+```
+
+# 7.2 Visualizing Networks
+
+Using the data from here [@gabasova2016]
+
+## **7.2.1 Setting up the visualization**
+
+Drawing networks only amongst the most important characters.
+
+```{r}
+sw_graph |> 
+  
+  # Visualizing Netwroks amongst most important characters
+  # filtering by appearances in scenes > 40
+  activate(nodes) |> 
+  filter(value > 40) |> 
+  
+  ggraph(layout = "stress") +
+  geom_edge_link(
+    mapping = aes(alpha = weightage)
+  ) +
+  geom_node_point(
+    mapping = aes(size = value, 
+                  colour = colour)
+  ) +
+  geom_node_text(
+    mapping = aes(label = firstname),
+    check_overlap = TRUE,
+    repel = TRUE
+  ) +
+  scale_size_area(max_size = 10) +
+  theme_void() + 
+  theme(legend.position = "none")
+```

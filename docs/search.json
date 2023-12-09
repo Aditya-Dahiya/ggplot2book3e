@@ -179,7 +179,7 @@
     "href": "Chapter7.html",
     "title": "Chapter 7",
     "section": "",
-    "text": "Warning\n\n\n\nSolutions for this chapter are under construction.\n\n\n\nCodelibrary(tidyverse)\nlibrary(ggraph)\nlibrary(tidygraph)"
+    "text": "Note\n\n\n\nThere are no exercises in this Chapter to generate solutions for. Instead, we create Network Graphs for Star Wars characters using Star Wars Social Networks data.\nCode# Loading the required libraries\nlibrary(tidyverse)\nlibrary(ggraph)\nlibrary(tidygraph)\nlibrary(jsonlite)"
   },
   {
     "objectID": "Chapter9.html",
@@ -586,5 +586,12 @@
     "title": "Chapter 11",
     "section": "Packages for colour palettes in R",
     "text": "Packages for colour palettes in R\n\nRColorBrewer:\n\nDescription: This package sources color palettes from ColorBrewer, delivering a diverse range of qualitative, sequential, and diverging color schemes for ggplot.\nExample:\n\nviridis:\n\nDescription: Designed for both colorblind individuals and black-and-white printing, viridis provides perceptually uniform color maps that enhance data visualization.\nExample:\n\nviridisLite:\n\nDescription: A streamlined version of viridis, viridisLite offers the same high-quality color maps with reduced dependencies for efficient use in ggplot.\nExample:\n\nwesanderson:\n\nDescription: Inspired by Wes Anderson films, this package provides a unique and aesthetically pleasing set of color palettes, adding a distinctive touch to ggplot visuals.\nExample:\n\nggsci:\n\nDescription: Drawing inspiration from scientific journals like Nature and Science, ggsci offers color palettes that lend a professional and research-oriented look to ggplot visualizations.\nExample:\n\nnord:\n\nDescription: Inspired by the Nord color scheme, this package delivers modern and elegant color palettes for ggplot, adding a contemporary feel to data visualizations.\nExample:\n\niWantHue:\n\nDescription: Enabling users to generate and explore color palettes based on criteria such as color count and harmony, iWantHue provides flexibility and customization for ggplot visuals.\nExample:\n\ncolorspace:\n\nDescription: Based on the HCL (Hue-Chroma-Luminance) color space, colorspace offers perceptually uniform and visually appealing color palettes for ggplot, enhancing the aesthetic quality of visualizations.\nExample:\n\ndichromat:\n\nDescription: Specifically catering to individuals with color vision deficiencies, dichromat provides color palettes that prioritize accessibility for improved data visualization experiences in ggplot.\nExample:\n\nggthemes:\n\nDescription: Inspired by popular data visualization libraries and software like Excel, Tableau, and Stata, ggthemes offers a variety of color palettes and themes to diversify ggplot visuals.\nExample:"
+  },
+  {
+    "objectID": "Chapter7.html#setting-up-the-visualization",
+    "href": "Chapter7.html#setting-up-the-visualization",
+    "title": "Chapter 7",
+    "section": "7.2.1 Setting up the visualization",
+    "text": "7.2.1 Setting up the visualization\nDrawing networks only amongst the most important characters.\n\nCodesw_graph |&gt; \n  \n  # Visualizing Netwroks amongst most important characters\n  # filtering by appearances in scenes &gt; 40\n  activate(nodes) |&gt; \n  filter(value &gt; 40) |&gt; \n  \n  ggraph(layout = \"stress\") +\n  geom_edge_link(\n    mapping = aes(alpha = weightage)\n  ) +\n  geom_node_point(\n    mapping = aes(size = value, \n                  colour = colour)\n  ) +\n  geom_node_text(\n    mapping = aes(label = firstname),\n    check_overlap = TRUE,\n    repel = TRUE\n  ) +\n  scale_size_area(max_size = 10) +\n  theme_void() + \n  theme(legend.position = \"none\")"
   }
 ]
