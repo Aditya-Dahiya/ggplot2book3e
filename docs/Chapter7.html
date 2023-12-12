@@ -450,8 +450,8 @@ Note
 <ul>
 <li>Creating a <code>tbl_graph</code> object <strong>(<code>tidygraph</code>)</strong> <span class="citation" data-cites="tidygraph">(<a href="#ref-tidygraph" role="doc-biblioref">Pedersen 2023</a>)</span> from a <em>.json</em> file using <code>jsonlite</code> package. <span class="citation" data-cites="jsonlite">(<a href="#ref-jsonlite" role="doc-biblioref">Ooms 2014</a>)</span>.</li>
 </ul>
-<div class="cell" data-hash="Chapter7_cache/html/tbl_graph_af47f77bacb7f8a70ec6c4b111da1702">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># The url for the data</span></span>
+<div class="cell" data-hash="Chapter7_cache/html/tbl_graph_2fce9e86dea0a57974e30ce9904baffc">
+<details><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># The url for the data</span></span>
 <span><span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/evelinag/star-wars-network-data/master/starwars-full-interactions.json"</span></span>
 <span></span>
 <span><span class="co"># Importing json data</span></span>
@@ -493,7 +493,7 @@ Note
 <span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">sw_graph</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
+</details><div class="cell-output cell-output-stdout">
 <pre><code># A tbl_graph: 110 nodes and 398 edges
 #
 # An undirected simple graph with 2 components
@@ -1058,7 +1058,7 @@ Note
 </div>
 </div>
 <ul>
-<li>Below, we trying outdifferent layouts in <strong>?@fig-v2</strong> using the argument <code>layout = ""</code> to the function <code><a href="https://ggraph.data-imaginist.com/reference/ggraph.html">ggraph()</a></code>. The <code>ggraph</code> provides well over 20 different layouts<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> to choose from, including (Credits: <a href="https://www.rdocumentation.org/packages/ggraph/versions/2.1.0/topics/layout_tbl_graph_igraph"><code>R</code> Documentation</a> for <code>layout_tbl_graph_igraph</code>): —</li>
+<li>Below, we trying out different layouts in <a href="#fig-layouts">Figure&nbsp;3</a> using the argument <code>layout = ""</code> to the function <code><a href="https://ggraph.data-imaginist.com/reference/ggraph.html">ggraph()</a></code>. The <code>ggraph</code> provides well over 20 different layouts<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> to choose from, including (Credits: <a href="https://www.rdocumentation.org/packages/ggraph/versions/2.1.0/topics/layout_tbl_graph_igraph"><code>R</code> Documentation</a> for <code>layout_tbl_graph_igraph</code>): —</li>
 </ul>
 <!-- --><ul>
 <li>
@@ -1116,7 +1116,7 @@ Note
 <span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
 <span>      face <span class="op">=</span> <span class="st">"bold"</span>,</span>
 <span>      family <span class="op">=</span> <span class="st">"mono"</span>,</span>
-<span>      size <span class="op">=</span> <span class="fl">15</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>      hjust <span class="op">=</span> <span class="fl">0</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
@@ -1137,67 +1137,69 @@ Note
 <span><span class="fu">sw_graph_fun</span><span class="op">(</span><span class="st">"grid"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">sw_graph_fun</span><span class="op">(</span><span class="st">"kk"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell quarto-layout-panel" data-fig.asp="1" data-hash="Chapter7_cache/html/fig-v2_3946d1069de73a7fb3b9e8114fc329a9">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-v2-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-v2-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3: Different Layouts</figcaption></figure>
+</details><div id="fig-layouts" class="cell quarto-layout-panel" data-fig.asp="1" data-hash="Chapter7_cache/html/fig-layouts_3fdf6da822a1523d240b541350e35914">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-layouts-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-layouts-1.png" class="img-fluid figure-img" data-ref-parent="fig-layouts" width="672"></p>
+<figcaption class="figure-caption">(a) drl</figcaption></figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-v2-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-v2-2.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;4: Different Layouts</figcaption></figure>
-</div>
-</div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-v2-3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-v2-3.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5: Different Layouts</figcaption></figure>
-</div>
-</div>
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-v2-4" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-v2-4.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6: Different Layouts</figcaption></figure>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-layouts-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-layouts-2.png" class="img-fluid figure-img" data-ref-parent="fig-layouts" width="672"></p>
+<figcaption class="figure-caption">(b) circle</figcaption></figure>
 </div>
 </div>
 </div>
 <div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-v2-5" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-v2-5.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;7: Different Layouts</figcaption></figure>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-layouts-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-layouts-3.png" class="img-fluid figure-img" data-ref-parent="fig-layouts" width="672"></p>
+<figcaption class="figure-caption">(c) nicely</figcaption></figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-v2-6" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-v2-6.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;8: Different Layouts</figcaption></figure>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-layouts-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-layouts-4.png" class="img-fluid figure-img" data-ref-parent="fig-layouts" width="672"></p>
+<figcaption class="figure-caption">(d) dh</figcaption></figure>
 </div>
 </div>
 </div>
 <div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-v2-7" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-v2-7.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;9: Different Layouts</figcaption></figure>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-layouts-5" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-layouts-5.png" class="img-fluid figure-img" data-ref-parent="fig-layouts" width="672"></p>
+<figcaption class="figure-caption">(e) gem</figcaption></figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-v2-8" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-v2-8.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;10: Different Layouts</figcaption></figure>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-layouts-6" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-layouts-6.png" class="img-fluid figure-img" data-ref-parent="fig-layouts" width="672"></p>
+<figcaption class="figure-caption">(f) graphopt</figcaption></figure>
 </div>
 </div>
 </div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-layouts-7" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-layouts-7.png" class="img-fluid figure-img" data-ref-parent="fig-layouts" width="672"></p>
+<figcaption class="figure-caption">(g) grid</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-layouts-8" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-layouts-8.png" class="img-fluid figure-img" data-ref-parent="fig-layouts" width="672"></p>
+<figcaption class="figure-caption">(h) kk</figcaption></figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: Different Layouts for the ggraph()</figcaption><p></p>
+</figure>
 </div>
 </div>
 <ul>
-<li>We can further customizing Edge-widths, curvature and colours to represent strength of links between the nodes using <code>ggraph</code>, as depicted in <a href="#fig-edges">Figure&nbsp;11</a>.</li>
+<li>We can further customizing Edge-widths, curvature and colours to represent strength of links between the nodes using <code>ggraph</code>, as depicted in <a href="#fig-edges">Figure&nbsp;4</a>.</li>
 </ul>
 <div class="cell" data-hash="Chapter7_cache/html/fig-edges_03df6c5a948a2036b9cbe1ac8a702f85">
 <details><summary>Code</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sw_graph</span> <span class="op">|&gt;</span></span>
@@ -1248,15 +1250,15 @@ Note
 </details><div class="cell-output-display">
 <div id="fig-edges" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="Chapter7_files/figure-html/fig-edges-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;11: Customizing the links between the nodes with geom_edge_link2()</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;4: Customizing the links between the nodes with geom_edge_link2()</figcaption></figure>
 </div>
 </div>
 </div>
 <ul>
 <li>
-<strong>Faceting:</strong> Lastly, we can also facet on the nodes or on the edges, and produce multiple network graphs, as shown in <a href="#fig-facet">Figure&nbsp;12</a> for the entire Star Wars cast (not just the most important characters): —</li>
+<strong>Faceting:</strong> Lastly, we can also facet on the nodes or on the edges, and produce multiple network graphs, as shown in <a href="#fig-facet">Figure&nbsp;5</a> for the entire Star Wars cast (not just the most important characters): —</li>
 </ul>
-<div class="cell" data-fig.asp="1.5" data-hash="Chapter7_cache/html/fig-facet_42e896ec54f6cc7910210d346ede6d75">
+<div class="cell" data-fig.asp="1.5" data-hash="Chapter7_cache/html/fig-facet_d432877b2d4eaff70487361845bea370">
 <details><summary>Code</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yixuan/showtext">showtext</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/fontawesome">fontawesome</a></span><span class="op">)</span></span>
 <span></span>
@@ -1290,10 +1292,10 @@ Note
 <span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_node_text.html">geom_node_text</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">firstname</span>,</span>
 <span>        size <span class="op">=</span> <span class="va">value</span><span class="op">)</span>,</span>
-<span>    check_overlap <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    repel <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_area</a></span><span class="op">(</span>max_size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_continuous</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_continuous</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/facet_nodes.html">facet_nodes</a></span><span class="op">(</span><span class="op">~</span> <span class="va">col_var</span>, </span>
 <span>              scales <span class="op">=</span> <span class="st">"free"</span>,</span>
@@ -1305,13 +1307,17 @@ Note
 <span>    strip.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
 <span>      family <span class="op">=</span> <span class="st">"font_sw"</span>,</span>
 <span>      hjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>      size <span class="op">=</span> <span class="fl">15</span></span>
-<span>    <span class="op">)</span></span>
+<span>      size <span class="op">=</span> <span class="fl">36</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"darkgrey"</span>,</span>
+<span>                                fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,</span>
+<span>    strip.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"darkgrey"</span>,</span>
+<span>                                    fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div id="fig-facet" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="Chapter7_files/figure-html/fig-facet-1.png" class="img-fluid figure-img" width="960"></p>
-<figcaption class="figure-caption">Figure&nbsp;12: Different Network of Characters in Star Wars: A Faceted ggraph</figcaption></figure>
+<figcaption class="figure-caption">Figure&nbsp;5: Different Network of Characters in Star Wars: A Faceted ggraph</figcaption></figure>
 </div>
 </div>
 </div>

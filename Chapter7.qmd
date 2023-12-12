@@ -55,7 +55,6 @@ I demonstrate an example to import a *.json* file using the [Star Wars Social Ne
 ```{r}
 #| label: tbl_graph
 #| echo: true
-#| code-fold: false
 
 # The url for the data
 url <- "https://raw.githubusercontent.com/evelinag/star-wars-network-data/master/starwars-full-interactions.json"
@@ -174,7 +173,7 @@ sw_graph |>
   theme(legend.position = "none")
 ```
 
--   Below, we trying outdifferent layouts in @fig-v2 using the argument `layout = ""` to the function `ggraph()`. The `ggraph` provides well over 20 different layouts[^1] to choose from, including (Credits: [`R` Documentation](https://www.rdocumentation.org/packages/ggraph/versions/2.1.0/topics/layout_tbl_graph_igraph) for `layout_tbl_graph_igraph`): ---
+-   Below, we trying out different layouts in @fig-layouts using the argument `layout = ""` to the function `ggraph()`. The `ggraph` provides well over 20 different layouts[^1] to choose from, including (Credits: [`R` Documentation](https://www.rdocumentation.org/packages/ggraph/versions/2.1.0/topics/layout_tbl_graph_igraph) for `layout_tbl_graph_igraph`): ---
 
 [^1]: The layouts have been picked up (copied) from [RDocumentation](https://www.rdocumentation.org/packages/ggraph/versions/2.1.0/topics/layout_tbl_graph_igraph) webpage: `ggraph` (version 2.1.0) `layout_tbl_graph_igraph`: using `igraph` layout algorithms for `layout_tbl_graph`
 
@@ -220,10 +219,19 @@ sw_graph |>
     -   **`lgl`**: Uses the algorithm from Large Graph Layout to place nodes.
 
 ```{r}
-#| label: fig-v2
+#| label: fig-layouts
 #| layout-ncol: 2
 #| fig-asp: 1
-#| fig-cap: "Different Layouts"
+#| fig-cap: "Different Layouts for the ggraph()"
+#| fig-subcap: 
+#|   - "drl"
+#|   - "circle"
+#|   - "nicely"
+#|   - "dh"
+#|   - "gem"
+#|   - "graphopt"
+#|   - "grid"
+#|   - "kk"
 
 sw_graph_fun <- function(my_layout){
   sw_graph |>
@@ -251,7 +259,7 @@ sw_graph_fun <- function(my_layout){
     plot.title = element_text(
       face = "bold",
       family = "mono",
-      size = 15,
+      size = 20,
       hjust = 0
     )
   )
@@ -368,10 +376,10 @@ sw_graph |>
   geom_node_text(
     aes(label = firstname,
         size = value),
-    check_overlap = TRUE
+    repel = TRUE
   ) +
   scale_size_area(max_size = 10) +
-  scale_size_continuous(range = c(4, 12)) +
+  scale_size_continuous(range = c(6, 15)) +
   scale_color_brewer(palette = "Set2") +
   facet_nodes(~ col_var, 
               scales = "free",
@@ -383,7 +391,11 @@ sw_graph |>
     strip.text = element_text(
       family = "font_sw",
       hjust = 0.5,
-      size = 15
-    )
+      size = 36
+    ),
+    panel.border = element_rect(colour = "darkgrey",
+                                fill = NA),
+    strip.background = element_rect(colour = "darkgrey",
+                                    fill = NA)
   )
 ```
