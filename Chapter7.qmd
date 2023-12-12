@@ -371,7 +371,7 @@ sw_graph |>
     check_overlap = TRUE
   ) +
   scale_size_area(max_size = 10) +
-  scale_size_continuous(range = c(2, 10)) +
+  scale_size_continuous(range = c(4, 12)) +
   scale_color_brewer(palette = "Set2") +
   facet_nodes(~ col_var, 
               scales = "free",
