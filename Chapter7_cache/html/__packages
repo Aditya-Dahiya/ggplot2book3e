@@ -11,3 +11,7 @@ lubridate
 ggraph
 tidygraph
 jsonlite
+sysfonts
+showtextdb
+showtext
+fontawesome

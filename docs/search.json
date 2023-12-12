@@ -593,5 +593,12 @@
     "title": "Chapter 7",
     "section": "7.2.1 Setting up the visualization",
     "text": "7.2.1 Setting up the visualization\nDrawing networks only amongst the most important characters.\n\nCodesw_graph |&gt; \n  \n  # Visualizing Netwroks amongst most important characters\n  # filtering by appearances in scenes &gt; 40\n  activate(nodes) |&gt; \n  filter(value &gt; 40) |&gt; \n  \n  ggraph(layout = \"stress\") +\n  geom_edge_link(\n    mapping = aes(alpha = weightage)\n  ) +\n  geom_node_point(\n    mapping = aes(size = value, \n                  colour = colour)\n  ) +\n  geom_node_text(\n    mapping = aes(label = firstname),\n    check_overlap = TRUE,\n    repel = TRUE\n  ) +\n  scale_size_area(max_size = 10) +\n  theme_void() + \n  theme(legend.position = \"none\")"
+  },
+  {
+    "objectID": "Chapter7.html#footnotes",
+    "href": "Chapter7.html#footnotes",
+    "title": "Chapter 7",
+    "section": "Footnotes",
+    "text": "Footnotes\n\nThe layouts have been picked up (copied) from RDocumentation webpage: ggraph (version 2.1.0) layout_tbl_graph_igraph: using igraph layout algorithms for layout_tbl_graph↩︎"
   }
 ]

@@ -114,11 +114,11 @@ div.csl-indent {
 }</script><link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="Solutions (and Beyond): ggplot2 - Chapter 7">
 <meta property="og:description" content="Networks">
-<meta property="og:image" content="Chapter7_files/figure-html/unnamed-chunk-3-1.png">
+<meta property="og:image" content="Chapter7_files/figure-html/fig-v1-1.png">
 <meta property="og:site-name" content="Solutions (and Beyond): ggplot2">
 <meta name="twitter:title" content="Solutions (and Beyond): ggplot2 - Chapter 7">
 <meta name="twitter:description" content="Networks">
-<meta name="twitter:image" content="Chapter7_files/figure-html/unnamed-chunk-3-1.png">
+<meta name="twitter:image" content="Chapter7_files/figure-html/fig-v1-1.png">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="nav-sidebar docked nav-fixed">
@@ -384,13 +384,14 @@ div.csl-indent {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
    
   <ul>
-<li><a href="#network-data" id="toc-network-data" class="nav-link active" data-scroll-target="#network-data">7.1 Network Data</a></li>
-  <li>
-<a href="#visualizing-networks" id="toc-visualizing-networks" class="nav-link" data-scroll-target="#visualizing-networks">7.2 Visualizing Networks</a>
+<li>
+<a href="#network-data" id="toc-network-data" class="nav-link active" data-scroll-target="#network-data">7.1 Network Data</a>
   <ul class="collapse">
-<li><a href="#setting-up-the-visualization" id="toc-setting-up-the-visualization" class="nav-link" data-scroll-target="#setting-up-the-visualization"><strong>7.2.1 Setting up the visualization</strong></a></li>
+<li><a href="#tidygraph-a-tidy-network-manipulation-api" id="toc-tidygraph-a-tidy-network-manipulation-api" class="nav-link" data-scroll-target="#tidygraph-a-tidy-network-manipulation-api">7.1.1 Tidygraph: <strong>A tidy network manipulation API</strong></a></li>
+  <li><a href="#algorithms" id="toc-algorithms" class="nav-link" data-scroll-target="#algorithms"><strong>7.1.3 Algorithms</strong></a></li>
   </ul>
 </li>
+  <li><a href="#visualizing-networks" id="toc-visualizing-networks" class="nav-link" data-scroll-target="#visualizing-networks">7.2 Visualizing Networks</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter7.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -443,33 +444,39 @@ Note
 </details>
 </div>
 <section id="network-data" class="level1"><h1>7.1 Network Data</h1>
-<p>Using the data from <a href="https://github.com/evelinag/star-wars-network-data/">here</a> <span class="citation" data-cites="gabasova2016">(<a href="#ref-gabasova2016" role="doc-biblioref">Gabasova 2016</a>)</span></p>
-<p>Creating a <code>tidygraph</code> object <span class="citation" data-cites="tidygraph">(<a href="#ref-tidygraph" role="doc-biblioref">Pedersen 2023</a>)</span> from a <em>.json</em> file using <code>jsonlite</code> package. <span class="citation" data-cites="jsonlite">(<a href="#ref-jsonlite" role="doc-biblioref">Ooms 2014</a>)</span></p>
-<div class="cell" data-hash="Chapter7_cache/html/unnamed-chunk-2_d6e4066871758c413a7391250010c499">
-<details><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/evelinag/star-wars-network-data/master/starwars-full-interactions.json"</span></span>
+<section id="tidygraph-a-tidy-network-manipulation-api" class="level3"><h3 class="anchored" data-anchor-id="tidygraph-a-tidy-network-manipulation-api">7.1.1 Tidygraph: <strong>A tidy network manipulation API</strong>
+</h3>
+<p>I demonstrate an example to import a <em>.json</em> file using the <a href="https://github.com/evelinag/star-wars-network-data">Star Wars Social Networks data</a> from <a href="https://github.com/evelinag/star-wars-network-data/">here</a> <span class="citation" data-cites="gabasova2016">(<a href="#ref-gabasova2016" role="doc-biblioref">Gabasova 2016</a>)</span>. Then, I manipulate the data using <code>tidygraph</code> and <code>tidyverse</code> functions.</p>
+<ul>
+<li>Creating a <code>tbl_graph</code> object <strong>(<code>tidygraph</code>)</strong> <span class="citation" data-cites="tidygraph">(<a href="#ref-tidygraph" role="doc-biblioref">Pedersen 2023</a>)</span> from a <em>.json</em> file using <code>jsonlite</code> package. <span class="citation" data-cites="jsonlite">(<a href="#ref-jsonlite" role="doc-biblioref">Ooms 2014</a>)</span>.</li>
+</ul>
+<div class="cell" data-hash="Chapter7_cache/html/tbl_graph_af47f77bacb7f8a70ec6c4b111da1702">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># The url for the data</span></span>
+<span><span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/evelinag/star-wars-network-data/master/starwars-full-interactions.json"</span></span>
+<span></span>
+<span><span class="co"># Importing json data</span></span>
 <span><span class="va">starwars</span> <span class="op">&lt;-</span> <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/read_json.html">read_json</a></span><span class="op">(</span><span class="va">url</span>, simplifyVector <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># Getting the nodes (i.e., Star-Wars characters)</span></span>
 <span><span class="va">sw_nodes</span> <span class="op">&lt;-</span> <span class="va">starwars</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="co"># An id to match nodes and links</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  </span>
 <span>  <span class="co"># Conventional naming</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span></span>
 <span>    firstname <span class="op">=</span> <span class="va">name</span>,</span>
 <span>    name <span class="op">=</span> <span class="va">id</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
+<span><span class="co"># Getting the links (i.e. connections between characters)</span></span>
 <span><span class="va">sw_links</span> <span class="op">&lt;-</span> <span class="va">starwars</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="co"># Network Graphs Tidygraph does not recognize 0 as a node, </span></span>
-<span>  <span class="co"># Hence adding 1 to all.</span></span>
+<span>  <span class="co"># Network Graphs Tidygraph does not recognize 0 as a node, so adding 1.</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>    source <span class="op">=</span> <span class="va">source</span> <span class="op">+</span> <span class="fl">1</span>,</span>
 <span>    target <span class="op">=</span> <span class="va">target</span> <span class="op">+</span> <span class="fl">1</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  </span>
 <span>  <span class="co"># Conventional Naming</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span></span>
 <span>    from <span class="op">=</span> <span class="va">source</span>,</span>
@@ -477,33 +484,562 @@ Note
 <span>    weightage <span class="op">=</span> <span class="va">value</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
+<span><span class="co"># Creating a tbl_graph object</span></span>
 <span><span class="va">sw_graph</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidygraph.data-imaginist.com/reference/tbl_graph.html">tbl_graph</a></span><span class="op">(</span></span>
 <span>  nodes <span class="op">=</span> <span class="va">sw_nodes</span>,</span>
 <span>  edges <span class="op">=</span> <span class="va">sw_links</span>,</span>
 <span>  node_key <span class="op">=</span> <span class="st">"name"</span>,</span>
 <span>  directed <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+<span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">sw_graph</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tbl_graph: 110 nodes and 398 edges
+#
+# An undirected simple graph with 2 components
+#
+# A tibble: 110 × 4
+   name firstname   value colour 
+  &lt;int&gt; &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;  
+1     1 QUI-GON        61 #4f4fb1
+2     2 NUTE GUNRAY    24 #808080
+3     3 PK-4            3 #808080
+4     4 TC-14           4 #808080
+5     5 OBI-WAN       147 #48D1CC
+6     6 DOFINE          3 #808080
+# ℹ 104 more rows
+#
+# A tibble: 398 × 3
+   from    to weightage
+  &lt;int&gt; &lt;int&gt;     &lt;int&gt;
+1     1     2         1
+2     3     4         1
+3     4     5         1
+# ℹ 395 more rows</code></pre>
 </div>
-</section><section id="visualizing-networks" class="level1"><h1>7.2 Visualizing Networks</h1>
-<p>Using the data from here <span class="citation" data-cites="gabasova2016">(<a href="#ref-gabasova2016" role="doc-biblioref">Gabasova 2016</a>)</span></p>
-<section id="setting-up-the-visualization" class="level2"><h2 class="anchored" data-anchor-id="setting-up-the-visualization"><strong>7.2.1 Setting up the visualization</strong></h2>
-<p>Drawing networks only amongst the most important characters.</p>
-<div class="cell" data-hash="Chapter7_cache/html/unnamed-chunk-3_ec980b8356f39acff6e45fc2e6246a88">
-<details><summary>Code</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sw_graph</span> <span class="op">|&gt;</span> </span>
+</div>
+</section><section id="algorithms" class="level3"><h3 class="anchored" data-anchor-id="algorithms"><strong>7.1.3 Algorithms</strong></h3>
+<p>The real benefit of tbl_graph data is that we can do many operations on them, while preserving the underlying structure, for example: centrality calculation, ranking, grouping, etc.</p>
+<p>Finding groups within Star Wars Characters using <code><a href="https://tidygraph.data-imaginist.com/reference/group_graph.html">group_leading_eigen()</a></code> which groups nodes based on the leading eigenvector of the modularity matrix using <code><a href="https://r.igraph.org/reference/cluster_leading_eigen.html">igraph::cluster_leading_eigen()</a></code> . The variable <code>col_var</code> shows the group, which can be used to create groups.</p>
+<div class="cell" data-hash="Chapter7_cache/html/unnamed-chunk-3_228aa24e79f8425e2207dc1d15c25727">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sw_graph</span> <span class="op">&lt;-</span> <span class="va">sw_graph</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Creating groups with group_leading_eigen()</span></span>
+<span>  <span class="fu"><a href="https://tidygraph.data-imaginist.com/reference/activate.html">activate</a></span><span class="op">(</span><span class="va">nodes</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>col_var <span class="op">=</span> <span class="fu">tidygraph</span><span class="fu">::</span><span class="fu"><a href="https://tidygraph.data-imaginist.com/reference/group_graph.html">group_leading_eigen</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The <code><a href="https://tidygraph.data-imaginist.com/reference/group_graph.html">group_leading_eigen()</a></code> creates groups, and as we can see below in <a href="#fig-eigen">Figure&nbsp;1</a> , the groups are of related characters who appear often together in the movie.</p>
+<div class="cell" data-hash="Chapter7_cache/html/fig-eigen_f7b19aec98445e7f8590e8c6c6f905c6">
+<details><summary>Code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sw_graph</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://tidygraph.data-imaginist.com/reference/activate.html">activate</a></span><span class="op">(</span><span class="va">nodes</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">col_var</span>, <span class="va">firstname</span>, <span class="va">value</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    Group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Gp. "</span>, <span class="va">col_var</span><span class="op">)</span>,</span>
+<span>    firstname <span class="op">=</span> <span class="fu">snakecase</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/snakecase/man/caseconverter.html">to_title_case</a></span><span class="op">(</span><span class="va">firstname</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">Group</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>Characters <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">firstname</span>, collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">gt</span><span class="fu">::</span><span class="fu"><a href="https://gt.rstudio.com/reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">gtExtras</span><span class="fu">::</span><span class="fu"><a href="https://jthomasmock.github.io/gtExtras/reference/gt_theme_espn.html">gt_theme_espn</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-eigen" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><div id="prgqebreky" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#prgqebreky table {
+  font-family: Lato, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#prgqebreky thead, #prgqebreky tbody, #prgqebreky tfoot, #prgqebreky tr, #prgqebreky td, #prgqebreky th {
+  border-style: none;
+}
+
+#prgqebreky p {
+  margin: 0;
+  padding: 0;
+}
+
+#prgqebreky .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: #FFFFFF;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#prgqebreky .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#prgqebreky .gt_title {
+  color: #333333;
+  font-size: 24px;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#prgqebreky .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#prgqebreky .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#prgqebreky .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#prgqebreky .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#prgqebreky .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#prgqebreky .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#prgqebreky .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#prgqebreky .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#prgqebreky .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#prgqebreky .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#prgqebreky .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#prgqebreky .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#prgqebreky .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#prgqebreky .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#prgqebreky .gt_row {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #F6F7F7;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#prgqebreky .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#prgqebreky .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#prgqebreky .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#prgqebreky .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#prgqebreky .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#prgqebreky .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#prgqebreky .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#prgqebreky .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#prgqebreky .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#prgqebreky .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#prgqebreky .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#prgqebreky .gt_striped {
+  background-color: #FAFAFA;
+}
+
+#prgqebreky .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#prgqebreky .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#prgqebreky .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#prgqebreky .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#prgqebreky .gt_sourcenote {
+  font-size: 12px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#prgqebreky .gt_left {
+  text-align: left;
+}
+
+#prgqebreky .gt_center {
+  text-align: center;
+}
+
+#prgqebreky .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#prgqebreky .gt_font_normal {
+  font-weight: normal;
+}
+
+#prgqebreky .gt_font_bold {
+  font-weight: bold;
+}
+
+#prgqebreky .gt_font_italic {
+  font-style: italic;
+}
+
+#prgqebreky .gt_super {
+  font-size: 65%;
+}
+
+#prgqebreky .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#prgqebreky .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#prgqebreky .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#prgqebreky .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#prgqebreky .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#prgqebreky .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#prgqebreky .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Group">Group</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Characters">Characters</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="Group" class="gt_row gt_left">Gp. 1</td>
+<td headers="Characters" class="gt_row gt_left">Obi Wan, Emperor, Yoda, Nute Gunray, Bail Organa, Mace Windu, General Grievous, Rune, Count Dooku, Sio Bibble, Lama Su, Ki Adi Mundi, Darth Maul, Jango Fett, Tc 14, Tey How, General Ceel, Odd Ball, Clone Commander Gree, Clone Commander Cody, Pk 4, Dofine, Valorum, Senator Ask Aak, Orn Free Taa, Sun Rit, Poggle, Plo Koon, Tion Medon, Rabe</td>
+</tr>
+<tr>
+<td headers="Group" class="gt_row gt_left gt_striped">Gp. 2</td>
+<td headers="Characters" class="gt_row gt_left gt_striped">Anakin, Padme, Qui Gon, Jar jar, Captain Panaka, Ric Olie, Shmi, Fode Beed, Owen, Watto, Jabba, Captain Typho, Bravo Two, Boss Nass, Kitster, Ruwee, Tarpals, Sebulba, Jira, Wald, Greedo, Bravo Three, Sola, Jobal, Cliegg, Fang Zar, Giddean Danu</td>
+</tr>
+<tr>
+<td headers="Group" class="gt_row gt_left">Gp. 3</td>
+<td headers="Characters" class="gt_row gt_left">Luke, C 3 Po, Leia, Lando, Red Leader, Wedge, Biggs, Gold Leader, Admiral Ackbar, Red Ten, Rieekan, Beru, Zev, Mon Mothma, Dack, Janson, Captain Antilles, Camie, Dodonna, Derlin, Bib Fortuna, Boushh</td>
+</tr>
+<tr>
+<td headers="Group" class="gt_row gt_left gt_striped">Gp. 4</td>
+<td headers="Characters" class="gt_row gt_left gt_striped">Han, Finn, Rey, Poe, Kylo Ren, General Hux, Captain Phasma, Maz, Unkar Plutt, Snap, Lor San Tekka, Bala Tik, Snoke, Ello Asty, Jess, Lieutenant Mitaka, Admiral Statura, Yolo Ziff, Colonel Datoo, Niv Lek, Bb 8</td>
+</tr>
+<tr>
+<td headers="Group" class="gt_row gt_left">Gp. 5</td>
+<td headers="Characters" class="gt_row gt_left">Darth Vader, Tarkin, Piett, Boba Fett, Taun We, Motti, Ozzel, Needa, Jerjerrod</td>
+</tr>
+<tr>
+<td headers="Group" class="gt_row gt_left gt_striped">Gp. 6</td>
+<td headers="Characters" class="gt_row gt_left gt_striped">Gold Five</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figcaption class="figure-caption">Figure&nbsp;1: Groups of Star Wars characters as formed by group_leading_eigen()</figcaption></figure>
+</div>
+</div>
+</section></section><section id="visualizing-networks" class="level1"><h1>7.2 Visualizing Networks</h1>
+<p>We can use the <code>tbl_graph</code> object with <code>ggraph</code> to create visualizations easily.</p>
+<ul>
+<li>In <a href="#fig-v1">Figure&nbsp;2</a>, we are visualizing Networks amongst most important characters (imporantance determined by &gt;40 appearances in scenes). As we can see, out <code>tidygraph</code> function <code><a href="https://tidygraph.data-imaginist.com/reference/group_graph.html">group_leading_eigen()</a></code> has successfully group the characters into groups, based on their interactions.</li>
+</ul>
+<div class="cell" data-fig-cap-location="top" data-hash="Chapter7_cache/html/fig-v1_fe1e356d47aefbd62e3edf0a4649a716">
+<details><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sw_graph</span> <span class="op">|&gt;</span> </span>
 <span>  </span>
-<span>  <span class="co"># Visualizing Netwroks amongst most important characters</span></span>
-<span>  <span class="co"># filtering by appearances in scenes &gt; 40</span></span>
 <span>  <span class="fu"><a href="https://tidygraph.data-imaginist.com/reference/activate.html">activate</a></span><span class="op">(</span><span class="va">nodes</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">value</span> <span class="op">&gt;</span> <span class="fl">40</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  </span>
 <span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/ggraph.html">ggraph</a></span><span class="op">(</span>layout <span class="op">=</span> <span class="st">"stress"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_edge_link.html">geom_edge_link</a></span><span class="op">(</span></span>
-<span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="va">weightage</span><span class="op">)</span></span>
+<span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>width <span class="op">=</span> <span class="va">weightage</span><span class="op">)</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"grey"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_node_point.html">geom_node_point</a></span><span class="op">(</span></span>
 <span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>size <span class="op">=</span> <span class="va">value</span>, </span>
-<span>                  colour <span class="op">=</span> <span class="va">colour</span><span class="op">)</span></span>
+<span>                  colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">col_var</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_node_text.html">geom_node_text</a></span><span class="op">(</span></span>
 <span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">firstname</span><span class="op">)</span>,</span>
@@ -511,16 +1047,278 @@ Note
 <span>    repel <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_area</a></span><span class="op">(</span>max_size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_colour_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Dark2"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<p><img src="Chapter7_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<div id="fig-v1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-v1-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Linkages (defined by simultaneous appearance in a scene in the movie) amongst most important characters of Star Wars movies</figcaption></figure>
 </div>
 </div>
+</div>
+<ul>
+<li>Below, we trying outdifferent layouts in <strong>?@fig-v2</strong> using the argument <code>layout = ""</code> to the function <code><a href="https://ggraph.data-imaginist.com/reference/ggraph.html">ggraph()</a></code>. The <code>ggraph</code> provides well over 20 different layouts<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> to choose from, including (Credits: <a href="https://www.rdocumentation.org/packages/ggraph/versions/2.1.0/topics/layout_tbl_graph_igraph"><code>R</code> Documentation</a> for <code>layout_tbl_graph_igraph</code>): —</li>
+</ul>
+<!-- --><ul>
+<li>
+<p><strong>Hierarchical layouts</strong></p>
+<ul>
+<li><p><strong><code>tree</code></strong>: Uses the Reingold-Tilford algorithm to place the nodes below their parent with the parent centered above its children.</p></li>
+<li><p><strong><code>sugiyama</code></strong>: Designed for directed acyclic graphs (that is, hierarchies where multiple parents are allowed) it minimizes the number of crossing edges.</p></li>
+</ul>
+</li>
+<li>
+<p><strong>Standard layouts</strong></p>
+<ul>
+<li><p><strong><code>bipartite</code></strong>: Minimize edge-crossings in a simple two-row (or column) layout for bipartite graphs.</p></li>
+<li><p><strong><code>star</code></strong>: Place one node in the center and the rest equidistantly around it.</p></li>
+<li><p><strong><code>circle</code></strong>: Place nodes in a circle in the order of their index. Consider using layout_tbl_graph_linear() with circular=TRUE for more control.</p></li>
+<li><p><strong><code>nicely</code></strong>: Tries to pick an appropriate layout. See igraph::nicely() for a description of the simple decision tree it uses</p></li>
+<li><p><strong><code>dh</code></strong>: Uses Davidson and Harels simulated annealing algorithm to place nodes.</p></li>
+<li><p><strong><code>gem</code></strong>: Place nodes on the plane using the GEM force-directed layout algorithm.</p></li>
+<li><p><strong><code>graphopt</code></strong>: Uses the Graphopt algorithm based on alternating attraction and repulsion to place nodes.</p></li>
+<li><p><strong><code>grid</code></strong>: Place nodes on a rectangular grid.</p></li>
+<li><p><strong><code>mds</code></strong>: Perform a multidimensional scaling of nodes using either the shortest path or a user supplied distance.</p></li>
+<li><p><strong><code>sphere</code></strong>: Place nodes uniformly on a sphere - less relevant for 2D visualizations of networks.</p></li>
+<li><p><strong><code>randomly</code></strong>: Places nodes uniformly random.</p></li>
+<li><p><strong><code>fr</code></strong>: Places nodes according to the force-directed algorithm of Fruchterman and Reingold.</p></li>
+<li><p><strong><code>kk</code></strong>: Uses the spring-based algorithm by Kamada and Kawai to place nodes.</p></li>
+<li><p><strong><code>drl</code></strong>: Uses the force directed algorithm from the DrL toolbox to place nodes.</p></li>
+<li><p><strong><code>lgl</code></strong>: Uses the algorithm from Large Graph Layout to place nodes.</p></li>
+</ul>
+</li>
+</ul>
+<div>
+<details><summary>Code</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sw_graph_fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">my_layout</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">sw_graph</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tidygraph.data-imaginist.com/reference/activate.html">activate</a></span><span class="op">(</span><span class="va">nodes</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">value</span> <span class="op">&gt;</span> <span class="fl">40</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/ggraph.html">ggraph</a></span><span class="op">(</span>layout <span class="op">=</span> <span class="va">my_layout</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_edge_link.html">geom_edge_link</a></span><span class="op">(</span></span>
+<span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>width <span class="op">=</span> <span class="va">weightage</span><span class="op">)</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"grey"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_node_point.html">geom_node_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>size <span class="op">=</span> <span class="va">value</span>, </span>
+<span>                                col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">col_var</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_node_text.html">geom_node_text</a></span><span class="op">(</span></span>
+<span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">firstname</span><span class="op">)</span>,</span>
+<span>    check_overlap <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>    repel <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    fontface <span class="op">=</span> <span class="st">"bold"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"layout = \""</span>, <span class="va">my_layout</span>, <span class="st">"\""</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_area</a></span><span class="op">(</span>max_size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      face <span class="op">=</span> <span class="st">"bold"</span>,</span>
+<span>      family <span class="op">=</span> <span class="st">"mono"</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">15</span>,</span>
+<span>      hjust <span class="op">=</span> <span class="fl">0</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">sw_graph_fun</span><span class="op">(</span><span class="st">"drl"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">sw_graph_fun</span><span class="op">(</span><span class="st">"circle"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">sw_graph_fun</span><span class="op">(</span><span class="st">"nicely"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">sw_graph_fun</span><span class="op">(</span><span class="st">"dh"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">sw_graph_fun</span><span class="op">(</span><span class="st">"gem"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">sw_graph_fun</span><span class="op">(</span><span class="st">"graphopt"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">sw_graph_fun</span><span class="op">(</span><span class="st">"grid"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">sw_graph_fun</span><span class="op">(</span><span class="st">"kk"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell quarto-layout-panel" data-fig.asp="1" data-hash="Chapter7_cache/html/fig-v2_3946d1069de73a7fb3b9e8114fc329a9">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-v2-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-v2-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Different Layouts</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-v2-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-v2-2.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Different Layouts</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-v2-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-v2-3.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5: Different Layouts</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-v2-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-v2-4.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;6: Different Layouts</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-v2-5" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-v2-5.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;7: Different Layouts</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-v2-6" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-v2-6.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;8: Different Layouts</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-v2-7" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-v2-7.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;9: Different Layouts</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-v2-8" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-v2-8.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;10: Different Layouts</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li>We can further customizing Edge-widths, curvature and colours to represent strength of links between the nodes using <code>ggraph</code>, as depicted in <a href="#fig-edges">Figure&nbsp;11</a>.</li>
+</ul>
+<div class="cell" data-hash="Chapter7_cache/html/fig-edges_03df6c5a948a2036b9cbe1ac8a702f85">
+<details><summary>Code</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sw_graph</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tidygraph.data-imaginist.com/reference/activate.html">activate</a></span><span class="op">(</span><span class="va">nodes</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>col_var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="va">col_var</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">value</span> <span class="op">&gt;</span> <span class="fl">40</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  </span>
+<span>  <span class="co"># Start plotting network graph</span></span>
+<span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/ggraph.html">ggraph</a></span><span class="op">(</span>layout <span class="op">=</span> <span class="st">"nicely"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Edges</span></span>
+<span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_edge_bend.html">geom_edge_bend2</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
+<span>      colour <span class="op">=</span> <span class="va">node.col_var</span>,</span>
+<span>      width <span class="op">=</span> <span class="va">weightage</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    lineend <span class="op">=</span> <span class="st">"round"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Nodes</span></span>
+<span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_node_point.html">geom_node_point</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
+<span>      size <span class="op">=</span> <span class="va">value</span>,</span>
+<span>      fill <span class="op">=</span> <span class="va">col_var</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    pch <span class="op">=</span> <span class="fl">21</span>,</span>
+<span>    colour <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>    stroke <span class="op">=</span> <span class="fl">2</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Labels</span></span>
+<span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_node_text.html">geom_node_text</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">firstname</span><span class="op">)</span>,</span>
+<span>    check_overlap <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    repel <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    fontface <span class="op">=</span> <span class="st">"bold"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_area</a></span><span class="op">(</span>max_size <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      face <span class="op">=</span> <span class="st">"bold"</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">15</span>,</span>
+<span>      hjust <span class="op">=</span> <span class="fl">0.5</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-edges" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-edges-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;11: Customizing the links between the nodes with geom_edge_link2()</figcaption></figure>
+</div>
+</div>
+</div>
+<ul>
+<li>
+<strong>Faceting:</strong> Lastly, we can also facet on the nodes or on the edges, and produce multiple network graphs, as shown in <a href="#fig-facet">Figure&nbsp;12</a> for the entire Star Wars cast (not just the most important characters): —</li>
+</ul>
+<div class="cell" data-fig.asp="1.5" data-hash="Chapter7_cache/html/fig-facet_42e896ec54f6cc7910210d346ede6d75">
+<details><summary>Code</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yixuan/showtext">showtext</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/fontawesome">fontawesome</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html">font_add_google</a></span><span class="op">(</span><span class="st">"Poller One"</span>,</span>
+<span>                family <span class="op">=</span> <span class="st">"font_sw"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_auto.html">showtext_auto</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">labels_facet</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"Jedi &amp; Sith Lords"</span>,</span>
+<span>  <span class="st">"Prequel Trilogy"</span>, </span>
+<span>  <span class="st">"Original Trilogy"</span>,</span>
+<span>  <span class="st">"Sequel Trilogy"</span>,</span>
+<span>  <span class="st">"Villains"</span>,</span>
+<span>  <span class="st">"An outlier!"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">labels_facet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html">str_to_upper</a></span><span class="op">(</span><span class="va">labels_facet</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">labels_facet</span><span class="op">)</span> <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span></span>
+<span></span>
+<span><span class="va">sw_graph</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tidygraph.data-imaginist.com/reference/activate.html">activate</a></span><span class="op">(</span><span class="va">nodes</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>firstname <span class="op">=</span> <span class="fu">snakecase</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/snakecase/man/caseconverter.html">to_title_case</a></span><span class="op">(</span><span class="va">firstname</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/ggraph.html">ggraph</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_edge_link.html">geom_edge_link</a></span><span class="op">(</span></span>
+<span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>width <span class="op">=</span> <span class="va">weightage</span><span class="op">)</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"grey"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_node_point.html">geom_node_point</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>size <span class="op">=</span> <span class="va">value</span>, </span>
+<span>        col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">col_var</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/geom_node_text.html">geom_node_text</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">firstname</span>,</span>
+<span>        size <span class="op">=</span> <span class="va">value</span><span class="op">)</span>,</span>
+<span>    check_overlap <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_area</a></span><span class="op">(</span>max_size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_continuous</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggraph.data-imaginist.com/reference/facet_nodes.html">facet_nodes</a></span><span class="op">(</span><span class="op">~</span> <span class="va">col_var</span>, </span>
+<span>              scales <span class="op">=</span> <span class="st">"free"</span>,</span>
+<span>              labeller <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/as_labeller.html">as_labeller</a></span><span class="op">(</span><span class="va">labels_facet</span><span class="op">)</span>,</span>
+<span>              ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    legend.position <span class="op">=</span> <span class="st">"none"</span>, </span>
+<span>    strip.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      family <span class="op">=</span> <span class="st">"font_sw"</span>,</span>
+<span>      hjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">15</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-facet" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter7_files/figure-html/fig-facet-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption class="figure-caption">Figure&nbsp;12: Different Network of Characters in Star Wars: A Faceted ggraph</figcaption></figure>
+</div>
+</div>
+</div>
 
 
 
-</section></section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-gabasova2016" class="csl-entry" role="listitem">
 Gabasova, Evelina. 2016. <span>“Star Wars Social Network.”</span> Zenodo. <a href="https://doi.org/10.5281/ZENODO.1411479">https://doi.org/10.5281/ZENODO.1411479</a>.
 </div>
@@ -530,7 +1328,10 @@ Ooms, Jeroen. 2014. <span>“The Jsonlite Package: A Practical and Consistent Ma
 <div id="ref-tidygraph" class="csl-entry" role="listitem">
 Pedersen, Thomas Lin. 2023. <span>“Tidygraph: A Tidy API for Graph Manipulation.”</span> <a href="https://CRAN.R-project.org/package=tidygraph">https://CRAN.R-project.org/package=tidygraph</a>.
 </div>
-</div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+<ol>
+<li id="fn1"><p>The layouts have been picked up (copied) from <a href="https://www.rdocumentation.org/packages/ggraph/versions/2.1.0/topics/layout_tbl_graph_igraph">RDocumentation</a> webpage: <code>ggraph</code> (version 2.1.0) <code>layout_tbl_graph_igraph</code>: using <code>igraph</code> layout algorithms for <code>layout_tbl_graph</code><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
