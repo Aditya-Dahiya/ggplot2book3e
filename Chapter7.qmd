@@ -177,9 +177,8 @@ sw_graph |>
 
 [^1]: The layouts have been picked up (copied) from [RDocumentation](https://www.rdocumentation.org/packages/ggraph/versions/2.1.0/topics/layout_tbl_graph_igraph) webpage: `ggraph` (version 2.1.0) `layout_tbl_graph_igraph`: using `igraph` layout algorithms for `layout_tbl_graph`
 
-```{=html}
 <!-- -->
-```
+
 -   **Hierarchical layouts**
 
     -   **`tree`**: Uses the Reingold-Tilford algorithm to place the nodes below their parent with the parent centered above its children.
