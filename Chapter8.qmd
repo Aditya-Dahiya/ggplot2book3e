@@ -1,8 +1,222 @@
 ---
 title: "Chapter 8"
 subtitle: "Annotations"
+author: "Aditya Dahiya"
+date: "2023-12-17"
+format: 
+  html: 
+    code-fold: true
+    code-copy: hover
+    code-link: true
+execute: 
+  echo: true
+  warning: false
+  error: false
+  cache: true
+filters:
+  - social-share
+share:
+  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter8.html"
+  description: "Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
+  twitter: true
+  facebook: true
+  linkedin: true
+  email: true
+  mastodon: true
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
 ---
 
 ::: callout-warning
-Solutions for this chapter are under construction.
+This Chapter has no exercises. So, we explore annotations and packages using [Holiday Episodes data](https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-12-19/readme.md) from [#TidyTuesday](https://github.com/rfordatascience/tidytuesday/tree/master)
 :::
+
+```{r}
+#| label: setup
+
+library(tidyverse)         # data wrangling and ggplot2
+library(summarytools)      # EDA
+library(gt)                # Tables
+library(ggthemes)          # Themes
+library(ggtext)            # Text, Annotations and Markdown
+
+tuesdata <- tidytuesdayR::tt_load('2023-12-19')
+holep <- tuesdata$holiday_episodes
+holep_genres <- tuesdata$holiday_episode_genres
+rm(tuesdata)
+```
+
+A look few rows of the complete data set: --
+
+```{r}
+holep |> 
+  slice_head(n = 5) |> 
+  gt() |> 
+   cols_label_with(fn = ~ janitor::make_clean_names(., case = "title")) |> 
+  gtExtras::gt_theme_nytimes()
+```
+
+## **8.1 Plot and axis titles**
+
+```{r}
+holep |>
+  slice_max(order_by = num_votes, 
+            n = 200) |> 
+  arrange(desc(num_votes)) |> 
+  mutate(
+    id = row_number(),
+    primary_title = if_else(id <= 20,
+                            primary_title,
+                            NA)
+  ) |> 
+  ggplot(aes(x = runtime_minutes, 
+             y = average_rating)) + 
+  geom_smooth(method = "lm", 
+              col = "lightblue", 
+              se = FALSE) +
+  geom_jitter(aes(size = num_votes),
+              alpha = 0.2) +
+  geom_text(aes(label = primary_title),
+            check_overlap = TRUE,
+            col = "black") + 
+  scale_x_continuous(breaks = c(0, 15, 30, 45, 60, 90, 120),
+                     limits = c(0, 120)) +
+  scale_size_continuous(range = c(1, 10),
+                        labels = scales::label_number_si(),
+                        trans = "sqrt") +
+  cowplot::theme_half_open() +
+  theme(
+    legend.position = "bottom",
+    legend.direction = "horizontal"
+  ) + 
+  labs(
+    x = "Run-time *(in min.)*",
+    y = "Average Rating",
+    size = "Number of Votes (on **IMDb**)",
+    title = "**IMDb** Holiday TV Show Episodes: Ratings _vs._ Run-time",
+    subtitle = "A Scatterplot of the top-200 episodes (by number of votes on IMBDb) of holiday TV shows,\nwith top 20 labelled with names of episodes"
+  ) +
+  theme(axis.title.x = element_markdown(hjust = 1),
+        axis.title.y = element_markdown(hjust = 1),
+        plot.title = element_markdown(face = "plain"),
+        legend.title = element_markdown(),
+        axis.line = element_line(arrow = arrow(angle = 15, length = unit(4, "mm")))) +
+  annotate(
+    geom = "text",
+    label = quote(y == a.x + b),
+    x = 90, y = 6,
+    col = "blue",
+    fontface = "italic"
+  )
+```
+
+## **8.2 Text labels**
+
+```{r}
+#| fig-asp: 1
+holep |> 
+  group_by(parent_primary_title) |> 
+  summarise(
+    n = n(),
+    votes = mean(parent_num_votes),
+    ratings = mean(parent_average_rating),
+    genre = paste(unique(genres), collapse = ",")
+  )  |> 
+  slice_max(order_by = votes, n = 40) |> 
+  arrange(desc(votes)) |> 
+  mutate(gen_col = case_when(
+    str_detect(genre, "Comedy") ~ "Comedy",
+    str_detect(genre, "Horror") ~ "Horror",
+    str_detect(genre, "Action") ~ "Action",
+    str_detect(genre, "Drama") ~ "Drama",
+    .default = "Others"
+  )) |> 
+  ggplot(aes(x = votes,
+             y = ratings,
+             size = n,
+             label = parent_primary_title,
+             color = gen_col)) + 
+  geom_text(check_overlap = TRUE,
+            hjust = "inward") +
+  labs(
+    x = "Number of votes (on IMDb) for the TV Series",
+    y = "Average Rating of episodes",
+    size = "Number of Holiday Season episodes",
+    color = "Genre",
+    title = "Most popular TV Series with atleast 1 holiday episode",
+    subtitle = "A scatter-plot replaced by Text Labels"
+  ) +
+  scale_size_continuous(range = c(4, 7)) +
+  scale_x_continuous(labels = scales::label_number_si(),
+                     limits = c(0, 1100000)) +
+  scale_color_manual(values = c("blue", "red", "darkgreen", "purple")) +
+  theme_classic() +
+  theme(
+    legend.position = "bottom",
+    legend.box = "vertical", 
+    legend.margin = margin(0,0,0,0),
+    legend.spacing = unit(0, "pt"),
+    axis.line.x = element_line(arrow = arrow(angle = 15))
+  )
+```
+
+## **8.3 Building custom annotations**
+
+```{r}
+
+# Top 10 TV Series (by Votes on IMDb) with atleast 1 holiday episode
+tv10 <- holep |> 
+  group_by(parent_tconst, parent_primary_title) |> 
+  summarise(
+    start = mean(parent_start_year, na.rm = TRUE),
+    end = mean(parent_end_year, na.rm = TRUE),
+    votes = mean(parent_num_votes, na.rm = TRUE),
+    runtime = mean(parent_runtime_minutes, na.rm = TRUE),
+    rating = mean(parent_average_rating, na.rm = TRUE), 
+    num_episodes = n()
+  ) |> 
+  ungroup() |> 
+  mutate(years = end - start) |> 
+  drop_na() |> 
+  slice_max(order_by = votes, n = 10)
+
+holep |> 
+  # See only the holiday episodes of top 10 series
+  filter(
+    parent_primary_title %in% (tv10 |> pull(parent_primary_title))
+  ) |> 
+  mutate(
+    parent_primary_title = 
+      fct(parent_primary_title,
+          levels = (tv10 |> pull(parent_primary_title)))) |> 
+  ggplot(aes(x = year,
+             y = fct_rev(parent_primary_title))) + 
+  
+  ggrepel::geom_text_repel(aes(label = primary_title)) +
+  geom_segment(
+    data = tv10,
+    aes(x = start,
+        xend = end,
+        y = parent_primary_title,
+        yend = parent_primary_title),
+    alpha = 0.3,
+    lineend = "round",
+    lwd = 3
+  ) +
+  geom_point(
+    aes(color = average_rating,
+        size = num_votes)
+  ) +
+  scale_color_gradient(low = "pink", 
+                        high = "purple") +
+  scale_size_continuous(range = c(2, 8)) +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom"
+  )
+ 
+
+
+ 
+```

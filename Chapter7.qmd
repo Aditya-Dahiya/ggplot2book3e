@@ -16,7 +16,7 @@ execute:
 filters:
   - social-share
 share:
-  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter6.html"
+  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter7.html"
   description: "Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
   twitter: true
   facebook: true
@@ -287,6 +287,27 @@ sw_graph_fun("kk")
 #| label: fig-edges
 #| fig-cap: "Customizing the links between the nodes with geom_edge_link2()"
 
+library(showtext)
+library(fontawesome)
+
+font_add_google("Poller One",
+                family = "font_sw")
+
+font_add_google("PT Sans Narrow", "font_title")
+font_add_google("Nova Square", "font_body")
+text_col <- "black"
+# Caption stuff
+github <- "&#xf09b"
+github_username <- "aditya-dahiya"
+xtwitter <- "&#xe61b"
+xtwitter_username <- "adityadahiyaias"
+linkedin <- "&#xf08c"
+linkedin_username <- "dr-aditya-dahiya-ias"
+social_caption <- glue::glue("<span style='font-family:\"Font Awesome 6 Brands\";'>{github};</span> <span style='color: {text_col}'>{github_username}  </span> <span style='font-family:\"Font Awesome 6 Brands\";'>{xtwitter};</span> <span style='color: {text_col}'>{xtwitter_username}</span> <span style='font-family:\"Font Awesome 6 Brands\";'>{linkedin};</span> <span style='color: {text_col}'>{linkedin_username}</span>")
+
+
+showtext_auto()
+set.seed(4)
 sw_graph |>
   activate(nodes) |>
   mutate(col_var = as.character(col_var)) |>
@@ -322,14 +343,26 @@ sw_graph |>
     repel = TRUE,
     fontface = "bold"
   ) +
+  labs(title = "Network showing appearances of main characters in Star Wars films",
+       subtitle = "Size of dot indicates screen-time; width of link indicates common appearances in scenes",
+       caption = social_caption) +
   scale_size_area(max_size = 15) +
   theme_void() +
   theme(
     legend.position = "none",
     plot.title = element_text(
+      family = "font_title",
       face = "bold",
-      size = 15,
-      hjust = 0.5
+      size = 21,
+      hjust = 0
+    ),
+    plot.subtitle = element_text(
+      family = "font_body",
+      hjust = 0
+    ),
+    plot.caption = element_text(
+      hjust = 1,
+      family = "font_title"
     )
   )
 ```
@@ -341,13 +374,6 @@ sw_graph |>
 #| fig-width: 10
 #| fig-asp: 1.5
 #| fig-cap: "Different Network of Characters in Star Wars: A Faceted ggraph"
-
-library(showtext)
-library(fontawesome)
-
-font_add_google("Poller One",
-                family = "font_sw")
-showtext_auto()
 
 labels_facet = c(
   "Jedi & Sith Lords",
@@ -397,4 +423,102 @@ sw_graph |>
     strip.background = element_rect(colour = "darkgrey",
                                     fill = NA)
   )
+```
+
+```{r}
+#| label: Code-for-social-media-post
+#| eval: false
+#| echo: false
+
+library(showtext)
+library(fontawesome)
+sysfonts::font_add(family = "Font Awesome 6 Brands",
+                   regular = "C:/Users/dradi/Documents/Post-Harvard Academics/projects_presentations/docs/Font Awesome 6 Brands-Regular-400.otf")
+  
+font_add_google("Poller One",
+                family = "font_sw")
+
+font_add_google("PT Sans Narrow", "font_title")
+font_add_google("Nova Square", "font_body")
+text_col <- "black"
+# Caption stuff
+github <- "&#xf09b"
+github_username <- "aditya-dahiya"
+xtwitter <- "&#xe61b"
+xtwitter_username <- "adityadahiyaias"
+linkedin <- "&#xf08c"
+linkedin_username <- "dr-aditya-dahiya-ias"
+social_caption <- glue::glue("<span style='font-family:\"Font Awesome 6 Brands\";'>{github};</span> <span style='color: {text_col}'>{github_username}  </span> <span style='font-family:\"Font Awesome 6 Brands\";'>{xtwitter};</span> <span style='color: {text_col}'>{xtwitter_username}</span> <span style='font-family:\"Font Awesome 6 Brands\";'>{linkedin};</span> <span style='color: {text_col}'>{linkedin_username}</span>")
+
+library(magick)
+img_sw <- image_read("https://www.freepnglogos.com/uploads/star-wars-logo-31.png")
+
+showtext_auto()
+set.seed(4)
+g <- sw_graph |>
+  activate(nodes) |>
+  mutate(col_var = as.character(col_var)) |>
+  filter(value > 40) |>
+  
+  # Start plotting network graph
+  ggraph(layout = "nicely") +
+  
+  # Edges
+  geom_edge_bend2(
+    aes(
+      colour = node.col_var,
+      width = weightage
+    ),
+    lineend = "round"
+  ) +
+  
+  # Nodes
+  geom_node_point(
+    aes(
+      size = value,
+      fill = col_var
+    ),
+    pch = 21,
+    colour = "white",
+    stroke = 2
+  ) +
+  
+  # Labels
+  geom_node_text(
+    aes(label = firstname),
+    check_overlap = TRUE,
+    repel = TRUE,
+    fontface = "bold"
+  ) +
+  theme_classic() +
+  labs(title = "Network showing appearances of main characters in Star Wars films",
+       subtitle = "Size of dot indicates screen-time; width of link indicates common appearances in scenes",
+       caption = social_caption) +
+  scale_size_area(max_size = 15) +
+  theme_void() +
+  theme(
+    legend.position = "none",
+    plot.title = element_text(
+      family = "font_title",
+      face = "bold",
+      size = 21,
+      hjust = 0
+    ),
+    plot.subtitle = element_text(
+      family = "font_body",
+      hjust = 0
+    ),
+    plot.caption = ggtext::element_textbox(
+      hjust = 0.1,
+      family = "font_title"
+    )
+  )
+
+g +
+  annotation_raster(img_sw,
+                    xmin = -1.2,
+                    xmax = 0,
+                    ymin = -3,
+                    ymax = -1.5)
+
 ```
