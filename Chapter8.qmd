@@ -53,7 +53,11 @@ A look few rows of the complete data set: --
 holep |> 
   slice_head(n = 5) |> 
   gt() |> 
-   cols_label_with(fn = ~ janitor::make_clean_names(., case = "title")) |> 
+  cols_label_with(fn = ~ janitor::make_clean_names(., case = "title")) |> 
+  tab_style(
+    style = cell_text(size = "small"),
+    locations = cells_body()
+  ) |> 
   gtExtras::gt_theme_nytimes()
 ```
 
@@ -208,6 +212,11 @@ holep |>
     aes(color = average_rating,
         size = num_votes)
   ) +
+  labs(
+    x = NULL, y = NULL,
+    title = "Holiday Episodes of IMDb's top 10 TV Series",
+    subtitle = "Size of dot indicates number of votes, Color indicates Average Rating on IMDb"
+  ) +
   scale_color_gradient(low = "pink", 
                         high = "purple") +
   scale_size_continuous(range = c(2, 8)) +
@@ -215,8 +224,251 @@ holep |>
   theme(
     legend.position = "bottom"
   )
- 
-
-
- 
 ```
+
+### A Professional Visualization
+
+An attempt to make a nice visualization with annotations for [#TidyTuesday](https://github.com/rfordatascience/tidytuesday/tree/master)
+
+```{r}
+#| eval: false
+
+
+#==============================================================================#
+# Libraries --------------------------------------------------------------------
+#==============================================================================#
+library(tidyverse)      # Data Wrangling and Plotting
+library(here)           # Files location and loading
+library(summarytools)   # Exploratory Data Analysis
+library(colorfindr)     # To get colour palettes for the Viz
+library(showtext)       # Using Fonts More Easily in R Graphs
+library(ggimage)        # Using Images in ggplot2
+library(fontawesome)    # Social Media icons
+library(ggtext)         # Markdown Text in ggplot2
+library(patchwork)      # For compiling plots
+library(figpatch)       # Images in patchwork
+library(magick)         # Work with Images and Logos
+library(ggimage)        # Background Image
+library(cropcircles)    # Crop Images
+library(cowplot)        # Images on axis ticks
+
+#==============================================================================#
+# Data Load-in------------------------------------------------------------------
+#==============================================================================#
+
+tuesdata <- tidytuesdayR::tt_load('2023-12-19')
+holep <- tuesdata$holiday_episodes
+rm(tuesdata)
+
+#==============================================================================#
+# Data Wrangling----------------------------------------------------------------
+#==============================================================================#
+# Find Top 10 series of IMDb
+tv10 <- holep |> 
+  group_by(parent_tconst, parent_primary_title) |> 
+  summarise(
+    start = mean(parent_start_year, na.rm = TRUE),
+    end = mean(parent_end_year, na.rm = TRUE),
+    votes = mean(parent_num_votes, na.rm = TRUE),
+    runtime = mean(parent_runtime_minutes, na.rm = TRUE),
+    rating = mean(parent_average_rating, na.rm = TRUE), 
+    num_episodes = n()
+  ) |> 
+  ungroup() |> 
+  mutate(years = end - start) |> 
+  drop_na() |> 
+  slice_max(order_by = votes, n = 10)
+
+# The Actual Data to be plotted
+df <- holep |> 
+  
+  # See only the holiday episodes of top 10 series
+  filter(
+    parent_primary_title %in% (tv10 |> pull(parent_primary_title))
+  ) |> 
+  # An ordered factor to display TV Series Ranking wise in the plot
+  mutate(
+    parent_primary_title = 
+      fct(parent_primary_title,
+          levels = (tv10 |> pull(parent_primary_title))))
+
+#==============================================================================#
+# Options & Visualization Parameters--------------------------------------------
+#==============================================================================#
+
+# Load fonts
+font_add_google("Ubuntu Condensed", 
+                family = "title_font")       # Font for titles
+font_add_google("Saira Extra Condensed", 
+                family = "caption_font")     # Font for the caption
+font_add_google("Exo", 
+                family = "body_font")            # Font for plot text
+showtext_auto()
+
+# Creating Images for 10 Series Titles
+# Image to extract
+img <- ""
+
+# Color Palette
+library(MetBrewer)
+MetBrewer::display_all()
+mypal <- met.brewer("Tam")
+
+# Define colours
+low_col <- mypal[2]                   # Heat map: low colour
+hi_col <- mypal[5]                    # Heat map: high colour
+bg_col <- "white"                    # Background Colour
+text_col <- mypal[8]                  # Colour for the text
+text_hil <- mypal[7]                  # Colour for highlighted text
+
+# Define Text Size
+ts = 24                              # Text Size
+
+# Caption stuff
+sysfonts::font_add(family = "Font Awesome 6 Brands",
+                   regular = here::here("docs", "Font Awesome 6 Brands-Regular-400.otf"))
+github <- "&#xf09b"
+github_username <- "aditya-dahiya"
+xtwitter <- "&#xe61b"
+xtwitter_username <- "@adityadahiyaias"
+linkedin <- "&#xf08c"
+linkedin_username <- "dr-aditya-dahiya-ias"
+social_caption <- glue::glue("<span style='font-family:\"Font Awesome 6 Brands\";'>{github};</span> <span style='color: {text_col}'>{github_username}  </span> <span style='font-family:\"Font Awesome 6 Brands\";'>{xtwitter};</span> <span style='color: {text_col}'>{xtwitter_username}</span> <span style='font-family:\"Font Awesome 6 Brands\";'>{linkedin};</span> <span style='color: {text_col}'>{linkedin_username}</span>")
+
+# Add text to plot--------------------------------------------------------------
+plot_title <- "Holiday Episodes of IMDb's top-10 TV Series"
+
+subtitle_text <- "The Office had the most (6) holiday season episodes, while the highest rated episode is Dexter's Dex Takes a Holiday."
+plot_subtitle <- paste(strwrap(subtitle_text, 150), collapse = "\n")
+
+plot_caption <- paste0("**Data:** IMDb Non-Commercial Datasets. | ", "**Graphics:** ", social_caption)
+
+
+#==============================================================================#
+# Images for Y-Axis ------------------------------------------------------------
+#==============================================================================#
+url1 <- "https://www.tvstyleguide.com/wp-content/uploads/2017/05/the_vampire_diaries_logo-1.jpg"
+url2 <- "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p9974290_b_h8_ba.jpg"
+url3 <- "https://cdn1.edgedatg.com/aws/v2/abc/ModernFamily/showimages/cae29355a2f177539897e6db1d9b0861/1600x900-Q90_cae29355a2f177539897e6db1d9b0861.jpg"
+url4 <- "https://1000logos.net/wp-content/uploads/2017/07/emblem-Supernatural.jpg"
+url5 <- "https://pics.filmaffinity.com/House_M_D_TV_Series-298794401-large.jpg"
+url6 <- "https://cdn.britannica.com/63/247263-050-3ABF5622/promotional-still-The-Office-Steve-Carell.jpg"
+url7 <- "https://m.media-amazon.com/images/M/MV5BNjg1MDQ5MjQ2N15BMl5BanBnXkFtZTYwNjI5NjA3._V1_FMjpg_UX1000_.jpg"
+url8 <- "https://rukminim2.flixcart.com/image/850/1000/k0zlsi80/poster/f/p/y/medium-dexter-tv-series-poster-for-room-office-13-inch-x-19-inch-original-imafknhcvrnzxfwy.jpeg"
+url9 <- "https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p185554_b_v9_bk.jpg"
+url10 <- "https://m.media-amazon.com/images/M/MV5BNDVkYjU0MzctMWRmZi00NTkxLTgwZWEtOWVhYjZlYjllYmU4XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_.jpg"
+
+mk_logo <- function(url){
+  image_read(url) |> 
+  image_resize("x300") |> 
+  circle_crop(border_size = 1, 
+              border_colour = "black") |> 
+  image_read()
+  }
+
+#==============================================================================#
+# Data Visualization------------------------------------------------------------
+#==============================================================================#
+
+p <- df |> 
+  ggplot(aes(x = year,
+             y = fct_rev(parent_primary_title))) + 
+  ggrepel::geom_text_repel(
+    aes(label = primary_title),
+    family = "body_font",
+    col = mypal[7],
+    size = 3, nudge_y = -0.5) +
+  geom_segment(
+    data = tv10,
+    aes(x = start,
+        xend = end,
+        y = parent_primary_title,
+        yend = parent_primary_title),
+    alpha = 0.3,
+    lineend = "round",
+    lwd = 4, 
+    col = mypal[7]
+  ) +
+  geom_point(
+    aes(color = average_rating,
+        size = num_votes),
+    alpha = 0.96
+  ) +
+  scale_color_gradient(low = low_col, 
+                        high = hi_col) +
+  scale_size_continuous(range = c(4, 12),
+                        labels = scales::label_number_si()) +
+  scale_x_continuous(limits = c(1993, 2023),
+                     breaks = seq(1995, 2020, 5),
+                     expand = c(0, 0)) +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom"
+  ) +
+  labs(title = plot_title,
+       caption = plot_caption,
+       subtitle = NULL,
+       x = NULL, y = NULL,
+       color = "Episode Rating (IMDb)",
+       size = "Number of Votes (IMDb)") +
+  guides(size = guide_legend(override.aes = list(colour = text_hil)),
+         alpha = "none") + 
+  theme(
+    plot.caption =  element_textbox(family = "caption_font",
+                                    hjust = 0.5,
+                                    colour = text_col,
+                                    size = ts/2),
+    plot.title   =     element_text(hjust = 0.5,
+                                    size = 2*ts,
+                                    family = "title_font",
+                                    face = "bold",
+                                    colour = text_col),
+    plot.subtitle    = element_text(hjust = 0,
+                                    size = ts/2,
+                                    family = "body_font",
+                                    colour = text_col),
+    plot.background =  element_rect(fill = bg_col,
+                                    color = bg_col,
+                                    linewidth = 0),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.y = element_line(linetype = 2),
+    axis.text       =  element_text(hjust = 0.5,
+                                    size = ts/2,
+                                    family = "body_font",
+                                    colour = text_col),
+    legend.title = element_text(family = "body_font",
+                                colour = text_col,
+                                vjust = 0.5),
+    legend.key.height = unit(2, "mm"),
+    legend.text = element_text(family = "body_font",
+                               colour = text_col),
+    plot.title.position = "plot",
+    plot.caption.position = "plot"
+    )
+scale_fac = 0.9
+
+pimage <- axis_canvas(
+  p, 
+  axis = "y") + 
+  draw_image(mk_logo(url1), y = 0.5, scale = scale_fac) +
+  draw_image(mk_logo(url2), y = 1.5, scale = scale_fac) +
+  draw_image(mk_logo(url3), y = 2.5, scale = scale_fac) +
+  draw_image(mk_logo(url4), y = 3.5, scale = scale_fac) +
+  draw_image(mk_logo(url5), y = 4.5, scale = scale_fac) +
+  draw_image(mk_logo(url6), y = 5.5, scale = scale_fac) +
+  draw_image(mk_logo(url7), y = 6.5, scale = scale_fac) +
+  draw_image(mk_logo(url8), y = 7.5, scale = scale_fac) +
+  draw_image(mk_logo(url9), y = 8.5, scale = scale_fac) +
+  draw_image(mk_logo(url10), y = 9.5, scale = scale_fac)
+
+
+# insert the image strip into the plot
+ggdraw(insert_yaxis_grob(
+  p, 
+  pimage, 
+  position = "left",
+  width = unit(15, "mm")))
+```
+
+![](docs/holidayepisodes_tidy.png)

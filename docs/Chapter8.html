@@ -367,7 +367,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
 <li><a href="#plot-and-axis-titles" id="toc-plot-and-axis-titles" class="nav-link active" data-scroll-target="#plot-and-axis-titles"><strong>8.1 Plot and axis titles</strong></a></li>
   <li><a href="#text-labels" id="toc-text-labels" class="nav-link" data-scroll-target="#text-labels"><strong>8.2 Text labels</strong></a></li>
-  <li><a href="#building-custom-annotations" id="toc-building-custom-annotations" class="nav-link" data-scroll-target="#building-custom-annotations"><strong>8.3 Building custom annotations</strong></a></li>
+  <li>
+<a href="#building-custom-annotations" id="toc-building-custom-annotations" class="nav-link" data-scroll-target="#building-custom-annotations"><strong>8.3 Building custom annotations</strong></a>
+  <ul class="collapse">
+<li><a href="#a-professional-visualization" id="toc-a-professional-visualization" class="nav-link" data-scroll-target="#a-professional-visualization">A Professional Visualization</a></li>
+  </ul>
+</li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter8.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -430,11 +435,15 @@ Warning
 </details>
 </div>
 <p>A look few rows of the complete data set: –</p>
-<div class="cell" data-hash="Chapter8_cache/html/unnamed-chunk-2_f96558c33700658aec311cbec86d4c74">
+<div class="cell" data-hash="Chapter8_cache/html/unnamed-chunk-2_ebb4935bf2bdfdea8d3a70e3034c7fe5">
 <details><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">holep</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>   <span class="fu"><a href="https://gt.rstudio.com/reference/cols_label_with.html">cols_label_with</a></span><span class="op">(</span>fn <span class="op">=</span> <span class="op">~</span> <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/make_clean_names.html">make_clean_names</a></span><span class="op">(</span><span class="va">.</span>, case <span class="op">=</span> <span class="st">"title"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/cols_label_with.html">cols_label_with</a></span><span class="op">(</span>fn <span class="op">=</span> <span class="op">~</span> <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/make_clean_names.html">make_clean_names</a></span><span class="op">(</span><span class="va">.</span>, case <span class="op">=</span> <span class="st">"title"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cell_text.html">cell_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="st">"small"</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cells_body.html">cells_body</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">gtExtras</span><span class="fu">::</span><span class="fu"><a href="https://jthomasmock.github.io/gtExtras/reference/gt_theme_nytimes.html">gt_theme_nytimes</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
@@ -912,144 +921,144 @@ Warning
     </tr></thead>
 <tbody class="gt_table_body">
 <tr>
-<td headers="tconst" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">tt0046855</td>
-<td headers="parent_tconst" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">tt0046643</td>
-<td headers="season_number" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
-<td headers="episode_number" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">4</td>
-<td headers="primary_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">A Christmas Carol</td>
-<td headers="original_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">A Christmas Carol</td>
-<td headers="year" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1954</td>
-<td headers="runtime_minutes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">60</td>
-<td headers="genres" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Adventure,Drama,Family</td>
-<td headers="simple_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">a christmas carol</td>
-<td headers="average_rating" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">5.9</td>
-<td headers="num_votes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">159</td>
-<td headers="parent_title_type" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">tvSeries</td>
-<td headers="parent_primary_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Shower of Stars</td>
-<td headers="parent_original_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Shower of Stars</td>
-<td headers="parent_start_year" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1954</td>
-<td headers="parent_end_year" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1958</td>
-<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">60</td>
-<td headers="parent_genres" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Adventure,Drama,Family</td>
-<td headers="parent_simple_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">shower of stars</td>
-<td headers="parent_average_rating" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">7.5</td>
-<td headers="parent_num_votes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">78</td>
-<td headers="christmas" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">TRUE</td>
-<td headers="hanukkah" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
-<td headers="kwanzaa" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
-<td headers="holiday" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0046855</td>
+<td headers="parent_tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0046643</td>
+<td headers="season_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
+<td headers="episode_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">4</td>
+<td headers="primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">A Christmas Carol</td>
+<td headers="original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">A Christmas Carol</td>
+<td headers="year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1954</td>
+<td headers="runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">60</td>
+<td headers="genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Adventure,Drama,Family</td>
+<td headers="simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">a christmas carol</td>
+<td headers="average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">5.9</td>
+<td headers="num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">159</td>
+<td headers="parent_title_type" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tvSeries</td>
+<td headers="parent_primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Shower of Stars</td>
+<td headers="parent_original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Shower of Stars</td>
+<td headers="parent_start_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1954</td>
+<td headers="parent_end_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1958</td>
+<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">60</td>
+<td headers="parent_genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Adventure,Drama,Family</td>
+<td headers="parent_simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">shower of stars</td>
+<td headers="parent_average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">7.5</td>
+<td headers="parent_num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">78</td>
+<td headers="christmas" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">TRUE</td>
+<td headers="hanukkah" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="kwanzaa" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="holiday" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
 </tr>
 <tr>
-<td headers="tconst" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">tt0110014</td>
-<td headers="parent_tconst" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">tt0094525</td>
-<td headers="season_number" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">6</td>
-<td headers="episode_number" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
-<td headers="primary_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Hercule Poirot's Christmas</td>
-<td headers="original_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Hercule Poirot's Christmas</td>
-<td headers="year" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1994</td>
-<td headers="runtime_minutes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">100</td>
-<td headers="genres" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Crime,Drama,Mystery</td>
-<td headers="simple_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">hercule poirots christmas</td>
-<td headers="average_rating" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">8.0</td>
-<td headers="num_votes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">2461</td>
-<td headers="parent_title_type" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">tvSeries</td>
-<td headers="parent_primary_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Poirot</td>
-<td headers="parent_original_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Poirot</td>
-<td headers="parent_start_year" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1989</td>
-<td headers="parent_end_year" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">2013</td>
-<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">100</td>
-<td headers="parent_genres" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Crime,Drama,Mystery</td>
-<td headers="parent_simple_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">poirot</td>
-<td headers="parent_average_rating" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">8.6</td>
-<td headers="parent_num_votes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">50365</td>
-<td headers="christmas" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">TRUE</td>
-<td headers="hanukkah" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
-<td headers="kwanzaa" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
-<td headers="holiday" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0110014</td>
+<td headers="parent_tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0094525</td>
+<td headers="season_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">6</td>
+<td headers="episode_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
+<td headers="primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Hercule Poirot's Christmas</td>
+<td headers="original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Hercule Poirot's Christmas</td>
+<td headers="year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1994</td>
+<td headers="runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">100</td>
+<td headers="genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Crime,Drama,Mystery</td>
+<td headers="simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">hercule poirots christmas</td>
+<td headers="average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">8.0</td>
+<td headers="num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2461</td>
+<td headers="parent_title_type" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tvSeries</td>
+<td headers="parent_primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Poirot</td>
+<td headers="parent_original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Poirot</td>
+<td headers="parent_start_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1989</td>
+<td headers="parent_end_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2013</td>
+<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">100</td>
+<td headers="parent_genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Crime,Drama,Mystery</td>
+<td headers="parent_simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">poirot</td>
+<td headers="parent_average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">8.6</td>
+<td headers="parent_num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">50365</td>
+<td headers="christmas" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">TRUE</td>
+<td headers="hanukkah" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="kwanzaa" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="holiday" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
 </tr>
 <tr>
-<td headers="tconst" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">tt0125755</td>
-<td headers="parent_tconst" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">tt2388808</td>
-<td headers="season_number" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">NA</td>
-<td headers="episode_number" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">NA</td>
-<td headers="primary_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Red Skelton's Christmas Dinner</td>
-<td headers="original_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Red Skelton's Christmas Dinner</td>
-<td headers="year" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1981</td>
-<td headers="runtime_minutes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">50</td>
-<td headers="genres" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Music</td>
-<td headers="simple_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">red skeltons christmas dinner</td>
-<td headers="average_rating" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">8.1</td>
-<td headers="num_votes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">167</td>
-<td headers="parent_title_type" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">tvSeries</td>
-<td headers="parent_primary_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Standing Room Only</td>
-<td headers="parent_original_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Standing Room Only</td>
-<td headers="parent_start_year" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1976</td>
-<td headers="parent_end_year" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1982</td>
-<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">NA</td>
-<td headers="parent_genres" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Music</td>
-<td headers="parent_simple_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">standing room only</td>
-<td headers="parent_average_rating" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">7.7</td>
-<td headers="parent_num_votes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">41</td>
-<td headers="christmas" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">TRUE</td>
-<td headers="hanukkah" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
-<td headers="kwanzaa" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
-<td headers="holiday" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0125755</td>
+<td headers="parent_tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt2388808</td>
+<td headers="season_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">NA</td>
+<td headers="episode_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">NA</td>
+<td headers="primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Red Skelton's Christmas Dinner</td>
+<td headers="original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Red Skelton's Christmas Dinner</td>
+<td headers="year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1981</td>
+<td headers="runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">50</td>
+<td headers="genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Music</td>
+<td headers="simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">red skeltons christmas dinner</td>
+<td headers="average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">8.1</td>
+<td headers="num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">167</td>
+<td headers="parent_title_type" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tvSeries</td>
+<td headers="parent_primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Standing Room Only</td>
+<td headers="parent_original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Standing Room Only</td>
+<td headers="parent_start_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1976</td>
+<td headers="parent_end_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1982</td>
+<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">NA</td>
+<td headers="parent_genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Music</td>
+<td headers="parent_simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">standing room only</td>
+<td headers="parent_average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">7.7</td>
+<td headers="parent_num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">41</td>
+<td headers="christmas" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">TRUE</td>
+<td headers="hanukkah" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="kwanzaa" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="holiday" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
 </tr>
 <tr>
-<td headers="tconst" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">tt0138038</td>
-<td headers="parent_tconst" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">tt0132666</td>
-<td headers="season_number" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
-<td headers="episode_number" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">14</td>
-<td headers="primary_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Principal Takes a Holiday</td>
-<td headers="original_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Principal Takes a Holiday</td>
-<td headers="year" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1998</td>
-<td headers="runtime_minutes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">96</td>
-<td headers="genres" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Adventure,Comedy,Drama</td>
-<td headers="simple_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">principal takes a holiday</td>
-<td headers="average_rating" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">6.0</td>
-<td headers="num_votes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">414</td>
-<td headers="parent_title_type" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">tvSeries</td>
-<td headers="parent_primary_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">The Wonderful World of Disney</td>
-<td headers="parent_original_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">The Wonderful World of Disney</td>
-<td headers="parent_start_year" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1997</td>
-<td headers="parent_end_year" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">2023</td>
-<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">120</td>
-<td headers="parent_genres" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Adventure,Comedy,Drama</td>
-<td headers="parent_simple_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">the wonderful world of disney</td>
-<td headers="parent_average_rating" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">7.4</td>
-<td headers="parent_num_votes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1005</td>
-<td headers="christmas" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
-<td headers="hanukkah" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
-<td headers="kwanzaa" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
-<td headers="holiday" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">TRUE</td>
+<td headers="tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0138038</td>
+<td headers="parent_tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0132666</td>
+<td headers="season_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
+<td headers="episode_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">14</td>
+<td headers="primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Principal Takes a Holiday</td>
+<td headers="original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Principal Takes a Holiday</td>
+<td headers="year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1998</td>
+<td headers="runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">96</td>
+<td headers="genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Adventure,Comedy,Drama</td>
+<td headers="simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">principal takes a holiday</td>
+<td headers="average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">6.0</td>
+<td headers="num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">414</td>
+<td headers="parent_title_type" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tvSeries</td>
+<td headers="parent_primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">The Wonderful World of Disney</td>
+<td headers="parent_original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">The Wonderful World of Disney</td>
+<td headers="parent_start_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1997</td>
+<td headers="parent_end_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2023</td>
+<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">120</td>
+<td headers="parent_genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Adventure,Comedy,Drama</td>
+<td headers="parent_simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">the wonderful world of disney</td>
+<td headers="parent_average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">7.4</td>
+<td headers="parent_num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1005</td>
+<td headers="christmas" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="hanukkah" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="kwanzaa" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="holiday" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">TRUE</td>
 </tr>
 <tr>
-<td headers="tconst" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">tt0179551</td>
-<td headers="parent_tconst" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">tt0233023</td>
-<td headers="season_number" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
-<td headers="episode_number" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">14</td>
-<td headers="primary_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">A Christmas Memory</td>
-<td headers="original_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">A Christmas Memory</td>
-<td headers="year" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1966</td>
-<td headers="runtime_minutes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">51</td>
-<td headers="genres" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Comedy,Drama,Musical</td>
-<td headers="simple_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">a christmas memory</td>
-<td headers="average_rating" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">9.0</td>
-<td headers="num_votes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">257</td>
-<td headers="parent_title_type" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">tvSeries</td>
-<td headers="parent_primary_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">ABC Stage 67</td>
-<td headers="parent_original_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">ABC Stage 67</td>
-<td headers="parent_start_year" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1966</td>
-<td headers="parent_end_year" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">1967</td>
-<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">51</td>
-<td headers="parent_genres" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">Comedy,Drama,Musical</td>
-<td headers="parent_simple_title" class="gt_row gt_left" style="font-family: 'Source Sans Pro'; font-weight: 400;">abc stage 67</td>
-<td headers="parent_average_rating" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">7.4</td>
-<td headers="parent_num_votes" class="gt_row gt_right" style="font-family: 'Source Sans Pro'; font-weight: 400;">104</td>
-<td headers="christmas" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">TRUE</td>
-<td headers="hanukkah" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
-<td headers="kwanzaa" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
-<td headers="holiday" class="gt_row gt_center" style="font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0179551</td>
+<td headers="parent_tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0233023</td>
+<td headers="season_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
+<td headers="episode_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">14</td>
+<td headers="primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">A Christmas Memory</td>
+<td headers="original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">A Christmas Memory</td>
+<td headers="year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1966</td>
+<td headers="runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">51</td>
+<td headers="genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Comedy,Drama,Musical</td>
+<td headers="simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">a christmas memory</td>
+<td headers="average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">9.0</td>
+<td headers="num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">257</td>
+<td headers="parent_title_type" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tvSeries</td>
+<td headers="parent_primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">ABC Stage 67</td>
+<td headers="parent_original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">ABC Stage 67</td>
+<td headers="parent_start_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1966</td>
+<td headers="parent_end_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1967</td>
+<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">51</td>
+<td headers="parent_genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Comedy,Drama,Musical</td>
+<td headers="parent_simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">abc stage 67</td>
+<td headers="parent_average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">7.4</td>
+<td headers="parent_num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">104</td>
+<td headers="christmas" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">TRUE</td>
+<td headers="hanukkah" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="kwanzaa" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="holiday" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
 </tr>
 </tbody>
 </table>
@@ -1162,7 +1171,7 @@ Warning
 </div>
 </div>
 </section><section id="building-custom-annotations" class="level2"><h2 class="anchored" data-anchor-id="building-custom-annotations"><strong>8.3 Building custom annotations</strong></h2>
-<div class="cell" data-hash="Chapter8_cache/html/unnamed-chunk-5_37d6fa52191997244d9438dbcf330850">
+<div class="cell" data-hash="Chapter8_cache/html/unnamed-chunk-5_df05e6543f50156e460f96c8304ceffe">
 <details><summary>Code</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Top 10 TV Series (by Votes on IMDb) with atleast 1 holiday episode</span></span>
 <span><span class="va">tv10</span> <span class="op">&lt;-</span> <span class="va">holep</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">parent_tconst</span>, <span class="va">parent_primary_title</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -1206,6 +1215,11 @@ Warning
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">average_rating</span>,</span>
 <span>        size <span class="op">=</span> <span class="va">num_votes</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    title <span class="op">=</span> <span class="st">"Holiday Episodes of IMDb's top 10 TV Series"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Size of dot indicates number of votes, Color indicates Average Rating on IMDb"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_color_gradient</a></span><span class="op">(</span>low <span class="op">=</span> <span class="st">"pink"</span>, </span>
 <span>                        high <span class="op">=</span> <span class="st">"purple"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_continuous</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1217,9 +1231,250 @@ Warning
 <p><img src="Chapter8_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<section id="a-professional-visualization" class="level3"><h3 class="anchored" data-anchor-id="a-professional-visualization">A Professional Visualization</h3>
+<p>An attempt to make a nice visualization with annotations for <a href="https://github.com/rfordatascience/tidytuesday/tree/master">#TidyTuesday</a></p>
+<div class="cell" data-hash="Chapter8_cache/html/unnamed-chunk-6_9b89ebe2d2c8b4b1b02e7439fa00ac7e">
+<details><summary>Code</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#==============================================================================#</span></span>
+<span><span class="co"># Libraries --------------------------------------------------------------------</span></span>
+<span><span class="co">#==============================================================================#</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>      <span class="co"># Data Wrangling and Plotting</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span>           <span class="co"># Files location and loading</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dcomtois/summarytools">summarytools</a></span><span class="op">)</span>   <span class="co"># Exploratory Data Analysis</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">colorfindr</span><span class="op">)</span>     <span class="co"># To get colour palettes for the Viz</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yixuan/showtext">showtext</a></span><span class="op">)</span>       <span class="co"># Using Fonts More Easily in R Graphs</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GuangchuangYu/ggimage">ggimage</a></span><span class="op">)</span>        <span class="co"># Using Images in ggplot2</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/fontawesome">fontawesome</a></span><span class="op">)</span>    <span class="co"># Social Media icons</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/ggtext/">ggtext</a></span><span class="op">)</span>         <span class="co"># Markdown Text in ggplot2</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span>      <span class="co"># For compiling plots</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/BradyAJohnston/figpatch">figpatch</a></span><span class="op">)</span>       <span class="co"># Images in patchwork</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/magick/">magick</a></span><span class="op">)</span>         <span class="co"># Work with Images and Logos</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/GuangchuangYu/ggimage">ggimage</a></span><span class="op">)</span>        <span class="co"># Background Image</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/doehm/cropcircles">cropcircles</a></span><span class="op">)</span>    <span class="co"># Crop Images</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/cowplot/">cowplot</a></span><span class="op">)</span>        <span class="co"># Images on axis ticks</span></span>
+<span></span>
+<span><span class="co">#==============================================================================#</span></span>
+<span><span class="co"># Data Load-in------------------------------------------------------------------</span></span>
+<span><span class="co">#==============================================================================#</span></span>
+<span></span>
+<span><span class="va">tuesdata</span> <span class="op">&lt;-</span> <span class="fu">tidytuesdayR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tidytuesdayR/man/tt_load.html">tt_load</a></span><span class="op">(</span><span class="st">'2023-12-19'</span><span class="op">)</span></span>
+<span><span class="va">holep</span> <span class="op">&lt;-</span> <span class="va">tuesdata</span><span class="op">$</span><span class="va">holiday_episodes</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">tuesdata</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#==============================================================================#</span></span>
+<span><span class="co"># Data Wrangling----------------------------------------------------------------</span></span>
+<span><span class="co">#==============================================================================#</span></span>
+<span><span class="co"># Find Top 10 series of IMDb</span></span>
+<span><span class="va">tv10</span> <span class="op">&lt;-</span> <span class="va">holep</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">parent_tconst</span>, <span class="va">parent_primary_title</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
+<span>    start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">parent_start_year</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">parent_end_year</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    votes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">parent_num_votes</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    runtime <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">parent_runtime_minutes</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    rating <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">parent_average_rating</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
+<span>    num_episodes <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>years <span class="op">=</span> <span class="va">end</span> <span class="op">-</span> <span class="va">start</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span>order_by <span class="op">=</span> <span class="va">votes</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># The Actual Data to be plotted</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">holep</span> <span class="op">|&gt;</span> </span>
+<span>  </span>
+<span>  <span class="co"># See only the holiday episodes of top 10 series</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span></span>
+<span>    <span class="va">parent_primary_title</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="op">(</span><span class="va">tv10</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">parent_primary_title</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># An ordered factor to display TV Series Ranking wise in the plot</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    parent_primary_title <span class="op">=</span> </span>
+<span>      <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct.html">fct</a></span><span class="op">(</span><span class="va">parent_primary_title</span>,</span>
+<span>          levels <span class="op">=</span> <span class="op">(</span><span class="va">tv10</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">parent_primary_title</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#==============================================================================#</span></span>
+<span><span class="co"># Options &amp; Visualization Parameters--------------------------------------------</span></span>
+<span><span class="co">#==============================================================================#</span></span>
+<span></span>
+<span><span class="co"># Load fonts</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html">font_add_google</a></span><span class="op">(</span><span class="st">"Ubuntu Condensed"</span>, </span>
+<span>                family <span class="op">=</span> <span class="st">"title_font"</span><span class="op">)</span>       <span class="co"># Font for titles</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html">font_add_google</a></span><span class="op">(</span><span class="st">"Saira Extra Condensed"</span>, </span>
+<span>                family <span class="op">=</span> <span class="st">"caption_font"</span><span class="op">)</span>     <span class="co"># Font for the caption</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html">font_add_google</a></span><span class="op">(</span><span class="st">"Exo"</span>, </span>
+<span>                family <span class="op">=</span> <span class="st">"body_font"</span><span class="op">)</span>            <span class="co"># Font for plot text</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_auto.html">showtext_auto</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Creating Images for 10 Series Titles</span></span>
+<span><span class="co"># Image to extract</span></span>
+<span><span class="va">img</span> <span class="op">&lt;-</span> <span class="st">""</span></span>
+<span></span>
+<span><span class="co"># Color Palette</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">MetBrewer</span><span class="op">)</span></span>
+<span><span class="fu">MetBrewer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MetBrewer/man/display_all.html">display_all</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">mypal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MetBrewer/man/met.brewer.html">met.brewer</a></span><span class="op">(</span><span class="st">"Tam"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Define colours</span></span>
+<span><span class="va">low_col</span> <span class="op">&lt;-</span> <span class="va">mypal</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>                   <span class="co"># Heat map: low colour</span></span>
+<span><span class="va">hi_col</span> <span class="op">&lt;-</span> <span class="va">mypal</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span>                    <span class="co"># Heat map: high colour</span></span>
+<span><span class="va">bg_col</span> <span class="op">&lt;-</span> <span class="st">"white"</span>                    <span class="co"># Background Colour</span></span>
+<span><span class="va">text_col</span> <span class="op">&lt;-</span> <span class="va">mypal</span><span class="op">[</span><span class="fl">8</span><span class="op">]</span>                  <span class="co"># Colour for the text</span></span>
+<span><span class="va">text_hil</span> <span class="op">&lt;-</span> <span class="va">mypal</span><span class="op">[</span><span class="fl">7</span><span class="op">]</span>                  <span class="co"># Colour for highlighted text</span></span>
+<span></span>
+<span><span class="co"># Define Text Size</span></span>
+<span><span class="va">ts</span> <span class="op">=</span> <span class="fl">24</span>                              <span class="co"># Text Size</span></span>
+<span></span>
+<span><span class="co"># Caption stuff</span></span>
+<span><span class="fu">sysfonts</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add.html">font_add</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"Font Awesome 6 Brands"</span>,</span>
+<span>                   regular <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"docs"</span>, <span class="st">"Font Awesome 6 Brands-Regular-400.otf"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">github</span> <span class="op">&lt;-</span> <span class="st">"&amp;#xf09b"</span></span>
+<span><span class="va">github_username</span> <span class="op">&lt;-</span> <span class="st">"aditya-dahiya"</span></span>
+<span><span class="va">xtwitter</span> <span class="op">&lt;-</span> <span class="st">"&amp;#xe61b"</span></span>
+<span><span class="va">xtwitter_username</span> <span class="op">&lt;-</span> <span class="st">"@adityadahiyaias"</span></span>
+<span><span class="va">linkedin</span> <span class="op">&lt;-</span> <span class="st">"&amp;#xf08c"</span></span>
+<span><span class="va">linkedin_username</span> <span class="op">&lt;-</span> <span class="st">"dr-aditya-dahiya-ias"</span></span>
+<span><span class="va">social_caption</span> <span class="op">&lt;-</span> <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"&lt;span style='font-family:\"Font Awesome 6 Brands\";'&gt;{github};&lt;/span&gt; &lt;span style='color: {text_col}'&gt;{github_username}  &lt;/span&gt; &lt;span style='font-family:\"Font Awesome 6 Brands\";'&gt;{xtwitter};&lt;/span&gt; &lt;span style='color: {text_col}'&gt;{xtwitter_username}&lt;/span&gt; &lt;span style='font-family:\"Font Awesome 6 Brands\";'&gt;{linkedin};&lt;/span&gt; &lt;span style='color: {text_col}'&gt;{linkedin_username}&lt;/span&gt;"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Add text to plot--------------------------------------------------------------</span></span>
+<span><span class="va">plot_title</span> <span class="op">&lt;-</span> <span class="st">"Holiday Episodes of IMDb's top-10 TV Series"</span></span>
+<span></span>
+<span><span class="va">subtitle_text</span> <span class="op">&lt;-</span> <span class="st">"The Office had the most (6) holiday season episodes, while the highest rated episode is Dexter's Dex Takes a Holiday."</span></span>
+<span><span class="va">plot_subtitle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strwrap.html">strwrap</a></span><span class="op">(</span><span class="va">subtitle_text</span>, <span class="fl">150</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">"\n"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">plot_caption</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"**Data:** IMDb Non-Commercial Datasets. | "</span>, <span class="st">"**Graphics:** "</span>, <span class="va">social_caption</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co">#==============================================================================#</span></span>
+<span><span class="co"># Images for Y-Axis ------------------------------------------------------------</span></span>
+<span><span class="co">#==============================================================================#</span></span>
+<span><span class="va">url1</span> <span class="op">&lt;-</span> <span class="st">"https://www.tvstyleguide.com/wp-content/uploads/2017/05/the_vampire_diaries_logo-1.jpg"</span></span>
+<span><span class="va">url2</span> <span class="op">&lt;-</span> <span class="st">"https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p9974290_b_h8_ba.jpg"</span></span>
+<span><span class="va">url3</span> <span class="op">&lt;-</span> <span class="st">"https://cdn1.edgedatg.com/aws/v2/abc/ModernFamily/showimages/cae29355a2f177539897e6db1d9b0861/1600x900-Q90_cae29355a2f177539897e6db1d9b0861.jpg"</span></span>
+<span><span class="va">url4</span> <span class="op">&lt;-</span> <span class="st">"https://1000logos.net/wp-content/uploads/2017/07/emblem-Supernatural.jpg"</span></span>
+<span><span class="va">url5</span> <span class="op">&lt;-</span> <span class="st">"https://pics.filmaffinity.com/House_M_D_TV_Series-298794401-large.jpg"</span></span>
+<span><span class="va">url6</span> <span class="op">&lt;-</span> <span class="st">"https://cdn.britannica.com/63/247263-050-3ABF5622/promotional-still-The-Office-Steve-Carell.jpg"</span></span>
+<span><span class="va">url7</span> <span class="op">&lt;-</span> <span class="st">"https://m.media-amazon.com/images/M/MV5BNjg1MDQ5MjQ2N15BMl5BanBnXkFtZTYwNjI5NjA3._V1_FMjpg_UX1000_.jpg"</span></span>
+<span><span class="va">url8</span> <span class="op">&lt;-</span> <span class="st">"https://rukminim2.flixcart.com/image/850/1000/k0zlsi80/poster/f/p/y/medium-dexter-tv-series-poster-for-room-office-13-inch-x-19-inch-original-imafknhcvrnzxfwy.jpeg"</span></span>
+<span><span class="va">url9</span> <span class="op">&lt;-</span> <span class="st">"https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p185554_b_v9_bk.jpg"</span></span>
+<span><span class="va">url10</span> <span class="op">&lt;-</span> <span class="st">"https://m.media-amazon.com/images/M/MV5BNDVkYjU0MzctMWRmZi00NTkxLTgwZWEtOWVhYjZlYjllYmU4XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_.jpg"</span></span>
+<span></span>
+<span><span class="va">mk_logo</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">url</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_read</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://docs.ropensci.org/magick/reference/transform.html">image_resize</a></span><span class="op">(</span><span class="st">"x300"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/cropcircles/man/crop.html">circle_crop</a></span><span class="op">(</span>border_size <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>              border_colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_read</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span><span class="co">#==============================================================================#</span></span>
+<span><span class="co"># Data Visualization------------------------------------------------------------</span></span>
+<span><span class="co">#==============================================================================#</span></span>
+<span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>,</span>
+<span>             y <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html">fct_rev</a></span><span class="op">(</span><span class="va">parent_primary_title</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">ggrepel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html">geom_text_repel</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">primary_title</span><span class="op">)</span>,</span>
+<span>    family <span class="op">=</span> <span class="st">"body_font"</span>,</span>
+<span>    col <span class="op">=</span> <span class="va">mypal</span><span class="op">[</span><span class="fl">7</span><span class="op">]</span>,</span>
+<span>    size <span class="op">=</span> <span class="fl">3</span>, nudge_y <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">tv10</span>,</span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">start</span>,</span>
+<span>        xend <span class="op">=</span> <span class="va">end</span>,</span>
+<span>        y <span class="op">=</span> <span class="va">parent_primary_title</span>,</span>
+<span>        yend <span class="op">=</span> <span class="va">parent_primary_title</span><span class="op">)</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span>    lineend <span class="op">=</span> <span class="st">"round"</span>,</span>
+<span>    lwd <span class="op">=</span> <span class="fl">4</span>, </span>
+<span>    col <span class="op">=</span> <span class="va">mypal</span><span class="op">[</span><span class="fl">7</span><span class="op">]</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">average_rating</span>,</span>
+<span>        size <span class="op">=</span> <span class="va">num_votes</span><span class="op">)</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="fl">0.96</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_color_gradient</a></span><span class="op">(</span>low <span class="op">=</span> <span class="va">low_col</span>, </span>
+<span>                        high <span class="op">=</span> <span class="va">hi_col</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_continuous</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">12</span><span class="op">)</span>,</span>
+<span>                        labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number_si.html">label_number_si</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1993</span>, <span class="fl">2023</span><span class="op">)</span>,</span>
+<span>                     breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1995</span>, <span class="fl">2020</span>, <span class="fl">5</span><span class="op">)</span>,</span>
+<span>                     expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    legend.position <span class="op">=</span> <span class="st">"bottom"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="va">plot_title</span>,</span>
+<span>       caption <span class="op">=</span> <span class="va">plot_caption</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>       x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>       color <span class="op">=</span> <span class="st">"Episode Rating (IMDb)"</span>,</span>
+<span>       size <span class="op">=</span> <span class="st">"Number of Votes (IMDb)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html">guide_legend</a></span><span class="op">(</span>override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">text_hil</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>         alpha <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    plot.caption <span class="op">=</span>  <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_textbox.html">element_textbox</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"caption_font"</span>,</span>
+<span>                                    hjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>                                    colour <span class="op">=</span> <span class="va">text_col</span>,</span>
+<span>                                    size <span class="op">=</span> <span class="va">ts</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,</span>
+<span>    plot.title   <span class="op">=</span>     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>                                    size <span class="op">=</span> <span class="fl">2</span><span class="op">*</span><span class="va">ts</span>,</span>
+<span>                                    family <span class="op">=</span> <span class="st">"title_font"</span>,</span>
+<span>                                    face <span class="op">=</span> <span class="st">"bold"</span>,</span>
+<span>                                    colour <span class="op">=</span> <span class="va">text_col</span><span class="op">)</span>,</span>
+<span>    plot.subtitle    <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>                                    size <span class="op">=</span> <span class="va">ts</span><span class="op">/</span><span class="fl">2</span>,</span>
+<span>                                    family <span class="op">=</span> <span class="st">"body_font"</span>,</span>
+<span>                                    colour <span class="op">=</span> <span class="va">text_col</span><span class="op">)</span>,</span>
+<span>    plot.background <span class="op">=</span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">bg_col</span>,</span>
+<span>                                    color <span class="op">=</span> <span class="va">bg_col</span>,</span>
+<span>                                    linewidth <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
+<span>    panel.grid.major.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    panel.grid.minor.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    panel.grid.major.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>    axis.text       <span class="op">=</span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>                                    size <span class="op">=</span> <span class="va">ts</span><span class="op">/</span><span class="fl">2</span>,</span>
+<span>                                    family <span class="op">=</span> <span class="st">"body_font"</span>,</span>
+<span>                                    colour <span class="op">=</span> <span class="va">text_col</span><span class="op">)</span>,</span>
+<span>    legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"body_font"</span>,</span>
+<span>                                colour <span class="op">=</span> <span class="va">text_col</span>,</span>
+<span>                                vjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>    legend.key.height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
+<span>    legend.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"body_font"</span>,</span>
+<span>                               colour <span class="op">=</span> <span class="va">text_col</span><span class="op">)</span>,</span>
+<span>    plot.title.position <span class="op">=</span> <span class="st">"plot"</span>,</span>
+<span>    plot.caption.position <span class="op">=</span> <span class="st">"plot"</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="va">scale_fac</span> <span class="op">=</span> <span class="fl">0.9</span></span>
+<span></span>
+<span><span class="va">pimage</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://wilkelab.org/cowplot/reference/axis_canvas.html">axis_canvas</a></span><span class="op">(</span></span>
+<span>  <span class="va">p</span>, </span>
+<span>  axis <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://wilkelab.org/cowplot/reference/draw_image.html">draw_image</a></span><span class="op">(</span><span class="fu">mk_logo</span><span class="op">(</span><span class="va">url1</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">0.5</span>, scale <span class="op">=</span> <span class="va">scale_fac</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://wilkelab.org/cowplot/reference/draw_image.html">draw_image</a></span><span class="op">(</span><span class="fu">mk_logo</span><span class="op">(</span><span class="va">url2</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">1.5</span>, scale <span class="op">=</span> <span class="va">scale_fac</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://wilkelab.org/cowplot/reference/draw_image.html">draw_image</a></span><span class="op">(</span><span class="fu">mk_logo</span><span class="op">(</span><span class="va">url3</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">2.5</span>, scale <span class="op">=</span> <span class="va">scale_fac</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://wilkelab.org/cowplot/reference/draw_image.html">draw_image</a></span><span class="op">(</span><span class="fu">mk_logo</span><span class="op">(</span><span class="va">url4</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">3.5</span>, scale <span class="op">=</span> <span class="va">scale_fac</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://wilkelab.org/cowplot/reference/draw_image.html">draw_image</a></span><span class="op">(</span><span class="fu">mk_logo</span><span class="op">(</span><span class="va">url5</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">4.5</span>, scale <span class="op">=</span> <span class="va">scale_fac</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://wilkelab.org/cowplot/reference/draw_image.html">draw_image</a></span><span class="op">(</span><span class="fu">mk_logo</span><span class="op">(</span><span class="va">url6</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">5.5</span>, scale <span class="op">=</span> <span class="va">scale_fac</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://wilkelab.org/cowplot/reference/draw_image.html">draw_image</a></span><span class="op">(</span><span class="fu">mk_logo</span><span class="op">(</span><span class="va">url7</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">6.5</span>, scale <span class="op">=</span> <span class="va">scale_fac</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://wilkelab.org/cowplot/reference/draw_image.html">draw_image</a></span><span class="op">(</span><span class="fu">mk_logo</span><span class="op">(</span><span class="va">url8</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">7.5</span>, scale <span class="op">=</span> <span class="va">scale_fac</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://wilkelab.org/cowplot/reference/draw_image.html">draw_image</a></span><span class="op">(</span><span class="fu">mk_logo</span><span class="op">(</span><span class="va">url9</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">8.5</span>, scale <span class="op">=</span> <span class="va">scale_fac</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://wilkelab.org/cowplot/reference/draw_image.html">draw_image</a></span><span class="op">(</span><span class="fu">mk_logo</span><span class="op">(</span><span class="va">url10</span><span class="op">)</span>, y <span class="op">=</span> <span class="fl">9.5</span>, scale <span class="op">=</span> <span class="va">scale_fac</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># insert the image strip into the plot</span></span>
+<span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/ggdraw.html">ggdraw</a></span><span class="op">(</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/insert_xaxis_grob.html">insert_yaxis_grob</a></span><span class="op">(</span></span>
+<span>  <span class="va">p</span>, </span>
+<span>  <span class="va">pimage</span>, </span>
+<span>  position <span class="op">=</span> <span class="st">"left"</span>,</span>
+<span>  width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">15</span>, <span class="st">"mm"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><img src="docs/holidayepisodes_tidy.png" class="img-fluid"></p>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
