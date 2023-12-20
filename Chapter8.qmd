@@ -29,17 +29,24 @@ bibliography: references.bib
 ---
 
 ::: callout-warning
-This Chapter has no exercises. So, we explore annotations and packages using [Holiday Episodes data](https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-12-19/readme.md) from [#TidyTuesday](https://github.com/rfordatascience/tidytuesday/tree/master)
+This Chapter has no exercises. So, we explore annotations and packages using [Holiday Episodes data](https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-12-19/readme.md) from [#TidyTuesday](https://github.com/rfordatascience/tidytuesday/tree/master) All code is annotated to explain the steps.
 :::
+
+Loading Libraries and the Data-Set: ---
 
 ```{r}
 #| label: setup
+#| message: false
+#| error: false
+#| warning: false
+#| code-fold: false
 
 library(tidyverse)         # data wrangling and ggplot2
 library(summarytools)      # EDA
 library(gt)                # Tables
 library(ggthemes)          # Themes
 library(ggtext)            # Text, Annotations and Markdown
+library(magick)            # Images
 
 tuesdata <- tidytuesdayR::tt_load('2023-12-19')
 holep <- tuesdata$holiday_episodes
@@ -47,53 +54,87 @@ holep_genres <- tuesdata$holiday_episode_genres
 rm(tuesdata)
 ```
 
-A look few rows of the complete data set: --
+A look at 5 rows of the complete data set: ---
 
 ```{r}
+# Pipe the 'holep' dataframe through a series of operations using the magrittr pipe operator %>%
 holep |> 
-  slice_head(n = 5) |> 
+  
+  # Select the first 5 rows for top 5 highest votes received TV episodes
+  slice_max(num_votes, n = 5) |> 
+  
+  # Create a gt table
   gt() |> 
+  
+  # Label columns using janitor::make_clean_names function
   cols_label_with(fn = ~ janitor::make_clean_names(., case = "title")) |> 
+ 
+   # Apply styling to the table cells to make the text small
   tab_style(
     style = cell_text(size = "small"),
     locations = cells_body()
   ) |> 
+  
+  # Apply the gt theme from gtExtras package
   gtExtras::gt_theme_nytimes()
+
 ```
 
 ## **8.1 Plot and axis titles**
 
 ```{r}
+#| fig-cap: "Scatterplot of TV Episodes Ratings vs. Runtime - demonstrating 'labs' of ggplot2 - markdown elements"
+#| label: fig-8-1
+
+# Pipe the 'holep' dataframe through a series of operations using the magrittr pipe operator %>%
 holep |>
-  slice_max(order_by = num_votes, 
-            n = 200) |> 
-  arrange(desc(num_votes)) |> 
+  
+  # Select the top 200 rows based on the 'num_votes' column
+  slice_max(order_by = num_votes, n = 200) |>
+  
+  # Arrange the data in descending order of 'num_votes'
+ 
+  arrange(desc(num_votes)) |>
+  
+  # Add new columns: 'id' (row number) and 
+  # 'primary_title' (conditional labeling)
   mutate(
     id = row_number(),
     primary_title = if_else(id <= 20,
-                            primary_title,
-                            NA)
-  ) |> 
-  ggplot(aes(x = runtime_minutes, 
-             y = average_rating)) + 
-  geom_smooth(method = "lm", 
-              col = "lightblue", 
-              se = FALSE) +
-  geom_jitter(aes(size = num_votes),
-              alpha = 0.2) +
-  geom_text(aes(label = primary_title),
-            check_overlap = TRUE,
-            col = "black") + 
-  scale_x_continuous(breaks = c(0, 15, 30, 45, 60, 90, 120),
+      primary_title,
+      NA
+    )
+  ) |>
+  
+  # Create a ggplot scatterplot
+  ggplot(aes(x = runtime_minutes, y = average_rating)) +
+  geom_smooth(method = "lm", col = "lightblue", se = FALSE) +
+  geom_jitter(aes(size = num_votes), alpha = 0.2) +
+  geom_text(aes(label = primary_title), 
+            check_overlap = TRUE, 
+            col = "black") +
+ 
+   # Customize axis scales and size scale
+  scale_x_continuous(breaks = c(0, 15, 30, 45, 60, 90, 120), 
                      limits = c(0, 120)) +
-  scale_size_continuous(range = c(1, 10),
-                        labels = scales::label_number_si(),
+  scale_size_continuous(range = c(1, 10), 
+                        labels = scales::label_number_si(), 
                         trans = "sqrt") +
+  
+  # Set themes for the plot
   cowplot::theme_half_open() +
   theme(
     legend.position = "bottom",
-    legend.direction = "horizontal"
-  ) + 
+    legend.direction = "horizontal",
+    axis.title.x = element_markdown(hjust = 1),
+    axis.title.y = element_markdown(hjust = 1),
+    plot.title = element_markdown(face = "plain"),
+    legend.title = element_markdown(),
+    axis.line = element_line(arrow = arrow(angle = 15, 
+                                           length = unit(4, "mm")))
+  ) +
+ 
+   # Add labels and annotations
   labs(
     x = "Run-time *(in min.)*",
     y = "Average Rating",
@@ -101,11 +142,7 @@ holep |>
     title = "**IMDb** Holiday TV Show Episodes: Ratings _vs._ Run-time",
     subtitle = "A Scatterplot of the top-200 episodes (by number of votes on IMBDb) of holiday TV shows,\nwith top 20 labelled with names of episodes"
   ) +
-  theme(axis.title.x = element_markdown(hjust = 1),
-        axis.title.y = element_markdown(hjust = 1),
-        plot.title = element_markdown(face = "plain"),
-        legend.title = element_markdown(),
-        axis.line = element_line(arrow = arrow(angle = 15, length = unit(4, "mm")))) +
+  
   annotate(
     geom = "text",
     label = quote(y == a.x + b),
@@ -113,122 +150,163 @@ holep |>
     col = "blue",
     fontface = "italic"
   )
+
 ```
 
 ## **8.2 Text labels**
 
 ```{r}
 #| fig-asp: 1
-holep |> 
-  group_by(parent_primary_title) |> 
+#| label: fig-8-2
+#| fig-cap: "Demonstrating the use of Text Labels in place of points in a scatterplot"
+
+# Pipe the 'holep' dataframe through a series of operations using the magrittr pipe operator %>%
+holep |>
+  
+  # Group the data by 'parent_primary_title'
+  group_by(parent_primary_title) |>
+ 
+   # Summarize the data: count of episodes, mean votes, mean ratings, and concatenate unique genres
   summarise(
     n = n(),
     votes = mean(parent_num_votes),
     ratings = mean(parent_average_rating),
     genre = paste(unique(genres), collapse = ",")
-  )  |> 
-  slice_max(order_by = votes, n = 40) |> 
-  arrange(desc(votes)) |> 
+  ) |>
+ 
+  # Select the top 40 rows based on 'votes'
+  slice_max(order_by = votes, n = 40) |>
+  
+  # Arrange the data in descending order of 'votes'
+  arrange(desc(votes)) |>
+  
+  # Add a new column 'gen_col' based on genre classification
   mutate(gen_col = case_when(
     str_detect(genre, "Comedy") ~ "Comedy",
     str_detect(genre, "Horror") ~ "Horror",
     str_detect(genre, "Action") ~ "Action",
     str_detect(genre, "Drama") ~ "Drama",
     .default = "Others"
-  )) |> 
-  ggplot(aes(x = votes,
-             y = ratings,
-             size = n,
-             label = parent_primary_title,
-             color = gen_col)) + 
-  geom_text(check_overlap = TRUE,
-            hjust = "inward") +
+  )) |>
+  
+  # Create a ggplot scatterplot
+  ggplot(aes(x = votes, y = ratings, size = n, label = parent_primary_title, color = gen_col)) +
+  geom_text(check_overlap = TRUE, hjust = "inward") +
+  
+  # Customize labels, titles, and scales
   labs(
     x = "Number of votes (on IMDb) for the TV Series",
     y = "Average Rating of episodes",
     size = "Number of Holiday Season episodes",
     color = "Genre",
-    title = "Most popular TV Series with atleast 1 holiday episode",
+    title = "Most popular TV Series with at least 1 holiday episode",
     subtitle = "A scatter-plot replaced by Text Labels"
   ) +
   scale_size_continuous(range = c(4, 7)) +
-  scale_x_continuous(labels = scales::label_number_si(),
+  scale_x_continuous(labels = scales::label_number_si(), 
                      limits = c(0, 1100000)) +
   scale_color_manual(values = c("blue", "red", "darkgreen", "purple")) +
+  
+  # Set themes for the plot
   theme_classic() +
   theme(
     legend.position = "bottom",
-    legend.box = "vertical", 
-    legend.margin = margin(0,0,0,0),
+    legend.box = "vertical",
+    legend.margin = margin(0, 0, 0, 0),
     legend.spacing = unit(0, "pt"),
     axis.line.x = element_line(arrow = arrow(angle = 15))
   )
+
 ```
 
 ## **8.3 Building custom annotations**
 
 ```{r}
+#| label: fig-8-3
+#| fig-cap: "Text Annotations within a plot's panel area"
+#| fig-width: 10
+#| fig-asp: 0.8
 
-# Top 10 TV Series (by Votes on IMDb) with atleast 1 holiday episode
-tv10 <- holep |> 
-  group_by(parent_tconst, parent_primary_title) |> 
+# IMDb logo image for annotation in the plot
+img <- image_read("https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/171_Imdb_logo_logos-512.png")
+
+# Extract the top 10 TV series with at least 1 holiday episode based on IMDb votes
+tv10 <- holep |>
+  group_by(parent_tconst, parent_primary_title) |>
   summarise(
     start = mean(parent_start_year, na.rm = TRUE),
     end = mean(parent_end_year, na.rm = TRUE),
     votes = mean(parent_num_votes, na.rm = TRUE),
     runtime = mean(parent_runtime_minutes, na.rm = TRUE),
-    rating = mean(parent_average_rating, na.rm = TRUE), 
+    rating = mean(parent_average_rating, na.rm = TRUE),
     num_episodes = n()
-  ) |> 
-  ungroup() |> 
-  mutate(years = end - start) |> 
-  drop_na() |> 
+  ) |>
+  ungroup() |>
+  mutate(years = end - start) |>
+  drop_na() |>
   slice_max(order_by = votes, n = 10)
 
-holep |> 
-  # See only the holiday episodes of top 10 series
-  filter(
-    parent_primary_title %in% (tv10 |> pull(parent_primary_title))
-  ) |> 
+# Filter the 'holep' dataframe to see only the holiday episodes of the top 10 series
+holep |>
+  filter(parent_primary_title %in% (tv10 |> pull(parent_primary_title))) |>
   mutate(
-    parent_primary_title = 
+    parent_primary_title =
       fct(parent_primary_title,
-          levels = (tv10 |> pull(parent_primary_title)))) |> 
-  ggplot(aes(x = year,
-             y = fct_rev(parent_primary_title))) + 
+        levels = (tv10 |> pull(parent_primary_title))
+      )
+  ) |>
   
-  ggrepel::geom_text_repel(aes(label = primary_title)) +
+  # Create a ggplot scatterplot
+  ggplot(aes(x = year, y = fct_rev(parent_primary_title))) +
+  ggrepel::geom_text_repel(aes(label = primary_title),
+                           vjust = +1) +
   geom_segment(
     data = tv10,
-    aes(x = start,
-        xend = end,
-        y = parent_primary_title,
-        yend = parent_primary_title),
-    alpha = 0.3,
-    lineend = "round",
-    lwd = 3
+    aes(x = start, xend = end, y = parent_primary_title, yend = parent_primary_title),
+    alpha = 0.3, lineend = "round", lwd = 3
   ) +
   geom_point(
-    aes(color = average_rating,
-        size = num_votes)
+    aes(color = average_rating, size = num_votes),
+    alpha = 0.7
   ) +
+  
+  # Customize labels, titles, and scales
   labs(
     x = NULL, y = NULL,
     title = "Holiday Episodes of IMDb's top 10 TV Series",
-    subtitle = "Size of dot indicates number of votes, Color indicates Average Rating on IMDb"
+    subtitle = "Size of dot indicates number of votes, Color indicates Average Rating on IMDb",
+    colour = "Average Rating\n(IMDb)",
+    size = "Number of Votes (IMDb)"
   ) +
-  scale_color_gradient(low = "pink", 
-                        high = "purple") +
+  scale_color_gradient(low = "pink", high = "purple") +
   scale_size_continuous(range = c(2, 8)) +
   theme_minimal() +
   theme(
-    legend.position = "bottom"
+    legend.position = "bottom", 
+    plot.title.position = "plot"
+  ) +
+  annotate(
+    geom = "label",
+    x = 1993,
+    y = 1.5,
+    label = "Source: IMDb Non-Commercial Datasets",
+    fontface = "italic",
+    hjust = 0,
+    fill = "#f2c522"
+  ) +
+  annotation_custom(
+    grob = grid::rasterGrob(img),
+    xmin = 1993,
+    xmax = 1998,
+    ymin = 2,
+    ymax = 5
   )
+
 ```
 
-### A Professional Visualization
+### Building a Visualization with Image annotations on the *y-axis*
 
-An attempt to make a nice visualization with annotations for [#TidyTuesday](https://github.com/rfordatascience/tidytuesday/tree/master)
+An attempt to make a nice visualization with annotations for [#TidyTuesday](https://github.com/rfordatascience/tidytuesday/tree/master): ---
 
 ```{r}
 #| eval: false
@@ -472,3 +550,197 @@ ggdraw(insert_yaxis_grob(
 ```
 
 ![](docs/holidayepisodes_tidy.png)
+
+## **8.4 Direct labelling**
+
+An Example using `directlabels` package [@directlabels-2] is at @fig-8-4-a
+
+```{r}
+#| label: fig-8-4-a
+#| fig-cap: "Using directlabels and annotations to make reading the scatterplot easier, instead of a legend"
+#| fig-width: 10
+
+library(directlabels)
+
+# Top 10 TV Series with most holiday season episodes
+names_series <- holep |> 
+  count(parent_primary_title, sort = TRUE) |> 
+  filter(n > 10) |> 
+  pull(parent_primary_title)
+
+select_name = "Holiday Baking Championship"
+n = 5
+
+holep |> 
+  filter(parent_primary_title %in% names_series[1:n]) |> 
+  ggplot(
+    aes(x = num_votes,
+        y = average_rating,
+        color = parent_primary_title)
+  ) +
+  # Background Highlighting of specific series
+  geom_point(
+    data = (holep |> filter(parent_primary_title == select_name)),
+    size = 5,
+    color = "lightgrey"
+  ) +
+  
+  # Plotting all the points
+  geom_point() +
+  
+  # Text Annotation Arrow
+  annotate(
+    geom = "curve",
+    x = (holep |> 
+           filter(parent_primary_title == select_name) |> 
+           arrange(average_rating) |> 
+           slice_head(n = 1) |> 
+           pull(num_votes)),
+    y = (holep |> 
+           filter(parent_primary_title == select_name) |> 
+           arrange(average_rating) |> 
+           slice_head(n = 1) |> 
+           pull(average_rating)),
+    xend = 80, yend = 4,
+    arrow = arrow(length = unit(2, "mm")),
+    col = "darkgrey"
+  ) +
+  
+  # Text Annotation
+  annotate(
+    geom = "label",
+    x = 80, y = 4,
+    hjust = 0,
+    vjust = 0.5,
+    label = paste0("TV Episodes of\n", select_name),
+    fill = "grey",
+    fontface = "italic",
+    label_padding = unit(15, "mm"),
+    label_size = unit(0, "mm")
+  ) +
+  
+  # Labels and Titles
+  labs(
+    x = "Number of Votes for the episode on IMDb",
+    y = "Average Rating of the Episode",
+    title = paste0("Ratings and Votes for episodes of ", select_name),
+    subtitle = paste0("Comparison with other series in the top ", n, " TV Series by number of holiday episodes")
+  ) +
+  scale_x_continuous(trans = "log10") +
+  scale_color_brewer(palette = "Set1") + 
+  cowplot::theme_half_open() +
+  theme(
+    axis.title = element_text(hjust = 1),
+    legend.position = "none",
+    axis.line = element_line(arrow = arrow(length = unit(3, "mm")))
+  ) +
+  
+  # Using directlabels
+  directlabels::geom_dl(
+    aes(label = parent_primary_title),
+    method = "smart.grid"
+  )
+```
+
+Another example, which uses `geom_mark_ellipse()` of `ggforce` package [@ggforce-2] to focus on specific groups within a scatter-plot. The @fig-8-4-b shows this.
+
+```{r}
+#| label: fig-8-4-b
+#| fig-cap: "Using ellipses to highlight areas of specific groups in a scatterplot"
+#| fig-width: 10
+
+names_highlight = c("Holiday Baking Championship",
+                    "Thomas & Friends")
+
+holep |> 
+  filter(parent_primary_title %in% names_series[1:n]) |> 
+  ggplot(
+    aes(x = num_votes,
+        y = average_rating,
+        color = parent_primary_title)
+  ) +
+  # Background Highlighting of specific series
+  geom_point(
+    data = (holep |> filter(parent_primary_title %in% names_highlight)),
+    size = 5,
+    color = "lightgrey"
+  ) +
+  
+  # Plotting all the points
+  geom_point() +
+  
+ 
+ # Labels and Titles
+  labs(
+    x = "Number of Votes for the episode on IMDb",
+    y = "Average Rating of the Episode",
+    title = paste0("Ratings and Votes for TV Series with most holiday episodes"),
+    subtitle = paste0("Highlighting the TV Series: ", paste0(names_highlight, collapse = ", "))
+  ) +
+  ggforce::geom_mark_ellipse(
+    data = (holep |> filter(parent_primary_title %in% names_highlight)),
+    aes(label = parent_primary_title,
+        group = parent_primary_title,
+        fill = parent_primary_title),
+    linetype = 2,
+    alpha = 0.2,
+    label.margin = margin(0,0,0,0),
+    con.linetype = 2,
+    label.fill = "lightgrey"
+  ) +
+  scale_x_continuous(trans = "log10") +
+  scale_color_brewer(palette = "Set1") + 
+  scale_fill_brewer(palette = "Set1") +
+  cowplot::theme_half_open() +
+  theme(
+    axis.title = element_text(hjust = 1),
+    legend.position = "none",
+    axis.line = element_line(arrow = arrow(length = unit(3, "mm")))
+  )
+```
+
+## **8.5 Annotation across facets**
+
+Similarly, using `gghighlight` package [@gghighlight-2], we can annotate different facets in one go, as shown in @fig-8-5.
+
+```{r}
+#| label: fig-8-5
+#| fig-cap: "Annotating different facets by using gghighlight"
+#| fig-width: 10
+
+
+holep |> 
+  filter(parent_primary_title %in% names_series[1:4]) |> 
+  ggplot(
+    aes(x = num_votes,
+        y = average_rating,
+        color = parent_primary_title)
+  ) +
+  
+  # Plotting all the points
+  geom_point(size = 2) +
+  
+  # Faceting by TV Series
+  facet_wrap(~ parent_primary_title) +
+  
+  # gghighlight to annotate
+  gghighlight::gghighlight() +
+ 
+  # Labels and Titles
+  labs(
+    x = "Number of Votes for the episode on IMDb",
+    y = "Average Rating of the Episode",
+    title = paste0("Ratings and Votes for 4 TV Series with most holiday episodes"),
+    subtitle = "Highlighting the TV Series in each panel."
+  ) +
+  scale_x_continuous(trans = "log10") +
+  scale_color_brewer(palette = "Set1") + 
+  scale_fill_brewer(palette = "Set1") +
+  cowplot::theme_half_open() +
+  theme(
+    axis.title = element_text(hjust = 1),
+    legend.position = "none",
+    axis.line = element_line(arrow = arrow(length = unit(3, "mm"))),
+    strip.background = element_rect(fill = "white")
+  )
+```

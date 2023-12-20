@@ -53,7 +53,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -95,11 +114,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script><link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="Solutions (and Beyond): ggplot2 - Chapter 8">
 <meta property="og:description" content="Annotations">
-<meta property="og:image" content="Chapter8_files/figure-html/unnamed-chunk-3-1.png">
+<meta property="og:image" content="Chapter8_files/figure-html/fig-8-1-1.png">
 <meta property="og:site-name" content="Solutions (and Beyond): ggplot2">
 <meta name="twitter:title" content="Solutions (and Beyond): ggplot2 - Chapter 8">
 <meta name="twitter:description" content="Annotations">
-<meta name="twitter:image" content="Chapter8_files/figure-html/unnamed-chunk-3-1.png">
+<meta name="twitter:image" content="Chapter8_files/figure-html/fig-8-1-1.png">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 <body class="nav-sidebar docked nav-fixed">
@@ -370,9 +389,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li>
 <a href="#building-custom-annotations" id="toc-building-custom-annotations" class="nav-link" data-scroll-target="#building-custom-annotations"><strong>8.3 Building custom annotations</strong></a>
   <ul class="collapse">
-<li><a href="#a-professional-visualization" id="toc-a-professional-visualization" class="nav-link" data-scroll-target="#a-professional-visualization">A Professional Visualization</a></li>
+<li><a href="#building-a-visualization-with-image-annotations-on-the-y-axis" id="toc-building-a-visualization-with-image-annotations-on-the-y-axis" class="nav-link" data-scroll-target="#building-a-visualization-with-image-annotations-on-the-y-axis">Building a Visualization with Image annotations on the <em>y-axis</em></a></li>
   </ul>
 </li>
+  <li><a href="#direct-labelling" id="toc-direct-labelling" class="nav-link" data-scroll-target="#direct-labelling"><strong>8.4 Direct labelling</strong></a></li>
+  <li><a href="#annotation-across-facets" id="toc-annotation-across-facets" class="nav-link" data-scroll-target="#annotation-across-facets"><strong>8.5 Annotation across facets</strong></a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter8.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -413,60 +434,72 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This Chapter has no exercises. So, we explore annotations and packages using <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-12-19/readme.md">Holiday Episodes data</a> from <a href="https://github.com/rfordatascience/tidytuesday/tree/master">#TidyTuesday</a></p>
+<p>This Chapter has no exercises. So, we explore annotations and packages using <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-12-19/readme.md">Holiday Episodes data</a> from <a href="https://github.com/rfordatascience/tidytuesday/tree/master">#TidyTuesday</a> All code is annotated to explain the steps.</p>
 </div>
 </div>
-<div class="cell" data-hash="Chapter8_cache/html/setup_35dbb05196d584c997c9f014ebbf3be4">
-<details><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>         <span class="co"># data wrangling and ggplot2</span></span>
+<p>Loading Libraries and the Data-Set: —</p>
+<div class="cell" data-hash="Chapter8_cache/html/setup_80ca4366622c61ab4787f55299e1f190">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>         <span class="co"># data wrangling and ggplot2</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dcomtois/summarytools">summarytools</a></span><span class="op">)</span>      <span class="co"># EDA</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com">gt</a></span><span class="op">)</span>                <span class="co"># Tables</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jrnold/ggthemes">ggthemes</a></span><span class="op">)</span>          <span class="co"># Themes</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/ggtext/">ggtext</a></span><span class="op">)</span>            <span class="co"># Text, Annotations and Markdown</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/magick/">magick</a></span><span class="op">)</span>            <span class="co"># Images</span></span>
 <span></span>
 <span><span class="va">tuesdata</span> <span class="op">&lt;-</span> <span class="fu">tidytuesdayR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tidytuesdayR/man/tt_load.html">tt_load</a></span><span class="op">(</span><span class="st">'2023-12-19'</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output cell-output-stdout">
+<div class="cell-output cell-output-stdout">
 <pre><code>
     Downloading file 1 of 2: `holiday_episodes.csv`
     Downloading file 2 of 2: `holiday_episode_genres.csv`</code></pre>
 </div>
-<details><summary>Code</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">holep</span> <span class="op">&lt;-</span> <span class="va">tuesdata</span><span class="op">$</span><span class="va">holiday_episodes</span></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">holep</span> <span class="op">&lt;-</span> <span class="va">tuesdata</span><span class="op">$</span><span class="va">holiday_episodes</span></span>
 <span><span class="va">holep_genres</span> <span class="op">&lt;-</span> <span class="va">tuesdata</span><span class="op">$</span><span class="va">holiday_episode_genres</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">tuesdata</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 </div>
-<p>A look few rows of the complete data set: –</p>
-<div class="cell" data-hash="Chapter8_cache/html/unnamed-chunk-2_ebb4935bf2bdfdea8d3a70e3034c7fe5">
-<details><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">holep</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<p>A look at 5 rows of the complete data set: —</p>
+<div class="cell" data-hash="Chapter8_cache/html/unnamed-chunk-2_d3c6150006db38ebb545cbfe2093af05">
+<details><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Pipe the 'holep' dataframe through a series of operations using the magrittr pipe operator %&gt;%</span></span>
+<span><span class="va">holep</span> <span class="op">|&gt;</span> </span>
+<span>  </span>
+<span>  <span class="co"># Select the first 5 rows for top 5 highest votes received TV episodes</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">num_votes</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  </span>
+<span>  <span class="co"># Create a gt table</span></span>
 <span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  </span>
+<span>  <span class="co"># Label columns using janitor::make_clean_names function</span></span>
 <span>  <span class="fu"><a href="https://gt.rstudio.com/reference/cols_label_with.html">cols_label_with</a></span><span class="op">(</span>fn <span class="op">=</span> <span class="op">~</span> <span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/make_clean_names.html">make_clean_names</a></span><span class="op">(</span><span class="va">.</span>, case <span class="op">=</span> <span class="st">"title"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span> </span>
+<span>   <span class="co"># Apply styling to the table cells to make the text small</span></span>
 <span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cell_text.html">cell_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="st">"small"</span><span class="op">)</span>,</span>
 <span>    locations <span class="op">=</span> <span class="fu"><a href="https://gt.rstudio.com/reference/cells_body.html">cells_body</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  </span>
+<span>  <span class="co"># Apply the gt theme from gtExtras package</span></span>
 <span>  <span class="fu">gtExtras</span><span class="fu">::</span><span class="fu"><a href="https://jthomasmock.github.io/gtExtras/reference/gt_theme_nytimes.html">gt_theme_nytimes</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 
-<div id="iocifmpvtu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="sjmcbovpog" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#iocifmpvtu table {
+#sjmcbovpog table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#iocifmpvtu thead, #iocifmpvtu tbody, #iocifmpvtu tfoot, #iocifmpvtu tr, #iocifmpvtu td, #iocifmpvtu th {
+#sjmcbovpog thead, #sjmcbovpog tbody, #sjmcbovpog tfoot, #sjmcbovpog tr, #sjmcbovpog td, #sjmcbovpog th {
   border-style: none;
 }
 
-#iocifmpvtu p {
+#sjmcbovpog p {
   margin: 0;
   padding: 0;
 }
 
-#iocifmpvtu .gt_table {
+#sjmcbovpog .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -492,12 +525,12 @@ Warning
   border-left-color: #D3D3D3;
 }
 
-#iocifmpvtu .gt_caption {
+#sjmcbovpog .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#iocifmpvtu .gt_title {
+#sjmcbovpog .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -509,7 +542,7 @@ Warning
   border-bottom-width: 0;
 }
 
-#iocifmpvtu .gt_subtitle {
+#sjmcbovpog .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -521,7 +554,7 @@ Warning
   border-top-width: 0;
 }
 
-#iocifmpvtu .gt_heading {
+#sjmcbovpog .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -533,13 +566,13 @@ Warning
   border-right-color: #D3D3D3;
 }
 
-#iocifmpvtu .gt_bottom_border {
+#sjmcbovpog .gt_bottom_border {
   border-bottom-style: none;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#iocifmpvtu .gt_col_headings {
+#sjmcbovpog .gt_col_headings {
   border-top-style: none;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -554,7 +587,7 @@ Warning
   border-right-color: #D3D3D3;
 }
 
-#iocifmpvtu .gt_col_heading {
+#sjmcbovpog .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 12px;
@@ -574,7 +607,7 @@ Warning
   overflow-x: hidden;
 }
 
-#iocifmpvtu .gt_column_spanner_outer {
+#sjmcbovpog .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 12px;
@@ -586,15 +619,15 @@ Warning
   padding-right: 4px;
 }
 
-#iocifmpvtu .gt_column_spanner_outer:first-child {
+#sjmcbovpog .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#iocifmpvtu .gt_column_spanner_outer:last-child {
+#sjmcbovpog .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#iocifmpvtu .gt_column_spanner {
+#sjmcbovpog .gt_column_spanner {
   border-bottom-style: none;
   border-bottom-width: 1px;
   border-bottom-color: #334422;
@@ -606,11 +639,11 @@ Warning
   width: 100%;
 }
 
-#iocifmpvtu .gt_spanner_row {
+#sjmcbovpog .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#iocifmpvtu .gt_group_heading {
+#sjmcbovpog .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -636,7 +669,7 @@ Warning
   text-align: left;
 }
 
-#iocifmpvtu .gt_empty_group_heading {
+#sjmcbovpog .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -651,15 +684,15 @@ Warning
   vertical-align: middle;
 }
 
-#iocifmpvtu .gt_from_md > :first-child {
+#sjmcbovpog .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#iocifmpvtu .gt_from_md > :last-child {
+#sjmcbovpog .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#iocifmpvtu .gt_row {
+#sjmcbovpog .gt_row {
   padding-top: 7px;
   padding-bottom: 7px;
   padding-left: 5px;
@@ -678,7 +711,7 @@ Warning
   overflow-x: hidden;
 }
 
-#iocifmpvtu .gt_stub {
+#sjmcbovpog .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -691,7 +724,7 @@ Warning
   padding-right: 5px;
 }
 
-#iocifmpvtu .gt_stub_row_group {
+#sjmcbovpog .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -705,15 +738,15 @@ Warning
   vertical-align: top;
 }
 
-#iocifmpvtu .gt_row_group_first td {
+#sjmcbovpog .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#iocifmpvtu .gt_row_group_first th {
+#sjmcbovpog .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#iocifmpvtu .gt_summary_row {
+#sjmcbovpog .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -723,16 +756,16 @@ Warning
   padding-right: 5px;
 }
 
-#iocifmpvtu .gt_first_summary_row {
+#sjmcbovpog .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#iocifmpvtu .gt_first_summary_row.thick {
+#sjmcbovpog .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#iocifmpvtu .gt_last_summary_row {
+#sjmcbovpog .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -742,7 +775,7 @@ Warning
   border-bottom-color: #D3D3D3;
 }
 
-#iocifmpvtu .gt_grand_summary_row {
+#sjmcbovpog .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -752,7 +785,7 @@ Warning
   padding-right: 5px;
 }
 
-#iocifmpvtu .gt_first_grand_summary_row {
+#sjmcbovpog .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -762,7 +795,7 @@ Warning
   border-top-color: #D3D3D3;
 }
 
-#iocifmpvtu .gt_last_grand_summary_row_top {
+#sjmcbovpog .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -772,11 +805,11 @@ Warning
   border-bottom-color: #D3D3D3;
 }
 
-#iocifmpvtu .gt_striped {
+#sjmcbovpog .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#iocifmpvtu .gt_table_body {
+#sjmcbovpog .gt_table_body {
   border-top-style: none;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -785,7 +818,7 @@ Warning
   border-bottom-color: #FFFFFF;
 }
 
-#iocifmpvtu .gt_footnotes {
+#sjmcbovpog .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -799,7 +832,7 @@ Warning
   border-right-color: #D3D3D3;
 }
 
-#iocifmpvtu .gt_footnote {
+#sjmcbovpog .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -808,7 +841,7 @@ Warning
   padding-right: 5px;
 }
 
-#iocifmpvtu .gt_sourcenotes {
+#sjmcbovpog .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -822,7 +855,7 @@ Warning
   border-right-color: #D3D3D3;
 }
 
-#iocifmpvtu .gt_sourcenote {
+#sjmcbovpog .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -830,63 +863,63 @@ Warning
   padding-right: 5px;
 }
 
-#iocifmpvtu .gt_left {
+#sjmcbovpog .gt_left {
   text-align: left;
 }
 
-#iocifmpvtu .gt_center {
+#sjmcbovpog .gt_center {
   text-align: center;
 }
 
-#iocifmpvtu .gt_right {
+#sjmcbovpog .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#iocifmpvtu .gt_font_normal {
+#sjmcbovpog .gt_font_normal {
   font-weight: normal;
 }
 
-#iocifmpvtu .gt_font_bold {
+#sjmcbovpog .gt_font_bold {
   font-weight: bold;
 }
 
-#iocifmpvtu .gt_font_italic {
+#sjmcbovpog .gt_font_italic {
   font-style: italic;
 }
 
-#iocifmpvtu .gt_super {
+#sjmcbovpog .gt_super {
   font-size: 65%;
 }
 
-#iocifmpvtu .gt_footnote_marks {
+#sjmcbovpog .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#iocifmpvtu .gt_asterisk {
+#sjmcbovpog .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#iocifmpvtu .gt_indent_1 {
+#sjmcbovpog .gt_indent_1 {
   text-indent: 5px;
 }
 
-#iocifmpvtu .gt_indent_2 {
+#sjmcbovpog .gt_indent_2 {
   text-indent: 10px;
 }
 
-#iocifmpvtu .gt_indent_3 {
+#sjmcbovpog .gt_indent_3 {
   text-indent: 15px;
 }
 
-#iocifmpvtu .gt_indent_4 {
+#sjmcbovpog .gt_indent_4 {
   text-indent: 20px;
 }
 
-#iocifmpvtu .gt_indent_5 {
+#sjmcbovpog .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -921,140 +954,140 @@ Warning
     </tr></thead>
 <tbody class="gt_table_body">
 <tr>
-<td headers="tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0046855</td>
-<td headers="parent_tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0046643</td>
-<td headers="season_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
+<td headers="tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt3973198</td>
+<td headers="parent_tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt2085059</td>
+<td headers="season_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2</td>
 <td headers="episode_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">4</td>
+<td headers="primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">White Christmas</td>
+<td headers="original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">White Christmas</td>
+<td headers="year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2014</td>
+<td headers="runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">73</td>
+<td headers="genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Drama,Mystery,Sci-Fi</td>
+<td headers="simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">white christmas</td>
+<td headers="average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">9.1</td>
+<td headers="num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">66843</td>
+<td headers="parent_title_type" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tvSeries</td>
+<td headers="parent_primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Black Mirror</td>
+<td headers="parent_original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Black Mirror</td>
+<td headers="parent_start_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2011</td>
+<td headers="parent_end_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">NA</td>
+<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">60</td>
+<td headers="parent_genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Drama,Mystery,Sci-Fi</td>
+<td headers="parent_simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">black mirror</td>
+<td headers="parent_average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">8.7</td>
+<td headers="parent_num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">620664</td>
+<td headers="christmas" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">TRUE</td>
+<td headers="hanukkah" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="kwanzaa" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="holiday" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+</tr>
+<tr>
+<td headers="tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt10166582</td>
+<td headers="parent_tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt10160804</td>
+<td headers="season_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
+<td headers="episode_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">6</td>
+<td headers="primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">So This Is Christmas?</td>
+<td headers="original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">So This Is Christmas?</td>
+<td headers="year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2021</td>
+<td headers="runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">61</td>
+<td headers="genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Action,Adventure,Crime</td>
+<td headers="simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">so this is christmas</td>
+<td headers="average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">8.0</td>
+<td headers="num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">11460</td>
+<td headers="parent_title_type" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tvMiniSeries</td>
+<td headers="parent_primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Hawkeye</td>
+<td headers="parent_original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Hawkeye</td>
+<td headers="parent_start_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2021</td>
+<td headers="parent_end_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2021</td>
+<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">339</td>
+<td headers="parent_genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Action,Adventure,Crime</td>
+<td headers="parent_simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">hawkeye</td>
+<td headers="parent_average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">7.5</td>
+<td headers="parent_num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">206915</td>
+<td headers="christmas" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">TRUE</td>
+<td headers="hanukkah" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="kwanzaa" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+<td headers="holiday" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
+</tr>
+<tr>
+<td headers="tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt1672218</td>
+<td headers="parent_tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0436992</td>
+<td headers="season_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">6</td>
+<td headers="episode_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">0</td>
 <td headers="primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">A Christmas Carol</td>
 <td headers="original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">A Christmas Carol</td>
-<td headers="year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1954</td>
-<td headers="runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">60</td>
-<td headers="genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Adventure,Drama,Family</td>
+<td headers="year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2010</td>
+<td headers="runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">62</td>
+<td headers="genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Adventure,Drama,Sci-Fi</td>
 <td headers="simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">a christmas carol</td>
-<td headers="average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">5.9</td>
-<td headers="num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">159</td>
+<td headers="average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">8.5</td>
+<td headers="num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">8109</td>
 <td headers="parent_title_type" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tvSeries</td>
-<td headers="parent_primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Shower of Stars</td>
-<td headers="parent_original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Shower of Stars</td>
-<td headers="parent_start_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1954</td>
-<td headers="parent_end_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1958</td>
-<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">60</td>
-<td headers="parent_genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Adventure,Drama,Family</td>
-<td headers="parent_simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">shower of stars</td>
-<td headers="parent_average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">7.5</td>
-<td headers="parent_num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">78</td>
-<td headers="christmas" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">TRUE</td>
-<td headers="hanukkah" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
-<td headers="kwanzaa" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
-<td headers="holiday" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
-</tr>
-<tr>
-<td headers="tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0110014</td>
-<td headers="parent_tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0094525</td>
-<td headers="season_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">6</td>
-<td headers="episode_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
-<td headers="primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Hercule Poirot's Christmas</td>
-<td headers="original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Hercule Poirot's Christmas</td>
-<td headers="year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1994</td>
-<td headers="runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">100</td>
-<td headers="genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Crime,Drama,Mystery</td>
-<td headers="simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">hercule poirots christmas</td>
-<td headers="average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">8.0</td>
-<td headers="num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2461</td>
-<td headers="parent_title_type" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tvSeries</td>
-<td headers="parent_primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Poirot</td>
-<td headers="parent_original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Poirot</td>
-<td headers="parent_start_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1989</td>
-<td headers="parent_end_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2013</td>
-<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">100</td>
-<td headers="parent_genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Crime,Drama,Mystery</td>
-<td headers="parent_simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">poirot</td>
+<td headers="parent_primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Doctor Who</td>
+<td headers="parent_original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Doctor Who</td>
+<td headers="parent_start_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2005</td>
+<td headers="parent_end_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">NA</td>
+<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">45</td>
+<td headers="parent_genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Adventure,Drama,Sci-Fi</td>
+<td headers="parent_simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">doctor who</td>
 <td headers="parent_average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">8.6</td>
-<td headers="parent_num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">50365</td>
+<td headers="parent_num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">239270</td>
 <td headers="christmas" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">TRUE</td>
 <td headers="hanukkah" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
 <td headers="kwanzaa" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
 <td headers="holiday" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
 </tr>
 <tr>
-<td headers="tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0125755</td>
-<td headers="parent_tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt2388808</td>
-<td headers="season_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">NA</td>
-<td headers="episode_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">NA</td>
-<td headers="primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Red Skelton's Christmas Dinner</td>
-<td headers="original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Red Skelton's Christmas Dinner</td>
-<td headers="year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1981</td>
-<td headers="runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">50</td>
-<td headers="genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Music</td>
-<td headers="simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">red skeltons christmas dinner</td>
-<td headers="average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">8.1</td>
-<td headers="num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">167</td>
+<td headers="tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0562994</td>
+<td headers="parent_tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0436992</td>
+<td headers="season_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2</td>
+<td headers="episode_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">0</td>
+<td headers="primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">The Christmas Invasion</td>
+<td headers="original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">The Christmas Invasion</td>
+<td headers="year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2005</td>
+<td headers="runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">60</td>
+<td headers="genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Adventure,Drama,Sci-Fi</td>
+<td headers="simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">the christmas invasion</td>
+<td headers="average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">8.0</td>
+<td headers="num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">8089</td>
 <td headers="parent_title_type" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tvSeries</td>
-<td headers="parent_primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Standing Room Only</td>
-<td headers="parent_original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Standing Room Only</td>
-<td headers="parent_start_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1976</td>
-<td headers="parent_end_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1982</td>
-<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">NA</td>
-<td headers="parent_genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Music</td>
-<td headers="parent_simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">standing room only</td>
-<td headers="parent_average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">7.7</td>
-<td headers="parent_num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">41</td>
+<td headers="parent_primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Doctor Who</td>
+<td headers="parent_original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Doctor Who</td>
+<td headers="parent_start_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2005</td>
+<td headers="parent_end_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">NA</td>
+<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">45</td>
+<td headers="parent_genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Adventure,Drama,Sci-Fi</td>
+<td headers="parent_simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">doctor who</td>
+<td headers="parent_average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">8.6</td>
+<td headers="parent_num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">239270</td>
 <td headers="christmas" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">TRUE</td>
 <td headers="hanukkah" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
 <td headers="kwanzaa" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
 <td headers="holiday" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
 </tr>
 <tr>
-<td headers="tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0138038</td>
-<td headers="parent_tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0132666</td>
-<td headers="season_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
-<td headers="episode_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">14</td>
-<td headers="primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Principal Takes a Holiday</td>
-<td headers="original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Principal Takes a Holiday</td>
-<td headers="year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1998</td>
-<td headers="runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">96</td>
-<td headers="genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Adventure,Comedy,Drama</td>
-<td headers="simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">principal takes a holiday</td>
-<td headers="average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">6.0</td>
-<td headers="num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">414</td>
+<td headers="tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0664513</td>
+<td headers="parent_tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0386676</td>
+<td headers="season_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2</td>
+<td headers="episode_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">10</td>
+<td headers="primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Christmas Party</td>
+<td headers="original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Christmas Party</td>
+<td headers="year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2005</td>
+<td headers="runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">22</td>
+<td headers="genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Comedy</td>
+<td headers="simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">christmas party</td>
+<td headers="average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">8.7</td>
+<td headers="num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">7369</td>
 <td headers="parent_title_type" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tvSeries</td>
-<td headers="parent_primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">The Wonderful World of Disney</td>
-<td headers="parent_original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">The Wonderful World of Disney</td>
-<td headers="parent_start_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1997</td>
-<td headers="parent_end_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2023</td>
-<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">120</td>
-<td headers="parent_genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Adventure,Comedy,Drama</td>
-<td headers="parent_simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">the wonderful world of disney</td>
-<td headers="parent_average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">7.4</td>
-<td headers="parent_num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1005</td>
-<td headers="christmas" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
-<td headers="hanukkah" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
-<td headers="kwanzaa" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
-<td headers="holiday" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">TRUE</td>
-</tr>
-<tr>
-<td headers="tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0179551</td>
-<td headers="parent_tconst" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tt0233023</td>
-<td headers="season_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1</td>
-<td headers="episode_number" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">14</td>
-<td headers="primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">A Christmas Memory</td>
-<td headers="original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">A Christmas Memory</td>
-<td headers="year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1966</td>
-<td headers="runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">51</td>
-<td headers="genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Comedy,Drama,Musical</td>
-<td headers="simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">a christmas memory</td>
-<td headers="average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">9.0</td>
-<td headers="num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">257</td>
-<td headers="parent_title_type" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">tvSeries</td>
-<td headers="parent_primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">ABC Stage 67</td>
-<td headers="parent_original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">ABC Stage 67</td>
-<td headers="parent_start_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1966</td>
-<td headers="parent_end_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">1967</td>
-<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">51</td>
-<td headers="parent_genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Comedy,Drama,Musical</td>
-<td headers="parent_simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">abc stage 67</td>
-<td headers="parent_average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">7.4</td>
-<td headers="parent_num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">104</td>
+<td headers="parent_primary_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">The Office</td>
+<td headers="parent_original_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">The Office</td>
+<td headers="parent_start_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2005</td>
+<td headers="parent_end_year" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">2013</td>
+<td headers="parent_runtime_minutes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">22</td>
+<td headers="parent_genres" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">Comedy</td>
+<td headers="parent_simple_title" class="gt_row gt_left" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">the office</td>
+<td headers="parent_average_rating" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">9.0</td>
+<td headers="parent_num_votes" class="gt_row gt_right" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">680216</td>
 <td headers="christmas" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">TRUE</td>
 <td headers="hanukkah" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
 <td headers="kwanzaa" class="gt_row gt_center" style="font-size: small; font-family: 'Source Sans Pro'; font-weight: 400;">FALSE</td>
@@ -1066,37 +1099,56 @@ Warning
 </div>
 </div>
 <section id="plot-and-axis-titles" class="level2"><h2 class="anchored" data-anchor-id="plot-and-axis-titles"><strong>8.1 Plot and axis titles</strong></h2>
-<div class="cell" data-hash="Chapter8_cache/html/unnamed-chunk-3_5addee846f369c1ae739ba1d915f354e">
-<details><summary>Code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">holep</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span>order_by <span class="op">=</span> <span class="va">num_votes</span>, </span>
-<span>            n <span class="op">=</span> <span class="fl">200</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">num_votes</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<div class="cell" data-hash="Chapter8_cache/html/fig-8-1_92b75398943713c8f1ae52b1e9ccfc9d">
+<details><summary>Code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Pipe the 'holep' dataframe through a series of operations using the magrittr pipe operator %&gt;%</span></span>
+<span><span class="va">holep</span> <span class="op">|&gt;</span></span>
+<span>  </span>
+<span>  <span class="co"># Select the top 200 rows based on the 'num_votes' column</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span>order_by <span class="op">=</span> <span class="va">num_votes</span>, n <span class="op">=</span> <span class="fl">200</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  </span>
+<span>  <span class="co"># Arrange the data in descending order of 'num_votes'</span></span>
+<span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">num_votes</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  </span>
+<span>  <span class="co"># Add new columns: 'id' (row number) and </span></span>
+<span>  <span class="co"># 'primary_title' (conditional labeling)</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>    id <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html">row_number</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    primary_title <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">id</span> <span class="op">&lt;=</span> <span class="fl">20</span>,</span>
-<span>                            <span class="va">primary_title</span>,</span>
-<span>                            <span class="cn">NA</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">runtime_minutes</span>, </span>
-<span>             y <span class="op">=</span> <span class="va">average_rating</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, </span>
-<span>              col <span class="op">=</span> <span class="st">"lightblue"</span>, </span>
-<span>              se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>size <span class="op">=</span> <span class="va">num_votes</span><span class="op">)</span>,</span>
-<span>              alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">primary_title</span><span class="op">)</span>,</span>
-<span>            check_overlap <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>            col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">15</span>, <span class="fl">30</span>, <span class="fl">45</span>, <span class="fl">60</span>, <span class="fl">90</span>, <span class="fl">120</span><span class="op">)</span>,</span>
+<span>      <span class="va">primary_title</span>,</span>
+<span>      <span class="cn">NA</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  </span>
+<span>  <span class="co"># Create a ggplot scatterplot</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">runtime_minutes</span>, y <span class="op">=</span> <span class="va">average_rating</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, col <span class="op">=</span> <span class="st">"lightblue"</span>, se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>size <span class="op">=</span> <span class="va">num_votes</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">primary_title</span><span class="op">)</span>, </span>
+<span>            check_overlap <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>            col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
+<span> </span>
+<span>   <span class="co"># Customize axis scales and size scale</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">15</span>, <span class="fl">30</span>, <span class="fl">45</span>, <span class="fl">60</span>, <span class="fl">90</span>, <span class="fl">120</span><span class="op">)</span>, </span>
 <span>                     limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">120</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_continuous</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span>,</span>
-<span>                        labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number_si.html">label_number_si</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_continuous</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span>, </span>
+<span>                        labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number_si.html">label_number_si</a></span><span class="op">(</span><span class="op">)</span>, </span>
 <span>                        trans <span class="op">=</span> <span class="st">"sqrt"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Set themes for the plot</span></span>
 <span>  <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/theme_cowplot.html">theme_half_open</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
 <span>    legend.position <span class="op">=</span> <span class="st">"bottom"</span>,</span>
-<span>    legend.direction <span class="op">=</span> <span class="st">"horizontal"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span> </span>
+<span>    legend.direction <span class="op">=</span> <span class="st">"horizontal"</span>,</span>
+<span>    axis.title.x <span class="op">=</span> <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html">element_markdown</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>    axis.title.y <span class="op">=</span> <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html">element_markdown</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html">element_markdown</a></span><span class="op">(</span>face <span class="op">=</span> <span class="st">"plain"</span><span class="op">)</span>,</span>
+<span>    legend.title <span class="op">=</span> <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html">element_markdown</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>arrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">15</span>, </span>
+<span>                                           length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"mm"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span> </span>
+<span>   <span class="co"># Add labels and annotations</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="st">"Run-time *(in min.)*"</span>,</span>
 <span>    y <span class="op">=</span> <span class="st">"Average Rating"</span>,</span>
@@ -1104,11 +1156,7 @@ Warning
 <span>    title <span class="op">=</span> <span class="st">"**IMDb** Holiday TV Show Episodes: Ratings _vs._ Run-time"</span>,</span>
 <span>    subtitle <span class="op">=</span> <span class="st">"A Scatterplot of the top-200 episodes (by number of votes on IMBDb) of holiday TV shows,\nwith top 20 labelled with names of episodes"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.title.x <span class="op">=</span> <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html">element_markdown</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span>        axis.title.y <span class="op">=</span> <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html">element_markdown</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span>        plot.title <span class="op">=</span> <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html">element_markdown</a></span><span class="op">(</span>face <span class="op">=</span> <span class="st">"plain"</span><span class="op">)</span>,</span>
-<span>        legend.title <span class="op">=</span> <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html">element_markdown</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>        axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>arrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">15</span>, length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">4</span>, <span class="st">"mm"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span></span>
 <span>    geom <span class="op">=</span> <span class="st">"text"</span>,</span>
 <span>    label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/substitute.html">quote</a></span><span class="op">(</span><span class="va">y</span> <span class="op">==</span> <span class="va">a.x</span> <span class="op">+</span> <span class="va">b</span><span class="op">)</span>,</span>
@@ -1117,122 +1165,163 @@ Warning
 <span>    fontface <span class="op">=</span> <span class="st">"italic"</span></span>
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<p><img src="Chapter8_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+<div id="fig-8-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter8_files/figure-html/fig-8-1-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: Scatterplot of TV Episodes Ratings vs.&nbsp;Runtime - demonstrating ‘labs’ of ggplot2 - markdown elements</figcaption></figure>
+</div>
 </div>
 </div>
 </section><section id="text-labels" class="level2"><h2 class="anchored" data-anchor-id="text-labels"><strong>8.2 Text labels</strong></h2>
-<div class="cell" data-fig.asp="1" data-hash="Chapter8_cache/html/unnamed-chunk-4_f23a042864dafa0123a1bb3d1741b020">
-<details><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">holep</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">parent_primary_title</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<div class="cell" data-fig.asp="1" data-hash="Chapter8_cache/html/fig-8-2_eb5f9fcaafc6f92ad738176b7c0f73ed">
+<details><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Pipe the 'holep' dataframe through a series of operations using the magrittr pipe operator %&gt;%</span></span>
+<span><span class="va">holep</span> <span class="op">|&gt;</span></span>
+<span>  </span>
+<span>  <span class="co"># Group the data by 'parent_primary_title'</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">parent_primary_title</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span> </span>
+<span>   <span class="co"># Summarize the data: count of episodes, mean votes, mean ratings, and concatenate unique genres</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
 <span>    n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    votes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">parent_num_votes</span><span class="op">)</span>,</span>
 <span>    ratings <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">parent_average_rating</span><span class="op">)</span>,</span>
 <span>    genre <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">genres</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
-<span>  <span class="op">)</span>  <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span>order_by <span class="op">=</span> <span class="va">votes</span>, n <span class="op">=</span> <span class="fl">40</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">votes</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span> </span>
+<span>  <span class="co"># Select the top 40 rows based on 'votes'</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span>order_by <span class="op">=</span> <span class="va">votes</span>, n <span class="op">=</span> <span class="fl">40</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  </span>
+<span>  <span class="co"># Arrange the data in descending order of 'votes'</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">votes</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  </span>
+<span>  <span class="co"># Add a new column 'gen_col' based on genre classification</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>gen_col <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">genre</span>, <span class="st">"Comedy"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"Comedy"</span>,</span>
 <span>    <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">genre</span>, <span class="st">"Horror"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"Horror"</span>,</span>
 <span>    <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">genre</span>, <span class="st">"Action"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"Action"</span>,</span>
 <span>    <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">genre</span>, <span class="st">"Drama"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"Drama"</span>,</span>
 <span>    .default <span class="op">=</span> <span class="st">"Others"</span></span>
-<span>  <span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">votes</span>,</span>
-<span>             y <span class="op">=</span> <span class="va">ratings</span>,</span>
-<span>             size <span class="op">=</span> <span class="va">n</span>,</span>
-<span>             label <span class="op">=</span> <span class="va">parent_primary_title</span>,</span>
-<span>             color <span class="op">=</span> <span class="va">gen_col</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span>check_overlap <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>            hjust <span class="op">=</span> <span class="st">"inward"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  </span>
+<span>  <span class="co"># Create a ggplot scatterplot</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">votes</span>, y <span class="op">=</span> <span class="va">ratings</span>, size <span class="op">=</span> <span class="va">n</span>, label <span class="op">=</span> <span class="va">parent_primary_title</span>, color <span class="op">=</span> <span class="va">gen_col</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span>check_overlap <span class="op">=</span> <span class="cn">TRUE</span>, hjust <span class="op">=</span> <span class="st">"inward"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Customize labels, titles, and scales</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="st">"Number of votes (on IMDb) for the TV Series"</span>,</span>
 <span>    y <span class="op">=</span> <span class="st">"Average Rating of episodes"</span>,</span>
 <span>    size <span class="op">=</span> <span class="st">"Number of Holiday Season episodes"</span>,</span>
 <span>    color <span class="op">=</span> <span class="st">"Genre"</span>,</span>
-<span>    title <span class="op">=</span> <span class="st">"Most popular TV Series with atleast 1 holiday episode"</span>,</span>
+<span>    title <span class="op">=</span> <span class="st">"Most popular TV Series with at least 1 holiday episode"</span>,</span>
 <span>    subtitle <span class="op">=</span> <span class="st">"A scatter-plot replaced by Text Labels"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_continuous</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number_si.html">label_number_si</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number_si.html">label_number_si</a></span><span class="op">(</span><span class="op">)</span>, </span>
 <span>                     limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1100000</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"darkgreen"</span>, <span class="st">"purple"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Set themes for the plot</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
 <span>    legend.position <span class="op">=</span> <span class="st">"bottom"</span>,</span>
-<span>    legend.box <span class="op">=</span> <span class="st">"vertical"</span>, </span>
-<span>    legend.margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>,</span>
+<span>    legend.box <span class="op">=</span> <span class="st">"vertical"</span>,</span>
+<span>    legend.margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,</span>
 <span>    legend.spacing <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"pt"</span><span class="op">)</span>,</span>
 <span>    axis.line.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>arrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">15</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<p><img src="Chapter8_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<div id="fig-8-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter8_files/figure-html/fig-8-2-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: Demonstrating the use of Text Labels in place of points in a scatterplot</figcaption></figure>
+</div>
 </div>
 </div>
 </section><section id="building-custom-annotations" class="level2"><h2 class="anchored" data-anchor-id="building-custom-annotations"><strong>8.3 Building custom annotations</strong></h2>
-<div class="cell" data-hash="Chapter8_cache/html/unnamed-chunk-5_df05e6543f50156e460f96c8304ceffe">
-<details><summary>Code</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Top 10 TV Series (by Votes on IMDb) with atleast 1 holiday episode</span></span>
-<span><span class="va">tv10</span> <span class="op">&lt;-</span> <span class="va">holep</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">parent_tconst</span>, <span class="va">parent_primary_title</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<div class="cell" data-fig.asp="0.8" data-hash="Chapter8_cache/html/fig-8-3_d4cad7c7bef9662ab48430015d5b053e">
+<details><summary>Code</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># IMDb logo image for annotation in the plot</span></span>
+<span><span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_read</a></span><span class="op">(</span><span class="st">"https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/171_Imdb_logo_logos-512.png"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Extract the top 10 TV series with at least 1 holiday episode based on IMDb votes</span></span>
+<span><span class="va">tv10</span> <span class="op">&lt;-</span> <span class="va">holep</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">parent_tconst</span>, <span class="va">parent_primary_title</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
 <span>    start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">parent_start_year</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">parent_end_year</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    votes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">parent_num_votes</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    runtime <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">parent_runtime_minutes</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>    rating <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">parent_average_rating</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
+<span>    rating <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">parent_average_rating</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>    num_episodes <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>years <span class="op">=</span> <span class="va">end</span> <span class="op">-</span> <span class="va">start</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>years <span class="op">=</span> <span class="va">end</span> <span class="op">-</span> <span class="va">start</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span>order_by <span class="op">=</span> <span class="va">votes</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">holep</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="co"># See only the holiday episodes of top 10 series</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span></span>
-<span>    <span class="va">parent_primary_title</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="op">(</span><span class="va">tv10</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">parent_primary_title</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span><span class="co"># Filter the 'holep' dataframe to see only the holiday episodes of the top 10 series</span></span>
+<span><span class="va">holep</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">parent_primary_title</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="op">(</span><span class="va">tv10</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">parent_primary_title</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
-<span>    parent_primary_title <span class="op">=</span> </span>
+<span>    parent_primary_title <span class="op">=</span></span>
 <span>      <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct.html">fct</a></span><span class="op">(</span><span class="va">parent_primary_title</span>,</span>
-<span>          levels <span class="op">=</span> <span class="op">(</span><span class="va">tv10</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">parent_primary_title</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>,</span>
-<span>             y <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html">fct_rev</a></span><span class="op">(</span><span class="va">parent_primary_title</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>        levels <span class="op">=</span> <span class="op">(</span><span class="va">tv10</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">parent_primary_title</span><span class="op">)</span><span class="op">)</span></span>
+<span>      <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  </span>
-<span>  <span class="fu">ggrepel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html">geom_text_repel</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">primary_title</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># Create a ggplot scatterplot</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html">fct_rev</a></span><span class="op">(</span><span class="va">parent_primary_title</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggrepel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html">geom_text_repel</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">primary_title</span><span class="op">)</span>,</span>
+<span>                           vjust <span class="op">=</span> <span class="op">+</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="va">tv10</span>,</span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">start</span>,</span>
-<span>        xend <span class="op">=</span> <span class="va">end</span>,</span>
-<span>        y <span class="op">=</span> <span class="va">parent_primary_title</span>,</span>
-<span>        yend <span class="op">=</span> <span class="va">parent_primary_title</span><span class="op">)</span>,</span>
-<span>    alpha <span class="op">=</span> <span class="fl">0.3</span>,</span>
-<span>    lineend <span class="op">=</span> <span class="st">"round"</span>,</span>
-<span>    lwd <span class="op">=</span> <span class="fl">3</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">start</span>, xend <span class="op">=</span> <span class="va">end</span>, y <span class="op">=</span> <span class="va">parent_primary_title</span>, yend <span class="op">=</span> <span class="va">parent_primary_title</span><span class="op">)</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="fl">0.3</span>, lineend <span class="op">=</span> <span class="st">"round"</span>, lwd <span class="op">=</span> <span class="fl">3</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">average_rating</span>,</span>
-<span>        size <span class="op">=</span> <span class="va">num_votes</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">average_rating</span>, size <span class="op">=</span> <span class="va">num_votes</span><span class="op">)</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="fl">0.7</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Customize labels, titles, and scales</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>    title <span class="op">=</span> <span class="st">"Holiday Episodes of IMDb's top 10 TV Series"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"Size of dot indicates number of votes, Color indicates Average Rating on IMDb"</span></span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Size of dot indicates number of votes, Color indicates Average Rating on IMDb"</span>,</span>
+<span>    colour <span class="op">=</span> <span class="st">"Average Rating\n(IMDb)"</span>,</span>
+<span>    size <span class="op">=</span> <span class="st">"Number of Votes (IMDb)"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_color_gradient</a></span><span class="op">(</span>low <span class="op">=</span> <span class="st">"pink"</span>, </span>
-<span>                        high <span class="op">=</span> <span class="st">"purple"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_color_gradient</a></span><span class="op">(</span>low <span class="op">=</span> <span class="st">"pink"</span>, high <span class="op">=</span> <span class="st">"purple"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size_continuous</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">8</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
-<span>    legend.position <span class="op">=</span> <span class="st">"bottom"</span></span>
+<span>    legend.position <span class="op">=</span> <span class="st">"bottom"</span>, </span>
+<span>    plot.title.position <span class="op">=</span> <span class="st">"plot"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span></span>
+<span>    geom <span class="op">=</span> <span class="st">"label"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">1993</span>,</span>
+<span>    y <span class="op">=</span> <span class="fl">1.5</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"Source: IMDb Non-Commercial Datasets"</span>,</span>
+<span>    fontface <span class="op">=</span> <span class="st">"italic"</span>,</span>
+<span>    hjust <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    fill <span class="op">=</span> <span class="st">"#f2c522"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotation_custom.html">annotation_custom</a></span><span class="op">(</span></span>
+<span>    grob <span class="op">=</span> <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/grid.raster.html">rasterGrob</a></span><span class="op">(</span><span class="va">img</span><span class="op">)</span>,</span>
+<span>    xmin <span class="op">=</span> <span class="fl">1993</span>,</span>
+<span>    xmax <span class="op">=</span> <span class="fl">1998</span>,</span>
+<span>    ymin <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    ymax <span class="op">=</span> <span class="fl">5</span></span>
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
-<p><img src="Chapter8_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<div id="fig-8-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter8_files/figure-html/fig-8-3-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: Text Annotations within a plot’s panel area</figcaption></figure>
 </div>
 </div>
-<section id="a-professional-visualization" class="level3"><h3 class="anchored" data-anchor-id="a-professional-visualization">A Professional Visualization</h3>
-<p>An attempt to make a nice visualization with annotations for <a href="https://github.com/rfordatascience/tidytuesday/tree/master">#TidyTuesday</a></p>
+</div>
+<section id="building-a-visualization-with-image-annotations-on-the-y-axis" class="level3"><h3 class="anchored" data-anchor-id="building-a-visualization-with-image-annotations-on-the-y-axis">Building a Visualization with Image annotations on the <em>y-axis</em>
+</h3>
+<p>An attempt to make a nice visualization with annotations for <a href="https://github.com/rfordatascience/tidytuesday/tree/master">#TidyTuesday</a>: —</p>
 <div class="cell" data-hash="Chapter8_cache/html/unnamed-chunk-6_9b89ebe2d2c8b4b1b02e7439fa00ac7e">
 <details><summary>Code</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#==============================================================================#</span></span>
 <span><span class="co"># Libraries --------------------------------------------------------------------</span></span>
@@ -1472,9 +1561,211 @@ Warning
 </details>
 </div>
 <p><img src="docs/holidayepisodes_tidy.png" class="img-fluid"></p>
+</section></section><section id="direct-labelling" class="level2"><h2 class="anchored" data-anchor-id="direct-labelling"><strong>8.4 Direct labelling</strong></h2>
+<p>An Example using <code>directlabels</code> package <span class="citation" data-cites="directlabels-2">(<a href="#ref-directlabels-2" role="doc-biblioref">Hocking 2023</a>)</span> is at <a href="#fig-8-4-a">Figure&nbsp;4</a></p>
+<div class="cell" data-hash="Chapter8_cache/html/fig-8-4-a_72696309164741bdc1698451973f27e6">
+<details><summary>Code</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tdhock/directlabels">directlabels</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Top 10 TV Series with most holiday season episodes</span></span>
+<span><span class="va">names_series</span> <span class="op">&lt;-</span> <span class="va">holep</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">parent_primary_title</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">parent_primary_title</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">select_name</span> <span class="op">=</span> <span class="st">"Holiday Baking Championship"</span></span>
+<span><span class="va">n</span> <span class="op">=</span> <span class="fl">5</span></span>
+<span></span>
+<span><span class="va">holep</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">parent_primary_title</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">names_series</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">num_votes</span>,</span>
+<span>        y <span class="op">=</span> <span class="va">average_rating</span>,</span>
+<span>        color <span class="op">=</span> <span class="va">parent_primary_title</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># Background Highlighting of specific series</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="op">(</span><span class="va">holep</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">parent_primary_title</span> <span class="op">==</span> <span class="va">select_name</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    size <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"lightgrey"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Plotting all the points</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Text Annotation Arrow</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span></span>
+<span>    geom <span class="op">=</span> <span class="st">"curve"</span>,</span>
+<span>    x <span class="op">=</span> <span class="op">(</span><span class="va">holep</span> <span class="op">|&gt;</span> </span>
+<span>           <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">parent_primary_title</span> <span class="op">==</span> <span class="va">select_name</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>           <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">average_rating</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>           <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>           <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">num_votes</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    y <span class="op">=</span> <span class="op">(</span><span class="va">holep</span> <span class="op">|&gt;</span> </span>
+<span>           <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">parent_primary_title</span> <span class="op">==</span> <span class="va">select_name</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>           <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">average_rating</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>           <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>           <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">average_rating</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    xend <span class="op">=</span> <span class="fl">80</span>, yend <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>    arrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"mm"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    col <span class="op">=</span> <span class="st">"darkgrey"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Text Annotation</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span></span>
+<span>    geom <span class="op">=</span> <span class="st">"label"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">80</span>, y <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>    hjust <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    vjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"TV Episodes of\n"</span>, <span class="va">select_name</span><span class="op">)</span>,</span>
+<span>    fill <span class="op">=</span> <span class="st">"grey"</span>,</span>
+<span>    fontface <span class="op">=</span> <span class="st">"italic"</span>,</span>
+<span>    label_padding <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">15</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
+<span>    label_size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"mm"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Labels and Titles</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="st">"Number of Votes for the episode on IMDb"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"Average Rating of the Episode"</span>,</span>
+<span>    title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Ratings and Votes for episodes of "</span>, <span class="va">select_name</span><span class="op">)</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Comparison with other series in the top "</span>, <span class="va">n</span>, <span class="st">" TV Series by number of holiday episodes"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>trans <span class="op">=</span> <span class="st">"log10"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/theme_cowplot.html">theme_half_open</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>    legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>    axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>arrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">3</span>, <span class="st">"mm"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Using directlabels</span></span>
+<span>  <span class="fu">directlabels</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/directlabels/man/geom_dl.html">geom_dl</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">parent_primary_title</span><span class="op">)</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"smart.grid"</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-8-4-a" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter8_files/figure-html/fig-8-4-a-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: Using directlabels and annotations to make reading the scatterplot easier, instead of a legend</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Another example, which uses <code>geom_mark_ellipse()</code> of <code>ggforce</code> package <span class="citation" data-cites="ggforce-2">(<a href="#ref-ggforce-2" role="doc-biblioref">Pedersen 2022</a>)</span> to focus on specific groups within a scatter-plot. The <a href="#fig-8-4-b">Figure&nbsp;5</a> shows this.</p>
+<div class="cell" data-hash="Chapter8_cache/html/fig-8-4-b_43ccab81a742eb5bcaad583bb816fcf1">
+<details><summary>Code</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">names_highlight</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Holiday Baking Championship"</span>,</span>
+<span>                    <span class="st">"Thomas &amp; Friends"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">holep</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">parent_primary_title</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">names_series</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">num_votes</span>,</span>
+<span>        y <span class="op">=</span> <span class="va">average_rating</span>,</span>
+<span>        color <span class="op">=</span> <span class="va">parent_primary_title</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># Background Highlighting of specific series</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="op">(</span><span class="va">holep</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">parent_primary_title</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">names_highlight</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    size <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"lightgrey"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Plotting all the points</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span> </span>
+<span> <span class="co"># Labels and Titles</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="st">"Number of Votes for the episode on IMDb"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"Average Rating of the Episode"</span>,</span>
+<span>    title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Ratings and Votes for TV Series with most holiday episodes"</span><span class="op">)</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Highlighting the TV Series: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">names_highlight</span>, collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggforce</span><span class="fu">::</span><span class="fu"><a href="https://ggforce.data-imaginist.com/reference/geom_mark_ellipse.html">geom_mark_ellipse</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="op">(</span><span class="va">holep</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">parent_primary_title</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">names_highlight</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">parent_primary_title</span>,</span>
+<span>        group <span class="op">=</span> <span class="va">parent_primary_title</span>,</span>
+<span>        fill <span class="op">=</span> <span class="va">parent_primary_title</span><span class="op">)</span>,</span>
+<span>    linetype <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>    label.margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>,</span>
+<span>    con.linetype <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    label.fill <span class="op">=</span> <span class="st">"lightgrey"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>trans <span class="op">=</span> <span class="st">"log10"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/theme_cowplot.html">theme_half_open</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>    legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>    axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>arrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">3</span>, <span class="st">"mm"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-8-4-b" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter8_files/figure-html/fig-8-4-b-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption class="figure-caption">Figure&nbsp;5: Using ellipses to highlight areas of specific groups in a scatterplot</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="annotation-across-facets" class="level2"><h2 class="anchored" data-anchor-id="annotation-across-facets"><strong>8.5 Annotation across facets</strong></h2>
+<p>Similarly, using <code>gghighlight</code> package <span class="citation" data-cites="gghighlight-2">(<a href="#ref-gghighlight-2" role="doc-biblioref">Yutani 2022</a>)</span>, we can annotate different facets in one go, as shown in <a href="#fig-8-5">Figure&nbsp;6</a>.</p>
+<div class="cell" data-hash="Chapter8_cache/html/fig-8-5_11d3096d380877a57335a6b6aaa4a318">
+<details><summary>Code</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">holep</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">parent_primary_title</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">names_series</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">num_votes</span>,</span>
+<span>        y <span class="op">=</span> <span class="va">average_rating</span>,</span>
+<span>        color <span class="op">=</span> <span class="va">parent_primary_title</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Plotting all the points</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Faceting by TV Series</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">parent_primary_title</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># gghighlight to annotate</span></span>
+<span>  <span class="fu">gghighlight</span><span class="fu">::</span><span class="fu"><a href="https://yutannihilation.github.io/gghighlight/reference/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span> </span>
+<span>  <span class="co"># Labels and Titles</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="st">"Number of Votes for the episode on IMDb"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"Average Rating of the Episode"</span>,</span>
+<span>    title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Ratings and Votes for 4 TV Series with most holiday episodes"</span><span class="op">)</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Highlighting the TV Series in each panel."</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>trans <span class="op">=</span> <span class="st">"log10"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/theme_cowplot.html">theme_half_open</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>    legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>    axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>arrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">3</span>, <span class="st">"mm"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    strip.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-8-5" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter8_files/figure-html/fig-8-5-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption class="figure-caption">Figure&nbsp;6: Annotating different facets by using gghighlight</figcaption></figure>
+</div>
+</div>
+</div>
 
 
-</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-directlabels-2" class="csl-entry" role="listitem">
+Hocking, Toby Dylan. 2023. <span>“Directlabels: Direct Labels for Multicolor Plots.”</span> <a href="https://CRAN.R-project.org/package=directlabels">https://CRAN.R-project.org/package=directlabels</a>.
+</div>
+<div id="ref-ggforce-2" class="csl-entry" role="listitem">
+Pedersen, Thomas Lin. 2022. <span>“Ggforce: Accelerating ’Ggplot2’.”</span> <a href="https://CRAN.R-project.org/package=ggforce">https://CRAN.R-project.org/package=ggforce</a>.
+</div>
+<div id="ref-gghighlight-2" class="csl-entry" role="listitem">
+Yutani, Hiroaki. 2022. <span>“Gghighlight: Highlight Lines and Points in ’Ggplot2’.”</span> <a href="https://CRAN.R-project.org/package=gghighlight">https://CRAN.R-project.org/package=gghighlight</a>.
+</div>
+</div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
