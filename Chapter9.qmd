@@ -1,8 +1,378 @@
 ---
 title: "Chapter 9"
 subtitle: "Arranging Plots"
+author: "Aditya Dahiya"
+date: "2023-12-21"
+format: 
+  html: 
+    code-fold: true
+    code-copy: hover
+    code-link: true
+execute: 
+  echo: true
+  warning: false
+  error: false
+  cache: true
+filters:
+  - social-share
+share:
+  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter9.html"
+  description: "Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
+  twitter: true
+  facebook: true
+  linkedin: true
+  email: true
+  mastodon: true
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
 ---
 
 ::: callout-warning
-Solutions for this chapter are under construction.
+This chapter does not have any exercises. Instead, we practice arranging plots using the `patchwork` package [@patchwork] and [data](https://www.kaggle.com/datasets/saadharoon27/diwali-sales-dataset) on [Diwali Sales](https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-11-14/readme.md) from India, initially presented as a part of [#TidyTuesday](https://github.com/rfordatascience/tidytuesday/tree/master?tab=readme-ov-file#about-tidytuesday).
 :::
+
+## Libraries and Data
+
+```{r}
+#| label: setup
+#| code-fold: false
+#| message: false
+#| error: false
+#| warning: false
+
+library(tidyverse)      # tidy tools data wrangling
+library(ggtext)         # text into ggplot2
+library(sf)             # maps and plotting
+library(here)           # files location and loading
+library(showtext)       # Using Fonts More Easily in R Graphs
+library(ggimage)        # Using images in ggplot2
+library(rvest)          # Get states population data
+library(fontawesome)    # Social Media icons
+library(ggtext)         # Markdown Text in ggplot2
+library(patchwork)      # For combining plots
+```
+
+```{r}
+#| message: false
+#| error: false
+#| warning: false
+
+
+# Loading the data
+diwali <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-11-14/diwali_sales_data.csv') |> 
+  janitor::clean_names()
+
+india_map <- st_read(here("data", "india_map", "India_State_Boundary.shp")) |> 
+  mutate(state = str_to_title(State_Name),
+         .keep = "unused")
+
+
+# Getting population Data from web scraping
+state_pop <- rvest::read_html("https://www.indiacensus.net/") |> 
+  html_nodes("table")
+
+state_pop <- state_pop[1] |> 
+  html_table() 
+
+state_pop <- state_pop[[1]] |> 
+  janitor::clean_names() |> 
+  select(2, 4) |> 
+  rename(
+    state = state_name,
+    population = estimated_population_in_2023
+  )
+
+state_pop <- state_pop |> 
+  mutate(population = parse_number(population))
+
+# Correct names for some states in india_map
+india_map <- india_map |> 
+  mutate(state = case_when(
+    state == "Tamilnadu" ~ "Tamil Nadu",
+    state == "Chhattishgarh" ~ "Chhattisgarh",
+    state == "Telengana" ~ "Telangana",
+    state == "Jammu And Kashmir" ~ "Jammu & Kashmir",
+    state == "Andaman & Nicobar" ~ "Andaman & Nicobar Islands",
+    state == "Daman And Diu And Dadra And Nagar Haveli" ~ "Dadra and Nagar Haveli",
+    .default = state
+  ))
+
+# Number of customers per capita and Avg. Purchase per customer
+df1 <- diwali |> 
+  count(state, sort = TRUE) |> 
+  full_join(state_pop) |> 
+  mutate(cust_m_pop = 1000000 * n / population) |> 
+  arrange(desc(cust_m_pop)) |>
+  rename(customers = n) |> 
+  select(state, customers, cust_m_pop)
+
+df2 <- diwali |> 
+  group_by(state) |> 
+  summarise(purchase = sum(amount, na.rm = TRUE)) |> 
+  full_join(df1) |> 
+  mutate(purc_cust = purchase / customers) |> 
+  select(state, cust_m_pop, purc_cust) |> 
+  mutate(
+    state = case_when(
+      state == "Jammu and Kashmir" ~ "Jammu & Kashmir",
+      state == "Orissa" ~ "Odisha",
+      .default = state)
+  )
+  
+  
+mapdf <- df2 |> 
+  full_join(india_map, relationship = "many-to-many") |> 
+  # Simplifying geometry to drastically reduce plotting time
+  mutate(
+    geometry = st_simplify(geometry, 
+                           preserveTopology = FALSE, 
+                           dTolerance = 1000)
+  )
+```
+
+## **9.1 Laying out plots side by side**
+
+Starting by defining some basic parameters, colours and annotations for the final plot
+
+```{r}
+
+# Load fonts
+font_add_google("Pragati Narrow")
+font_add_google("Pacifico")
+font_add_google("Roboto")
+showtext_auto()
+body_font <- "Roboto"              # Font for plot legends, body etc.
+title_font <- "Pacifico"              # Font for titles, subtitles
+caption_font <- "Pragati Narrow"   # Font for the caption
+
+# Define colours
+map1_col = c("yellow",             # Colours for Chloropleth g1
+             "red")
+map2_col = c("#cdeff7",          # Colours for Chloropleth g2 
+             "#1f76f0")
+ts = 45                            # Text Size
+bg_col <- "white"                  # Background Colour
+text_col <- "black"                # Colour for the text
+text_hil <- "red"                  # Colour for highlighted text
+  
+# Add text to plot
+plot_title <- "Diwali Sales: Insights"
+
+plot_subtitle <- "#TidyTuesday. Insights about the Diwali sales data."
+
+sysfonts::font_add(family = "Font Awesome 6 Brands",
+                   regular = here::here("docs", "Font Awesome 6 Brands-Regular-400.otf"))
+github <- "&#xf09b"
+github_username <- "aditya-dahiya"
+xtwitter <- "&#xe61b"
+xtwitter_username <- "@adityadahiyaias"
+mastodon <- "&#xf4f6"
+mastodon_username <- "@adityadahiya@mastodon.social"
+social_caption <- glue::glue(
+  "<span style='font-family:\"Font Awesome 6 Brands\";'>{github};</span> <span style='color: #000000'>{github_username}  </span>
+  <span style='font-family:\"Font Awesome 6 Brands\";'>{xtwitter};</span> <span style='color: #000000'>{xtwitter_username}</span>"
+)
+plot_caption <- paste0("**Data**: kaggle.com<br>", social_caption)
+```
+
+The first plot `g1` (as shown in @fig-g1) shows map of India, with number of customers (per million population) from different states in the Data-Set.
+
+```{r}
+#| label: fig-g1
+#| fig-cap: "Map of India with geom_sf() and geom_sf_text()"
+#| fig-height: 7
+#| fig-asp: 1
+
+g1 <- mapdf |> 
+      ggplot(aes(fill = cust_m_pop, 
+                 geometry = geometry,
+                 label = state)) +
+      geom_sf() +
+      geom_sf_text(aes(alpha = !is.na(cust_m_pop)),
+                   size = ts/15) +
+      coord_sf() +
+      scale_fill_continuous(low = map1_col[1], 
+                            high = map1_col[2],
+                            na.value = bg_col,
+                            trans = "log10") +
+      scale_alpha_discrete(range = c(0, 1)) +
+      guides(alpha = "none", fill = "colorbar") +
+      
+      ggthemes::theme_map() +
+      labs(fill = "Customer Numbers\n(per mil. pop.)",
+           subtitle = "Customer numbers (per million population)") +
+      theme(plot.subtitle = element_text(size = ts/3,
+                                      family = body_font,
+                                      hjust = 0.5),
+            legend.text = element_text(size = ts/6,
+                                       family = body_font),
+            legend.title = element_text(size = ts/6,
+                                        family = body_font,
+                                        vjust = 0.5),
+            legend.position = "right",
+            legend.background = element_rect(fill = NULL),
+            legend.key.width = unit(2, "mm"))
+g1
+```
+
+The second plot `g2` (as shown in @fig-g2) shows map of India, with average spending per customer in the Diwali Sales dataset from different states.
+
+```{r}
+#| label: fig-g2
+#| fig-cap: "Using geom_sf and geom_sf_text to plot map with average customer spending"
+#| fig-height: 7
+#| fig-asp: 1
+
+g2 <- mapdf |> 
+      ggplot(aes(fill = purc_cust, 
+                 geometry = geometry,
+                 label = state)) +
+      geom_sf() +
+      geom_sf_text(aes(alpha = !is.na(purc_cust)),
+                   size = ts/15) +
+      coord_sf() +
+      scale_fill_continuous(low = map2_col[1], 
+                            high = map2_col[2],
+                            na.value = bg_col,
+                            labels = scales::label_comma(prefix = "Rs."),
+                            breaks = c(8000, 10000)) +
+      scale_alpha_discrete(range = c(0, 1)) +
+      guides(alpha = "none", fill = "colorbar") +
+      
+      ggthemes::theme_map() +
+      labs(fill = "Average Customer\nSpending (Rs.)",
+           subtitle = "Average customer spending (in Rupees)") +
+      theme(plot.subtitle = element_text(size = ts/3,
+                                      family = body_font,
+                                      hjust = 0.5),
+            legend.text = element_text(size = ts/6,
+                                       family = body_font),
+            legend.title = element_text(size = ts/6,
+                                        family = body_font,
+                                        vjust = 0.5),
+            legend.position = "right",
+            legend.background = element_rect(fill = NULL),
+            legend.key.width = unit(2, "mm"))
+g2
+```
+
+Now, we lay the two plots side by side using `patchwork`: —
+
+```{r}
+#| label: fig-p1
+#| fig-cap: "Using patchwork to combine two plots"
+#| fig-width: 10
+
+g1 + g2 +
+  plot_layout(guides = "collect") &
+  plot_annotation(
+    title = "Diwali Sales Data",
+    caption = "Source: #TidyTuesday, kaggle.com"
+  ) &
+  theme(
+    plot.title = element_text(hjust = 0.5,
+                              size = ts/2),
+    plot.caption = element_text(hjust = 0.5,
+                                size = ts/5)
+  )
+```
+
+Another @fig-g3 shows the age distribution of customers in the data-set: —
+
+```{r}
+#| label: fig-g3
+#| fig-cap: "Age distribution of the customers in the Diwali Dataset"
+
+g3 <- diwali |> 
+  count(age_group) |> 
+  mutate(fill_var = age_group == "26-35") |> 
+  ggplot(aes(x = n, y = age_group, fill = fill_var)) +
+  geom_col() +
+  labs(subtitle = "Maximum customers are aged 26-35",
+       y = "Customer Age Group",
+       x = "Number of customers") +
+  scale_x_continuous(labels = scales::label_number_si()) +
+  scale_fill_manual(values = c("grey", "orange")) +
+  cowplot::theme_minimal_vgrid() +
+  theme(axis.ticks.y = element_blank(),
+        panel.grid = element_line(linetype = 2),
+        axis.line.y = element_blank(),
+        panel.border = element_blank(),
+        plot.subtitle = element_text(hjust = 0.5,
+                                  size = ts/3),
+        legend.position = "none")
+
+g3
+
+```
+
+Another @fig-g4 shows a heat-map of the products sold category-wise in different states from the data-set: —
+
+```{r}
+#| label: fig-g4
+#| fig-cap: "A heat map using geom_tile() and geom_text()"
+
+# Create ordering of groups
+st_vec <- diwali |> 
+  count(state, sort = TRUE) |> 
+  pull(state) |> 
+  rev()
+pr_vec <- diwali |> 
+  count(product_category, sort = TRUE) |>  
+  pull(product_category)
+  
+  
+g4 <- diwali |> 
+  count(state, product_category, wt = orders, sort = TRUE) |> 
+  mutate(
+    state = fct(state, levels = st_vec),
+    product_category = fct(product_category, levels = pr_vec)
+  ) |> 
+  ggplot(aes(y = state, x = product_category, fill = n)) +
+  geom_tile(col = "white") +
+  geom_text(aes(label = n), size = ts/15) +
+  scale_fill_gradient(low = "white", 
+                      high = "red",
+                      na.value = "white",
+                      trans = "log2",
+                      breaks = c(1, 10, 50, 200, 500)) +
+  labs(x = NULL, y = NULL, 
+       fill = "Number of products sold",
+       subtitle = "Certain items are more popular in some states") +
+  theme_minimal() +
+  theme(panel.grid = element_blank(),
+        axis.text.x = element_text(angle = 90, 
+                                   hjust = 1),
+        legend.position = "right",
+        legend.title = element_text(angle = 90, 
+                                    hjust = 0, 
+                                    vjust = 1,
+                                    size = ts/4))
+g4
+```
+
+Combining the two @fig-g3 and @fig-g4 using `patchwork`: —
+
+```{r}
+#| label: fig-p2
+#| fig-cap: "Combining plots using patchwork"
+#| fig-width: 10
+
+g3 + g4 +
+  plot_layout(design = "
+              ABB
+              ABB") +
+  plot_annotation(
+    tag_levels = "I",
+    tag_prefix = "Subplot "
+  ) &
+  theme(
+    plot.subtitle = element_text(hjust = 0,
+                                 size = ts/4,
+                                 face = "bold"),
+    plot.title.position = "plot"
+  )
+```
+
+## **9.2 Arranging plots on top of each other**
