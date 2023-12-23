@@ -667,7 +667,7 @@ Projected CRS: WGS 84 / Pseudo-Mercator</code></pre>
 </div>
 </div>
 <p>Another <a href="#fig-g3">Figure&nbsp;4</a> shows the age distribution of customers in the data-set: —</p>
-<div class="cell" data-hash="Chapter9_cache/html/fig-g3_588fd0a1783ffd3ae2af350a519138d1">
+<div class="cell" data-hash="Chapter9_cache/html/fig-g3_1710640ae214c6642ec974a02cec34b5">
 <details><summary>Code</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g3</span> <span class="op">&lt;-</span> <span class="va">diwali</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">age_group</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>fill_var <span class="op">=</span> <span class="va">age_group</span> <span class="op">==</span> <span class="st">"26-35"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -684,7 +684,9 @@ Projected CRS: WGS 84 / Pseudo-Mercator</code></pre>
 <span>        axis.line.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>        panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>        plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>                                  size <span class="op">=</span> <span class="va">ts</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>,</span>
+<span>                                  size <span class="op">=</span> <span class="va">ts</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span>,</span>
+<span>        axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="va">ts</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span>,</span>
+<span>        axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span><span class="va">ts</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span>,</span>
 <span>        legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">g3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -696,7 +698,7 @@ Projected CRS: WGS 84 / Pseudo-Mercator</code></pre>
 </div>
 </div>
 <p>Another <a href="#fig-g4">Figure&nbsp;5</a> shows a heat-map of the products sold category-wise in different states from the data-set: —</p>
-<div class="cell" data-hash="Chapter9_cache/html/fig-g4_bcc9a2c1a21de787efea0f40df52c3dc">
+<div class="cell" data-hash="Chapter9_cache/html/fig-g4_6f341de4ac08aec13657eeaaf077c9b6">
 <details><summary>Code</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create ordering of groups</span></span>
 <span><span class="va">st_vec</span> <span class="op">&lt;-</span> <span class="va">diwali</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">state</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -715,7 +717,7 @@ Projected CRS: WGS 84 / Pseudo-Mercator</code></pre>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">state</span>, x <span class="op">=</span> <span class="va">product_category</span>, fill <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">n</span><span class="op">)</span>, size <span class="op">=</span> <span class="va">ts</span><span class="op">/</span><span class="fl">15</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">n</span><span class="op">)</span>, size <span class="op">=</span> <span class="va">ts</span><span class="op">/</span><span class="fl">18</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html">scale_fill_gradient</a></span><span class="op">(</span>low <span class="op">=</span> <span class="st">"white"</span>, </span>
 <span>                      high <span class="op">=</span> <span class="st">"red"</span>,</span>
 <span>                      na.value <span class="op">=</span> <span class="st">"white"</span>,</span>
@@ -731,8 +733,9 @@ Projected CRS: WGS 84 / Pseudo-Mercator</code></pre>
 <span>        legend.position <span class="op">=</span> <span class="st">"right"</span>,</span>
 <span>        legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, </span>
 <span>                                    hjust <span class="op">=</span> <span class="fl">0</span>, </span>
-<span>                                    vjust <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>                                    size <span class="op">=</span> <span class="va">ts</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span>                                    vjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>        axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="va">ts</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span>,</span>
+<span>        plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="va">ts</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">g4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div id="fig-g4" class="quarto-figure quarto-figure-center anchored">
@@ -742,20 +745,24 @@ Projected CRS: WGS 84 / Pseudo-Mercator</code></pre>
 </div>
 </div>
 <p>Combining the two <a href="#fig-g3">Figure&nbsp;4</a> and <a href="#fig-g4">Figure&nbsp;5</a> using <code>patchwork</code>: —</p>
-<div class="cell" data-hash="Chapter9_cache/html/fig-p2_af36577184f4ed606e89800cae10fa8d">
+<div class="cell" data-hash="Chapter9_cache/html/fig-p2_4dc8e92d437989bf7f6f50df155f2ed0">
 <details><summary>Code</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g3</span> <span class="op">+</span> <span class="va">g4</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>design <span class="op">=</span> <span class="st">"</span></span>
 <span><span class="st">              ABB</span></span>
 <span><span class="st">              ABB"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Insights from Diwali Sales Data"</span>,</span>
 <span>    tag_levels <span class="op">=</span> <span class="st">"I"</span>,</span>
-<span>    tag_prefix <span class="op">=</span> <span class="st">"Subplot "</span></span>
+<span>    tag_prefix <span class="op">=</span> <span class="st">"Figure "</span></span>
 <span>  <span class="op">)</span> <span class="op">&amp;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
 <span>    plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>                                 size <span class="op">=</span> <span class="va">ts</span><span class="op">/</span><span class="fl">4</span>,</span>
-<span>                                 face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
-<span>    plot.title.position <span class="op">=</span> <span class="st">"plot"</span></span>
+<span>                                 size <span class="op">=</span> <span class="va">ts</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span>,</span>
+<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>                              size <span class="op">=</span> <span class="va">ts</span><span class="op">/</span><span class="fl">1.5</span><span class="op">)</span>,</span>
+<span>    plot.tag.position <span class="op">=</span> <span class="st">"top"</span>,</span>
+<span>    plot.tag <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>face <span class="op">=</span> <span class="st">"italic"</span>,</span>
+<span>                            size <span class="op">=</span> <span class="va">ts</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div id="fig-p2" class="quarto-figure quarto-figure-center anchored">
@@ -764,11 +771,42 @@ Projected CRS: WGS 84 / Pseudo-Mercator</code></pre>
 </div>
 </div>
 </div>
-</section><section id="arranging-plots-on-top-of-each-other" class="level2">
+</section><section id="arranging-plots-on-top-of-each-other" class="level2"><h2 class="anchored" data-anchor-id="arranging-plots-on-top-of-each-other"><strong>9.2 Arranging plots on top of each other</strong></h2>
+<p>The <a href="#fig-inset1">Figure&nbsp;7</a> shows the use of <code><a href="https://patchwork.data-imaginist.com/reference/inset_element.html">inset_element()</a></code> to depict arranging plots on top of one-another using <code>patchwork</code>.</p>
+<div class="cell" data-hash="Chapter9_cache/html/fig-inset1_2f71b2e46559a7fe45e9c1526b04c2ef">
+<details><summary>Code</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g3inset</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">g3</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="va">ts</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span>,</span>
+<span>    axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="va">ts</span><span class="op">/</span><span class="fl">6</span><span class="op">)</span>,</span>
+<span>    plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">g1</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    legend.position <span class="op">=</span> <span class="st">"bottom"</span>,</span>
+<span>    legend.key.width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
+<span>    legend.key.height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"mm"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/inset_element.html">inset_element</a></span><span class="op">(</span></span>
+<span>    <span class="va">g3inset</span>,</span>
+<span>    top <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span>    bottom <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    left <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    right <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-inset1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter9_files/figure-html/fig-inset1-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;7: A figure with inset horizontal bar plot on bottom-right corner using inset_element()</figcaption></figure>
+</div>
+</div>
+</div>
 
 
 
-</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">9.2 Arranging plots on top of each other</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-patchwork" class="csl-entry" role="listitem">
 Pedersen, Thomas Lin. 2023. <span>“Patchwork: The Composer of Plots.”</span> <a href="https://CRAN.R-project.org/package=patchwork">https://CRAN.R-project.org/package=patchwork</a>.
 </div>

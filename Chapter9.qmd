@@ -300,7 +300,9 @@ g3 <- diwali |>
         axis.line.y = element_blank(),
         panel.border = element_blank(),
         plot.subtitle = element_text(hjust = 0.5,
-                                  size = ts/3),
+                                  size = ts/2),
+        axis.text = element_text(size = ts/4),
+        axis.title = element_text(ts/3),
         legend.position = "none")
 
 g3
@@ -331,7 +333,7 @@ g4 <- diwali |>
   ) |> 
   ggplot(aes(y = state, x = product_category, fill = n)) +
   geom_tile(col = "white") +
-  geom_text(aes(label = n), size = ts/15) +
+  geom_text(aes(label = n), size = ts/18) +
   scale_fill_gradient(low = "white", 
                       high = "red",
                       na.value = "white",
@@ -347,8 +349,9 @@ g4 <- diwali |>
         legend.position = "right",
         legend.title = element_text(angle = 90, 
                                     hjust = 0, 
-                                    vjust = 1,
-                                    size = ts/4))
+                                    vjust = 1),
+        axis.text = element_text(size = ts/4),
+        plot.subtitle = element_text(size = ts/4))
 g4
 ```
 
@@ -364,15 +367,49 @@ g3 + g4 +
               ABB
               ABB") +
   plot_annotation(
+    title = "Insights from Diwali Sales Data",
     tag_levels = "I",
-    tag_prefix = "Subplot "
+    tag_prefix = "Figure "
   ) &
   theme(
     plot.subtitle = element_text(hjust = 0,
-                                 size = ts/4,
-                                 face = "bold"),
-    plot.title.position = "plot"
+                                 size = ts/4),
+    plot.title = element_text(hjust = 0.5,
+                              size = ts/1.5),
+    plot.tag.position = "top",
+    plot.tag = element_text(face = "italic",
+                            size = ts/5)
   )
 ```
 
 ## **9.2 Arranging plots on top of each other**
+
+The @fig-inset1 shows the use of `inset_element()` to depict arranging plots on top of one-another using `patchwork`.
+
+```{r}
+#| label: fig-inset1
+#| fig-cap: "A figure with inset horizontal bar plot on bottom-right corner using inset_element()"
+#| fig-height: 7
+g3inset <- 
+  g3 +
+  labs(subtitle = NULL) + 
+  theme(
+    axis.title = element_text(size = ts/5),
+    axis.text = element_text(size = ts/6),
+    plot.background = element_rect(fill = "white")
+  )
+
+g1 + 
+  theme(
+    legend.position = "bottom",
+    legend.key.width = unit(10, "mm"),
+    legend.key.height = unit(2, "mm")
+  ) +
+  inset_element(
+    g3inset,
+    top = 0.3,
+    bottom = 0,
+    left = 0.5,
+    right = 1
+  )
+```
