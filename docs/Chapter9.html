@@ -417,17 +417,14 @@ div.csl-indent {
   </div>
   
 
-</header><div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
+</header><div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<div class="callout-body-container">
 <p>This chapter does not have any exercises. Instead, we practice arranging plots using the <code>patchwork</code> package <span class="citation" data-cites="patchwork">(<a href="#ref-patchwork" role="doc-biblioref">Pedersen 2023</a>)</span> and <a href="https://www.kaggle.com/datasets/saadharoon27/diwali-sales-dataset">data</a> on <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-11-14/readme.md">Diwali Sales</a> from India, initially presented as a part of <a href="https://github.com/rfordatascience/tidytuesday/tree/master?tab=readme-ov-file#about-tidytuesday">#TidyTuesday</a>.</p>
+</div>
 </div>
 </div>
 <section id="libraries-and-data" class="level2"><h2 class="anchored" data-anchor-id="libraries-and-data">Libraries and Data</h2>
@@ -800,6 +797,47 @@ Projected CRS: WGS 84 / Pseudo-Mercator</code></pre>
 <div id="fig-inset1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="Chapter9_files/figure-html/fig-inset1-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption class="figure-caption">Figure&nbsp;7: A figure with inset horizontal bar plot on bottom-right corner using inset_element()</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Also, we can use <code><a href="https://patchwork.data-imaginist.com/reference/wrap_elements.html">wrap_elements()</a></code> to wrap arbitrary graphics in a patchwork-compliant patch, as shown in <a href="#fig-we">Figure&nbsp;8</a> below.</p>
+<div class="cell" data-hash="Chapter9_cache/html/fig-we_99f965b04683e45bd733207f8cb2191e">
+<details><summary>Code</summary><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/magick/">magick</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">img</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://docs.ropensci.org/magick/reference/editing.html">image_read</a></span><span class="op">(</span><span class="st">"https://static.vecteezy.com/system/resources/previews/010/795/495/non_2x/diwali-lamp-icon-free-vector.jpg"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://docs.ropensci.org/magick/reference/transform.html">image_resize</a></span><span class="op">(</span><span class="st">"x200"</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">g1</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Diwali Sales Data"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Customer numbers (per million population)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span>, size <span class="op">=</span> <span class="va">ts</span><span class="op">/</span><span class="fl">1.5</span><span class="op">)</span>,</span>
+<span>    legend.position <span class="op">=</span> <span class="st">"bottom"</span>,</span>
+<span>    legend.key.width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
+<span>    legend.key.height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"mm"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/inset_element.html">inset_element</a></span><span class="op">(</span></span>
+<span>    <span class="va">g3inset</span>,</span>
+<span>    top <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span>    bottom <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    left <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    right <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/inset_element.html">inset_element</a></span><span class="op">(</span></span>
+<span>    p <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotation_raster.html">annotation_raster</a></span><span class="op">(</span>raster <span class="op">=</span> <span class="va">img</span>, <span class="op">-</span><span class="cn">Inf</span>, <span class="cn">Inf</span>, <span class="op">-</span><span class="cn">Inf</span>, <span class="cn">Inf</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    top <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    bottom <span class="op">=</span> <span class="fl">0.7</span>,</span>
+<span>    left <span class="op">=</span> <span class="fl">0.6</span>,</span>
+<span>    right <span class="op">=</span> <span class="fl">0.9</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-we" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter9_files/figure-html/fig-we-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;8: Using inset_element() to add raster images to patchwork plots</figcaption></figure>
 </div>
 </div>
 </div>

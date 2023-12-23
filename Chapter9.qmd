@@ -28,7 +28,7 @@ editor_options:
 bibliography: references.bib
 ---
 
-::: callout-warning
+::: {.callout-note appearance="minimal"}
 This chapter does not have any exercises. Instead, we practice arranging plots using the `patchwork` package [@patchwork] and [data](https://www.kaggle.com/datasets/saadharoon27/diwali-sales-dataset) on [Diwali Sales](https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-11-14/readme.md) from India, initially presented as a part of [#TidyTuesday](https://github.com/rfordatascience/tidytuesday/tree/master?tab=readme-ov-file#about-tidytuesday).
 :::
 
@@ -412,4 +412,47 @@ g1 +
     left = 0.5,
     right = 1
   )
+```
+
+Also, we can use `wrap_elements()` to wrap arbitrary graphics in a patchwork-compliant patch, as shown in @fig-we below.
+
+```{r}
+#| label: fig-we
+#| fig-height: 10
+#| fig-cap: "Using inset_element() to add raster images to patchwork plots"
+
+library(magick)
+
+img <- image_read("https://static.vecteezy.com/system/resources/previews/010/795/495/non_2x/diwali-lamp-icon-free-vector.jpg") |> 
+  image_resize("x200")
+
+
+g1 + 
+  labs(title = "Diwali Sales Data",
+       subtitle = "Customer numbers (per million population)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = ts/1.5),
+    legend.position = "bottom",
+    legend.key.width = unit(10, "mm"),
+    legend.key.height = unit(2, "mm")
+  ) +
+  inset_element(
+    g3inset,
+    top = 0.3,
+    bottom = 0,
+    left = 0.5,
+    right = 1
+  ) +
+  inset_element(
+    p = ggplot() + 
+      annotation_raster(raster = img, -Inf, Inf, -Inf, Inf) +
+      theme_void() +
+      coord_fixed(),
+    top = 1,
+    bottom = 0.7,
+    left = 0.6,
+    right = 0.9
+  )
+  
+
 ```
