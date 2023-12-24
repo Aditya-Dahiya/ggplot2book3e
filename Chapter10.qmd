@@ -1,8 +1,97 @@
 ---
 title: "Chapter 10"
 subtitle: "Position Scales and axes"
+author: "Aditya Dahiya"
+date: "2023-12-23"
+format: 
+  html: 
+    code-fold: true
+    code-copy: hover
+    code-link: true
+execute: 
+  echo: true
+  warning: false
+  error: false
+  cache: true
+filters:
+  - social-share
+share:
+  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter10.html"
+  description: "Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
+  twitter: true
+  facebook: true
+  linkedin: true
+  email: true
+  mastodon: true
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
 ---
 
-::: callout-warning
-Solutions for this chapter are under construction.
+::: {.callout-note appearance="minimal"}
+This Chapter has no exercises to solve, so we use [#TidyTuesday](https://github.com/rfordatascience/tidytuesday/tree/master) webpage's [data-set](https://github.com/rfordatascience/tidytuesday/blob/master/data/2023/2023-12-26/readme.md) on R Package Structure (from the paper [Historical Trends in R Package Structure and Interdependency on CRAN](#0) by [Mark Padgham](https://mpadge.github.io/#) and [Noam Ross](https://www.noamross.net/#connect)) to explore and customize Position Scales and axes.
 :::
+
+## Libraries and Data
+
+```{r}
+#| label: setup
+
+library(tidyverse)     # Data wrangling and plotting
+library(ggthemes)      # ggplot2 themes
+library(patchwork)     # Composing multiple plots
+
+
+# Loading Data
+rpkgstats <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-12-26/cran_20221122.csv')
+
+# Focussing on number of lines of code (LOC) and files in R directory of packages
+df1 <- rpkgstats |> 
+  select(package, version, date, files_R, loc_R)
+```
+
+## **10.1 Numeric position scales**
+
+### **10.1.1 Limits**
+
+```{r}
+#| label: fig-lim1
+#| fig-cap: "Demonstrating use of ylim(), scale_y_*() and coord_cartesian() to manually control limits of a plot"
+#| fig-asp: 0.5
+#| fig-width: 10
+
+g1 <- df1 |> 
+  ggplot(aes(
+    x = date,
+    y = loc_R
+  )) +
+  geom_point(alpha = 0.05) +
+  geom_smooth(col = "red") +
+  labs(
+    x = "Year of R package release",
+    y = "Lines of Code in /R directory of the package",
+    title = "Full plot with no axes limits"
+  ) +
+  scale_y_continuous(labels = scales::label_number_si()) +
+  theme_minimal() +
+  theme(plot.title.position = "plot")
+
+g2 <- g1 +
+  scale_y_continuous(labels = scales::label_number_si(accuracy = 1),
+                     limits = c(0, 2000)) +
+  labs(title = "Viewing only packages upto 2,000 LoC")
+
+g3 <- g1 +
+  scale_y_continuous(labels = scales::label_number_si(accuracy = 1)) +
+  coord_cartesian(ylim = c(0, 2000)) +
+  labs(title = "Zooming-in on packages upto 2,000 LoC")
+
+
+g1 + g2 + g3 +
+  plot_annotation(
+    title = "Scatter plot of Lines of Code in R-Packages over the years",
+    theme = theme(plot.title = element_text(hjust = 0.5,
+                                            face = "bold"))
+  )
+  
+```

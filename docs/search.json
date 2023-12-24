@@ -88,7 +88,7 @@
     "href": "Chapter10.html",
     "title": "Chapter 10",
     "section": "",
-    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+    "text": "This Chapter has no exercises to solve, so we use #TidyTuesday webpage’s data-set on R Package Structure (from the paper Historical Trends in R Package Structure and Interdependency on CRAN by Mark Padgham and Noam Ross) to explore and customize Position Scales and axes."
   },
   {
     "objectID": "about.html",
@@ -656,5 +656,19 @@
     "title": "Chapter 9",
     "section": "9.2 Arranging plots on top of each other",
     "text": "9.2 Arranging plots on top of each other\nThe Figure 7 shows the use of inset_element() to depict arranging plots on top of one-another using patchwork.\n\nCodeg3inset &lt;- \n  g3 +\n  labs(subtitle = NULL) + \n  theme(\n    axis.title = element_text(size = ts/5),\n    axis.text = element_text(size = ts/6),\n    plot.background = element_rect(fill = \"white\")\n  )\n\ng1 + \n  theme(\n    legend.position = \"bottom\",\n    legend.key.width = unit(10, \"mm\"),\n    legend.key.height = unit(2, \"mm\")\n  ) +\n  inset_element(\n    g3inset,\n    top = 0.3,\n    bottom = 0,\n    left = 0.5,\n    right = 1\n  )\n\n\n\nFigure 7: A figure with inset horizontal bar plot on bottom-right corner using inset_element()\n\n\n\nAlso, we can use wrap_elements() to wrap arbitrary graphics in a patchwork-compliant patch, as shown in Figure 8 below.\n\nCodelibrary(magick)\n\nimg &lt;- image_read(\"https://static.vecteezy.com/system/resources/previews/010/795/495/non_2x/diwali-lamp-icon-free-vector.jpg\") |&gt; \n  image_resize(\"x200\")\n\n\ng1 + \n  labs(title = \"Diwali Sales Data\",\n       subtitle = \"Customer numbers (per million population)\") +\n  theme(\n    plot.title = element_text(hjust = 0.5, size = ts/1.5),\n    legend.position = \"bottom\",\n    legend.key.width = unit(10, \"mm\"),\n    legend.key.height = unit(2, \"mm\")\n  ) +\n  inset_element(\n    g3inset,\n    top = 0.3,\n    bottom = 0,\n    left = 0.5,\n    right = 1\n  ) +\n  inset_element(\n    p = ggplot() + \n      annotation_raster(raster = img, -Inf, Inf, -Inf, Inf) +\n      theme_void() +\n      coord_fixed(),\n    top = 1,\n    bottom = 0.7,\n    left = 0.6,\n    right = 0.9\n  )\n\n\n\nFigure 8: Using inset_element() to add raster images to patchwork plots"
+  },
+  {
+    "objectID": "Chapter10.html#numeric-position-scales",
+    "href": "Chapter10.html#numeric-position-scales",
+    "title": "Chapter 10",
+    "section": "10.1 Numeric position scales",
+    "text": "10.1 Numeric position scales\n10.1.1 Limits\n\nCodeg1 &lt;- df1 |&gt; \n  ggplot(aes(\n    x = date,\n    y = loc_R\n  )) +\n  geom_point(alpha = 0.05) +\n  geom_smooth(col = \"red\") +\n  labs(\n    x = \"Year of R package release\",\n    y = \"Lines of Code in /R directory of the package\",\n    title = \"Full plot with no axes limits\"\n  ) +\n  scale_y_continuous(labels = scales::label_number_si()) +\n  theme_minimal() +\n  theme(plot.title.position = \"plot\")\n\ng2 &lt;- g1 +\n  scale_y_continuous(labels = scales::label_number_si(accuracy = 1),\n                     limits = c(0, 2000)) +\n  labs(title = \"Viewing only packages upto 2,000 LoC\")\n\ng3 &lt;- g1 +\n  scale_y_continuous(labels = scales::label_number_si(accuracy = 1)) +\n  coord_cartesian(ylim = c(0, 2000)) +\n  labs(title = \"Zooming-in on packages upto 2,000 LoC\")\n\n\ng1 + g2 + g3 +\n  plot_annotation(\n    title = \"Scatter plot of Lines of Code in R-Packages over the years\",\n    theme = theme(plot.title = element_text(hjust = 0.5,\n                                            face = \"bold\"))\n  )\n\n\n\nFigure 1: Demonstrating use of ylim(), scale_y_*() and coord_cartesian() to manually control limits of a plot"
+  },
+  {
+    "objectID": "Chapter10.html#libraries-and-data",
+    "href": "Chapter10.html#libraries-and-data",
+    "title": "Chapter 10",
+    "section": "Libraries and Data",
+    "text": "Libraries and Data\n\nCodelibrary(tidyverse)     # Data wrangling and plotting\nlibrary(ggthemes)      # ggplot2 themes\nlibrary(patchwork)     # Composing multiple plots\n\n\n# Loading Data\nrpkgstats &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-12-26/cran_20221122.csv')\n\n# Focussing on number of lines of code (LOC) and files in R directory of packages\ndf1 &lt;- rpkgstats |&gt; \n  select(package, version, date, files_R, loc_R)"
   }
 ]
