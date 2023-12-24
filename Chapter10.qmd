@@ -36,6 +36,10 @@ This Chapter has no exercises to solve, so we use [#TidyTuesday](https://github.
 
 ```{r}
 #| label: setup
+#| code-fold: false
+#| warning: false
+#| error: false
+#| message: false
 
 library(tidyverse)     # Data wrangling and plotting
 library(ggthemes)      # ggplot2 themes
@@ -43,7 +47,8 @@ library(patchwork)     # Composing multiple plots
 
 
 # Loading Data
-rpkgstats <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-12-26/cran_20221122.csv')
+url <- 'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-12-26/cran_20221122.csv'
+rpkgstats <- readr::read_csv(url)
 
 # Focussing on number of lines of code (LOC) and files in R directory of packages
 df1 <- rpkgstats |> 
@@ -52,7 +57,7 @@ df1 <- rpkgstats |>
 
 ## **10.1 Numeric position scales**
 
-### **10.1.1 Limits**
+### **10.1.1-2: Limits and Zooming in**
 
 ```{r}
 #| label: fig-lim1
@@ -68,8 +73,8 @@ g1 <- df1 |>
   geom_point(alpha = 0.05) +
   geom_smooth(col = "red") +
   labs(
-    x = "Year of R package release",
     y = "Lines of Code in /R directory of the package",
+    x = NULL,
     title = "Full plot with no axes limits"
   ) +
   scale_y_continuous(labels = scales::label_number_si()) +
@@ -79,19 +84,211 @@ g1 <- df1 |>
 g2 <- g1 +
   scale_y_continuous(labels = scales::label_number_si(accuracy = 1),
                      limits = c(0, 2000)) +
-  labs(title = "Viewing only packages upto 2,000 LoC")
+  labs(title = "Viewing only packages upto 2,000 LoC",
+       y = NULL)
 
 g3 <- g1 +
   scale_y_continuous(labels = scales::label_number_si(accuracy = 1)) +
   coord_cartesian(ylim = c(0, 2000)) +
-  labs(title = "Zooming-in on packages upto 2,000 LoC")
+  labs(title = "Zooming-in on packages upto 2,000 LoC",
+       y = NULL)
 
 
 g1 + g2 + g3 +
   plot_annotation(
     title = "Scatter plot of Lines of Code in R-Packages over the years",
+    caption = "Year of the R package Release",
     theme = theme(plot.title = element_text(hjust = 0.5,
-                                            face = "bold"))
+                                            face = "bold"),
+                  plot.caption = element_text(hjust = 0.5))
   )
   
+```
+
+### **10.1.3 Visual range expansion**
+
+Exploring number of R packages released over time on CRAN in @fig-exp1, while also demonstrating the use of `scale_y_continuous(expand = expansion(0))` and `scale_x_date(expand = expansion(0))` to remove any extra space between the graph and x-axis labels and y-axis labels.
+
+```{r}
+#| label: fig-exp1
+#| fig-cap: "Number of R packages released / updated each month"
+#| fig-width: 10
+
+df1 |> 
+  mutate(year = year(date),
+         month = month(date)) |> 
+  group_by(year, month) |> 
+  summarize(
+    n = n(),
+    avg_files = mean(files_R, na.rm = TRUE),
+    avg_loc = mean(loc_R, na.rm = TRUE)
+  ) |> 
+  mutate(time = make_date(year = year, 
+                          month = month)) |> 
+  ggplot(aes(x = time, 
+             y = n)) + 
+  geom_line() + 
+  labs(title = "Number of new R packages has exploded in recent years",
+       subtitle = "Line graph shows new R packages released each month",
+       x = "Year", y = "Number of packages released") +
+  scale_y_continuous(expand = expansion(0)) +
+  scale_x_date(expand = expansion(0)) +
+  theme_minimal()
+```
+
+The best use of `expand = expansion(0)` comes with heat-maps. Here is an example in @fig-hm demonstrating the number of packages of R released each month of the year, since 1999. We've made it interactive using `ggiraph` to make it more appealing to the user.
+
+```{r}
+#| label: fig-hm
+#| fig-width: 10
+#| fig-asp: 0.6
+#| fig-cap: "An interactive heat-map for number of new R packages released each month"
+
+library(ggiraph)
+
+g1 <- df1 |> 
+  mutate(year = year(date),
+         month = month(date, label = TRUE, abbr = FALSE)) |> 
+  group_by(year, month) |> 
+  summarize(
+    n = n(),
+    avg_files = mean(files_R, na.rm = TRUE),
+    avg_loc = mean(loc_R, na.rm = TRUE)
+  ) |> 
+  ungroup() |> 
+  mutate(id = row_number()) |> 
+  ggplot(
+    aes(x = year, 
+        y = month,
+        fill = n)) +
+  geom_tile_interactive(
+    aes(tooltip = paste0(month, " ", year, 
+                         "\nPackages released: ", n,
+                         "\nAvg. Lines of Code: ", 
+                         round(avg_loc, 0)),
+        data_id = id),
+    hover_nearest = FALSE
+  ) +
+  scale_fill_gradient2(low = "yellow", 
+                       high = "red",
+                       trans = "log10") +
+  scale_x_continuous(expand = expansion(0)) + 
+  scale_y_discrete(expand = expansion(0)) +
+  labs(title = "New R packages released each month over the years",
+       x = NULL, y = NULL,
+       fill = "Number of packages") +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    legend.key.width = unit(15, "mm"),
+    panel.grid = element_blank(),
+    plot.title = element_text(hjust = 0.5,
+                              size = 21),
+    axis.text = element_text(size = 15),
+    legend.title = element_text(vjust = 1, 
+                                size = 15)
+  )
+
+girafe(
+  ggobj = g1,
+  options = list(
+    opts_hover(css = "stroke:black;stroke-width:1px;")
+  ))
+```
+
+Now, lets have a look at the average number of Lines of Code in the R packages over time @fig-loc-1 and its trend month-wise in an interactive heat-map in @fig-loc-2. In the @fig-loc-2, note the use of `coord_cartesian(ylim = c(0, 4000))` to zoom-in on the lower part of y-axis without removing values above 4000 from the plot.
+
+```{r}
+#| label: fig-loc
+#| fig-subcap: 
+#|   - "An interactive heat-map for average number of Lines of Code in the R packages released during the month"
+#|   - "A line-graph for average number of Lines of Code in the R packages over time"
+#| layout-ncol: 1
+#| fig-width: 10
+
+library(ggiraph)
+
+g2 <- df1 |> 
+  mutate(year = year(date),
+         month = month(date, label = TRUE, abbr = FALSE)) |> 
+  group_by(year, month) |> 
+  summarize(
+    n = n(),
+    avg_files = mean(files_R, na.rm = TRUE),
+    avg_loc = mean(loc_R, na.rm = TRUE)
+  ) |> 
+  ungroup() |> 
+  mutate(id = row_number()) |> 
+  ggplot(
+    aes(x = year, 
+        y = month,
+        fill = avg_loc)) +
+  geom_tile_interactive(
+    aes(tooltip = paste0(month, " ", year, 
+                         "\nPackages released: ", n,
+                         "\nAvg. Lines of Code: ", 
+                         round(avg_loc, 0)),
+        data_id = id),
+    hover_nearest = FALSE
+  ) +
+  scale_fill_gradient2(low = "white", 
+                       high = "blue",
+                       trans = "log10",
+                       na.value = "white",
+                       labels = scales::label_number_si()) +
+  scale_x_continuous(expand = expansion(0)) + 
+  scale_y_discrete(expand = expansion(0)) +
+  labs(title = "Average Number of Lines of Code in newly released R packages",
+       x = NULL, y = NULL,
+       fill = "Average number of Lines of Code") +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    legend.key.width = unit(15, "mm"),
+    panel.grid = element_blank(),
+    plot.title = element_text(hjust = 0.5,
+                              size = 15),
+    plot.title.position = "plot",
+    axis.text = element_text(size = 12),
+    legend.title = element_text(vjust = 1, 
+                                size = 12)
+  )
+girafe(
+  ggobj = g2,
+  options = list(
+    opts_hover(css = "stroke:black;stroke-width:1px;")
+  ))
+
+df1 |> 
+  mutate(year = year(date),
+         month = month(date, label = TRUE, abbr = FALSE)) |> 
+  group_by(year, month) |> 
+  summarize(
+    n = n(),
+    avg_files = mean(files_R, na.rm = TRUE),
+    avg_loc = mean(loc_R, na.rm = TRUE)
+  ) |> 
+  ungroup() |> 
+  mutate(time = make_date(year = year, 
+                          month = month)) |> 
+  ggplot(aes(x = time, 
+             y = avg_loc)) + 
+  geom_smooth(lwd = 1.5,
+              alpha = 0.8,
+              col = "darkgrey",
+              fill = "#dbdbdb") +
+  geom_line() +
+  geom_point(col = "black", 
+             fill = "white",
+             pch = 1) +
+  labs(title = "Average Lines of Code in new R packages",
+       subtitle = "Rose slightly in 2000s, declined slight for next 5 years, and rose significantly during 2018-2022",
+       x = "Year", 
+       y = "Average Lines of Code in packages released during the month") +
+  scale_y_continuous(expand = expansion(0),
+                     labels = scales::label_number_si()) +
+  scale_x_date(expand = expansion(0),
+               labels = scales::label_date_short()) +
+  coord_cartesian(ylim = c(0, 4000)) +
+  theme_minimal()
 ```
