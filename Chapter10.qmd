@@ -44,6 +44,7 @@ This Chapter has no exercises to solve, so we use [#TidyTuesday](https://github.
 library(tidyverse)     # Data wrangling and plotting
 library(ggthemes)      # ggplot2 themes
 library(patchwork)     # Composing multiple plots
+library(ggiraph)       # Interactive ggplot2 graphs
 
 
 # Loading Data
@@ -57,7 +58,7 @@ df1 <- rpkgstats |>
 
 ## **10.1 Numeric position scales**
 
-### **10.1.1-2: Limits and Zooming in**
+### **10.1.1 & 10.1.2: Limits and Zooming in**
 
 ```{r}
 #| label: fig-lim1
@@ -196,19 +197,13 @@ girafe(
   ))
 ```
 
-Now, lets have a look at the average number of Lines of Code in the R packages over time @fig-loc-1 and its trend month-wise in an interactive heat-map in @fig-loc-2. In the @fig-loc-2, note the use of `coord_cartesian(ylim = c(0, 4000))` to zoom-in on the lower part of y-axis without removing values above 4000 from the plot.
+Now, lets have a look at the average number of Lines of Code in the R packages over time @fig-loc and its trend month-wise in an interactive heat-map in @fig-loc2. In the @fig-loc2, note the use of `coord_cartesian(ylim = c(0, 4000))` to zoom-in on the lower part of y-axis without removing values above 4000 from the plot.
 
 ```{r}
 #| label: fig-loc
-#| fig-cap: "Using heatmap and line graph to look at Lines of Code in newly released R packages"
-#| fig-subcap: 
-#|   - "An interactive heat-map for average number of Lines of Code in the R packages released during the month"
-#|   - "A line-graph for average number of Lines of Code in the R packages over time"
-#| layout-ncol: 1
-#| fig-width: 10
+#| fig-cap: "An interactive heat-map for average number of Lines of Code in the R packages released during the month"
 
 library(ggiraph)
-
 df2 <- df1 |> 
   mutate(year = year(date),
          month = month(date, label = TRUE, abbr = FALSE)) |> 
@@ -221,7 +216,7 @@ df2 <- df1 |>
   ungroup() |> 
   mutate(id = row_number())
   
-df2 |> 
+g2 <- df2 |> 
   ggplot(
     aes(x = year, 
         y = month,
@@ -256,11 +251,20 @@ df2 |>
     legend.title = element_text(vjust = 1, 
                                 size = 12)
   )
+
 girafe(
   ggobj = g2,
   options = list(
     opts_hover(css = "stroke:black;stroke-width:1px;")
   ))
+```
+
+```{r}
+#| label: fig-loc2
+#| fig-cap: "A line-graph for average number of Lines of Code in the R packages over time"
+#| fig-width: 10
+#| fig-asp: 0.5
+
 
 df2 |> 
   mutate(time = make_date(year = year, 
@@ -287,7 +291,7 @@ df2 |>
   theme_minimal()
 ```
 
-Finally, the @fig-files looks at the average number of files per new R package over the years, both
+Finally, the @fig-files looks at the average number of files per new R package over the years, both as a heat map in @fig-files-1, and as a line graph in @fig-files-2.
 
 ```{r}
 #| label: fig-files
@@ -367,10 +371,16 @@ df2 |>
   theme_minimal()
 ```
 
-Now, let us look the licensing of the newly released R packages: —
+Now, let us explore the kind of licenses used by newly released R packages over the years. The @fig-license shows the share of different licenses in an interactive stacked bar chart, while @fig-license1 shows different characteristics of packages with these licenses: —
 
 ```{r}
+#| label: fig-license
+#| fig-cap: "Exploring the licenses of R packages"
+#| fig-subcap:
+#|   - "A Stacked bar-chart of the proportion of different license types of the years"
+#|   - "Interactive Version of the same stacked bar chart"
 
+library(ggiraph)
 
 g4 <- rpkgstats |> 
   mutate(license = as_factor(license)) |> 
@@ -390,7 +400,7 @@ g4 <- rpkgstats |>
   geom_col_interactive(aes(
     tooltip = paste0("Year: ", year,
                      "\nTotal Number of packages released: ", yeartotal,
-                     "\nPackages with ", license, "License: ", n,
+                     "\nPackages with ", license, " License: ", n,
                      "\nPercentage of total: ", round(prop*100, 2), " %"),
     
     data_id = id
@@ -401,14 +411,106 @@ g4 <- rpkgstats |>
   scale_x_continuous(expand = expansion(0),
                      breaks = seq(1998, 2022, 4)) +
   scale_fill_brewer_interactive(palette = "Set2") +
-  labs(y = "Percentage Packages under the license",
+  labs(y = "% Packages with a particular license",
        x = "Year",
        fill = "License",
-       title = "Share of license types on packages has varied over the years",
+       title = "Share of license types on new R packages over time",
        subtitle = "Recently, MIT+ and GPL-3 licenses have become popular") +
+  theme_minimal() +
   theme(
-    legend.position = "bottom"
+    legend.position = "bottom",
+    axis.line.x = element_line_interactive(),
+    legend.text = element_text(hjust = 0),
+    panel.grid = element_blank()
   )
 
-girafe(ggobj = g4)
+g4
+
+girafe(
+  ggobj = g4,
+  options = list(
+    opts_hover(css = "fill:darkgrey;stroke:black;stroke-width:0.5px;"))
+  )
+```
+
+```{r}
+#| label: fig-license1
+#| fig-cap: "Faceted plot on average characteristics of packages with difference licenses"
+#| fig-width: 10
+#| fig-asp: 0.4
+
+
+strip_text = c(
+  "Average Data Size",
+  "Average Lines of Code",
+  "Average No. of vignettes",
+  "Number of packages"
+)
+
+names(strip_text) <- c(
+  "avg_dt_size",
+  "avg_loc",
+  "avg_vignettes",
+  "n"
+)
+
+rpkgstats |> 
+  mutate(license = as_factor(license)) |> 
+  mutate(license = fct_lump_n(license, n = 6)) |> 
+  mutate(year = year(date),
+         month = month(date)) |> 
+  group_by(license) |> 
+  summarise(
+    avg_loc = mean(loc_R, na.rm = TRUE),
+    avg_vignettes = mean(num_vignettes, na.rm = TRUE),
+    avg_dt_size = mean(data_size_total, na.rm = TRUE),
+    n = n()
+  ) |> 
+  arrange(license) |> 
+  mutate(id = row_number()) |> 
+  mutate(license = fct_reorder(license, -id)) |> 
+  select(-id) |> 
+  pivot_longer(cols = -license,
+               names_to = "indicator",
+               values_to = "value") |> 
+  mutate(col_var = case_when(
+    license == "GPL (>= 2)" ~ "a",
+    license == "MIT + file LICENSE" ~ "b",
+    .default = "c"
+  )) |> 
+  ggplot(aes(x = value, 
+             y = license,
+             fill = col_var)) +
+  geom_col() +
+  facet_wrap(~indicator, 
+             scales = "free_x", 
+             nrow = 1,
+             labeller = as_labeller(strip_text)) + 
+  labs(x = NULL, y = NULL, 
+       title = "Characteristics of R packages released under different licenses",
+       subtitle = "GPL>=2 packages have longest code and data size, while MIT+ packages have most vignettes") +
+  scale_x_continuous(labels = scales::label_number_si(),
+                     expand = expansion(0)) +
+  scale_fill_manual(values = c("orange", "blue", "lightgrey")) +
+  cowplot::theme_minimal_hgrid() +
+  theme(
+    axis.text.x = element_text(angle = 90),
+    legend.position = "none",
+    plot.title.position = "plot",
+    panel.grid.major.y = element_line(linetype = 2)
+  )
+```
+
+### A look at the "tidy" packages in R
+
+```{r}
+rpkgstats |> 
+  filter(str_detect(package, "tidy")) |> 
+  arrange(desc(loc_R)) |> 
+  ggplot(aes(x = date, 
+             y = loc_R,
+             label = package,
+             size = files_R)) +
+  geom_text_interactive(alpha = 0.5) +
+  theme_clean()
 ```
