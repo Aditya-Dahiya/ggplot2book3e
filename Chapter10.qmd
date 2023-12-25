@@ -12,7 +12,6 @@ execute:
   echo: true
   warning: false
   error: false
-  cache: true
 filters:
   - social-share
 share:
@@ -45,6 +44,8 @@ library(tidyverse)     # Data wrangling and plotting
 library(ggthemes)      # ggplot2 themes
 library(patchwork)     # Composing multiple plots
 library(ggiraph)       # Interactive ggplot2 graphs
+library(ggstream)      # Stream graphs in R
+library(paletteer)     # Huge color palettes aggregator
 
 
 # Loading Data
@@ -197,13 +198,16 @@ girafe(
   ))
 ```
 
-Now, lets have a look at the average number of Lines of Code in the R packages over time @fig-loc and its trend month-wise in an interactive heat-map in @fig-loc2. In the @fig-loc2, note the use of `coord_cartesian(ylim = c(0, 4000))` to zoom-in on the lower part of y-axis without removing values above 4000 from the plot.
+Now, lets have a look at the average number of Lines of Code in the R packages released each month in an interactive heat-map in @fig-loc . We also can view the trend of average number of lines of code in R packages released over time @fig-loc2, along with a loess smoother trend-line. In the @fig-loc2, note the use of `coord_cartesian(ylim = c(0, 4000))` to zoom-in on the lower part of y-axis without removing values above 4000 from the plot.
 
 ```{r}
 #| label: fig-loc
 #| fig-cap: "An interactive heat-map for average number of Lines of Code in the R packages released during the month"
+#| fig-width: 10
+#| fig-asp: 0.6
 
 library(ggiraph)
+
 df2 <- df1 |> 
   mutate(year = year(date),
          month = month(date, label = TRUE, abbr = FALSE)) |> 
@@ -272,11 +276,11 @@ df2 |>
   ggplot(aes(x = time, 
              y = avg_loc)) + 
   geom_smooth(lwd = 1.5,
-              alpha = 0.8,
-              col = "darkgrey",
-              fill = "#dbdbdb") +
+              alpha = 0.4,
+              col = "darkblue",
+              fill = "lightblue") +
   geom_line() +
-  geom_point(col = "black", 
+  geom_point(col = "darkblue", 
              fill = "white",
              pch = 1) +
   labs(title = "Average Lines of Code in new R packages",
@@ -288,7 +292,8 @@ df2 |>
   scale_x_date(expand = expansion(0),
                labels = scales::label_date_short()) +
   coord_cartesian(ylim = c(0, 4000)) +
-  theme_minimal()
+  theme_minimal() +
+  theme(panel.grid = element_line(linetype = 2))
 ```
 
 Finally, the @fig-files looks at the average number of files per new R package over the years, both as a heat map in @fig-files-1, and as a line graph in @fig-files-2.
@@ -376,9 +381,8 @@ Now, let us explore the kind of licenses used by newly released R packages over 
 ```{r}
 #| label: fig-license
 #| fig-cap: "Exploring the licenses of R packages"
-#| fig-subcap:
-#|   - "A Stacked bar-chart of the proportion of different license types of the years"
-#|   - "Interactive Version of the same stacked bar chart"
+#| fig-width: 10
+#| fig-asp: 0.6
 
 library(ggiraph)
 
@@ -423,8 +427,6 @@ g4 <- rpkgstats |>
     legend.text = element_text(hjust = 0),
     panel.grid = element_blank()
   )
-
-g4
 
 girafe(
   ggobj = g4,
@@ -501,16 +503,57 @@ rpkgstats |>
   )
 ```
 
-### A look at the "tidy" packages in R
+Instead of the stacked bar-plot, we can also make a stream graph using `ggstream` [@ggstream] to make the graph more visually appealing, at the cost of losing some detailed numbers etc. As shown in the stream graph in @fig-ggstr, it gives a better overall view: —
 
 ```{r}
+#| label: fig-ggstr
+#| fig-cap: "Visualizing the change in dominance of different licenses over time with a stream graph"
+#| fig-width: 10
+#| fig-asp: 0.8
+
 rpkgstats |> 
-  filter(str_detect(package, "tidy")) |> 
-  arrange(desc(loc_R)) |> 
-  ggplot(aes(x = date, 
-             y = loc_R,
-             label = package,
-             size = files_R)) +
-  geom_text_interactive(alpha = 0.5) +
-  theme_clean()
+  mutate(license = as_factor(license)) |> 
+  mutate(license = fct_lump_n(license, n = 6)) |> 
+  mutate(year = year(date),
+         month = month(date)) |> 
+  group_by(year, license) |> 
+  count() |> 
+  group_by(year) |> 
+  mutate(prop = n / sum(n),
+         yeartotal = sum(n)) |> 
+  ungroup() |> 
+  mutate(id = row_number()) |> 
+  ggplot(
+    aes(
+      x = year,
+      y = n,
+      fill = license,
+      label = license
+    )
+  ) +
+  geom_stream(bw = 0.85,
+              sorting = "onset",
+              color = "#3d3d3d") +
+  geom_stream_label(aes(color = license),
+                    hjust = "inward") +
+  labs(
+    x = NULL, y = NULL,
+    title = "Dominance of different licenses in R Packages released over the years",
+    subtitle = "MIT + file License is an increasingly preferred choice in recent years",
+    caption = "Created using {ggstream} and {paletteer}"
+  ) +
+  scale_x_continuous(expand = expansion(0)) +
+  scale_y_continuous(trans = "log10") +
+  scale_fill_manual(values = paletteer_d("nord::afternoon_prarie") 
+                    |> colorspace::lighten(0.2)) +
+  scale_color_manual(values = paletteer_d("nord::afternoon_prarie") 
+                    |> colorspace::darken(0.8)) +
+  cowplot::theme_minimal_vgrid() +
+  theme(
+    legend.position = "none",
+    panel.grid.major.x = element_line(linetype = 2),
+    axis.line.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank()
+  )
 ```
