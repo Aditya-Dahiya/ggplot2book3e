@@ -200,6 +200,7 @@ Now, lets have a look at the average number of Lines of Code in the R packages o
 
 ```{r}
 #| label: fig-loc
+#| fig-cap: "Using heatmap and line graph to look at Lines of Code in newly released R packages"
 #| fig-subcap: 
 #|   - "An interactive heat-map for average number of Lines of Code in the R packages released during the month"
 #|   - "A line-graph for average number of Lines of Code in the R packages over time"
@@ -208,7 +209,7 @@ Now, lets have a look at the average number of Lines of Code in the R packages o
 
 library(ggiraph)
 
-g2 <- df1 |> 
+df2 <- df1 |> 
   mutate(year = year(date),
          month = month(date, label = TRUE, abbr = FALSE)) |> 
   group_by(year, month) |> 
@@ -218,7 +219,9 @@ g2 <- df1 |>
     avg_loc = mean(loc_R, na.rm = TRUE)
   ) |> 
   ungroup() |> 
-  mutate(id = row_number()) |> 
+  mutate(id = row_number())
+  
+df2 |> 
   ggplot(
     aes(x = year, 
         y = month,
@@ -259,16 +262,7 @@ girafe(
     opts_hover(css = "stroke:black;stroke-width:1px;")
   ))
 
-df1 |> 
-  mutate(year = year(date),
-         month = month(date, label = TRUE, abbr = FALSE)) |> 
-  group_by(year, month) |> 
-  summarize(
-    n = n(),
-    avg_files = mean(files_R, na.rm = TRUE),
-    avg_loc = mean(loc_R, na.rm = TRUE)
-  ) |> 
-  ungroup() |> 
+df2 |> 
   mutate(time = make_date(year = year, 
                           month = month)) |> 
   ggplot(aes(x = time, 
@@ -291,4 +285,130 @@ df1 |>
                labels = scales::label_date_short()) +
   coord_cartesian(ylim = c(0, 4000)) +
   theme_minimal()
+```
+
+Finally, the @fig-files looks at the average number of files per new R package over the years, both
+
+```{r}
+#| label: fig-files
+#| fig-cap: "Using heatmap and line graph to look at Average number of file in the /R directory of the newly released R packages"
+#| fig-subcap: 
+#|   - "An interactive heat-map for average number of files in the /R directory of the R packages released during the month"
+#|   - "A line-graph for average number of files in the /R directory of the newly released R packages over time"
+#| layout-ncol: 1
+#| fig-width: 10
+
+
+g3 <- df2 |> 
+  ggplot(
+    aes(x = year, 
+        y = month,
+        fill = avg_files)) +
+  geom_tile_interactive(
+    aes(tooltip = paste0(month, " ", year, 
+                         "\nPackages released: ", n,
+                         "\nAvg. Lines of Code: ", 
+                         round(avg_loc, 0),
+                         "\nAvg. number of Files in Code: ",
+                         avg_files),
+        data_id = id),
+    hover_nearest = FALSE
+  ) +
+  scale_fill_gradient2(low = "white", 
+                       high = "darkgreen",
+                       trans = "log10",
+                       na.value = "white",
+                       labels = scales::label_number_si()) +
+  scale_x_continuous(expand = expansion(0)) + 
+  scale_y_discrete(expand = expansion(0)) +
+  labs(title = "Average Number of files in /R code of newly released R packages",
+       x = NULL, y = NULL,
+       fill = "Average number of Files for the packages released in the month") +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    legend.key.width = unit(15, "mm"),
+    panel.grid = element_blank(),
+    plot.title = element_text(hjust = 0.5,
+                              size = 15),
+    plot.title.position = "plot",
+    axis.text = element_text(size = 12),
+    legend.title = element_text(vjust = 1, 
+                                size = 12)
+  )
+
+girafe(
+  ggobj = g3,
+  options = list(
+    opts_hover(css = "stroke:black;stroke-width:1px;")
+  ))
+
+df2 |> 
+  mutate(time = make_date(year = year, 
+                          month = month)) |> 
+  ggplot(aes(x = time, 
+             y = avg_files)) + 
+  geom_smooth(lwd = 1.5,
+              alpha = 0.8,
+              col = "darkgreen",
+              fill = "#c5fcd1") +
+  geom_line() +
+  geom_point(col = "black", 
+             fill = "white",
+             pch = 1) +
+  labs(title = "Average number of files in /R of new R packages",
+       subtitle = "Rose in early 2000s, plateaued till 2018, and then rose again",
+       x = "Year", 
+       y = "Average Number of files during that month") +
+  scale_y_continuous(expand = expansion(0),
+                     labels = scales::label_number_si()) +
+  scale_x_date(expand = expansion(0),
+               labels = scales::label_date_short()) +
+  theme_minimal()
+```
+
+Now, let us look the licensing of the newly released R packages: —
+
+```{r}
+
+
+g4 <- rpkgstats |> 
+  mutate(license = as_factor(license)) |> 
+  mutate(license = fct_lump_n(license, n = 6)) |> 
+  mutate(year = year(date),
+         month = month(date)) |> 
+  group_by(year, license) |> 
+  count() |> 
+  group_by(year) |> 
+  mutate(prop = n / sum(n),
+         yeartotal = sum(n)) |> 
+  ungroup() |> 
+  mutate(id = row_number()) |> 
+  ggplot(aes(x = year,
+             y = prop,
+             fill = license)) +
+  geom_col_interactive(aes(
+    tooltip = paste0("Year: ", year,
+                     "\nTotal Number of packages released: ", yeartotal,
+                     "\nPackages with ", license, "License: ", n,
+                     "\nPercentage of total: ", round(prop*100, 2), " %"),
+    
+    data_id = id
+    ),
+    position = "stack") +
+  scale_y_continuous(expand = expansion(0),
+                     labels = scales::label_percent()) +
+  scale_x_continuous(expand = expansion(0),
+                     breaks = seq(1998, 2022, 4)) +
+  scale_fill_brewer_interactive(palette = "Set2") +
+  labs(y = "Percentage Packages under the license",
+       x = "Year",
+       fill = "License",
+       title = "Share of license types on packages has varied over the years",
+       subtitle = "Recently, MIT+ and GPL-3 licenses have become popular") +
+  theme(
+    legend.position = "bottom"
+  )
+
+girafe(ggobj = g4)
 ```
