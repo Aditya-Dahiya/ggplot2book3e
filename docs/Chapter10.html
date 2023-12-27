@@ -386,14 +386,8 @@ div.csl-indent {
    
   <ul>
 <li><a href="#libraries-and-data" id="toc-libraries-and-data" class="nav-link active" data-scroll-target="#libraries-and-data">Libraries and Data</a></li>
-  <li>
-<a href="#numeric-position-scales" id="toc-numeric-position-scales" class="nav-link" data-scroll-target="#numeric-position-scales"><strong>10.1 Numeric position scales</strong></a>
-  <ul class="collapse">
-<li><a href="#limits-and-zooming-in" id="toc-limits-and-zooming-in" class="nav-link" data-scroll-target="#limits-and-zooming-in"><strong>10.1.1 &amp; 10.1.2: Limits and Zooming in</strong></a></li>
-  <li><a href="#visual-range-expansion" id="toc-visual-range-expansion" class="nav-link" data-scroll-target="#visual-range-expansion"><strong>10.1.3 Visual range expansion</strong></a></li>
-  <li><a href="#breaks" id="toc-breaks" class="nav-link" data-scroll-target="#breaks"><strong>10.1.4 Breaks</strong></a></li>
-  </ul>
-</li>
+  <li><a href="#numeric-position-scales" id="toc-numeric-position-scales" class="nav-link" data-scroll-target="#numeric-position-scales"><strong>10.1 Numeric position scales</strong></a></li>
+  <li><a href="#date-time-position-scales" id="toc-date-time-position-scales" class="nav-link" data-scroll-target="#date-time-position-scales"><strong>10.2 Date-time position scales</strong></a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter10.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -456,7 +450,7 @@ div.csl-indent {
 </details>
 </div>
 </section><section id="numeric-position-scales" class="level2"><h2 class="anchored" data-anchor-id="numeric-position-scales"><strong>10.1 Numeric position scales</strong></h2>
-<section id="limits-and-zooming-in" class="level3"><h3 class="anchored" data-anchor-id="limits-and-zooming-in"><strong>10.1.1 &amp; 10.1.2: Limits and Zooming in</strong></h3>
+<p>The <a href="#fig-lim1">Figure&nbsp;1</a> demonstrates the use of Limits and Zooming-In features in ggplot2.</p>
 <div class="cell" data-fig.asp="0.5" data-hash="Chapter10_cache/html/fig-lim1_5055cb061559fb60e855752ac9a3d7f3">
 <details><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="va">df1</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
@@ -502,8 +496,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-</section><section id="visual-range-expansion" class="level3"><h3 class="anchored" data-anchor-id="visual-range-expansion"><strong>10.1.3 Visual range expansion</strong></h3>
-<p>Exploring number of R packages updated or released over time on CRAN in <a href="#fig-exp1">Figure&nbsp;2</a>, while also demonstrating the use of <code>scale_y_continuous(expand = expansion(0))</code> and <code>scale_x_date(expand = expansion(0))</code> to remove any extra space between the graph and x-axis labels and y-axis labels.</p>
+<p>We can also demonstrate Visual range expansion in the following example exploring number of R packages updated or released over time on CRAN in <a href="#fig-exp1">Figure&nbsp;2</a>. We also demonstrate the use of <code>scale_y_continuous(expand = expansion(0))</code> and <code>scale_x_date(expand = expansion(0))</code> to remove any extra space between the graph and x-axis labels and y-axis labels.</p>
 <div class="cell" data-hash="Chapter10_cache/html/fig-exp1_ea99082f99bdee84f05d82c32c176231">
 <details><summary>Code</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df1</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">&lt;</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/as_date.html">as_date</a></span><span class="op">(</span><span class="st">"2022-11-01"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -902,9 +895,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-</section><section id="breaks" class="level3"><h3 class="anchored" data-anchor-id="breaks"><strong>10.1.4 Breaks</strong></h3>
-<p>In this section, we use the same data to modify the breaks in an axis.</p>
-<p>Instead of the stacked bar-plot we made above, we can also make a stream graph using <code>ggstream</code> <span class="citation" data-cites="ggstream">(<a href="#ref-ggstream" role="doc-biblioref">Sjoberg 2021</a>)</span> to make the graph more visually appealing, while changing the breaks on x-axis etc. As shown in the stream graph in <a href="#fig-ggstr">Figure&nbsp;9</a>, it gives a better overall view: —</p>
+<p>In the section 10.1.4 Breaks, we use the same data to modify the breaks in an axis. Instead of the stacked bar-plot we made above, we can also make a stream graph using <code>ggstream</code> <span class="citation" data-cites="ggstream">(<a href="#ref-ggstream" role="doc-biblioref">Sjoberg 2021</a>)</span> to make the graph more visually appealing, while changing the breaks on x-axis etc. As shown in the stream graph in <a href="#fig-ggstr">Figure&nbsp;9</a>, it gives a better overall view: —</p>
 <div class="cell" data-fig.asp="0.8" data-hash="Chapter10_cache/html/fig-ggstr_12f650419c2b75dd577a38825daf54ec">
 <details><summary>Code</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/fontawesome">fontawesome</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yixuan/showtext">showtext</a></span><span class="op">)</span></span>
@@ -1002,7 +993,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<p>To demonstrate the <code>log10</code> scale on the x-axis, we use an animated histogram depicting the distribution of the Lines of Code in R packages over the years using {scales} <span class="citation" data-cites="scales">(<a href="#ref-scales" role="doc-biblioref">Wickham and Seidel 2022</a>)</span> and {gganimate} <span class="citation" data-cites="gganimate-3">(<a href="#ref-gganimate-3" role="doc-biblioref">Pedersen and Robinson 2022</a>)</span>, as depicted below: —</p>
+<p>To demonstrate transformations of scales (Section 10.1.7), we create a <code>log10</code> scale on the x-axis in an animated histogram depicting the distribution of the Lines of Code in R packages over the years using {scales} <span class="citation" data-cites="scales">(<a href="#ref-scales" role="doc-biblioref">Wickham and Seidel 2022</a>)</span> and {gganimate} <span class="citation" data-cites="gganimate-3">(<a href="#ref-gganimate-3" role="doc-biblioref">Pedersen and Robinson 2022</a>)</span>, as depicted below: —</p>
 <div class="cell" data-hash="Chapter10_cache/html/fig-anim2_2e736af491be74ac8aae8dae82255a58">
 <details><summary>Code</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/fontawesome">fontawesome</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yixuan/showtext">showtext</a></span><span class="op">)</span></span>
@@ -1100,10 +1091,154 @@ div.csl-indent {
 </details>
 </div>
 <p><img src="docs/anim_rpkgs.gif" id="fig-anim2" class="img-fluid" alt="An animated density-plot on Lines of Code in R packages released / updated during a year over the last decade. It shows rightward shift in density-plot: codes are becoming longer!"></p>
+</section><section id="date-time-position-scales" class="level2"><h2 class="anchored" data-anchor-id="date-time-position-scales"><strong>10.2 Date-time position scales</strong></h2>
+<p>The <a href="#fig-dates">Figure&nbsp;10</a> below demonstrates the use of Breaks (Section 10.2.1), Minor Breaks (Section 10.2.2) and custom labels (Section 10.2.3) taught in the book for date scales in ggplot2.</p>
+<div class="cell" data-hash="Chapter10_cache/html/unnamed-chunk-12_32c9478d1e25b175f665848009c5c4a6">
+<details><summary>Code</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/fontawesome">fontawesome</a></span><span class="op">)</span>    <span class="co"># Social Media icons</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/ggtext/">ggtext</a></span><span class="op">)</span>         <span class="co"># Markdown Text in ggplot2</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yixuan/showtext">showtext</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Load fonts</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html">font_add_google</a></span><span class="op">(</span><span class="st">"Nova Mono"</span>, </span>
+<span>                family <span class="op">=</span> <span class="st">"title_font"</span><span class="op">)</span>       <span class="co"># Font for titles</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html">font_add_google</a></span><span class="op">(</span><span class="st">"Saira Extra Condensed"</span>, </span>
+<span>                family <span class="op">=</span> <span class="st">"caption_font"</span><span class="op">)</span>     <span class="co"># Font for the caption</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html">font_add_google</a></span><span class="op">(</span><span class="st">"JetBrains Mono"</span>, </span>
+<span>                family <span class="op">=</span> <span class="st">"body_font"</span><span class="op">)</span>        <span class="co"># Font for plot text</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_auto.html">showtext_auto</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Palettes and Colours</span></span>
+<span></span>
+<span><span class="va">fill_palette</span> <span class="op">&lt;-</span> <span class="fu">paletteer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/paletteer/man/paletteer_d.html">paletteer_d</a></span><span class="op">(</span><span class="st">"MetBrewer::Hiroshige"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">colorspace</span><span class="fu">::</span><span class="fu"><a href="https://colorspace.R-Forge.R-project.org/reference/lighten.html">lighten</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="va">col_palette</span> <span class="op">&lt;-</span> <span class="va">fill_palette</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">colorspace</span><span class="fu">::</span><span class="fu"><a href="https://colorspace.R-Forge.R-project.org/reference/lighten.html">darken</a></span><span class="op">(</span><span class="fl">0.8</span><span class="op">)</span></span>
+<span><span class="va">text_col</span> <span class="op">=</span> <span class="va">col_palette</span><span class="op">[</span><span class="fl">10</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Caption stuff</span></span>
+<span><span class="fu">sysfonts</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add.html">font_add</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"Font Awesome 6 Brands"</span>,</span>
+<span>                   regular <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"docs"</span>, <span class="st">"Font Awesome 6 Brands-Regular-400.otf"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">github</span> <span class="op">&lt;-</span> <span class="st">"&amp;#xf09b"</span></span>
+<span><span class="va">github_username</span> <span class="op">&lt;-</span> <span class="st">"aditya-dahiya"</span></span>
+<span><span class="va">xtwitter</span> <span class="op">&lt;-</span> <span class="st">"&amp;#xe61b"</span></span>
+<span><span class="va">xtwitter_username</span> <span class="op">&lt;-</span> <span class="st">"@adityadahiyaias"</span></span>
+<span><span class="va">linkedin</span> <span class="op">&lt;-</span> <span class="st">"&amp;#xf08c"</span></span>
+<span><span class="va">linkedin_username</span> <span class="op">&lt;-</span> <span class="st">"dr-aditya-dahiya-ias"</span></span>
+<span><span class="va">social_caption</span> <span class="op">&lt;-</span> <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"&lt;span style='font-family:\"Font Awesome 6 Brands\";'&gt;{github};&lt;/span&gt; &lt;span style='color: {text_col}'&gt;{github_username}  &lt;/span&gt; &lt;span style='font-family:\"Font Awesome 6 Brands\";'&gt;{xtwitter};&lt;/span&gt; &lt;span style='color: {text_col}'&gt;{xtwitter_username}&lt;/span&gt; &lt;span style='font-family:\"Font Awesome 6 Brands\";'&gt;{linkedin};&lt;/span&gt; &lt;span style='color: {text_col}'&gt;{linkedin_username}&lt;/span&gt;"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">plot_caption</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"**Data:** Mark Padgham and Noam Ross  |  "</span>, <span class="st">"**Graphics:** "</span>, <span class="va">social_caption</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Number of n top packages to study</span></span>
+<span><span class="va">n</span> <span class="op">=</span> <span class="fl">10</span></span>
+<span></span>
+<span><span class="va">t_p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ggplot2"</span>, <span class="st">"tibble"</span>, <span class="st">"tidyr"</span>, </span>
+<span>         <span class="st">"readr"</span>, <span class="st">"dplyr"</span>, <span class="st">"stringr"</span>, </span>
+<span>         <span class="st">"purrr"</span>, <span class="st">"forcats"</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Finding the top n packages</span></span>
+<span><span class="va">top_pkgs</span> <span class="op">&lt;-</span> <span class="va">rpkgstats</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">imports</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_longer_delim.html">separate_longer_delim</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="va">imports</span>,</span>
+<span>                        delim <span class="op">=</span> <span class="st">", "</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">imports</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">imports</span><span class="op">)</span></span>
+<span><span class="va">top_pkgs</span> <span class="op">&lt;-</span> <span class="va">top_pkgs</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Plot</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">rpkgstats</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">imports</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/separate_longer_delim.html">separate_longer_delim</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="va">imports</span>,</span>
+<span>                        delim <span class="op">=</span> <span class="st">", "</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">imports</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">top_pkgs</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    date <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/round_date.html">floor_date</a></span><span class="op">(</span><span class="va">date</span>, unit <span class="op">=</span> <span class="st">"year"</span><span class="op">)</span>,</span>
+<span>    imports <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>      <span class="va">imports</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">t_p</span> <span class="op">~</span> <span class="st">"tidyverse"</span>,</span>
+<span>      .default <span class="op">=</span> <span class="va">imports</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">imports</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>prop <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">date</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">prop</span>,</span>
+<span>    fill <span class="op">=</span> <span class="va">imports</span>,</span>
+<span>    label <span class="op">=</span> <span class="va">imports</span>,</span>
+<span>    color <span class="op">=</span> <span class="va">imports</span></span>
+<span>  <span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggstream/man/geom_stream.html">geom_stream</a></span><span class="op">(</span></span>
+<span>    type <span class="op">=</span> <span class="st">"proportional"</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggstream/man/geom_stream_label.html">geom_stream_label</a></span><span class="op">(</span></span>
+<span>    type <span class="op">=</span> <span class="st">"proportional"</span>,</span>
+<span>    family <span class="op">=</span> <span class="st">"body_font"</span>,</span>
+<span>    size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">20</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
+<span>    hjust <span class="op">=</span> <span class="st">"inward"</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"% imports (amongst top packages)"</span>,</span>
+<span>    title <span class="op">=</span> <span class="st">"Top R packages used as imports"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"The core tidyverse packages have become increasingly popular as imports for other R packages!"</span>,</span>
+<span>    caption <span class="op">=</span> <span class="va">plot_caption</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html">scale_x_datetime</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html">expansion</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                   date_breaks <span class="op">=</span> <span class="st">"2 years"</span>,</span>
+<span>                   date_labels <span class="op">=</span> <span class="st">"%Y"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html">expansion</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html">label_percent</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">fill_palette</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">col_palette</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    panel.grid <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>    panel.grid.major.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>    axis.ticks.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"title_font"</span>,</span>
+<span>                              size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">120</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
+<span>                              face <span class="op">=</span> <span class="st">"bold"</span>,</span>
+<span>                              colour <span class="op">=</span> <span class="va">text_col</span>,</span>
+<span>                              hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>    plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"caption_font"</span>,</span>
+<span>                                 colour <span class="op">=</span> <span class="va">text_col</span>,</span>
+<span>                                 hjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>                                 size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">70</span>, <span class="st">"mm"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    plot.caption <span class="op">=</span> <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_textbox.html">element_textbox</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"caption_font"</span>,</span>
+<span>                                   colour <span class="op">=</span> <span class="va">text_col</span>,</span>
+<span>                                   hjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>                                   size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">30</span>, <span class="st">"mm"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"body_font"</span>,</span>
+<span>                             size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">40</span>, <span class="st">"mm"</span><span class="op">)</span>, </span>
+<span>                             color <span class="op">=</span> <span class="va">text_col</span><span class="op">)</span>,</span>
+<span>    axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"body_font"</span>,</span>
+<span>                             size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">50</span>, <span class="st">"mm"</span><span class="op">)</span>, </span>
+<span>                             color <span class="op">=</span> <span class="va">text_col</span>,</span>
+<span>                             hjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>                             margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span>, colour <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span>,</span>
+<span>    plot.title.position <span class="op">=</span> <span class="st">"plot"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave</a></span><span class="op">(</span></span>
+<span>    filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"docs"</span>, <span class="st">"rpkg_imports.png"</span><span class="op">)</span>,</span>
+<span>    plot <span class="op">=</span> <span class="va">g</span>,</span>
+<span>    height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"cm"</span><span class="op">)</span>,</span>
+<span>    width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"cm"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="fig-dates" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="docs/rpkg_imports.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure&nbsp;10: A proportional stream-plot showing the percentage of imports (amongst top packages) which belong to a particular R package.</figcaption></figure>
+</div>
 
 
 
-</section></section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-gganimate-3" class="csl-entry" role="listitem">
 Pedersen, Thomas Lin, and David Robinson. 2022. <span>“Gganimate: A Grammar of Animated Graphics.”</span> <a href="https://CRAN.R-project.org/package=gganimate">https://CRAN.R-project.org/package=gganimate</a>.
 </div>

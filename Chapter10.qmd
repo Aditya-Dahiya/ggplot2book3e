@@ -61,7 +61,7 @@ df1 <- rpkgstats |>
 
 ## **10.1 Numeric position scales**
 
-### **10.1.1 & 10.1.2: Limits and Zooming in**
+The @fig-lim1 demonstrates the use of Limits and Zooming-In features in ggplot2.
 
 ```{r}
 #| label: fig-lim1
@@ -109,9 +109,7 @@ g1 + g2 + g3 +
   
 ```
 
-### **10.1.3 Visual range expansion**
-
-Exploring number of R packages updated or released over time on CRAN in @fig-exp1, while also demonstrating the use of `scale_y_continuous(expand = expansion(0))` and `scale_x_date(expand = expansion(0))` to remove any extra space between the graph and x-axis labels and y-axis labels.
+We can also demonstrate Visual range expansion in the following example exploring number of R packages updated or released over time on CRAN in @fig-exp1. We also demonstrate the use of `scale_y_continuous(expand = expansion(0))` and `scale_x_date(expand = expansion(0))` to remove any extra space between the graph and x-axis labels and y-axis labels.
 
 ```{r}
 #| label: fig-exp1
@@ -515,11 +513,7 @@ rpkgstats |>
   )
 ```
 
-### **10.1.4 Breaks**
-
-In this section, we use the same data to modify the breaks in an axis.
-
-Instead of the stacked bar-plot we made above, we can also make a stream graph using `ggstream` [@ggstream] to make the graph more visually appealing, while changing the breaks on x-axis etc. As shown in the stream graph in @fig-ggstr, it gives a better overall view: —
+In the section 10.1.4 Breaks, we use the same data to modify the breaks in an axis. Instead of the stacked bar-plot we made above, we can also make a stream graph using `ggstream` [@ggstream] to make the graph more visually appealing, while changing the breaks on x-axis etc. As shown in the stream graph in @fig-ggstr, it gives a better overall view: —
 
 ```{r}
 #| label: fig-ggstr
@@ -618,7 +612,7 @@ rpkgstats |>
   )
 ```
 
-To demonstrate the `log10` scale on the x-axis, we use an animated histogram depicting the distribution of the Lines of Code in R packages over the years using {scales} [@scales] and {gganimate} [@gganimate-3], as depicted below: —
+To demonstrate transformations of scales (Section 10.1.7), we create a `log10` scale on the x-axis in an animated histogram depicting the distribution of the Lines of Code in R packages over the years using {scales} [@scales] and {gganimate} [@gganimate-3], as depicted below: —
 
 ```{r}
 #| label: fig-anim2
@@ -720,3 +714,149 @@ animate(
 ```
 
 ![](docs/anim_rpkgs.gif){#fig-anim2 fig-alt="An animated density-plot on Lines of Code in R packages released / updated during a year over the last decade. It shows rightward shift in density-plot: codes are becoming longer!"}
+
+## **10.2 Date-time position scales**
+
+The @fig-dates below demonstrates the use of Breaks (Section 10.2.1), Minor Breaks (Section 10.2.2) and custom labels (Section 10.2.3) taught in the book for date scales in ggplot2.
+
+```{r}
+#| eval: false
+
+library(fontawesome)    # Social Media icons
+library(ggtext)         # Markdown Text in ggplot2
+library(showtext)
+
+# Load fonts
+font_add_google("Nova Mono", 
+                family = "title_font")       # Font for titles
+font_add_google("Saira Extra Condensed", 
+                family = "caption_font")     # Font for the caption
+font_add_google("JetBrains Mono", 
+                family = "body_font")        # Font for plot text
+showtext_auto()
+
+# Palettes and Colours
+
+fill_palette <- paletteer::paletteer_d("MetBrewer::Hiroshige") |> 
+  colorspace::lighten(0.5)
+col_palette <- fill_palette |> 
+  colorspace::darken(0.8)
+text_col = col_palette[10]
+
+# Caption stuff
+sysfonts::font_add(family = "Font Awesome 6 Brands",
+                   regular = here::here("docs", "Font Awesome 6 Brands-Regular-400.otf"))
+github <- "&#xf09b"
+github_username <- "aditya-dahiya"
+xtwitter <- "&#xe61b"
+xtwitter_username <- "@adityadahiyaias"
+linkedin <- "&#xf08c"
+linkedin_username <- "dr-aditya-dahiya-ias"
+social_caption <- glue::glue("<span style='font-family:\"Font Awesome 6 Brands\";'>{github};</span> <span style='color: {text_col}'>{github_username}  </span> <span style='font-family:\"Font Awesome 6 Brands\";'>{xtwitter};</span> <span style='color: {text_col}'>{xtwitter_username}</span> <span style='font-family:\"Font Awesome 6 Brands\";'>{linkedin};</span> <span style='color: {text_col}'>{linkedin_username}</span>")
+
+plot_caption <- paste0("**Data:** Mark Padgham and Noam Ross  |  ", "**Graphics:** ", social_caption)
+
+# Number of n top packages to study
+n = 10
+
+t_p <- c("ggplot2", "tibble", "tidyr", 
+         "readr", "dplyr", "stringr", 
+         "purrr", "forcats")
+
+
+# Finding the top n packages
+top_pkgs <- rpkgstats |> 
+  select(imports) |> 
+  separate_longer_delim(cols = imports,
+                        delim = ", ") |> 
+  drop_na() |> 
+  count(imports, sort = TRUE) |> 
+  pull(imports)
+top_pkgs <- top_pkgs[1:n]
+
+# Plot
+g <- rpkgstats |> 
+  select(date, imports) |> 
+  separate_longer_delim(cols = imports,
+                        delim = ", ") |> 
+  drop_na() |> 
+  filter(imports %in% top_pkgs) |> 
+  mutate(
+    date = floor_date(date, unit = "year"),
+    imports = case_when(
+      imports %in% t_p ~ "tidyverse",
+      .default = imports
+    )
+  ) |>
+  group_by(date) |> 
+  count(imports) |> 
+  mutate(prop = n / sum(n)) |> 
+  ggplot(aes(
+    x = date,
+    y = prop,
+    fill = imports,
+    label = imports,
+    color = imports
+  )) +
+  geom_stream(
+    type = "proportional"
+    ) +
+  geom_stream_label(
+    type = "proportional",
+    family = "body_font",
+    size = unit(20, "mm"),
+    hjust = "inward"
+    ) +
+  labs(
+    x = NULL,
+    y = "% imports (amongst top packages)",
+    title = "Top R packages used as imports",
+    subtitle = "The core tidyverse packages have become increasingly popular as imports for other R packages!",
+    caption = plot_caption
+  ) +
+  scale_x_datetime(expand = expansion(),
+                   date_breaks = "2 years",
+                   date_labels = "%Y") +
+  scale_y_continuous(expand = expansion(0),
+                     labels = label_percent()) +
+  scale_fill_manual(values = fill_palette) +
+  scale_color_manual(values = col_palette) +
+  theme_minimal() +
+  theme(
+    panel.grid = element_blank(),
+    legend.position = "none",
+    panel.grid.major.x = element_line(linetype = 2),
+    axis.ticks.y = element_blank(),
+    plot.title = element_text(family = "title_font",
+                              size = unit(120, "mm"),
+                              face = "bold",
+                              colour = text_col,
+                              hjust = 0.5),
+    plot.subtitle = element_text(family = "caption_font",
+                                 colour = text_col,
+                                 hjust = 0.5,
+                                 size = unit(70, "mm")),
+    plot.caption = element_textbox(family = "caption_font",
+                                   colour = text_col,
+                                   hjust = 0.5,
+                                   size = unit(30, "mm")),
+    axis.text = element_text(family = "body_font",
+                             size = unit(40, "mm"), 
+                             color = text_col),
+    axis.title = element_text(family = "body_font",
+                             size = unit(50, "mm"), 
+                             color = text_col,
+                             hjust = 0.5,
+                             margin = margin(0,0,0,0)),
+    plot.background = element_rect(fill = "white", colour = "white"),
+    plot.title.position = "plot"
+  )
+ggsave(
+    filename = here::here("docs", "rpkg_imports.png"),
+    plot = g,
+    height = unit(10, "cm"),
+    width = unit(10, "cm")
+  )
+```
+
+![A proportional stream-plot showing the percentage of imports (amongst top packages) which belong to a particular R package.](docs/rpkg_imports.png){#fig-dates}
