@@ -579,12 +579,10 @@ df |>
 
 The `ggdist` R package [@ggdist] introduces geoms like [`half_eye`](https://mjskay.github.io/ggdist/articles/slabinterval.html#roadmap-it-all-starts-with-slabinterval) (implemented with `stat_slabinterval()`) and `stat_dotsinterval()` that enable the creation of rain-cloud plots. These plots offer an effective and clear visualization of data distribution, incorporating uncertainty representation. To illustrate, here's an example in @fig-ggdist utilizing the `diamonds` dataset from ggplot2.
 
-::: grid
-::: g-col-6
 ```{r}
 #| label: fig-ggdist
 #| fig-cap: "Raincloud plot to show distribution using ggdist"
-#| fig-asp: 1
+#| fig-width: 10
 
 library(tidyverse)
 library(ggdist)
@@ -631,22 +629,126 @@ diamonds |>
         axis.title = element_text(hjust = 1,
                                   face = "bold"))
 ```
+
+::: grid
+::: g-col-6
+The list of geoms available for use in `ggdist` can be accessed [here](https://mjskay.github.io/ggdist/reference/index.html), and are shown in the adjoining figure.
+
+Note: Rain-cloud Plots are made by combining `stat_halfeye()` + `stat_dotsinterval()`
 :::
 
 ::: g-col-6
-**List of geoms available in `ggdist`** : [**here**](https://mjskay.github.io/ggdist/reference/index.html)
-
-Raincloud Plots are made by combining `stat_halfeye()` + `stat_dotsinterval()`
 
 [![Credits: {ggdist} by Matthew Kay](https://mjskay.github.io/ggdist/articles/slabinterval_files/figure-html/slabinterval_family-1.png){width="473"}](https://mjskay.github.io/ggdist/index.html)
 :::
 :::
 
+## `ggstream`
+
+**`ggstream`** [@ggstream-2] is a tool designed to provide a straightforward yet robust implementation of streamplots or stream-graphs. Streamplots, essentially stacked area plots, are commonly employed for visualizing time series data. The package introduces a key function, **`geom_stream()`**. We can input our data and employ this function to create a fundamental stream graph. The default behavior of `geom_stream()` utilizes the **"mirror"** type, arranging streams symmetrically around the X-axis. Alternative options include **"ridge,"** stacking from the X-axis, and **"proportional,"** where streams sum up to 1. An example of the versatility of `ggstream` is shown in @fig-ggstream .
+
+```{r}
+#| eval: false
+
+library(fontawesome)
+library(showtext)
+library(ggtext)
+
+# Load fonts
+font_add_google("Nova Mono", 
+                family = "title_font")       # Font for titles
+font_add_google("Saira Extra Condensed", 
+                family = "caption_font")     # Font for the caption
+font_add_google("JetBrains Mono", 
+                family = "body_font")        # Font for plot text
+showtext_auto()
+
+text_col = "#01737d"
+# Caption stuff
+sysfonts::font_add(family = "Font Awesome 6 Brands",
+                   regular = here::here("docs", "Font Awesome 6 Brands-Regular-400.otf"))
+github <- "&#xf09b"
+github_username <- "aditya-dahiya"
+xtwitter <- "&#xe61b"
+xtwitter_username <- "@adityadahiyaias"
+linkedin <- "&#xf08c"
+linkedin_username <- "dr-aditya-dahiya-ias"
+social_caption <- glue::glue("<span style='font-family:\"Font Awesome 6 Brands\";'>{github};</span> <span style='color: {text_col}'>{github_username}  </span> <span style='font-family:\"Font Awesome 6 Brands\";'>{xtwitter};</span> <span style='color: {text_col}'>{xtwitter_username}</span> <span style='font-family:\"Font Awesome 6 Brands\";'>{linkedin};</span> <span style='color: {text_col}'>{linkedin_username}</span>")
+
+plot_caption <- paste0("**Data:** Mark Padgham and Noam Ross  |  ", "**Graphics:** ", social_caption)
+
+
+rpkgstats |> 
+  mutate(license = as_factor(license)) |> 
+  mutate(license = fct_lump_n(license, n = 6)) |> 
+  mutate(year = year(date),
+         month = month(date)) |> 
+  group_by(year, license) |> 
+  count() |> 
+  group_by(year) |> 
+  mutate(prop = n / sum(n),
+         yeartotal = sum(n)) |> 
+  ungroup() |> 
+  mutate(id = row_number()) |> 
+  ggplot(
+    aes(
+      x = year,
+      y = n,
+      fill = license,
+      label = license
+    )
+  ) +
+  geom_stream(bw = 0.85,
+              sorting = "onset",
+              color = "#3d3d3d") +
+  geom_stream_label(aes(color = license),
+                    hjust = "inward",
+                    size = 9) +
+  labs(
+    x = NULL, y = NULL,
+    title = "Share of different licenses in R Packages",
+    subtitle = "'MIT + file License' is an increasingly preferred choice in recent years",
+    caption = plot_caption
+  ) +
+  scale_x_continuous(expand = expansion(0),
+                     breaks = breaks_width(width = 4)) +
+  scale_y_log10() +
+  scale_fill_manual(values = paletteer_d("nord::afternoon_prarie") |> 
+                      colorspace::lighten(0.3)) +
+  scale_color_manual(values = paletteer_d("nord::afternoon_prarie") |> 
+                       colorspace::darken(0.6)) +
+  cowplot::theme_minimal_vgrid() +
+  theme(
+    legend.position = "none",
+    panel.grid.major.x = element_line(linetype = 2),
+    axis.line.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.title = element_text(family = "title_font",
+                              size = 48,
+                              face = "bold",
+                              colour = text_col,
+                              hjust = 0.5),
+    plot.subtitle = element_text(family = "body_font",
+                                 colour = text_col,
+                                 hjust = 0.5,
+                                 size = 24),
+    plot.caption = element_textbox(family = "caption_font",
+                                   colour = text_col,
+                                   hjust = 0.5,
+                                   size = 15),
+    axis.text.x = element_text(size = 18, color = text_col)
+  )
+
+```
+
+![A stream-plot of licenses used by R packages released or updated over the years](docs/Chapter10_files/figure-html/fig-ggstr-1.png){#fig-ggstream}
+
 ## `gganimate`
 
 The `gganimate` package [@gganimate-2] in R stands as a powerful tool for transforming static `ggplot2` visualizations into dynamic and animated graphics. By seamlessly integrating with the `ggplot2` ecosystem, `gganimate` enables users to breathe life into their plots, adding a temporal dimension to the presentation of data trends and patterns. L
 
-Whether visualizing changes over time, showcasing transitions between different states, or animating the evolution of data-driven narratives, gganimate opens up new avenues for exploration and communication in the realm of data visualization. An example is shown in the [animation](#fig-gganimate) below.
+Whether visualizing changes over time, showcasing transitions between different states, or animating the evolution of data-driven narratives, gganimate opens up new avenues for exploration and communication in the realm of data visualization. An example is shown in the @fig-gganimate below.
 
 ```{r}
 #| eval: false
@@ -742,13 +844,116 @@ animate(gganim2,
         end_pause = 20)
 ```
 
-![](images/fig-anim3-1.gif){#fig-gganimate .figure}
+![An animated bar-chart of average flight delay (in min.) for airlines over different months of 2013](images/fig-anim3-1.gif){#fig-gganimate .figure}
 
-## Dynamic Plots: `ggiraph`
+Another example is shown below in @fig-gganim2 that depicts the use of `shadow_mark()` to retain previous years' data as the animation progresses.
+
+```{r}
+#| eval: false
+
+
+library(fontawesome)
+library(showtext)
+library(ggtext)
+
+# Load fonts
+font_add_google("Nova Mono", 
+                family = "title_font")       # Font for titles
+font_add_google("Saira Extra Condensed", 
+                family = "caption_font")     # Font for the caption
+font_add_google("JetBrains Mono", 
+                family = "body_font")        # Font for plot text
+showtext_auto()
+
+plot_caption <- "Data: Mark Padgham and Noam Ross   |   Graphics: Aditya Dahiya"
+
+
+# Defining minor breaks for the x-axis
+mb <- unique(
+  as.numeric(
+    (1:10) %o% 10 ^ (0:5)  
+  )  
+)
+
+df3 <- rpkgstats |> 
+  mutate(year = year(date)) |>
+  select(package, year, loc_R) |> 
+  filter(loc_R != 0 & !is.na(loc_R))
+  
+
+fill_palette <- paletteer_d("khroma::smoothrainbow")[22:34]
+col_palette <- fill_palette |> colorspace::darken(0.4)
+
+anim <- df3 |>
+  filter(year > 2010) |> 
+  ggplot(aes(loc_R, 
+             fill = factor(year),
+             col = factor(year),
+             frame = year)) +
+  geom_density(alpha = 0.4) +
+  scale_x_log10(
+    minor_breaks = mb,
+    expand = expansion(c(0, 0.005)),
+    labels = label_number_si(),
+    breaks = (10^(1:4)),
+    limits = c(10, 10^4)) +
+  scale_y_continuous(expand = expansion()) +
+  scale_fill_manual(values = fill_palette) +
+  scale_color_manual(values = fill_palette) +
+  labs(
+    x = "Lines of Code in the R Package (Log scale)",
+    y = NULL,
+    title = "R packages released/updated in {as.integer(frame_time)}",
+    caption = plot_caption) +
+  theme_minimal() +
+  theme(
+    panel.grid.minor.y = element_blank(),
+    panel.grid.major.y = element_line(linetype = 2),
+    panel.grid.major.x = element_line(colour = "#ebebeb"),
+    panel.grid.minor.x = element_line(colour = "#ebebeb"),
+    plot.title = element_text(family = "title_font",
+                              size = 36,
+                              hjust = 0.5,
+                              color = col_palette[11]),
+    axis.text = element_text(family = "body_font"),
+    axis.title = element_text(family = "body_font", 
+                              size = 15),
+    legend.position = "none",
+    plot.caption = element_text(
+      family = "caption_font",
+      hjust = 0.5 ,
+      margin = margin(12, 0, 5, 0),
+      size = 15,
+      colour = col_palette[11])
+  )
+
+anim
+
+# Final animation to render
+animate(
+  plot = anim + 
+    transition_time(year) +
+    shadow_mark(alpha = alpha/4) +
+    ease_aes("linear") +
+    enter_fade() + 
+    exit_fade(),
+  fps = 20,
+  duration = 12,
+  end_pause = 40,
+  height = 800,
+  width = 1000
+  )
+
+
+```
+
+![Animated density plot of Lines of Code in R packages released / updated in the past decade. Notice the rightwards shift of the bell curve, and the log scale on x-axis.](docs/anim_rpkgs.gif){#fig-gganim2}
+
+# Dynamic Plots: `ggiraph`
 
 The `ggiraph` package [@ggiraph] in `R` enhances the capabilities of traditional `ggplot2` visualizations by introducing interactivity. This package allows us to create **interactive** (with `shiny`) and **dynamic** (as shown below) ggplot2 visualizations, primarily through the incorporation of HTML and JavaScript elements.
 
-With `ggiraph`, you can add interactivity to various ggplot2 charts, such as scatter plots, bar charts, and maps, enabling users to hover over elements for additional information, click on points of interest, and explore data in a more engaging manner. The interactivity is achieved by leveraging the capabilities of web technologies, making it particularly useful for creating interactive graphics for online presentations or dashboards. You can customize tooltips, add hyperlinks, and create interactive legends, providing a versatile tool for data exploration and communication. The package is explained amazing well in ***ggiraph-book*** at <https://www.ardata.fr/ggiraph-book/>
+With `ggiraph`, you can add interactivity to various ggplot2 charts, such as scatter plots, bar charts, and maps, enabling users to hover over elements for additional information, click on points of interest, and explore data in a more engaging manner. The interactivity is achieved by leveraging the capabilities of web technologies, making it particularly useful for creating interactive graphics for online presentations or dashboards. You can customize tool-tips, add hyperlinks, and create interactive legends, providing a versatile tool for data exploration and communication. The package is explained nicely in [***ggiraph-book***](https://www.ardata.fr/ggiraph-book/).
 
 ```{r}
 # Loading Libraries
@@ -853,7 +1058,7 @@ girafe(
 # Themes for `ggplot2`
 
 |     | Source                                                     | Description / Link                                                                                                            |
-|-----|------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+|-----------------|-----------------|---------------------------------------|
 | 1\. | Extensive List of `ggplot2` Themes                         | <https://yutannihilation.github.io/allYourFigureAreBelongToUs/1/>                                                             |
 | 2\. | `ggtech` Package                                           | Themes inspired by big tech companies (AirBnb, Facebook, Google). GitHub Repository: <https://github.com/ricardo-bion/ggtech> |
 | 3\. | `hrbrthemes` Package                                       | Typography-centric themes and components for ggplot2. GitHub Repository: <https://github.com/hrbrmstr/hrbrthemes>             |
