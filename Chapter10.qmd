@@ -879,7 +879,6 @@ The @fig-discrete1 demonstrates the use of `scale_y_discrete()` to customize the
 
 library(tidyverse)
 library(here)
-library(summarytools)
 library(patchwork)
 
 dengue <- read_csv(here("data", "dengue_india.csv"))
@@ -971,4 +970,51 @@ g3 <- dendf |>
         panel.grid.minor.y = element_blank(),
         panel.grid.major.y = element_line(linetype = 2))
 g3
+```
+
+# **10.4 Binned position scales**
+
+The @fig-binned demonstrates a use for `scale_x_binned()` when we might want to use histogram like scale labels even for scatter-plots or bar plots. Here we show the number cases year-wise (between Jan 1 - Dec 31) of a year for each state, from 1991 to 2022. Since our x-axis variable is not a continuous one, the use of `scale_x_binned()` does not serve any purpose here, and this is not a good example.
+
+```{r}
+#| label: fig-binned
+#| fig-cap: "Number of dengue fever cases in each state, over a period of 1991 to 2022"
+
+library(ggiraph)
+
+g3 <- dendf |> 
+  drop_na() |> 
+  mutate(state = str_to_title(state)) |> 
+  group_by(year, state) |> 
+  summarize(cases = sum(cases)) |> 
+  ungroup() |> 
+  mutate(id = row_number()) |> 
+  ggplot(aes(x = year, 
+             y = state,
+             size = cases,
+             data_id = id,
+             tooltip = paste0(state,
+                              "\nYear: ", year,
+                              "\nNumber of cases: ", cases),
+             col = state)) +
+  geom_point_interactive(alpha = 0.5) +
+  labs(
+    x = NULL, y = NULL,
+    title = "Number of dengue cases is various states",
+    subtitle = "Size of Dot represents number of cases. Hover on dots for details."
+  ) +
+  scale_x_binned(expand = expansion(),
+                 guide = guide_axis(angle = 90),
+                 n.breaks = 30) +
+  theme_minimal() +
+  theme(
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_text(hjust = 0),
+    legend.position = "none", 
+    plot.title.position = "plot",
+    plot.title = element_text(hjust = 0.5), 
+    plot.subtitle = element_text(hjust = 0.5)
+  )
+
+girafe(ggobj = g3)
 ```
