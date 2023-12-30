@@ -860,3 +860,115 @@ ggsave(
 ```
 
 ![A proportional stream-plot showing the percentage of imports (amongst top packages) which belong to a particular R package.](docs/rpkg_imports.png){#fig-dates}
+
+# 10.3 Discrete Position Scales
+
+### Using limits, breaks and labels on discrete scales
+
+Let's use a data-set I found on [Data is Plural](https://www.data-is-plural.com/) (2023-12-20 edition) by [Jeremy Singer-Vine](https://www.jsvine.com/) on the Dengue Trends in India[^1] from the [OpenDengue](https://opendengue.org/index.html) project [@clarke2023]. The data definitions are available [here](https://opendengue.org/data.html#data-definitions).
+
+[^1]: Clarke, Joe; Lim, Ahyoung; Gupte, Pratik R.; Pigott, David M.; van Panhuis, Wilbert G; Brady, Oliver (2023). OpenDengue: data from the OpenDengue database. Version \[1.2\]. figshare. Dataset. <https://doi.org/10.6084/m9.figshare.24259573.v3>
+
+The @fig-discrete1 demonstrates the use of `scale_y_discrete()` to customize the position of, and the label for a specific value *("Other States")* on the y-axis.
+
+```{r}
+#| label: fig-discrete1
+#| fig-cap: "The use of scale_y_discrete to change labels and position of values on the y axis"
+#| fig-asp: 0.5
+#| fig-width: 10
+
+library(tidyverse)
+library(here)
+library(summarytools)
+library(patchwork)
+
+dengue <- read_csv(here("data", "dengue_india.csv"))
+
+dendf <- dengue |> 
+  rename(country = adm_0_name,
+         state = adm_1_name,
+         year = Year,
+         cases = dengue_total,
+         definition = case_definition_standardised) |> 
+  select(country, state, year, cases, definition) |> 
+  mutate(state = if_else(state == "ARUNACHAL\nPRADESH",
+                         "ARUNACHAL PRADESH",
+                         state))
+
+
+df1 <- dendf |>
+  filter(year == 2022) |> 
+  group_by(state) |> 
+  summarise(total = sum(cases, na.rm = TRUE)) |>
+  ungroup() |> 
+  mutate(
+    state = str_to_title(state),
+    state = factor(state),
+    state = fct_lump_n(state, n = 10, w = total)
+    ) 
+  
+label_state <- df1 |> 
+  group_by(state) |> 
+  summarise(total = sum(total)) |> 
+  arrange(desc(total)) |> 
+  pull(state)
+
+g1 <- df1 |> 
+  ggplot(aes(y = reorder(state, total), 
+             x = total,
+             fill = state == "Other")) +
+  geom_col() +
+  labs(x = "Dengue Cases (2022)",
+       y = NULL,
+       subtitle = "Default plot") +
+  scale_x_continuous(
+    labels = scales::label_number_si(),
+    expand = expansion(0)
+  ) +
+  cowplot::theme_half_open() +
+  theme(legend.position = "none")
+
+g2 <- g1 +
+  scale_y_discrete(
+    limits = rev(label_state),
+    labels = c(Other = "All other States")
+  ) +
+  labs(subtitle = "Changing position and label for 'Others'")
+
+g1 + g2 +
+  plot_annotation(
+    title = "Number of dengue cases in different States in India (2022)",
+    subtitle = "Using labels, breaks and limits on a discrete scale in ggplot2",
+    theme = theme(
+      plot.title = element_text(face = "bold", hjust = 0.5),
+      plot.subtitle = element_text(hjust = 0.5)
+    )
+  )
+```
+
+The @fig-guide1 shows customization of **Label Positions** using helper function `guides()` or the argument `guides = giude_axis()` within x- or y-axis scale function to change angle and dodge position of the labels.
+
+```{r}
+#| label: fig-guide1
+#| fig-cap: "Number of total Dengue Fever cases ever reported in different states of India (1991 - 2022)"
+#| fig-width: 10
+
+g3 <- dendf |> 
+  group_by(state) |> 
+  summarise(total = sum(cases)) |> 
+  mutate(state = str_to_title(state)) |> 
+  drop_na() |> 
+  ggplot(aes(x = reorder(state, total),
+             y = total)) +
+  geom_col() +
+  labs(x = NULL, y = NULL, title = "Total number of Dengue Cases (1991-2022)") +
+  scale_x_discrete(guide = guide_axis(angle = 90)) +
+  scale_y_continuous(labels = scales::label_number_si(),
+                     expand = expansion(0)) +
+  theme_minimal() +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.y = element_line(linetype = 2))
+g3
+```

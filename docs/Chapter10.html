@@ -388,6 +388,12 @@ div.csl-indent {
 <li><a href="#libraries-and-data" id="toc-libraries-and-data" class="nav-link active" data-scroll-target="#libraries-and-data">Libraries and Data</a></li>
   <li><a href="#numeric-position-scales" id="toc-numeric-position-scales" class="nav-link" data-scroll-target="#numeric-position-scales"><strong>10.1 Numeric position scales</strong></a></li>
   <li><a href="#date-time-position-scales" id="toc-date-time-position-scales" class="nav-link" data-scroll-target="#date-time-position-scales"><strong>10.2 Date-time position scales</strong></a></li>
+  <li>
+<a href="#discrete-position-scales" id="toc-discrete-position-scales" class="nav-link" data-scroll-target="#discrete-position-scales">10.3 Discrete Position Scales</a>
+  <ul class="collapse">
+<li><a href="#using-limits-breaks-and-labels-on-discrete-scales" id="toc-using-limits-breaks-and-labels-on-discrete-scales" class="nav-link" data-scroll-target="#using-limits-breaks-and-labels-on-discrete-scales">Using limits, breaks and labels on discrete scales</a></li>
+  </ul>
+</li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter10.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -1235,10 +1241,119 @@ div.csl-indent {
 <figure class="figure"><p><img src="docs/rpkg_imports.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">Figure&nbsp;10: A proportional stream-plot showing the percentage of imports (amongst top packages) which belong to a particular R package.</figcaption></figure>
 </div>
+</section><section id="discrete-position-scales" class="level1"><h1>10.3 Discrete Position Scales</h1>
+<section id="using-limits-breaks-and-labels-on-discrete-scales" class="level3"><h3 class="anchored" data-anchor-id="using-limits-breaks-and-labels-on-discrete-scales">Using limits, breaks and labels on discrete scales</h3>
+<p>Let’s use a data-set I found on <a href="https://www.data-is-plural.com/">Data is Plural</a> (2023-12-20 edition) by <a href="https://www.jsvine.com/">Jeremy Singer-Vine</a> on the Dengue Trends in India<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> from the <a href="https://opendengue.org/index.html">OpenDengue</a> project <span class="citation" data-cites="clarke2023">(<a href="#ref-clarke2023" role="doc-biblioref">Clarke et al. 2023</a>)</span>. The data definitions are available <a href="https://opendengue.org/data.html#data-definitions">here</a>.</p>
+<p>The <a href="#fig-discrete1">Figure&nbsp;11</a> demonstrates the use of <code><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_y_discrete()</a></code> to customize the position of, and the label for a specific value <em>(“Other States”)</em> on the y-axis.</p>
+<div class="cell" data-fig.asp="0.5" data-hash="Chapter10_cache/html/fig-discrete1_0d03bd2f11412c3bec89e381212f89fd">
+<details><summary>Code</summary><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dcomtois/summarytools">summarytools</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dengue</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"dengue_india.csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dendf</span> <span class="op">&lt;-</span> <span class="va">dengue</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>country <span class="op">=</span> <span class="va">adm_0_name</span>,</span>
+<span>         state <span class="op">=</span> <span class="va">adm_1_name</span>,</span>
+<span>         year <span class="op">=</span> <span class="va">Year</span>,</span>
+<span>         cases <span class="op">=</span> <span class="va">dengue_total</span>,</span>
+<span>         definition <span class="op">=</span> <span class="va">case_definition_standardised</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">state</span>, <span class="va">year</span>, <span class="va">cases</span>, <span class="va">definition</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>state <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">state</span> <span class="op">==</span> <span class="st">"ARUNACHAL\nPRADESH"</span>,</span>
+<span>                         <span class="st">"ARUNACHAL PRADESH"</span>,</span>
+<span>                         <span class="va">state</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="va">dendf</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fl">2022</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">state</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>total <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">cases</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    state <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html">str_to_title</a></span><span class="op">(</span><span class="va">state</span><span class="op">)</span>,</span>
+<span>    state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">state</span><span class="op">)</span>,</span>
+<span>    state <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_lump.html">fct_lump_n</a></span><span class="op">(</span><span class="va">state</span>, n <span class="op">=</span> <span class="fl">10</span>, w <span class="op">=</span> <span class="va">total</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> </span>
+<span>  </span>
+<span><span class="va">label_state</span> <span class="op">&lt;-</span> <span class="va">df1</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">state</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>total <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">total</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">total</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">state</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="va">df1</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">state</span>, <span class="va">total</span><span class="op">)</span>, </span>
+<span>             x <span class="op">=</span> <span class="va">total</span>,</span>
+<span>             fill <span class="op">=</span> <span class="va">state</span> <span class="op">==</span> <span class="st">"Other"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Dengue Cases (2022)"</span>,</span>
+<span>       y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Default plot"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span></span>
+<span>    labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number_si.html">label_number_si</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html">expansion</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/theme_cowplot.html">theme_half_open</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g2</span> <span class="op">&lt;-</span> <span class="va">g1</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_y_discrete</a></span><span class="op">(</span></span>
+<span>    limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="va">label_state</span><span class="op">)</span>,</span>
+<span>    labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>Other <span class="op">=</span> <span class="st">"All other States"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"Changing position and label for 'Others'"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g1</span> <span class="op">+</span> <span class="va">g2</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html">plot_annotation</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Number of dengue cases in different States in India (2022)"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Using labels, breaks and limits on a discrete scale in ggplot2"</span>,</span>
+<span>    theme <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>      plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>face <span class="op">=</span> <span class="st">"bold"</span>, hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>      plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-discrete1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter10_files/figure-html/fig-discrete1-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption class="figure-caption">Figure&nbsp;11: The use of scale_y_discrete to change labels and position of values on the y axis</figcaption></figure>
+</div>
+</div>
+</div>
+<p>The <a href="#fig-guide1">Figure&nbsp;12</a> shows customization of <strong>Label Positions</strong> using helper function <code><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides()</a></code> or the argument <code>guides = giude_axis()</code> within x- or y-axis scale function to change angle and dodge position of the labels.</p>
+<div class="cell" data-hash="Chapter10_cache/html/fig-guide1_d2676b3d5b4774f6efc7c6d70bb91a23">
+<details><summary>Code</summary><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g3</span> <span class="op">&lt;-</span> <span class="va">dendf</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">state</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>total <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">cases</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>state <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html">str_to_title</a></span><span class="op">(</span><span class="va">state</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html">reorder</a></span><span class="op">(</span><span class="va">state</span>, <span class="va">total</span><span class="op">)</span>,</span>
+<span>             y <span class="op">=</span> <span class="va">total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span>, title <span class="op">=</span> <span class="st">"Total number of Dengue Cases (1991-2022)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_x_discrete</a></span><span class="op">(</span>guide <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_axis.html">guide_axis</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/label_number_si.html">label_number_si</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                     expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html">expansion</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.grid.major.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        panel.grid.minor.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        panel.grid.minor.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        panel.grid.major.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">g3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-guide1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="Chapter10_files/figure-html/fig-guide1-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption class="figure-caption">Figure&nbsp;12: Number of total Dengue Fever cases ever reported in different states of India (1991 - 2022)</figcaption></figure>
+</div>
+</div>
+</div>
 
 
 
-</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+</section></section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-clarke2023" class="csl-entry" role="listitem">
+Clarke, Joe, Ahyoung Lim, Pratik R. Gupte, David M. Pigott, Wilbert G van Panhuis, and Oliver Brady. 2023. <span>“OpenDengue: Data from the OpenDengue Database.”</span> figshare. <a href="https://doi.org/10.6084/M9.FIGSHARE.24259573.V3">https://doi.org/10.6084/M9.FIGSHARE.24259573.V3</a>.
+</div>
 <div id="ref-gganimate-3" class="csl-entry" role="listitem">
 Pedersen, Thomas Lin, and David Robinson. 2022. <span>“Gganimate: A Grammar of Animated Graphics.”</span> <a href="https://CRAN.R-project.org/package=gganimate">https://CRAN.R-project.org/package=gganimate</a>.
 </div>
@@ -1248,7 +1363,10 @@ Sjoberg, David. 2021. <span>“Ggstream: Create Streamplots in ’Ggplot2’.”
 <div id="ref-scales" class="csl-entry" role="listitem">
 Wickham, Hadley, and Dana Seidel. 2022. <span>“Scales: Scale Functions for Visualization.”</span> <a href="https://CRAN.R-project.org/package=scales">https://CRAN.R-project.org/package=scales</a>.
 </div>
-</div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+<ol>
+<li id="fn1"><p>Clarke, Joe; Lim, Ahyoung; Gupte, Pratik R.; Pigott, David M.; van Panhuis, Wilbert G; Brady, Oliver (2023). OpenDengue: data from the OpenDengue database. Version [1.2]. figshare. Dataset.&nbsp;<a href="https://doi.org/10.6084/m9.figshare.24259573.v3" class="uri">https://doi.org/10.6084/m9.figshare.24259573.v3</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
