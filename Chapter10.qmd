@@ -934,14 +934,24 @@ g2 <- g1 +
   ) +
   labs(subtitle = "Changing position and label for 'Others'")
 
+ts = 12
 g1 + g2 +
   plot_annotation(
     title = "Number of dengue cases in different States in India (2022)",
     subtitle = "Using labels, breaks and limits on a discrete scale in ggplot2",
     theme = theme(
-      plot.title = element_text(face = "bold", hjust = 0.5),
-      plot.subtitle = element_text(hjust = 0.5)
+      plot.title = element_text(face = "bold", 
+                                hjust = 0.5,
+                                size = 1.5*ts),
+      plot.subtitle = element_text(hjust = 0.5,
+                                   size = 0.8*ts)
     )
+  ) &
+  theme(
+    axis.text = element_text(size = ts),
+    axis.title = element_text(size = ts),
+    plot.subtitle = element_text(size = 0.8*ts, hjust = 0.5)
+    
   )
 ```
 
@@ -968,7 +978,10 @@ g3 <- dendf |>
   theme(panel.grid.major.x = element_blank(),
         panel.grid.minor.x = element_blank(),
         panel.grid.minor.y = element_blank(),
-        panel.grid.major.y = element_line(linetype = 2))
+        panel.grid.major.y = element_line(linetype = 2),
+        plot.title = element_text(size = 1.5*ts,
+                                  hjust = 0.5),
+        axis.text = element_text(size = 0.8*ts))
 g3
 ```
 
@@ -1018,3 +1031,59 @@ g3 <- dendf |>
 
 girafe(ggobj = g3)
 ```
+
+So, let's use `scale_y_binned()` in a plot where it's use is better expressed, as in @fig-binned2-2. Here, we plots the number of R packages released each month vs. Lines of Code over the years in the form of a scatter plot in @fig-binned2-1, leading to a crowded plot with with limited ease of understanding. Next, we bin the y-axis, i.e. Lines of Code along with a log10 transformation, and break-up x-axis (dates) into quarters of the years. Now, the scatter plot in @fig-binned2-2 seems much easier to understand.
+
+```{r}
+#| eval: false
+
+df1 |> 
+  drop_na() |> 
+  filter(date > as_datetime("2015-01-01")) |> 
+  ggplot(aes(x = date,
+             y = loc_R)) +
+  geom_point(alpha = 0.2) +
+  labs(x = "Date of Release",
+       y = "Lines of Code in R package",
+       title = "Lines of Code in R packages updated / released over the years") +
+  theme_minimal() +
+  theme()
+
+df1 |> 
+  drop_na() |> 
+  filter(date > as_datetime("2015-01-01")) |> 
+  mutate(qtr = floor_date(date, unit = "quarter"),
+         qtr = as_date(qtr)) |> 
+  ggplot(aes(x = qtr,
+             y = loc_R)) +
+  geom_count(alpha = 0.2) +
+  scale_x_date(breaks = scales::breaks_width("1 year", 
+                                             offset = "-45 days"),
+               date_minor_breaks = "3 months",
+               date_labels = "%Y",
+               expand = expansion(c(0.01, 0.05))) +
+  scale_y_binned(trans = "log10",
+                 labels = scales::label_number()) +
+  scale_size(range = c(1, 10)) +
+  labs(x = NULL,
+       y = "Lines of Code in R package",
+       title = "Lines of Code in R packages updated / released over the years",
+       size = "Number of R packages") +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    panel.grid.major.y = element_line(linetype = "dotted"),
+    panel.grid.major.x = element_line(linetype = "dotted"),
+    panel.grid.minor.x = element_blank(),
+    plot.title = element_text(hjust = 0.5,
+                              face = "bold"),
+    axis.text.x = element_text(vjust = 1,
+                               hjust = +2,
+                               face = "bold"),
+    plot.title.position = "plot"
+  )
+```
+
+![Scatter plot without scales modification. Difficult to spot the trend.](docs/fig-binned2-1.png){#fig-binned2-1}
+
+![Use of `scale_y_binned` and `log10` transformation, along with `scale_datetime()` to easily view trends](docs/gg-binned2-2.png){#fig-binned2-2}
