@@ -1087,3 +1087,23 @@ df1 |>
 ![Scatter plot without scales modification. Difficult to spot the trend.](docs/fig-binned2-1.png){#fig-binned2-1}
 
 ![Use of `scale_y_binned` and `log10` transformation, along with `scale_datetime()` to easily view trends](docs/gg-binned2-2.png){#fig-binned2-2}
+
+```{r}
+#| eval: false
+#| echo: false
+
+library(ggstream)
+
+dendf |> 
+  select(year, state, cases) |>
+  filter(year > 2010) |> 
+  drop_na() |> 
+  mutate(state = str_to_title(state)) |> 
+  ggplot(aes(x = year, 
+             y = cases,
+             fill = state,
+             label = state)) +
+  geom_stream(color = "black") +
+  geom_stream_label() +
+  theme(legend.position = "none")
+```
