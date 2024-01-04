@@ -385,12 +385,8 @@ div.csl-indent {
    
   <ul>
 <li><a href="#continuous-colour-scales" id="toc-continuous-colour-scales" class="nav-link active" data-scroll-target="#continuous-colour-scales"><strong>11.2 Continuous colour scales</strong></a></li>
-  <li>
-<a href="#discrete-colour-scales" id="toc-discrete-colour-scales" class="nav-link" data-scroll-target="#discrete-colour-scales"><strong>11.3 Discrete colour scales</strong></a>
-  <ul class="collapse">
-<li><a href="#some-packages-for-colour-palettes-in-r" id="toc-some-packages-for-colour-palettes-in-r" class="nav-link" data-scroll-target="#some-packages-for-colour-palettes-in-r">Some Packages for colour palettes in <code>R</code></a></li>
-  </ul>
-</li>
+  <li><a href="#discrete-colour-scales" id="toc-discrete-colour-scales" class="nav-link" data-scroll-target="#discrete-colour-scales"><strong>11.3 Discrete colour scales</strong></a></li>
+  <li><a href="#packages-for-colour-palettes-in-r" id="toc-packages-for-colour-palettes-in-r" class="nav-link" data-scroll-target="#packages-for-colour-palettes-in-r">Packages for colour palettes in <code>R</code></a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter11.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -451,7 +447,8 @@ div.csl-indent {
 </div>
 <section id="continuous-colour-scales" class="level1"><h1><strong>11.2 Continuous colour scales</strong></h1>
 <p>For depicting use of continuous color scales, we use the <a href="https://github.com/HarshaDevulapalli/indian-movie-theatres/blob/master/indian-movie-theatres.csv">dataset</a> by <a href="https://github.com/HarshaDevulapalli">Harsha Devulapalli</a> on <a href="https://github.com/HarshaDevulapalli/indian-movie-theatres">Movie Theaters</a> in 8 Indian metropolitan Cities. Credits to the <a href="https://www.data-is-plural.com/">Data is Plural</a> podcast by <a href="#0">Jeremy Singer-Vine</a> for circulating this data-set.</p>
-<div class="cell" data-hash="Chapter11_cache/html/fig-col-c_0a6e833324e14445c47936b9034b790d">
+<p>The <a href="#fig-col-c">Figure&nbsp;1</a> shows use of two fill scales, one for <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col()</a></code> and other for <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> , both within the same plot. This is possible with use of <code>ggnewscale</code> <span class="citation" data-cites="ggnewscale-2">(<a href="#ref-ggnewscale-2" role="doc-biblioref">Campitelli 2023</a>)</span> that allows us to specify a new fill or colour scale within the same plot.</p>
+<div class="cell" data-hash="Chapter11_cache/html/fig-col-c_dd9be16a076efb849c0487e1e17ec231">
 <details><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Loading dataset</span></span>
 <span></span>
 <span><span class="va">movies</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"https://raw.githubusercontent.com/HarshaDevulapalli/indian-movie-theatres/master/indian-movie-theatres.csv"</span><span class="op">)</span></span>
@@ -498,7 +495,46 @@ div.csl-indent {
 <span>    width <span class="op">=</span> <span class="fl">0.3</span>,</span>
 <span>    position <span class="op">=</span> <span class="st">"stack"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Annotations</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span></span>
+<span>    geom <span class="op">=</span> <span class="st">"curve"</span>,</span>
+<span>    x <span class="op">=</span> <span class="va">plotdf</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">theatre_chain</span> <span class="op">==</span> <span class="st">"PVR"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">avg_price</span><span class="op">)</span>,</span>
+<span>    y <span class="op">=</span> <span class="fl">9</span>,</span>
+<span>    xend <span class="op">=</span> <span class="fl">300</span>,</span>
+<span>    yend <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>    linetype <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>    arrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"mm"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    col <span class="op">=</span> <span class="st">"darkgrey"</span>,</span>
+<span>    curvature <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span></span>
+<span>    geom <span class="op">=</span> <span class="st">"curve"</span>,</span>
+<span>    x <span class="op">=</span> <span class="va">plotdf</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">theatre_chain</span> <span class="op">==</span> <span class="st">"Inox"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">avg_price</span><span class="op">)</span>,</span>
+<span>    y <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>    xend <span class="op">=</span> <span class="fl">300</span>,</span>
+<span>    yend <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>    linetype <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>    arrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"mm"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    col <span class="op">=</span> <span class="st">"darkgrey"</span>,</span>
+<span>    curvature <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/annotate.html">annotate</a></span><span class="op">(</span></span>
+<span>    geom <span class="op">=</span> <span class="st">"label"</span>,</span>
+<span>    x <span class="op">=</span> <span class="fl">300</span>,</span>
+<span>    y <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>    label <span class="op">=</span> <span class="st">"Size of the dot and the number represent\nnumber of Movie Theatres owned by the Chain"</span>,</span>
+<span>    hjust <span class="op">=</span> <span class="st">"inward"</span>, </span>
+<span>    vjust <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    size <span class="op">=</span> <span class="fl">3</span>, </span>
+<span>    fontface <span class="op">=</span> <span class="st">"italic"</span>,</span>
+<span>    col <span class="op">=</span> <span class="st">"black"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Colour Scales</span></span>
 <span>  <span class="fu">paletteer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/paletteer/man/ggplot2-scales-continuous.html">scale_fill_paletteer_c</a></span><span class="op">(</span><span class="st">"ggthemes::Orange-Gold"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  </span>
+<span>  <span class="co"># Using a Second Colour Scale in same ggplot2</span></span>
 <span>  <span class="fu"><a href="https://eliocamp.github.io/ggnewscale/reference/new_scale.html">new_scale_fill</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># Lollipop Graph, circles</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">avg_price</span>, </span>
@@ -521,24 +557,30 @@ div.csl-indent {
 <span>    subtitle <span class="op">=</span> <span class="st">"PVR is the most expensive, and also has the most movie theatres.\nThe numbers in circles represent the number of theatres run by the Chain."</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html">expansion</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_y_discrete</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html">expansion</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_y_discrete</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html">expansion</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
 <span>    legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>    panel.grid.major.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    panel.grid.minor.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    panel.grid.major.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>linetype <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
-<span>    axis.line.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>arrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">3</span>, <span class="st">"mm"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>    axis.line.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>arrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">3</span>, <span class="st">"mm"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>face <span class="op">=</span> <span class="st">"bold"</span>,</span>
+<span>                              size <span class="op">=</span> <span class="fl">18</span>,</span>
+<span>                              hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>    plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>face <span class="op">=</span> <span class="st">"italic"</span>,</span>
+<span>                                 hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>    plot.title.position <span class="op">=</span> <span class="st">"plot"</span></span>
+<span>  <span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div id="fig-col-c" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="Chapter11_files/figure-html/fig-col-c-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="Chapter11_files/figure-html/fig-col-c-1.png" class="img-fluid figure-img" width="960"></p>
 <figcaption class="figure-caption">Figure&nbsp;1: Using multiple continuous colour scales in a lollipop chart</figcaption></figure>
 </div>
 </div>
 </div>
 </section><section id="discrete-colour-scales" class="level1"><h1><strong>11.3 Discrete colour scales</strong></h1>
-<p>Now, I use the data-set with <code>ggwordcloud</code> <span class="citation" data-cites="ggwordcloud">(<a href="#ref-ggwordcloud" role="doc-biblioref">Le Pennec and Slowikowski 2023</a>)</span> to make word-clouds of top Netflix Titles. The <a href="#fig-default">Figure&nbsp;2</a> shows the top 10 titles on Netflix by number of hours viewed between January - June 2023, with default colour schemes in ggplot2.</p>
+<p>Now, I use the data-set with <code>ggwordcloud</code> <span class="citation" data-cites="ggwordcloud">(<a href="#ref-ggwordcloud" role="doc-biblioref">Le Pennec and Slowikowski 2023</a>)</span> to make word-clouds of top Netflix Titles. The <a href="#fig-default">Figure&nbsp;2</a> shows the top 10 titles on Netflix by number of hours viewed between January - June 2023, with default colour schemes in ggplot2. The word-cloud shows the use of a continuous colour scale for text colour based on the number of hours viewed.</p>
 <div id="fig-default" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><details><summary>Code</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="va">netflix</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span>order_by <span class="op">=</span> <span class="va">hours_viewed</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -590,7 +632,7 @@ div.csl-indent {
 </div>
 <figcaption class="figure-caption">Figure&nbsp;2: Top 10 titles on Netflix by number of hours viewed: January - June 2023</figcaption></figure>
 </div>
-<p>The <a href="#fig-default2">Figure&nbsp;3</a> shows the same plots with <code>paletteer</code> <span class="citation" data-cites="paletteer">(<a href="#ref-paletteer" role="doc-biblioref">Hvitfeldt 2021</a>)</span> scales.</p>
+<p>The <a href="#fig-default2">Figure&nbsp;3</a> shows the same plots with <code>paletteer</code> <span class="citation" data-cites="paletteer">(<a href="#ref-paletteer" role="doc-biblioref">Hvitfeldt 2021a</a>)</span> scales.</p>
 <div id="fig-default2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><details><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/EmilHvitfeldt/paletteer">paletteer</a></span><span class="op">)</span></span>
 <span></span>
@@ -611,9 +653,15 @@ div.csl-indent {
 </div>
 <figcaption class="figure-caption">Figure&nbsp;3: Top 10 titles on Netflix by number of hours viewed: January - June 2023</figcaption></figure>
 </div>
-<section id="some-packages-for-colour-palettes-in-r" class="level2"><h2 class="anchored" data-anchor-id="some-packages-for-colour-palettes-in-r">Some Packages for colour palettes in <code>R</code>
-</h2>
+</section><section id="packages-for-colour-palettes-in-r" class="level1"><h1>Packages for colour palettes in <code>R</code>
+</h1>
 <ul>
+<li>
+<strong><code>paletteer</code>:</strong>
+<ul>
+<li>The {paletteer} R package <span class="citation" data-cites="paletteer-2">(<a href="#ref-paletteer-2" role="doc-biblioref">Hvitfeldt 2021b</a>)</span>, developed by <em>Emil Hvitfeldt</em>, serves as a comprehensive repository of diverse color palettes sourced from various R packages. With a unified interface, {paletteer} aims to streamline the usage of these palettes, analogous to the “<code>caret</code> of palettes.” Featuring a collection of 2538 palettes obtained from CRAN packages, the palettes are categorized into discrete and continuous scales. The <a href="https://pmassicotte.github.io/paletteer_gallery/">paletteer gallery</a> facilitates easy exploration and implementation of these palettes in data visualization through ggplot2, providing users with copy/pastable R code for seamless integration.</li>
+</ul>
+</li>
 <li>
 <strong><code>RColorBrewer</code>:</strong>
 <ul>
@@ -678,9 +726,15 @@ div.csl-indent {
 
 
 
-</section></section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-ggnewscale-2" class="csl-entry" role="listitem">
+Campitelli, Elio. 2023. <span>“Ggnewscale: Multiple Fill and Colour Scales in ’Ggplot2’.”</span> <a href="https://CRAN.R-project.org/package=ggnewscale">https://CRAN.R-project.org/package=ggnewscale</a>.
+</div>
 <div id="ref-paletteer" class="csl-entry" role="listitem">
-Hvitfeldt, Emil. 2021. <span>“Paletteer: Comprehensive Collection of Color Palettes.”</span> <a href="https://github.com/EmilHvitfeldt/paletteer">https://github.com/EmilHvitfeldt/paletteer</a>.
+Hvitfeldt, Emil. 2021a. <span>“Paletteer: Comprehensive Collection of Color Palettes.”</span> <a href="https://github.com/EmilHvitfeldt/paletteer">https://github.com/EmilHvitfeldt/paletteer</a>.
+</div>
+<div id="ref-paletteer-2" class="csl-entry" role="listitem">
+———. 2021b. <span>“Paletteer: Comprehensive Collection of Color Palettes.”</span> <a href="https://github.com/EmilHvitfeldt/paletteer">https://github.com/EmilHvitfeldt/paletteer</a>.
 </div>
 <div id="ref-ggwordcloud" class="csl-entry" role="listitem">
 Le Pennec, Erwan, and Kamil Slowikowski. 2023. <span>“Ggwordcloud: A Word Cloud Geom for ’Ggplot2’.”</span> <a href="https://CRAN.R-project.org/package=ggwordcloud">https://CRAN.R-project.org/package=ggwordcloud</a>.

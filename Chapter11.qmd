@@ -55,9 +55,12 @@ netflix <- read_csv(here::here("data", "netflix.csv")) |>
 
 For depicting use of continuous color scales, we use the [dataset](https://github.com/HarshaDevulapalli/indian-movie-theatres/blob/master/indian-movie-theatres.csv) by [Harsha Devulapalli](https://github.com/HarshaDevulapalli) on [Movie Theaters](https://github.com/HarshaDevulapalli/indian-movie-theatres) in 8 Indian metropolitan Cities. Credits to the [Data is Plural](https://www.data-is-plural.com/) podcast by [Jeremy Singer-Vine](#0) for circulating this data-set.
 
+The @fig-col-c shows use of two fill scales, one for `geom_col()` and other for `geom_point()` , both within the same plot. This is possible with use of `ggnewscale` [@ggnewscale-2] that allows us to specify a new fill or colour scale within the same plot.
+
 ```{r}
 #| label: fig-col-c
 #| fig-cap: "Using multiple continuous colour scales in a lollipop chart"
+#| fig-width: 10
 
 # Loading dataset
 
@@ -105,7 +108,46 @@ plotdf |>
     width = 0.3,
     position = "stack"
   ) +
+  
+  # Annotations
+  annotate(
+    geom = "curve",
+    x = plotdf |> filter(theatre_chain == "PVR") |> pull(avg_price),
+    y = 9,
+    xend = 300,
+    yend = 4,
+    linetype = 5,
+    arrow = arrow(length = unit(2, "mm")),
+    col = "darkgrey",
+    curvature = -0.5
+  ) +
+  annotate(
+    geom = "curve",
+    x = plotdf |> filter(theatre_chain == "Inox") |> pull(avg_price),
+    y = 8,
+    xend = 300,
+    yend = 4,
+    linetype = 5,
+    arrow = arrow(length = unit(2, "mm")),
+    col = "darkgrey",
+    curvature = -0.5
+  ) +
+  annotate(
+    geom = "label",
+    x = 300,
+    y = 4,
+    label = "Size of the dot and the number represent\nnumber of Movie Theatres owned by the Chain",
+    hjust = "inward", 
+    vjust = 1,
+    size = 3, 
+    fontface = "italic",
+    col = "black"
+  ) +
+  
+  # Colour Scales
   paletteer::scale_fill_paletteer_c("ggthemes::Orange-Gold") +
+  
+  # Using a Second Colour Scale in same ggplot2
   new_scale_fill() +
   # Lollipop Graph, circles
   geom_point(aes(x = avg_price, 
@@ -128,20 +170,26 @@ plotdf |>
     subtitle = "PVR is the most expensive, and also has the most movie theatres.\nThe numbers in circles represent the number of theatres run by the Chain."
   ) +
   scale_x_continuous(expand = expansion(c(0, 0.05))) +
-  scale_y_discrete(expand = expansion(c(0.1, 0.1))) +
+  scale_y_discrete(expand = expansion(c(0.05, 0.1))) +
   theme_minimal() +
   theme(
     legend.position = "none",
     panel.grid.major.y = element_blank(),
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_line(linetype = 2),
-    axis.line.x = element_line(arrow = arrow(length = unit(3, "mm")))
-  )
+    axis.line.x = element_line(arrow = arrow(length = unit(3, "mm"))),
+    plot.title = element_text(face = "bold",
+                              size = 18,
+                              hjust = 0.5),
+    plot.subtitle = element_text(face = "italic",
+                                 hjust = 0.5),
+    plot.title.position = "plot"
+  ) 
 ```
 
 # **11.3 Discrete colour scales**
 
-Now, I use the data-set with `ggwordcloud` [@ggwordcloud] to make word-clouds of top Netflix Titles. The @fig-default shows the top 10 titles on Netflix by number of hours viewed between January - June 2023, with default colour schemes in ggplot2.
+Now, I use the data-set with `ggwordcloud` [@ggwordcloud] to make word-clouds of top Netflix Titles. The @fig-default shows the top 10 titles on Netflix by number of hours viewed between January - June 2023, with default colour schemes in ggplot2. The word-cloud shows the use of a continuous colour scale for text colour based on the number of hours viewed.
 
 ```{r}
 #| label: fig-default
@@ -204,8 +252,10 @@ g1 + scale_fill_paletteer_d("ggthemes::Winter")
 g2 + scale_color_paletteer_c("oompaBase::redscale")
 ```
 
-## Some Packages for colour palettes in `R`
+# Packages for colour palettes in `R`
 
+-   **`paletteer`:**
+    -   The {paletteer} R package [@paletteer-2], developed by *Emil Hvitfeldt*, serves as a comprehensive repository of diverse color palettes sourced from various R packages. With a unified interface, {paletteer} aims to streamline the usage of these palettes, analogous to the "`caret` of palettes." Featuring a collection of 2538 palettes obtained from CRAN packages, the palettes are categorized into discrete and continuous scales. The [paletteer gallery](https://pmassicotte.github.io/paletteer_gallery/) facilitates easy exploration and implementation of these palettes in data visualization through ggplot2, providing users with copy/pastable R code for seamless integration.
 -   **`RColorBrewer`:**
     -   This package sources color palettes from ColorBrewer, delivering a diverse range of qualitative, sequential, and diverging color schemes for ggplot.
 -   **`viridis`:**
