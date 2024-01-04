@@ -29,12 +29,10 @@ bibliography: references.bib
 ---
 
 ::: {.callout-note appearance="minimal"}
-This Chapter has no exercises to solve, so I use datasets to explore and customize colour scales and legends in `ggplot2`.
+This Chapter has no exercises to solve, so I use various datasets to explore and customize colour scales and legends in `ggplot2`.
 :::
 
-# **11.3 Discrete colour scales**
-
-Let's use the [data](#0 "What We Watched: A Netflix Engagement Report") on Engagement (Hours Watched) report from [Netflix](#0) which lists, in descending order, all 18,000+ titles viewed for 50,000+ hours on the platform in the first half of 2023. Credits to the [Data is Plural](#0) podcast by [Jeremy Singer-Vine](#0) for circulating this data-set. I use it with `ggwordcloud` [@ggwordcloud] to make word-clouds of top Netflix Titles.
+For this Chapter, let's use the [data](#0 "What We Watched: A Netflix Engagement Report") on Engagement (Hours Watched) report from [Netflix](#0) which lists, in descending order, all 18,000+ titles viewed for 50,000+ hours on the platform in the first half of 2023. Credits to the [Data is Plural](https://www.data-is-plural.com/) podcast by [Jeremy Singer-Vine](#0) for circulating this data-set.
 
 ```{r}
 library(tidyverse)
@@ -53,7 +51,97 @@ netflix <- read_csv(here::here("data", "netflix.csv")) |>
          year = year(release_date))
 ```
 
-The @fig-default shows the top 10 titles on Netflix by number of hours viewed between January - June 2023, with default colour schemes in ggplot2.
+# **11.2 Continuous colour scales**
+
+For depicting use of continuous color scales, we use the [dataset](https://github.com/HarshaDevulapalli/indian-movie-theatres/blob/master/indian-movie-theatres.csv) by [Harsha Devulapalli](https://github.com/HarshaDevulapalli) on [Movie Theaters](https://github.com/HarshaDevulapalli/indian-movie-theatres) in 8 Indian metropolitan Cities. Credits to the [Data is Plural](https://www.data-is-plural.com/) podcast by [Jeremy Singer-Vine](#0) for circulating this data-set.
+
+```{r}
+#| label: fig-col-c
+#| fig-cap: "Using multiple continuous colour scales in a lollipop chart"
+
+# Loading dataset
+
+movies <- read_csv("https://raw.githubusercontent.com/HarshaDevulapalli/indian-movie-theatres/master/indian-movie-theatres.csv")
+
+# Using two fill scales in 1 ggplot object
+library(ggnewscale)
+
+plotdf <- movies |> 
+  group_by(theatre_chain) |> 
+  summarise(
+    n = n(),
+    avg_price = mean(average_ticket_price, na.rm = TRUE)
+  ) |> 
+  drop_na() |> 
+  filter(n >= 5) |> 
+  mutate(
+    theatre_chain = factor(theatre_chain),
+    theatre_chain = fct_reorder(theatre_chain, avg_price),
+    avg_price = round(avg_price, 0)
+    )
+
+# Creating a gradient in the geom_col fill
+plotdf_fill <- plotdf  |> 
+  
+  # Group input by rows: to compute on a data frame a row-at-a-time.
+  rowwise()  |> 
+  
+  # Create Vars
+  summarise(theatre_chain = theatre_chain,
+            avg_price = avg_price,
+            fill_col = list(1:avg_price),
+            height = 1) %>%
+  # Long form
+  unnest(cols = fill_col)
+  
+plotdf |> 
+  ggplot(
+    aes(x = avg_price,
+        y = theatre_chain)) +
+  geom_col(
+    data = plotdf_fill,
+    aes(fill = fill_col,
+        x = height),
+    width = 0.3,
+    position = "stack"
+  ) +
+  paletteer::scale_fill_paletteer_c("ggthemes::Orange-Gold") +
+  new_scale_fill() +
+  # Lollipop Graph, circles
+  geom_point(aes(x = avg_price, 
+                 size = n,
+                 fill = n),
+             pch = 21,
+             col = "white") +
+  geom_text(
+    aes(label = n),
+    hjust = 0.5,
+    vjust = 0.5
+  ) +
+  paletteer::scale_fill_paletteer_c("grDevices::PinkYl",
+                                    direction = -1) +
+  scale_size_continuous(range = c(8, 15)) +
+  labs(
+    x = "Average Ticket Price (in Rs.)",
+    y = NULL,
+    title = "Ticket prices in Indian Movie Theatre Chains",
+    subtitle = "PVR is the most expensive, and also has the most movie theatres.\nThe numbers in circles represent the number of theatres run by the Chain."
+  ) +
+  scale_x_continuous(expand = expansion(c(0, 0.05))) +
+  scale_y_discrete(expand = expansion(c(0.1, 0.1))) +
+  theme_minimal() +
+  theme(
+    legend.position = "none",
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_line(linetype = 2),
+    axis.line.x = element_line(arrow = arrow(length = unit(3, "mm")))
+  )
+```
+
+# **11.3 Discrete colour scales**
+
+Now, I use the data-set with `ggwordcloud` [@ggwordcloud] to make word-clouds of top Netflix Titles. The @fig-default shows the top 10 titles on Netflix by number of hours viewed between January - June 2023, with default colour schemes in ggplot2.
 
 ```{r}
 #| label: fig-default
