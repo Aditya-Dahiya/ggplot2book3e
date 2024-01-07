@@ -311,6 +311,9 @@ The @fig-linetype shows the use of custom scales in line-type and line-width as 
 ```{r}
 #| label: fig-linetype
 #| fig-cap: "Using scale_linetype() to manually control linetype as an aesthetic"
+#| fig-width: 10
+
+
 economics |>
   select(date, psavert, uempmed) |> 
   pivot_longer(
