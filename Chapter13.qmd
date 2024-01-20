@@ -1,8 +1,89 @@
 ---
 title: "Chapter 13"
 subtitle: "Build a plot layer by layer"
+author: "Aditya Dahiya"
+date: "2024-01-20"
+format: 
+  html: 
+    code-fold: true
+    code-copy: hover
+    code-link: true
+execute: 
+  echo: true
+  warning: false
+  error: false
+  cache: true
+filters:
+  - social-share
+share:
+  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter13.html"
+  description: "Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
+  twitter: true
+  facebook: true
+  linkedin: true
+  email: true
+  mastodon: true
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
 ---
 
 ::: callout-warning
 Solutions for this chapter are under construction.
 :::
+
+# **13.3.1 Exercises**
+
+### Question 1
+
+**The first two arguments to ggplot are `data` and `mapping`. The first two arguments to all layer functions are `mapping` and `data`. Why does the order of the arguments differ? (Hint: think about what you set most commonly.)**
+
+The order of arguments in the `ggplot()` function versus the layer functions in the `ggplot2` package in `R` is designed for the convenience and readability of the user code. The rationale behind this design is to prioritize the most frequently modified or specified components.
+
+In the `ggplot()` function, the primary elements you often need to specify are the **data** and **aesthetic mappings** (which define how variables in the data are mapped to visual properties). These are fundamental to setting up the initial plot, so they are placed as the first two arguments for clarity and ease of use.
+
+On the other hand, **when adding layers to the plot** using functions like `geom_`, `stat_`, or `facet_`, the most common operation is to **modify or add aesthetic mappings**. Therefore, the mapping argument comes first, making it easier to focus on specifying how variables are represented in the additional layers without having to repeat the data argument frequently.
+
+In summary, the order of arguments is structured to align with the typical workflow of creating a plot: setting up the initial plot with data and basic aesthetic mappings, and then adding layers where the emphasis is often on modifying or adding aesthetic mappings. This design choice enhances the readability and usability of ggplot2 code.
+
+### Question 2
+
+**The following code uses dplyr to generate some summary statistics about each class of car.**
+
+```         
+library(dplyr) 
+class <- mpg %>%    
+  group_by(class) %>%    
+  summarise(n = n(), hwy = mean(hwy))
+```
+
+Use the data to recreate this plot.
+
+Answer: The code is shown below: —
+
+```{r}
+#| code-fold: false
+#| echo: true
+
+library(tidyverse)
+
+
+class <- mpg |>     
+  group_by(class) |>    
+  summarise(n = n(), hwy = mean(hwy))
+
+
+mpg |> 
+  ggplot(aes(x = class, y = hwy)) +
+  geom_jitter(width = 0.2) +
+  geom_point(
+    data = class,
+    color = "red",
+    size = 3
+  ) +
+  geom_text(
+    data = class,
+    mapping  = aes(label = paste0("n = ", n),
+                   y = 10)
+  )
+```
