@@ -387,7 +387,7 @@ div.csl-indent {
 <li><a href="#continuous-colour-scales" id="toc-continuous-colour-scales" class="nav-link active" data-scroll-target="#continuous-colour-scales"><strong>11.2 Continuous colour scales</strong></a></li>
   <li><a href="#discrete-colour-scales" id="toc-discrete-colour-scales" class="nav-link" data-scroll-target="#discrete-colour-scales"><strong>11.3 Discrete colour scales</strong></a></li>
   <li><a href="#legend-position" id="toc-legend-position" class="nav-link" data-scroll-target="#legend-position"><strong>11.7 Legend Position</strong></a></li>
-  <li><a href="#packages-for-colour-palettes-in-r" id="toc-packages-for-colour-palettes-in-r" class="nav-link" data-scroll-target="#packages-for-colour-palettes-in-r">Packages for colour palettes in <code>R</code></a></li>
+  <li><a href="#some-other-packages-for-colour-palettes-in-r" id="toc-some-other-packages-for-colour-palettes-in-r" class="nav-link" data-scroll-target="#some-other-packages-for-colour-palettes-in-r">Some other packages for colour palettes in <code>R</code></a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter11.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -428,7 +428,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<p>For this Chapter, let’s use the <a href="#0" title="What We Watched: A Netflix Engagement Report">data</a> on Engagement (Hours Watched) report from <a href="#0">Netflix</a> which lists, in descending order, all 18,000+ titles viewed for 50,000+ hours on the platform in the first half of 2023. Credits to the <a href="https://www.data-is-plural.com/">Data is Plural</a> podcast by <a href="#0">Jeremy Singer-Vine</a> for circulating this data-set.</p>
+<p>For this Chapter, let’s use the <a href="#0" title="What We Watched: A Netflix Engagement Report">data</a> on Engagement <em>(Hours Watched)</em> report from <a href="#0">Netflix</a> which lists, in descending order, all 18,000+ titles viewed for 50,000+ hours on the platform in the first half of 2023. Credits to the <a href="https://www.data-is-plural.com/">Data is Plural</a> newsletter by <a href="#0">Jeremy Singer-Vine</a> for circulating this data-set. I recommend <a href="https://www.data-is-plural.com/">subscribing</a> to this newsletter for some amazing data-sets.</p>
 <div class="cell" data-hash="Chapter11_cache/html/unnamed-chunk-1_e0d888c7b9f848d946d5f201832f8bab">
 <details><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span></span>
@@ -447,7 +447,7 @@ div.csl-indent {
 </details>
 </div>
 <section id="continuous-colour-scales" class="level1"><h1><strong>11.2 Continuous colour scales</strong></h1>
-<p>For depicting use of continuous color scales, we use the <a href="https://github.com/HarshaDevulapalli/indian-movie-theatres/blob/master/indian-movie-theatres.csv">dataset</a> by <a href="https://github.com/HarshaDevulapalli">Harsha Devulapalli</a> on <a href="https://github.com/HarshaDevulapalli/indian-movie-theatres">Movie Theaters</a> in 8 Indian metropolitan Cities. Credits to the <a href="https://www.data-is-plural.com/">Data is Plural</a> podcast by <a href="#0">Jeremy Singer-Vine</a> for circulating this data-set.</p>
+<p>For depicting use of continuous color scales, we use the <a href="https://github.com/HarshaDevulapalli/indian-movie-theatres/blob/master/indian-movie-theatres.csv">dataset</a> by <a href="https://github.com/HarshaDevulapalli">Harsha Devulapalli</a> on <a href="https://github.com/HarshaDevulapalli/indian-movie-theatres">Movie Theaters</a> in 8 Indian metropolitan Cities. Credits to the <a href="https://www.data-is-plural.com/">Data is Plural</a> newsletter by <a href="#0">Jeremy Singer-Vine</a> for circulating this data-set.</p>
 <p>The <a href="#fig-col-c">Figure&nbsp;1</a> shows use of two fill scales, one for <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col()</a></code> and other for <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> , both within the same plot. This is possible with use of <code>ggnewscale</code> <span class="citation" data-cites="ggnewscale-2">(<a href="#ref-ggnewscale-2" role="doc-biblioref">Campitelli 2023</a>)</span> that allows us to specify a new fill or colour scale within the same plot.</p>
 <div class="cell" data-hash="Chapter11_cache/html/fig-col-c_dd9be16a076efb849c0487e1e17ec231">
 <details><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Loading dataset</span></span>
@@ -975,7 +975,7 @@ div.csl-indent {
 <figure class="figure"><p><img src="images/delhimovies_tidy.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">Figure&nbsp;4: Map of New Delhi with locations of Movie Theatres, along with number of seats in each (size of circles) and average ticket price (colour of the circle).</figcaption></figure>
 </div>
-</section><section id="packages-for-colour-palettes-in-r" class="level1"><h1>Packages for colour palettes in <code>R</code>
+</section><section id="some-other-packages-for-colour-palettes-in-r" class="level1"><h1>Some other packages for colour palettes in <code>R</code>
 </h1>
 <ul>
 <li>

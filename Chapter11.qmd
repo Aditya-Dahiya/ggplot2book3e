@@ -32,7 +32,7 @@ bibliography: references.bib
 This Chapter has no exercises to solve, so I use various datasets to explore and customize colour scales and legends in `ggplot2`.
 :::
 
-For this Chapter, let's use the [data](#0 "What We Watched: A Netflix Engagement Report") on Engagement (Hours Watched) report from [Netflix](#0) which lists, in descending order, all 18,000+ titles viewed for 50,000+ hours on the platform in the first half of 2023. Credits to the [Data is Plural](https://www.data-is-plural.com/) podcast by [Jeremy Singer-Vine](#0) for circulating this data-set.
+For this Chapter, let's use the [data](#0 "What We Watched: A Netflix Engagement Report") on Engagement *(Hours Watched)* report from [Netflix](#0) which lists, in descending order, all 18,000+ titles viewed for 50,000+ hours on the platform in the first half of 2023. Credits to the [Data is Plural](https://www.data-is-plural.com/) newsletter by [Jeremy Singer-Vine](#0) for circulating this data-set. I recommend [subscribing](https://www.data-is-plural.com/) to this newsletter for some amazing data-sets.
 
 ```{r}
 library(tidyverse)
@@ -53,7 +53,7 @@ netflix <- read_csv(here::here("data", "netflix.csv")) |>
 
 # **11.2 Continuous colour scales**
 
-For depicting use of continuous color scales, we use the [dataset](https://github.com/HarshaDevulapalli/indian-movie-theatres/blob/master/indian-movie-theatres.csv) by [Harsha Devulapalli](https://github.com/HarshaDevulapalli) on [Movie Theaters](https://github.com/HarshaDevulapalli/indian-movie-theatres) in 8 Indian metropolitan Cities. Credits to the [Data is Plural](https://www.data-is-plural.com/) podcast by [Jeremy Singer-Vine](#0) for circulating this data-set.
+For depicting use of continuous color scales, we use the [dataset](https://github.com/HarshaDevulapalli/indian-movie-theatres/blob/master/indian-movie-theatres.csv) by [Harsha Devulapalli](https://github.com/HarshaDevulapalli) on [Movie Theaters](https://github.com/HarshaDevulapalli/indian-movie-theatres) in 8 Indian metropolitan Cities. Credits to the [Data is Plural](https://www.data-is-plural.com/) newsletter by [Jeremy Singer-Vine](#0) for circulating this data-set.
 
 The @fig-col-c shows use of two fill scales, one for `geom_col()` and other for `geom_point()` , both within the same plot. This is possible with use of `ggnewscale` [@ggnewscale-2] that allows us to specify a new fill or colour scale within the same plot.
 
@@ -576,7 +576,7 @@ st_write(
 
 ![Map of New Delhi with locations of Movie Theatres, along with number of seats in each (size of circles) and average ticket price (colour of the circle).](images/delhimovies_tidy.png){#fig-delhi}
 
-# Packages for colour palettes in `R`
+# Some other packages for colour palettes in `R`
 
 -   **`paletteer`:**
     -   The {paletteer} R package [@paletteer-2], developed by *Emil Hvitfeldt*, serves as a comprehensive repository of diverse color palettes sourced from various R packages. With a unified interface, {paletteer} aims to streamline the usage of these palettes, analogous to the "`caret` of palettes." Featuring a collection of 2538 palettes obtained from CRAN packages, the palettes are categorized into discrete and continuous scales. The [paletteer gallery](https://pmassicotte.github.io/paletteer_gallery/) facilitates easy exploration and implementation of these palettes in data visualization through ggplot2, providing users with copy/pastable R code for seamless integration.
