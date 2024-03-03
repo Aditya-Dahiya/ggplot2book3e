@@ -1,8 +1,283 @@
 ---
 title: "Chapter 14"
 subtitle: "Scales and guides"
+author: "Aditya Dahiya"
+date: "2024-03-03"
+format: 
+  html: 
+    code-fold: true
+    code-copy: hover
+    code-link: true
+execute: 
+  echo: true
+  warning: false
+  error: false
+  cache: true
+filters:
+  - social-share
+share:
+  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter14.html"
+  description: "Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
+  twitter: true
+  facebook: true
+  linkedin: true
+  email: true
+  mastodon: true
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
 ---
 
-::: callout-warning
-Solutions for this chapter are under construction.
+::: {.callout-note appearance="minimal"}
+This chapter has no exercises (yet!), so we show some examples to demonstrate the customization of scales.
 :::
+
+```{r}
+#| label: setup
+
+library(tidyverse)
+library(scales)
+library(ggnewscale)
+library(gt)
+library(gtExtras)
+library(cowplot)
+```
+
+A dummy data set to use for demonstrating scales in ggplot2 is shown in @fig-data
+
+```{r}
+#| label: fig-data
+#| fig-cap: "Dummy data set created for demonstration of scales in ggplot2"
+
+tb <- tibble(
+  v_random_number = sample(0:100, size = 10, replace = FALSE),
+  v_continuous = 1:10,
+  v_discrete = sample(letters, 10),
+  v_expo = (1:10)^4
+)
+
+tb |> gt() |> gt_theme_538()
+```
+
+## **14.1 Theory of scales and guides**
+
+Scale specification, naming scheme and fundamental scale types are shown in @fig-1.
+
+```{r}
+#| label: fig-1
+#| fig-cap: "The demonstration of Scale specification, naming scheme and fundamental scale types in ggplot2"
+
+g <- tb |> 
+  ggplot(
+    aes(
+      x = v_continuous,
+      y = v_random_number,
+      colour = v_discrete
+    )
+  ) +
+  geom_point(size = 4) +
+  paletteer::scale_color_paletteer_d(
+    "palettetown::croconaw"
+  ) +
+  labs(
+    subtitle = "ggplot2 automatically assigns scale_*_continuous() to X and Y axis in this plot.\nThe colour scale becomes scale_colour_discrete()"
+  ) +
+  theme_cowplot() +
+  theme(
+    legend.position = "bottom"
+  )
+g
+```
+
+## **14.2 Scale names**
+
+The scales can be easily names, wither in the main `scale_*_*()` function using the argument `name = "..."` , or, more easily using the `labs()` helper function as shown below in @fig-scale-names
+
+```{r}
+#| label: fig-scale-names
+#| fig-cap: "Using labs() helper function to add a title to legends and axis"
+
+g +
+  labs(
+    title = "A nice graph with a title",
+    x = "A continuous variable from 1 to 10",
+    y = "A number (1 to 100)",
+    colour = "A discrete variable",
+    subtitle = "The labs() function helps to easily add titles, subtites, legend titles and axes titles."
+  )
+
+```
+
+## **14.3 Scale breaks**
+
+The `breaks =` argument to the `scale_*_*()` functions is useful in determining the axis-ticks and lines or the colour levels in the legend to be displayed, as shown below in @fig-breaks
+
+```{r}
+#| label: fig-breaks
+#| fig-cap: "Using breaks argument in scale_*_* functions to show customized intervals of 2 on x-axis, and, 1000 on y-axis"
+
+g1 <- tb |> 
+  ggplot(aes(x = v_continuous,
+             y = v_expo,
+             colour = v_discrete)) + 
+  geom_point(
+    size = 6
+    ) +
+  scale_x_continuous(
+    breaks = seq(0, 10, 2),
+    name = "Breaks at even numbers"
+  ) +
+  scale_y_continuous(
+    name = "Exponentially increasing numbers\nBreaks at interval of 2000",
+    breaks = seq(0, 10000, 2000)
+  ) +
+  labs(
+    title = "Using breaks argument in scale_*_* functions",
+    subtitle = "This plot shows customized breaks at interval of 2 on x-axis and 1000 on y-axis"
+  ) +
+  theme_cowplot() +
+  theme(legend.position = "none")
+g1
+```
+
+## **14.4 Scale limits**
+
+The @fig-limits shows an example of setting scale limits using the `limit =` argument in `scale_*_*()` functions in ggplot2. In this example, Y-axis limited upto 8000; and colour scale limtied to levels between `a` to `h` only.
+
+```{r}
+#| label: fig-limits
+#| fig-cap: "Setting scale limits using limit argument in scale_*_* functions: Y-axis limited upto 8000; and colour scale limtied to some levels only" 
+
+g2 <- g1 +
+  scale_y_continuous(
+    limits = c(0, 8000),
+    name = "Limits from 0 to 8000"
+  ) +
+  scale_colour_discrete(
+    limits = letters[1:8],
+    na.value = "lightgrey",
+    name = "Limited to characters between a to h"
+  ) +
+  labs(
+    title = "Setting scale limits",
+    subtitle = "Y-axis limited upto 8000; and colour scale limtied to a - h only"
+  ) +
+  theme(legend.position = "bottom")
+g2
+```
+
+Further, with the `oob =` argument we can control the behavior of out-of-bounds data, as shown in @fig-oob below to squish to data onto the nearest limits.
+
+```{r}
+#| label: fig-oob
+#| fig-cap: "Using oob argument to limit Y-axis up-to 8000, but with out of bounds value squished to 8000"
+
+g2 +
+  scale_y_continuous(
+    limits = c(0, 8000),
+    name = "Limits from 0 to 8000; with squish oob",
+    oob = squish
+  ) +
+  labs(
+    subtitle = "Y-axis limited upto 8000, but with out of bounds value squished to 8000"
+  )
+```
+
+## **14.5 Scale guides**
+
+To demonstrate the use of guides() function, we customize the colour legend from @fig-breaks to generate a customized legend in @fig-guides
+
+```{r}
+#| label: fig-guides
+#| fig-cap: "Using guides() with guide_legend() to customize legend"
+
+g4 <- g1 +
+  theme(legend.position = "bottom") +
+  labs(
+    title = "Customized Legend", 
+    colour = "Using guide_legend() to customize legend") +
+  guides(
+    colour = guide_legend(
+      direction = "vertical",
+      reverse = TRUE,
+      nrow = 2,
+      override.aes = list(
+        size = 4
+      ),
+      theme = theme(
+        legend.text = element_text(
+          face = "bold"
+        )
+      )
+    )
+  )
+g4
+```
+
+## **14.6 Scale transformation**
+
+The continuous scales in @fig-guides can be transformed using the `trans` argument in the `scale_*_*()` function, as shown in @fig-trans below.
+
+```{r}
+#| label: fig-trans
+#| fig-cap: "Continuous scale transformation into a log2 scale using trans argument in the scale_*_*() function"
+
+g4 + 
+  scale_y_continuous(
+    trans = "log2",
+    name = "Transformed Y-Axis\nwith powers of Two"
+  ) +
+  labs(subtitle = "Transformed Y-Axis to the powers of 2",
+       title = "Transformed Axes")
+
+```
+
+## **14.7 Legend merging and splitting**
+
+The @fig-merged shows us that if we’ve mapped colour to both points and lines, the keys will show both points and lines.
+
+```{r}
+#| label: fig-merged
+#| fig-cap: "Merged legends in ggplot2 - the default behaviour"
+g4 +
+  geom_col(
+    fill = "transparent"
+  ) +
+  labs(subtitle = "Merged Legends - default option in ggplot2",
+       title = "Legend merging and splitting (1)",
+       colour = "Merged Legends")
+```
+
+The @fig-split shows us how we can split or hide legends for certain geoms - here we-ve hidden the colour legend for lines / column bars - so the key will show only points (and not lines).
+
+```{r}
+#| label: fig-split
+#| fig-cap: "Hiding specific legends using show.legend = FALSE in one of the geoms"
+
+g4 +
+  geom_col(
+    fill = "transparent",
+    show.legend = FALSE
+  ) +
+  labs(subtitle = "Splitting / Hiding Legends using show.legend = FALSE in one of the geoms",
+       title = "Legend merging and splitting (2)",
+       colour = "Legend only for points")
+```
+
+## **14.8 Legend key glyphs**
+
+Using the same graph as the last section, the @fig-glyph demonstrates the use of argument `key_glyph =` within a `geom_*()` function to change the glyph used in the key of the graph.
+
+```{r}
+#| label: fig-glyph
+#| fig-cap: "The use of argument key_glyph with a geom_*() to change the glyph used in the key"
+
+g4 +
+  geom_col(
+    fill = "transparent",
+    key_glyph = draw_key_path
+  ) +
+  labs(title = "Changing the glyphs for legends",
+       colour = "Customized legend glyph")
+
+```

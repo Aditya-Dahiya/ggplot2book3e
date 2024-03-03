@@ -18,7 +18,7 @@
     "href": "solutions.html",
     "title": "Chapter-wise Solutions",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\n\nTitle\n\n\nSubtitle\n\n\n\n\n\n\nChapter 1\n\n\nIntroduction\n\n\n\n\nChapter 10\n\n\nPosition Scales and axes\n\n\n\n\nChapter 11\n\n\nColour Scales and Legends\n\n\n\n\nChapter 12\n\n\nOther aesthetics\n\n\n\n\nChapter 13\n\n\nBuild a plot layer by layer\n\n\n\n\nChapter 14\n\n\nScales and guides\n\n\n\n\nChapter 15\n\n\nCoordinate Systems\n\n\n\n\nChapter 16\n\n\nFaceting\n\n\n\n\nChapter 17\n\n\nThemes\n\n\n\n\nChapter 18\n\n\nProgramming with ggplot2\n\n\n\n\nChapter 19\n\n\nInternals of ggplot2\n\n\n\n\nChapter 2\n\n\nFirst Steps\n\n\n\n\nChapter 20\n\n\nExtending ggplot2\n\n\n\n\nChapter 21\n\n\nA case study\n\n\n\n\nChapter 3\n\n\nIndividual geoms\n\n\n\n\nChapter 4\n\n\nCollective geoms\n\n\n\n\nChapter 5\n\n\nStatistical Summaries\n\n\n\n\nChapter 6\n\n\nMaps\n\n\n\n\nChapter 7\n\n\nNetworks\n\n\n\n\nChapter 8\n\n\nAnnotations\n\n\n\n\nChapter 9\n\n\nArranging Plots\n\n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Title\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\nTitle\n\n\nSubtitle\n\n\n\n\n\n\nChapter 1\n\n\nIntroduction\n\n\n\n\nChapter 10\n\n\nPosition Scales and axes\n\n\n\n\nChapter 11\n\n\nColour Scales and Legends\n\n\n\n\nChapter 12\n\n\nOther aesthetics\n\n\n\n\nChapter 13\n\n\nBuild a plot layer by layer\n\n\n\n\nChapter 14\n\n\nScales and guides\n\n\n\n\nChapter 15\n\n\nCoordinate Systems\n\n\n\n\nChapter 16\n\n\nFaceting\n\n\n\n\nChapter 17\n\n\nThemes\n\n\n\n\nChapter 18\n\n\nProgramming with ggplot2\n\n\n\n\nChapter 19\n\n\nInternals of ggplot2\n\n\n\n\nChapter 2\n\n\nFirst Steps\n\n\n\n\nChapter 20\n\n\nExtending ggplot2\n\n\n\n\nChapter 21\n\n\nA case study\n\n\n\n\nChapter 3\n\n\nIndividual geoms\n\n\n\n\nChapter 4\n\n\nCollective geoms\n\n\n\n\nChapter 5\n\n\nStatistical Summaries\n\n\n\n\nChapter 6\n\n\nMaps\n\n\n\n\nChapter 7\n\n\nNetworks\n\n\n\n\nChapter 8\n\n\nAnnotations\n\n\n\n\nChapter 9\n\n\nArranging Plots\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "Chapter8.html",
@@ -74,7 +74,12 @@
     "href": "Chapter14.html",
     "title": "Chapter 14",
     "section": "",
-    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+    "text": "This chapter has no exercises (yet!), so we show some examples to demonstrate the customization of scales.\nCodelibrary(tidyverse)\nlibrary(scales)\nlibrary(ggnewscale)\nlibrary(gt)\nlibrary(gtExtras)\nlibrary(cowplot)\nA dummy data set to use for demonstrating scales in ggplot2 is shown in Figure 1\nCodetb &lt;- tibble(\n  v_random_number = sample(0:100, size = 10, replace = FALSE),\n  v_continuous = 1:10,\n  v_discrete = sample(letters, 10),\n  v_expo = (1:10)^4\n)\n\ntb |&gt; gt() |&gt; gt_theme_538()\n\n\n\n\n\n\nv_random_number\nv_continuous\nv_discrete\nv_expo\n\n\n\n6\n1\ni\n1\n\n\n89\n2\nm\n16\n\n\n45\n3\nv\n81\n\n\n100\n4\nc\n256\n\n\n12\n5\ne\n625\n\n\n84\n6\nn\n1296\n\n\n2\n7\nu\n2401\n\n\n59\n8\nx\n4096\n\n\n55\n9\nw\n6561\n\n\n61\n10\nr\n10000\n\n\n\n\n\n\nFigure 1: Dummy data set created for demonstration of scales in ggplot2",
+    "crumbs": [
+      "Home",
+      "The Grammer",
+      "Chapter 14"
+    ]
   },
   {
     "objectID": "Chapter12.html",
@@ -130,7 +135,12 @@
     "href": "Chapter13.html",
     "title": "Chapter 13",
     "section": "",
-    "text": "Warning\n\n\n\nSolutions for this chapter are under construction.\n\n\n13.3.1 Exercises\nQuestion 1\nThe first two arguments to ggplot are data and mapping. The first two arguments to all layer functions are mapping and data. Why does the order of the arguments differ? (Hint: think about what you set most commonly.)\nThe order of arguments in the ggplot() function versus the layer functions in the ggplot2 package in R is designed for the convenience and readability of the user code. The rationale behind this design is to prioritize the most frequently modified or specified components.\nIn the ggplot() function, the primary elements you often need to specify are the data and aesthetic mappings (which define how variables in the data are mapped to visual properties). These are fundamental to setting up the initial plot, so they are placed as the first two arguments for clarity and ease of use.\nOn the other hand, when adding layers to the plot using functions like geom_, stat_, or facet_, the most common operation is to modify or add aesthetic mappings. Therefore, the mapping argument comes first, making it easier to focus on specifying how variables are represented in the additional layers without having to repeat the data argument frequently.\nIn summary, the order of arguments is structured to align with the typical workflow of creating a plot: setting up the initial plot with data and basic aesthetic mappings, and then adding layers where the emphasis is often on modifying or adding aesthetic mappings. This design choice enhances the readability and usability of ggplot2 code.\nQuestion 2\nThe following code uses dplyr to generate some summary statistics about each class of car.\nlibrary(dplyr) \nclass &lt;- mpg %&gt;%    \n  group_by(class) %&gt;%    \n  summarise(n = n(), hwy = mean(hwy))\nUse the data to recreate this plot.\nAnswer: The code is shown below: —\n\nlibrary(tidyverse)\n\n\nclass &lt;- mpg |&gt;     \n  group_by(class) |&gt;    \n  summarise(n = n(), hwy = mean(hwy))\n\n\nmpg |&gt; \n  ggplot(aes(x = class, y = hwy)) +\n  geom_jitter(width = 0.2) +\n  geom_point(\n    data = class,\n    color = \"red\",\n    size = 3\n  ) +\n  geom_text(\n    data = class,\n    mapping  = aes(label = paste0(\"n = \", n),\n                   y = 10)\n  )"
+    "text": "13.3.1 Exercises\nQuestion 1\nThe first two arguments to ggplot are data and mapping. The first two arguments to all layer functions are mapping and data. Why does the order of the arguments differ? (Hint: think about what you set most commonly.)\nThe order of arguments in the ggplot() function versus the layer functions in the ggplot2 package in R is designed for the convenience and readability of the user code. The rationale behind this design is to prioritize the most frequently modified or specified components.\nIn the ggplot() function, the primary elements you often need to specify are the data and aesthetic mappings (which define how variables in the data are mapped to visual properties). These are fundamental to setting up the initial plot, so they are placed as the first two arguments for clarity and ease of use.\nOn the other hand, when adding layers to the plot using functions like geom_, stat_, or facet_, the most common operation is to modify or add aesthetic mappings. Therefore, the mapping argument comes first, making it easier to focus on specifying how variables are represented in the additional layers without having to repeat the data argument frequently.\nIn summary, the order of arguments is structured to align with the typical workflow of creating a plot: setting up the initial plot with data and basic aesthetic mappings, and then adding layers where the emphasis is often on modifying or adding aesthetic mappings. This design choice enhances the readability and usability of ggplot2 code.\nQuestion 2\nThe following code uses dplyr to generate some summary statistics about each class of car.\nlibrary(dplyr) \nclass &lt;- mpg %&gt;%    \n  group_by(class) %&gt;%    \n  summarise(n = n(), hwy = mean(hwy))\nUse the data to recreate this plot.\nAnswer: The code is shown below: —\n\nlibrary(tidyverse)\n\n\nclass &lt;- mpg |&gt;     \n  group_by(class) |&gt;    \n  summarise(n = n(), hwy = mean(hwy))\n\n\nmpg |&gt; \n  ggplot(aes(x = class, y = hwy)) +\n  geom_jitter(width = 0.2) +\n  geom_point(\n    data = class,\n    color = \"red\",\n    size = 3\n  ) +\n  geom_text(\n    data = class,\n    mapping  = aes(label = paste0(\"n = \", n),\n                   y = 10)\n  )",
+    "crumbs": [
+      "Home",
+      "The Grammer",
+      "Chapter 13"
+    ]
   },
   {
     "objectID": "Chapter15.html",
@@ -698,5 +708,101 @@
     "title": "Chapter 11",
     "section": "Some Packages for colour palettes in R\n",
     "text": "Some Packages for colour palettes in R\n\n\n\nRColorBrewer:\n\nThis package sources color palettes from ColorBrewer, delivering a diverse range of qualitative, sequential, and diverging color schemes for ggplot.\n\n\n\nviridis:\n\nDesigned for both colorblind individuals and black-and-white printing, viridis provides perceptually uniform color maps that enhance data visualization.\n\n\n\nviridisLite:\n\nA streamlined version of viridis, viridisLite offers the same high-quality color maps with reduced dependencies for efficient use in ggplot.\n\n\n\nwesanderson:\n\nInspired by Wes Anderson films, this package provides a unique and aesthetically pleasing set of color palettes, adding a distinctive touch to ggplot visuals.\n\n\n\nggsci:\n\nDrawing inspiration from scientific journals like Nature and Science, ggsci offers color palettes that lend a professional and research-oriented look to ggplot visualizations.\n\n\n\nnord:\n\nInspired by the Nord color scheme, this package delivers modern and elegant color palettes for ggplot, adding a contemporary feel to data visualizations.\n\n\n\niWantHue:\n\nEnabling users to generate and explore color palettes based on criteria such as color count and harmony, iWantHue provides flexibility and customization for ggplot visuals.\n\n\n\ncolorspace:\n\nBased on the HCL (Hue-Chroma-Luminance) color space, colorspace offers perceptually uniform and visually appealing color palettes for ggplot, enhancing the aesthetic quality of visualizations.\n\n\n\ndichromat:\n\nSpecifically catering to individuals with color vision deficiencies, dichromat provides color palettes that prioritize accessibility for improved data visualization experiences in ggplot.\n\n\n\nggthemes:\n\nInspired by popular data visualization libraries and software like Excel, Tableau, and Stata, ggthemes offers a variety of color palettes and themes to diversify ggplot visuals."
+  },
+  {
+    "objectID": "Chapter14.html#theory-of-scales-and-guides",
+    "href": "Chapter14.html#theory-of-scales-and-guides",
+    "title": "Chapter 14",
+    "section": "14.1 Theory of scales and guides",
+    "text": "14.1 Theory of scales and guides\nScale specification, naming scheme and fundamental scale types are shown in Figure 2.\n\nCodeg &lt;- tb |&gt; \n  ggplot(\n    aes(\n      x = v_continuous,\n      y = v_random_number,\n      colour = v_discrete\n    )\n  ) +\n  geom_point(size = 4) +\n  paletteer::scale_color_paletteer_d(\n    \"palettetown::croconaw\"\n  ) +\n  labs(\n    subtitle = \"ggplot2 automatically assigns scale_*_continuous() to X and Y axis in this plot.\\nThe colour scale becomes scale_colour_discrete()\"\n  ) +\n  theme_cowplot() +\n  theme(\n    legend.position = \"bottom\"\n  )\ng\n\n\n\n\n\n\nFigure 2: The demonstration of Scale specification, naming scheme and fundamental scale types in ggplot2",
+    "crumbs": [
+      "Home",
+      "The Grammer",
+      "Chapter 14"
+    ]
+  },
+  {
+    "objectID": "Chapter14.html#scale-names",
+    "href": "Chapter14.html#scale-names",
+    "title": "Chapter 14",
+    "section": "14.2 Scale names",
+    "text": "14.2 Scale names\nThe scales can be easily names, wither in the main scale_*_*() function using the argument name = \"...\" , or, more easily using the labs() helper function as shown below in Figure 3\n\nCodeg +\n  labs(\n    title = \"A nice graph with a title\",\n    x = \"A continuous variable from 1 to 10\",\n    y = \"A number (1 to 100)\",\n    colour = \"A discrete variable\",\n    subtitle = \"The labs() function helps to easily add titles, subtites, legend titles and axes titles.\"\n  )\n\n\n\n\n\n\nFigure 3: Using labs() helper function to add a title to legends and axis",
+    "crumbs": [
+      "Home",
+      "The Grammer",
+      "Chapter 14"
+    ]
+  },
+  {
+    "objectID": "Chapter14.html#scale-breaks",
+    "href": "Chapter14.html#scale-breaks",
+    "title": "Chapter 14",
+    "section": "14.3 Scale breaks",
+    "text": "14.3 Scale breaks\nThe breaks = argument to the scale_*_*() functions is useful in determining the axis-ticks and lines or the colour levels in the legend to be displayed, as shown below in Figure 4\n\nCodeg1 &lt;- tb |&gt; \n  ggplot(aes(x = v_continuous,\n             y = v_expo,\n             colour = v_discrete)) + \n  geom_point(\n    size = 6\n    ) +\n  scale_x_continuous(\n    breaks = seq(0, 10, 2),\n    name = \"Breaks at even numbers\"\n  ) +\n  scale_y_continuous(\n    name = \"Exponentially increasing numbers\\nBreaks at interval of 2000\",\n    breaks = seq(0, 10000, 2000)\n  ) +\n  labs(\n    title = \"Using breaks argument in scale_*_* functions\",\n    subtitle = \"This plot shows customized breaks at interval of 2 on x-axis and 1000 on y-axis\"\n  ) +\n  theme_cowplot() +\n  theme(legend.position = \"none\")\ng1\n\n\n\n\n\n\nFigure 4: Using breaks argument in scale_*_* functions to show customized intervals of 2 on x-axis, and, 1000 on y-axis",
+    "crumbs": [
+      "Home",
+      "The Grammer",
+      "Chapter 14"
+    ]
+  },
+  {
+    "objectID": "Chapter14.html#scale-limits",
+    "href": "Chapter14.html#scale-limits",
+    "title": "Chapter 14",
+    "section": "14.4 Scale limits",
+    "text": "14.4 Scale limits\nThe Figure 5 shows an example of setting scale limits using the limit = argument in scale_*_*() functions in ggplot2. In this example, Y-axis limited upto 8000; and colour scale limtied to levels between a to h only.\n\nCodeg2 &lt;- g1 +\n  scale_y_continuous(\n    limits = c(0, 8000),\n    name = \"Limits from 0 to 8000\"\n  ) +\n  scale_colour_discrete(\n    limits = letters[1:8],\n    na.value = \"lightgrey\",\n    name = \"Limited to characters between a to h\"\n  ) +\n  labs(\n    title = \"Setting scale limits\",\n    subtitle = \"Y-axis limited upto 8000; and colour scale limtied to a - h only\"\n  ) +\n  theme(legend.position = \"bottom\")\ng2\n\n\n\n\n\n\nFigure 5: Setting scale limits using limit argument in scale_*_* functions: Y-axis limited upto 8000; and colour scale limtied to some levels only\n\n\n\n\nFurther, with the oob = argument we can control the behavior of out-of-bounds data, as shown in Figure 6 below to squish to data onto the nearest limits.\n\nCodeg2 +\n  scale_y_continuous(\n    limits = c(0, 8000),\n    name = \"Limits from 0 to 8000; with squish oob\",\n    oob = squish\n  ) +\n  labs(\n    subtitle = \"Y-axis limited upto 8000, but with out of bounds value squished to 8000\"\n  )\n\n\n\n\n\n\nFigure 6: Using oob argument to limit Y-axis up-to 8000, but with out of bounds value squished to 8000",
+    "crumbs": [
+      "Home",
+      "The Grammer",
+      "Chapter 14"
+    ]
+  },
+  {
+    "objectID": "Chapter14.html#scale-guides",
+    "href": "Chapter14.html#scale-guides",
+    "title": "Chapter 14",
+    "section": "14.5 Scale guides",
+    "text": "14.5 Scale guides\nTo demonstrate the use of guides() function, we customize the colour legend from Figure 4 to generate a customized legend in Figure 7\n\nCodeg4 &lt;- g1 +\n  theme(legend.position = \"bottom\") +\n  labs(\n    title = \"Customized Legend\", \n    colour = \"Using guide_legend() to customize legend\") +\n  guides(\n    colour = guide_legend(\n      direction = \"vertical\",\n      reverse = TRUE,\n      nrow = 2,\n      override.aes = list(\n        size = 4\n      ),\n      theme = theme(\n        legend.text = element_text(\n          face = \"bold\"\n        )\n      )\n    )\n  )\ng4\n\n\n\n\n\n\nFigure 7: Using guides() with guide_legend() to customize legend",
+    "crumbs": [
+      "Home",
+      "The Grammer",
+      "Chapter 14"
+    ]
+  },
+  {
+    "objectID": "Chapter14.html#scale-transformation",
+    "href": "Chapter14.html#scale-transformation",
+    "title": "Chapter 14",
+    "section": "14.6 Scale transformation",
+    "text": "14.6 Scale transformation\nThe continuous scales in Figure 7 can be transformed using the trans argument in the scale_*_*() function, as shown in Figure 8 below.\n\nCodeg4 + \n  scale_y_continuous(\n    trans = \"log2\",\n    name = \"Transformed Y-Axis\\nwith powers of Two\"\n  ) +\n  labs(subtitle = \"Transformed Y-Axis to the powers of 2\",\n       title = \"Transformed Axes\")\n\n\n\n\n\n\nFigure 8: Continuous scale transformation into a log2 scale using trans argument in the scale_*_*() function",
+    "crumbs": [
+      "Home",
+      "The Grammer",
+      "Chapter 14"
+    ]
+  },
+  {
+    "objectID": "Chapter14.html#legend-merging-and-splitting",
+    "href": "Chapter14.html#legend-merging-and-splitting",
+    "title": "Chapter 14",
+    "section": "14.7 Legend merging and splitting",
+    "text": "14.7 Legend merging and splitting\nThe Figure 9 shows us that if we’ve mapped colour to both points and lines, the keys will show both points and lines.\n\nCodeg4 +\n  geom_col(\n    fill = \"transparent\"\n  ) +\n  labs(subtitle = \"Merged Legends - default option in ggplot2\",\n       title = \"Legend merging and splitting (1)\",\n       colour = \"Merged Legends\")\n\n\n\n\n\n\nFigure 9: Merged legends in ggplot2 - the default behaviour\n\n\n\n\nThe Figure 10 shows us how we can split or hide legends for certain geoms - here we-ve hidden the colour legend for lines / column bars - so the key will show only points (and not lines).\n\nCodeg4 +\n  geom_col(\n    fill = \"transparent\",\n    show.legend = FALSE\n  ) +\n  labs(subtitle = \"Splitting / Hiding Legends using show.legend = FALSE in one of the geoms\",\n       title = \"Legend merging and splitting (2)\",\n       colour = \"Legend only for points\")\n\n\n\n\n\n\nFigure 10: Hiding specific legends using show.legend = FALSE in one of the geoms",
+    "crumbs": [
+      "Home",
+      "The Grammer",
+      "Chapter 14"
+    ]
+  },
+  {
+    "objectID": "Chapter14.html#legend-key-glyphs",
+    "href": "Chapter14.html#legend-key-glyphs",
+    "title": "Chapter 14",
+    "section": "14.8 Legend key glyphs",
+    "text": "14.8 Legend key glyphs\nUsing the same graph as the last section, the Figure 11 demonstrates the use of argument key_glyph = within a geom_*() function to change the glyph used in the key of the graph.\n\nCodeg4 +\n  geom_col(\n    fill = \"transparent\",\n    key_glyph = draw_key_path\n  ) +\n  labs(title = \"Changing the glyphs for legends\",\n       colour = \"Customized legend glyph\")\n\n\n\n\n\n\nFigure 11: The use of argument key_glyph with a geom_*() to change the glyph used in the key",
+    "crumbs": [
+      "Home",
+      "The Grammer",
+      "Chapter 14"
+    ]
   }
 ]

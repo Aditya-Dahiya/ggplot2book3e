@@ -28,10 +28,6 @@ editor_options:
 bibliography: references.bib
 ---
 
-::: callout-warning
-Solutions for this chapter are under construction.
-:::
-
 # **13.3.1 Exercises**
 
 ### Question 1
