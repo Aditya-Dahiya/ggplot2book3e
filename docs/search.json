@@ -147,7 +147,12 @@
     "href": "Chapter15.html",
     "title": "Chapter 15",
     "section": "",
-    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+    "text": "This chapter has no exercises, so I use a dummy dataset to generate some examples of the functions and ggplot2 customization of coordinates discussed in this chapter.\nCodelibrary(tidyverse)\nlibrary(scales)\nlibrary(gt)\nlibrary(gtExtras)\nTo begin with, lets create a dummy data set shown in Figure 1\nCodeset.seed(123)\ntb &lt;- tibble(\n  v_integer = 1:20,\n  v_squared = v_integer ^ 2,\n  v_regress = round(\n    (v_integer ^ 2) + \n      rnorm(\n        20, mean = 0, sd = 1), \n    2),\n  v_random = sample(1:100, 20, replace = FALSE),\n  v_discrete = sample(LETTERS[1:4], 20, replace = TRUE)\n)\ntb |&gt; \n  gt() |&gt; \n  cols_align(\"center\") |&gt; \n  gt_theme_538()\n\n\n\n\n\n\nv_integer\nv_squared\nv_regress\nv_random\nv_discrete\n\n\n\n1\n1\n0.44\n15\nB\n\n\n2\n4\n3.77\n32\nA\n\n\n3\n9\n10.56\n7\nA\n\n\n4\n16\n16.07\n9\nC\n\n\n5\n25\n25.13\n41\nA\n\n\n6\n36\n37.72\n74\nB\n\n\n7\n49\n49.46\n23\nA\n\n\n8\n64\n62.73\n27\nC\n\n\n9\n81\n80.31\n60\nA\n\n\n10\n100\n99.55\n53\nC\n\n\n11\n121\n122.22\n98\nB\n\n\n12\n144\n144.36\n91\nD\n\n\n13\n169\n169.40\n93\nC\n\n\n14\n196\n196.11\n38\nD\n\n\n15\n225\n224.44\n34\nD\n\n\n16\n256\n257.79\n69\nB\n\n\n17\n289\n289.50\n72\nB\n\n\n18\n324\n322.03\n76\nC\n\n\n19\n361\n361.70\n63\nD\n\n\n20\n400\n399.53\n13\nB\n\n\n\n\n\n\nFigure 1: A dummy dataset to use in the examples for this Chapters’ Solutions / Examples",
+    "crumbs": [
+      "Home",
+      "The Grammer",
+      "Chapter 15"
+    ]
   },
   {
     "objectID": "Chapter17.html",
@@ -803,6 +808,18 @@
       "Home",
       "The Grammer",
       "Chapter 14"
+    ]
+  },
+  {
+    "objectID": "Chapter15.html#linear-coordinate-systems",
+    "href": "Chapter15.html#linear-coordinate-systems",
+    "title": "Chapter 15",
+    "section": "15.1 Linear coordinate systems",
+    "text": "15.1 Linear coordinate systems\nLet’s use the example plot in Figure 2 to demonstrate the various changes / customization possible with ggplot2 with coordinates.\n\nCodeg1 &lt;- tb |&gt;\n  ggplot(\n    aes(\n      x = v_integer,\n      y = v_regress\n    )\n  ) +\n  geom_smooth(\n    se = TRUE,\n    colour = \"grey\",\n    fill = \"lightgrey\",\n    alpha = 0.5\n  ) +\n  geom_point(\n    aes(colour = v_discrete),\n    size = 3\n  ) +\n  scale_colour_brewer(palette = \"Dark2\") +\n  theme_minimal() +\n  theme(axis.line = element_line(arrow = arrow()))\ng1\n\n\n\n\n\n\nFigure 2: An example plot which we will later use in various examples of tweaking the Linear Coordinate Systems\n\n\n\n\n15.1.1 Zooming into a plot with coord_cartesian()\n\nThe Figure 3 shows an example of zooming into a plot with coord_cartesian() and its difference from the other option using scale_*_continuous(limits = *) .\n\nCodeg1 +\n  labs(title = \"The Base Plot shows entire data\")\n\ng1 + scale_y_continuous(limits = c(100, 200)) +\n  labs(title = \"Using limits in scale_y_continuous() eliminates\\nall data out of limits\")\n\ng1 + coord_cartesian(ylim = c(100, 200)) +\n  labs(title = \"Using ylim in coord_cartesian() simply zooms-in,\\nand preserves out-of-limits data\")\n\n\n\n\n\n\n\n\n(a) Base Plot\n\n\n\n\n\n\n\n\n\n(b) Limits argument in scale_y_continuous()\n\n\n\n\n\n\n\n\n\n(c) ylim argument in coord_cartesian()\n\n\n\n\n\nFigure 3: Zooming in on a specified portion of Y-Axis: 100 to 200\n\n\n\n15.1.2 Flipping the axes with coord_flip()\n\nThe Figure 4 shows examples of flipping the coordinates, and reasoning as to why it may be better than changing X-axis and Y-axis variables manually, especially if we are using geom_smooth() which uses y ~ x formula by default.\n\nCodeg1 + labs(title = \"The base plot\",\n                subtitle = \"Dependent variable is v_regress, and independent var is v_integer\")\n\ng1 + \n  coord_flip() +\n  labs(title = \"coord_flip()\",\n       subtitle = \"Smoother line still follows v_regress ~ v_integer formula\")\n\ntb |&gt;\n  ggplot(\n    aes(\n      y = v_integer,\n      x = v_regress\n    )\n  ) +\n  geom_smooth(\n    se = TRUE,\n    colour = \"grey\",\n    fill = \"lightgrey\",\n    alpha = 0.5\n  ) +\n  geom_point(\n    aes(colour = v_discrete),\n    size = 3\n  ) +\n  scale_color_brewer(palette = \"Dark2\") +\n  theme_minimal() +\n  theme(axis.line = element_line(arrow = arrow())) + \n  labs(title = \"Exchanging x and y variable\",\n       subtitle = \"Smoother line now follows v_integer ~ v_regress formula\")\n\n\n\n\n\n\n\n\n(a) The base plot\n\n\n\n\n\n\n\n\n\n(b) Smoother line still follows v_regress ~ v_integer formula\n\n\n\n\n\n\n\n\n\n(c) Smoother line now follows v_integer ~ v_regress formula\n\n\n\n\n\nFigure 4: Demonstrating the use of coord_flip()\n\n\n\n15.1.3 Equal scales with coord_fixed()\n\nThe Figure 5 shows the same three graphs above, but in a much better sense now that coordinates are fixed to be equal.\nCodeg1 + labs(title = \"The base plot\")\n\ng1 + coord_fixed() + labs(title = \"The base plot with coord_fixed()\")\n\n\n\n\n\n\n\n\n\n(a) The base plot\n\n\n\n\n\n\n\n\n\n(b) The base plot with fixed coordinates\n\n\n\n\n\n\nFigure 5: Demonstrating the use of coord_fixed()",
+    "crumbs": [
+      "Home",
+      "The Grammer",
+      "Chapter 15"
     ]
   }
 ]

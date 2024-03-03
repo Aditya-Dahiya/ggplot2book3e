@@ -59,7 +59,7 @@ tb <- tibble(
 tb |> gt() |> gt_theme_538()
 ```
 
-## **14.1 Theory of scales and guides**
+## 14.1 Theory of scales and guides
 
 Scale specification, naming scheme and fundamental scale types are shown in @fig-1.
 
@@ -89,7 +89,7 @@ g <- tb |>
 g
 ```
 
-## **14.2 Scale names**
+## 14.2 Scale names
 
 The scales can be easily names, wither in the main `scale_*_*()` function using the argument `name = "..."` , or, more easily using the `labs()` helper function as shown below in @fig-scale-names
 
@@ -108,7 +108,7 @@ g +
 
 ```
 
-## **14.3 Scale breaks**
+## 14.3 Scale breaks
 
 The `breaks =` argument to the `scale_*_*()` functions is useful in determining the axis-ticks and lines or the colour levels in the legend to be displayed, as shown below in @fig-breaks
 
@@ -140,7 +140,7 @@ g1 <- tb |>
 g1
 ```
 
-## **14.4 Scale limits**
+## 14.4 Scale limits
 
 The @fig-limits shows an example of setting scale limits using the `limit =` argument in `scale_*_*()` functions in ggplot2. In this example, Y-axis limited upto 8000; and colour scale limtied to levels between `a` to `h` only.
 
@@ -183,7 +183,7 @@ g2 +
   )
 ```
 
-## **14.5 Scale guides**
+## 14.5 Scale guides
 
 To demonstrate the use of guides() function, we customize the colour legend from @fig-breaks to generate a customized legend in @fig-guides
 
@@ -214,7 +214,7 @@ g4 <- g1 +
 g4
 ```
 
-## **14.6 Scale transformation**
+## 14.6 Scale transformation
 
 The continuous scales in @fig-guides can be transformed using the `trans` argument in the `scale_*_*()` function, as shown in @fig-trans below.
 
@@ -232,7 +232,7 @@ g4 +
 
 ```
 
-## **14.7 Legend merging and splitting**
+## 14.7 Legend merging and splitting
 
 The @fig-merged shows us that if we’ve mapped colour to both points and lines, the keys will show both points and lines.
 
@@ -264,7 +264,7 @@ g4 +
        colour = "Legend only for points")
 ```
 
-## **14.8 Legend key glyphs**
+## 14.8 Legend key glyphs
 
 Using the same graph as the last section, the @fig-glyph demonstrates the use of argument `key_glyph =` within a `geom_*()` function to change the glyph used in the key of the graph.
 

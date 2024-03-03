@@ -369,14 +369,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
    
   <ul>
-<li><a href="#theory-of-scales-and-guides" id="toc-theory-of-scales-and-guides" class="nav-link active" data-scroll-target="#theory-of-scales-and-guides"><strong>14.1 Theory of scales and guides</strong></a></li>
-  <li><a href="#scale-names" id="toc-scale-names" class="nav-link" data-scroll-target="#scale-names"><strong>14.2 Scale names</strong></a></li>
-  <li><a href="#scale-breaks" id="toc-scale-breaks" class="nav-link" data-scroll-target="#scale-breaks"><strong>14.3 Scale breaks</strong></a></li>
-  <li><a href="#scale-limits" id="toc-scale-limits" class="nav-link" data-scroll-target="#scale-limits"><strong>14.4 Scale limits</strong></a></li>
-  <li><a href="#scale-guides" id="toc-scale-guides" class="nav-link" data-scroll-target="#scale-guides"><strong>14.5 Scale guides</strong></a></li>
-  <li><a href="#scale-transformation" id="toc-scale-transformation" class="nav-link" data-scroll-target="#scale-transformation"><strong>14.6 Scale transformation</strong></a></li>
-  <li><a href="#legend-merging-and-splitting" id="toc-legend-merging-and-splitting" class="nav-link" data-scroll-target="#legend-merging-and-splitting"><strong>14.7 Legend merging and splitting</strong></a></li>
-  <li><a href="#legend-key-glyphs" id="toc-legend-key-glyphs" class="nav-link" data-scroll-target="#legend-key-glyphs"><strong>14.8 Legend key glyphs</strong></a></li>
+<li><a href="#theory-of-scales-and-guides" id="toc-theory-of-scales-and-guides" class="nav-link active" data-scroll-target="#theory-of-scales-and-guides">14.1 Theory of scales and guides</a></li>
+  <li><a href="#scale-names" id="toc-scale-names" class="nav-link" data-scroll-target="#scale-names">14.2 Scale names</a></li>
+  <li><a href="#scale-breaks" id="toc-scale-breaks" class="nav-link" data-scroll-target="#scale-breaks">14.3 Scale breaks</a></li>
+  <li><a href="#scale-limits" id="toc-scale-limits" class="nav-link" data-scroll-target="#scale-limits">14.4 Scale limits</a></li>
+  <li><a href="#scale-guides" id="toc-scale-guides" class="nav-link" data-scroll-target="#scale-guides">14.5 Scale guides</a></li>
+  <li><a href="#scale-transformation" id="toc-scale-transformation" class="nav-link" data-scroll-target="#scale-transformation">14.6 Scale transformation</a></li>
+  <li><a href="#legend-merging-and-splitting" id="toc-legend-merging-and-splitting" class="nav-link" data-scroll-target="#legend-merging-and-splitting">14.7 Legend merging and splitting</a></li>
+  <li><a href="#legend-key-glyphs" id="toc-legend-key-glyphs" class="nav-link" data-scroll-target="#legend-key-glyphs">14.8 Legend key glyphs</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter14.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
@@ -964,7 +964,7 @@ Figure&nbsp;1: Dummy data set created for demonstration of scales in ggplot2
 </figcaption></figure>
 </div>
 </div>
-<section id="theory-of-scales-and-guides" class="level2"><h2 class="anchored" data-anchor-id="theory-of-scales-and-guides"><strong>14.1 Theory of scales and guides</strong></h2>
+<section id="theory-of-scales-and-guides" class="level2"><h2 class="anchored" data-anchor-id="theory-of-scales-and-guides">14.1 Theory of scales and guides</h2>
 <p>Scale specification, naming scheme and fundamental scale types are shown in <a href="#fig-1" class="quarto-xref">Figure&nbsp;2</a>.</p>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">tb</span> <span class="op">|&gt;</span> </span>
@@ -998,7 +998,7 @@ Figure&nbsp;2: The demonstration of Scale specification, naming scheme and funda
 </div>
 </div>
 </div>
-</section><section id="scale-names" class="level2"><h2 class="anchored" data-anchor-id="scale-names"><strong>14.2 Scale names</strong></h2>
+</section><section id="scale-names" class="level2"><h2 class="anchored" data-anchor-id="scale-names">14.2 Scale names</h2>
 <p>The scales can be easily names, wither in the main <code>scale_*_*()</code> function using the argument <code>name = "..."</code> , or, more easily using the <code><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs()</a></code> helper function as shown below in <a href="#fig-scale-names" class="quarto-xref">Figure&nbsp;3</a></p>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g</span> <span class="op">+</span></span>
@@ -1020,7 +1020,7 @@ Figure&nbsp;3: Using labs() helper function to add a title to legends and axis
 </div>
 </div>
 </div>
-</section><section id="scale-breaks" class="level2"><h2 class="anchored" data-anchor-id="scale-breaks"><strong>14.3 Scale breaks</strong></h2>
+</section><section id="scale-breaks" class="level2"><h2 class="anchored" data-anchor-id="scale-breaks">14.3 Scale breaks</h2>
 <p>The <code>breaks =</code> argument to the <code>scale_*_*()</code> functions is useful in determining the axis-ticks and lines or the colour levels in the legend to be displayed, as shown below in <a href="#fig-breaks" class="quarto-xref">Figure&nbsp;4</a></p>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="va">tb</span> <span class="op">|&gt;</span> </span>
@@ -1056,7 +1056,7 @@ Figure&nbsp;4: Using breaks argument in scale_*_* functions to show customized i
 </div>
 </div>
 </div>
-</section><section id="scale-limits" class="level2"><h2 class="anchored" data-anchor-id="scale-limits"><strong>14.4 Scale limits</strong></h2>
+</section><section id="scale-limits" class="level2"><h2 class="anchored" data-anchor-id="scale-limits">14.4 Scale limits</h2>
 <p>The <a href="#fig-limits" class="quarto-xref">Figure&nbsp;5</a> shows an example of setting scale limits using the <code>limit =</code> argument in <code>scale_*_*()</code> functions in ggplot2. In this example, Y-axis limited upto 8000; and colour scale limtied to levels between <code>a</code> to <code>h</code> only.</p>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g2</span> <span class="op">&lt;-</span> <span class="va">g1</span> <span class="op">+</span></span>
@@ -1108,7 +1108,7 @@ Figure&nbsp;6: Using oob argument to limit Y-axis up-to 8000, but with out of bo
 </div>
 </div>
 </div>
-</section><section id="scale-guides" class="level2"><h2 class="anchored" data-anchor-id="scale-guides"><strong>14.5 Scale guides</strong></h2>
+</section><section id="scale-guides" class="level2"><h2 class="anchored" data-anchor-id="scale-guides">14.5 Scale guides</h2>
 <p>To demonstrate the use of guides() function, we customize the colour legend from <a href="#fig-breaks" class="quarto-xref">Figure&nbsp;4</a> to generate a customized legend in <a href="#fig-guides" class="quarto-xref">Figure&nbsp;7</a></p>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g4</span> <span class="op">&lt;-</span> <span class="va">g1</span> <span class="op">+</span></span>
@@ -1143,7 +1143,7 @@ Figure&nbsp;7: Using guides() with guide_legend() to customize legend
 </div>
 </div>
 </div>
-</section><section id="scale-transformation" class="level2"><h2 class="anchored" data-anchor-id="scale-transformation"><strong>14.6 Scale transformation</strong></h2>
+</section><section id="scale-transformation" class="level2"><h2 class="anchored" data-anchor-id="scale-transformation">14.6 Scale transformation</h2>
 <p>The continuous scales in <a href="#fig-guides" class="quarto-xref">Figure&nbsp;7</a> can be transformed using the <code>trans</code> argument in the <code>scale_*_*()</code> function, as shown in <a href="#fig-trans" class="quarto-xref">Figure&nbsp;8</a> below.</p>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g4</span> <span class="op">+</span> </span>
@@ -1164,7 +1164,7 @@ Figure&nbsp;8: Continuous scale transformation into a log2 scale using trans arg
 </div>
 </div>
 </div>
-</section><section id="legend-merging-and-splitting" class="level2"><h2 class="anchored" data-anchor-id="legend-merging-and-splitting"><strong>14.7 Legend merging and splitting</strong></h2>
+</section><section id="legend-merging-and-splitting" class="level2"><h2 class="anchored" data-anchor-id="legend-merging-and-splitting">14.7 Legend merging and splitting</h2>
 <p>The <a href="#fig-merged" class="quarto-xref">Figure&nbsp;9</a> shows us that if we’ve mapped colour to both points and lines, the keys will show both points and lines.</p>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g4</span> <span class="op">+</span></span>
@@ -1206,7 +1206,7 @@ Figure&nbsp;10: Hiding specific legends using show.legend = FALSE in one of the 
 </div>
 </div>
 </div>
-</section><section id="legend-key-glyphs" class="level2"><h2 class="anchored" data-anchor-id="legend-key-glyphs"><strong>14.8 Legend key glyphs</strong></h2>
+</section><section id="legend-key-glyphs" class="level2"><h2 class="anchored" data-anchor-id="legend-key-glyphs">14.8 Legend key glyphs</h2>
 <p>Using the same graph as the last section, the <a href="#fig-glyph" class="quarto-xref">Figure&nbsp;11</a> demonstrates the use of argument <code>key_glyph =</code> within a <code>geom_*()</code> function to change the glyph used in the key of the graph.</p>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g4</span> <span class="op">+</span></span>
