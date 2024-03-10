@@ -377,6 +377,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#equal-scales-with-coord_fixed" id="toc-equal-scales-with-coord_fixed" class="nav-link" data-scroll-target="#equal-scales-with-coord_fixed">15.1.3 Equal scales with <code>coord_fixed()</code></a></li>
   </ul>
 </li>
+  <li>
+<a href="#non-linear-coordinate-systems" id="toc-non-linear-coordinate-systems" class="nav-link" data-scroll-target="#non-linear-coordinate-systems">15.2 Non-linear coordinate systems</a>
+  <ul class="collapse">
+<li><a href="#transformations-with-coord_trans" id="toc-transformations-with-coord_trans" class="nav-link" data-scroll-target="#transformations-with-coord_trans">15.2.1 Transformations with <code>coord_trans()</code></a></li>
+  <li><a href="#polar-coordinates-with-coord_polar" id="toc-polar-coordinates-with-coord_polar" class="nav-link" data-scroll-target="#polar-coordinates-with-coord_polar">15.2.2 Polar coordinates with <code>coord_polar()</code></a></li>
+  <li><a href="#map-projections-with-coord_map" id="toc-map-projections-with-coord_map" class="nav-link" data-scroll-target="#map-projections-with-coord_map">15.2.3 Map projections with <code>coord_map()</code></a></li>
+  </ul>
+</li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter15.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
@@ -1242,6 +1250,270 @@ Figure&nbsp;4: Demonstrating the use of coord_flip()
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coordfixed-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;5: Demonstrating the use of coord_fixed()
 </figcaption></figure>
+</div>
+</section></section><section id="non-linear-coordinate-systems" class="level2"><h2 class="anchored" data-anchor-id="non-linear-coordinate-systems">15.2 Non-linear coordinate systems</h2>
+<p>The <a href="#fig-coord1" class="quarto-xref">Figure&nbsp;6</a> demonstrates five types of coordinate systems - first three linear, and the last two non-linear.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>  x_random <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">100</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>,</span>
+<span>  y_random <span class="op">=</span> <span class="op">(</span><span class="fl">1.5</span> <span class="op">*</span> <span class="va">x_random</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">0</span>, <span class="fl">25</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">tb</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x_random</span>, <span class="va">y_random</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Cartesian Coordinates"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g1</span> </span>
+<span></span>
+<span><span class="va">g1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Flipped Coordinates"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"coord_flipped()"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Fixed Coordinates"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"coord_fixed()"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Polar Coordinates"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"coord_polar() transforms x-axis into theta (angle) and y-axis into radius"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_trans.html">coord_trans</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"log10"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Transformed Coordinates"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"coord_trans() with x-axis on log10 scale"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-coord1" class="cell quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-coord1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="fig-coord1-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-coord1-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter15_files/figure-html/fig-coord1-1.png" class="img-fluid figure-img" data-ref-parent="fig-coord1" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coord1-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) coord_cartesian()
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-coord1-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-coord1-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter15_files/figure-html/fig-coord1-2.png" class="img-fluid figure-img" data-ref-parent="fig-coord1" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coord1-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) coord_flip()
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-coord1-3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-coord1-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter15_files/figure-html/fig-coord1-3.png" class="img-fluid figure-img" data-ref-parent="fig-coord1" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coord1-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) coord_fixed()
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-coord1-4" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-coord1-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter15_files/figure-html/fig-coord1-4.png" class="img-fluid figure-img" data-ref-parent="fig-coord1" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coord1-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(d) coord_polar()
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-coord1-5" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-coord1-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter15_files/figure-html/fig-coord1-5.png" class="img-fluid figure-img" data-ref-parent="fig-coord1" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-coord1-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(e) coord_trans()
+</figcaption></figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-coord1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: A demonstration of Polar Coordinates, Flipped Coordinates, Transformed Coordinates and Fixed Coordinates
+</figcaption></figure>
+</div>
+</div>
+<section id="transformations-with-coord_trans" class="level3"><h3 class="anchored" data-anchor-id="transformations-with-coord_trans">15.2.1 Transformations with <code>coord_trans()</code>
+</h3>
+<p>The impact of <code><a href="https://ggplot2.tidyverse.org/reference/coord_trans.html">coord_trans()</a></code> can be demonstrated in <a href="#fig-c-trans" class="quarto-xref">Figure&nbsp;7</a> shown below.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g1</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_trans.html">coord_trans</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"log2"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">2</span><span class="op">^</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Transformation to Log 2 scale"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Note that x-axis has equidistant powers of 2"</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-c-trans" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-c-trans-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter15_files/figure-html/fig-c-trans-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-c-trans-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Use of coord_trans() to change the graph into a non-linear one
+</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="polar-coordinates-with-coord_polar" class="level3"><h3 class="anchored" data-anchor-id="polar-coordinates-with-coord_polar">15.2.2 Polar coordinates with <code>coord_polar()</code>
+</h3>
+<p>The <a href="#fig-polar" class="quarto-xref">Figure&nbsp;8</a> demonstrates various uses of <code><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar()</a></code></p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">tb2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>  Type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, size <span class="op">=</span> <span class="fl">10</span>, replace <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g2</span> <span class="op">&lt;-</span> <span class="va">tb2</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"1"</span>, fill <span class="op">=</span> <span class="va">Type</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"A Stacked Bar-Chart"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_void</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g2</span></span>
+<span></span>
+<span></span>
+<span><span class="va">g2</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"coord_polar()"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Without use of expand = expansion(0)"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g2</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_x_discrete</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html">expansion</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Bulls-Eye Chart"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Using expand = expansion(0) in scale_x_discrete()"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g2</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span><span class="op">(</span>theta <span class="op">=</span> <span class="st">"y"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Pie Chart"</span>,</span>
+<span>       subtitle <span class="op">=</span> <span class="st">"Using theta = 'y' in coord_polar()"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-polar" class="cell quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="fig-polar-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-polar-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter15_files/figure-html/fig-polar-1.png" class="img-fluid figure-img" data-ref-parent="fig-polar" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-polar-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) A Stacked bar chart
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-polar-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-polar-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter15_files/figure-html/fig-polar-2.png" class="img-fluid figure-img" data-ref-parent="fig-polar" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-polar-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Chart with coord_polar()
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-polar-3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-polar-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter15_files/figure-html/fig-polar-3.png" class="img-fluid figure-img" data-ref-parent="fig-polar" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-polar-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Bulls-Eye Chart
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-polar-4" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-polar-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter15_files/figure-html/fig-polar-4.png" class="img-fluid figure-img" data-ref-parent="fig-polar" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-polar-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(d) Pie-Chart
+</figcaption></figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Using polar coordinates
+</figcaption></figure>
+</div>
+</div>
+</section><section id="map-projections-with-coord_map" class="level3"><h3 class="anchored" data-anchor-id="map-projections-with-coord_map">15.2.3 Map projections with <code>coord_map()</code>
+</h3>
+<p>Here, in <a href="#fig-map" class="quarto-xref">Figure&nbsp;9</a>, we show the map of Canada with different projections.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/map_data.html">map_data</a></span><span class="op">(</span></span>
+<span>  database <span class="op">=</span> <span class="st">"world"</span>,</span>
+<span>  regions <span class="op">=</span> <span class="st">"canada"</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
+<span>      x <span class="op">=</span> <span class="va">long</span>,</span>
+<span>      y <span class="op">=</span> <span class="va">lat</span>,</span>
+<span>      group <span class="op">=</span> <span class="va">group</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span></span>
+<span>    fill <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>    colour <span class="op">=</span> <span class="st">"black"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Canada's Map: coord_cartesian()"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g3</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Canada's Map: coord_quickmap()"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g3</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html">coord_map</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Canada's Map: coord_map()"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g3</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html">coord_map</a></span><span class="op">(</span><span class="st">"ortho"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Canada's Map: coord_map(projection = `ortho`)"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-map" class="cell quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="fig-map-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-map-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter15_files/figure-html/fig-map-1.png" class="img-fluid figure-img" data-ref-parent="fig-map" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-map-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Base map in coord_cartesian()
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-map-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-map-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter15_files/figure-html/fig-map-2.png" class="img-fluid figure-img" data-ref-parent="fig-map" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-map-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) coord_quickmap()
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-map-3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-map-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter15_files/figure-html/fig-map-3.png" class="img-fluid figure-img" data-ref-parent="fig-map" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-map-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) coord_map()
+</figcaption></figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Map of Canada with different coordinates
+</figcaption></figure>
+</div>
 </div>
 
 

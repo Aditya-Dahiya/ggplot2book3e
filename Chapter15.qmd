@@ -180,3 +180,154 @@ g1 + labs(title = "The base plot")
 g1 + coord_fixed() + labs(title = "The base plot with coord_fixed()")
 
 ```
+
+## 15.2 Non-linear coordinate systems
+
+The @fig-coord1 demonstrates five types of coordinate systems - first three linear, and the last two non-linear.
+
+```{r}
+#| label: fig-coord1
+#| fig-cap: "A demonstration of Polar Coordinates, Flipped Coordinates, Transformed Coordinates and Fixed Coordinates"
+#| fig-subcap: 
+#|   - "coord_cartesian()"
+#|   - "coord_flip()"
+#|   - "coord_fixed()"
+#|   - "coord_polar()"
+#|   - "coord_trans()"
+
+tb <- tibble(
+  x_random = runif(100, min = 0, max = 100),
+  y_random = (1.5 * x_random) + (rnorm(100, 0, 25))
+)
+
+g1 <- ggplot(tb, aes(x_random, y_random)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  labs(title = "Cartesian Coordinates") +
+  theme_minimal()
+
+g1 
+
+g1 + coord_flip() + 
+  labs(title = "Flipped Coordinates",
+       subtitle = "coord_flipped()")
+
+g1 + coord_fixed() +
+  labs(title = "Fixed Coordinates",
+       subtitle = "coord_fixed()")
+
+g1 + coord_polar() +
+  labs(title = "Polar Coordinates",
+       subtitle = "coord_polar() transforms x-axis into theta (angle) and y-axis into radius")
+
+g1 + coord_trans(x = "log10") +
+  labs(title = "Transformed Coordinates",
+       subtitle = "coord_trans() with x-axis on log10 scale")
+```
+
+### 15.2.1 Transformations with `coord_trans()`
+
+The impact of `coord_trans()` can be demonstrated in @fig-c-trans shown below.
+
+```{r}
+#| label: fig-c-trans
+#| fig-cap: "Use of coord_trans() to change the graph into a non-linear one"
+
+g1 +
+  coord_trans(x = "log2") +
+  scale_x_continuous(breaks = 2^(1:8)) +
+  theme(panel.grid.minor = element_blank()) +
+  labs(
+    title = "Transformation to Log 2 scale",
+    subtitle = "Note that x-axis has equidistant powers of 2"
+  )
+```
+
+### 15.2.2 Polar coordinates with `coord_polar()`
+
+The @fig-polar demonstrates various uses of `coord_polar()`
+
+```{r}
+#| label: fig-polar
+#| fig-cap: "Using polar coordinates"
+#| fig-subcap: 
+#|   - "A Stacked bar chart"
+#|   - "Chart with coord_polar()"
+#|   - "Bulls-Eye Chart"
+#|   - "Pie-Chart"
+
+tb2 <- tibble(
+  Type = sample(LETTERS[1:4], size = 10, replace = T)
+)
+
+g2 <- tb2 |> 
+  ggplot(aes(x = "1", fill = Type)) +
+  geom_bar() +
+  labs(title = "A Stacked Bar-Chart") +
+  theme_void() +
+  theme(legend.position = "bottom")
+
+g2
+
+
+g2 + 
+  coord_polar() +
+  labs(title = "coord_polar()",
+       subtitle = "Without use of expand = expansion(0)")
+
+g2 + 
+  coord_polar() +
+  scale_x_discrete(expand = expansion(0)) +
+  labs(title = "Bulls-Eye Chart",
+       subtitle = "Using expand = expansion(0) in scale_x_discrete()")
+
+g2 + 
+  coord_polar(theta = "y") +
+  labs(title = "Pie Chart",
+       subtitle = "Using theta = 'y' in coord_polar()")
+```
+
+### 15.2.3 Map projections with `coord_map()`
+
+Here, in @fig-map, we show the map of Canada with different projections.
+
+```{r}
+#| label: fig-map
+#| fig-cap: "Map of Canada with different coordinates"
+#| fig-subcap: 
+#|   - "Base map in coord_cartesian()"
+#|   - "coord_quickmap()"
+#|   - "coord_map()"
+#|   - "coord_map(projection = `ortho`)"
+
+g3 <- map_data(
+  database = "world",
+  regions = "canada"
+) |> 
+  ggplot(
+    aes(
+      x = long,
+      y = lat,
+      group = group
+    )
+  ) +
+  geom_polygon(
+    fill = "white",
+    colour = "black"
+  ) +
+  theme(legend.position = "none") +
+  labs(title = "Canada's Map: coord_cartesian()")
+
+g3 + 
+  coord_quickmap() +
+  labs(title = "Canada's Map: coord_quickmap()")
+
+g3 + 
+  coord_map() +
+  labs(title = "Canada's Map: coord_map()")
+
+g3 + 
+  coord_map("ortho") +
+  labs(title = "Canada's Map: coord_map(projection = `ortho`)")
+
+```
