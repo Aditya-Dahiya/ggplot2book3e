@@ -1,8 +1,39 @@
 ---
 title: "Chapter 16"
 subtitle: "Faceting"
+editor_options: 
+  chunk_output_type: console
 ---
 
-::: callout-warning
-Solutions for this chapter are under construction.
-:::
+```{r}
+#| label: setup
+
+library(tidyverse)
+
+```
+
+## **16.7 Exercises**
+
+## Question 1
+
+**Diamonds: display the distribution of price conditional on cut and carat. Try faceting by cut and grouping by carat. Try faceting by carat and grouping by cut. Which do you prefer?**
+
+```{r}
+diamonds
+```
+
+## Question 2
+
+Diamonds: compare the relationship between price and carat for each colour. What makes it hard to compare the groups? Is grouping better or faceting? If you use faceting, what annotation might you add to make it easier to see the differences between panels?
+
+### Question 3
+
+Why is `facet_wrap()` generally more useful than `facet_grid()`?
+
+## Question 4
+
+Recreate the following plot. It facets `mpg2` by class, overlaying a smooth curve fit to the full dataset.
+
+```         
+#> `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
+```
