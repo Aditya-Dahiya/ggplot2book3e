@@ -145,7 +145,7 @@ diamonds |>
        subtitle = "A comparison line allows us to measure and compare the\ncoorelations in different colours of diamonds")
 ```
 
-### Question 3
+## Question 3
 
 **Why is `facet_wrap()` generally more useful than `facet_grid()`?**
 
