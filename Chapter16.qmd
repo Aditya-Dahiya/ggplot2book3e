@@ -1,14 +1,38 @@
 ---
 title: "Chapter 16"
 subtitle: "Faceting"
+author: "Aditya Dahiya"
+date: "2024-03-27"
+format: 
+  html: 
+    code-fold: true
+    code-copy: hover
+    code-link: true
+execute: 
+  echo: true
+  warning: false
+  error: false
+filters:
+  - social-share
+share:
+  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter16.html"
+  description: "Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
+  twitter: true
+  facebook: true
+  linkedin: true
+  email: true
+  mastodon: true
 editor_options: 
   chunk_output_type: console
+bibliography: references.bib
 ---
 
 ```{r}
 #| label: setup
 
 library(tidyverse)
+library(gt)
+library(scales)
 
 ```
 
@@ -18,22 +42,151 @@ library(tidyverse)
 
 **Diamonds: display the distribution of price conditional on cut and carat. Try faceting by cut and grouping by carat. Try faceting by carat and grouping by cut. Which do you prefer?**
 
+The @fig-q1 shows the output of both grouping and faceting by cut and carat respectively. As we can see in @fig-q1-1, the better option out of the two is faceting by cut and grouping by carat.
+
 ```{r}
-diamonds
+#| label: fig-q1
+#| fig-cap: "Distribution of price conditional on cut and carat"
+#| fig-subcap: 
+#|   - "Faceting by cut and grouping by carat"
+#|   - "Faceting by carat and grouping by cut"
+#| fig-width: 10
+#| fig-height: 5
+
+diamonds |> 
+  mutate(carat = cut_width(carat, 1)) |> 
+  ggplot(aes(price, group = carat, colour = carat)) +
+  geom_density() +
+  facet_grid( ~ cut) +
+  theme_minimal() +
+  scale_x_continuous(
+    labels = scales::label_number(scale_cut = scales::cut_short_scale())
+  ) +
+  guides(
+    colour = guide_legend(nrow = 1)
+  ) +
+  theme(legend.position = "bottom",
+        axis.text.x = element_text(angle = 0)) +
+  labs(title = "Faceting by cut and grouping by carat",
+       subtitle = "Cut has been ground into 6 intervals of width 1 each",
+       x = "Price, in US $",
+       y = "Density",
+       colour = "Carat")
+
+diamonds |> 
+  mutate(carat = cut_width(carat, 1)) |> 
+  ggplot(aes(price, group = cut, colour = cut)) +
+  geom_density() +
+  facet_grid( ~ carat) +
+  theme_minimal() +
+  scale_x_continuous(
+    labels = scales::label_number(scale_cut = scales::cut_short_scale())
+  ) +
+  guides(
+    colour = guide_legend(nrow = 1)
+  ) +
+  scale_color_brewer(palette = "Dark2") +
+  theme(legend.position = "bottom",
+        axis.text.x = element_text(angle = 0)) +
+  labs(title = "Faceting by carat and grouping by cut",
+       subtitle = "Cut has been ground into 6 intervals of width 1 each",
+       x = "Price, in US $",
+       y = "Density",
+       colour = "Cut of the diamond")
 ```
 
 ## Question 2
 
-Diamonds: compare the relationship between price and carat for each colour. What makes it hard to compare the groups? Is grouping better or faceting? If you use faceting, what annotation might you add to make it easier to see the differences between panels?
+**Diamonds: compare the relationship between price and carat for each colour. What makes it hard to compare the groups? Is grouping better or faceting? If you use faceting, what annotation might you add to make it easier to see the differences between panels?**
+
+The @fig-q2 shows the use of grouping (@fig-q2-1) and faceting (@fig-q2-2) in comparing the relationship of price and carat for each colour of the diamonds. Using grouping, as shown in @fig-q2-1, leads to over-plotting and makes it nearly impossible to compare across different colours. Using faceting, as shown in @fig-q2-2, we can compare the correlations, but there is no common line with which we can easily compare the panels.
+
+Thus, we can add an annotation of an A-B line using `geom_abline()` with slope of `mean(price) / mean(carat)`, as shown in @fig-q2-3, to make it easier to compare the relationship between price and carat for each colour, and even compare across colours.
+
+```{r}
+#| label: fig-q2
+#| fig-cap: "Comparing the relationship between price and carat for each colour"
+#| fig-subcap: 
+#|   - "Grouping by color of diamond"
+#|   - "Faceting by color of diamond"
+#|   - "Adding an abline annotation to improve comparison in the faceted plot"
+
+diamonds |> 
+  ggplot(aes(x = carat, y = price, color = color, group = color)) +
+  geom_point(size = 0.75) +
+  scale_color_brewer(palette = "Dark2") +
+   labs(x = "Carat", y = "Price, in US $", 
+       title = "Grouping by Color of the diamond",
+       subtitle = "The overplotting - too many points - mnakes it hard to compare groups")
+
+
+diamonds |> 
+  ggplot(aes(x = carat, y = price)) +
+  geom_point(size = 0.5) +
+  facet_wrap(~ color, nrow = 2) +
+  scale_y_continuous(labels = label_number(scale_cut = cut_short_scale(),
+                                           prefix = "$ ")) +
+  labs(x = "Carat", y = "Price, in US $", 
+       title = "Faceting by Color of the diamond",
+       subtitle = "The lack of an (annotation a comparison line) makes it hard to compare groups")
+
+
+slope_var = mean(diamonds$price, na.rm = T) / mean(diamonds$carat, na.rm = T)
+
+diamonds |> 
+  ggplot(aes(x = carat, y = price)) +
+  geom_point(size = 0.5, alpha = 0.25) +
+  geom_abline(slope = slope_var) +
+  facet_wrap(~ color, nrow = 2) +
+  scale_y_continuous(labels = label_number(scale_cut = cut_short_scale(),
+                                           prefix = "$ ")) +
+  labs(x = "Carat", y = "Price, in US $", 
+       title = "Faceting by Color of the diamond",
+       subtitle = "A comparison line allows us to measure and compare the\ncoorelations in different colours of diamonds")
+```
 
 ### Question 3
 
-Why is `facet_wrap()` generally more useful than `facet_grid()`?
+**Why is `facet_wrap()` generally more useful than `facet_grid()`?**
+
+The `facet_wrap()` and `facet_grid()` are both used for creating multiple plots (facets) based on one or more categorical variables. The choice between them depends on the structure of your data and the specific visualization goals.
+
+Here are some reasons why `facet_wrap()` might be considered more useful than `facet_grid()` in certain situations:
+
+1.  **Automatic Layout**: `facet_wrap()` automatically determines the layout of the facets based on the number of levels in the faceting variable. This means you don't need to specify the number of rows or columns, making it more convenient, especially when you have many levels in the faceting variable.
+
+2.  **Single Variable Faceting**: If you only have one categorical variable to facet by, `facet_wrap()` is generally more concise to use than `facet_grid()`, which requires specifying rows and columns even if you only have one variable.
+
+3.  **Variable Number of Panels**: If the number of levels in the faceting variable varies across different subsets of your data, `facet_wrap()` adapts to this variability by adjusting the layout accordingly. `facet_grid()` requires specifying the number of rows and columns, which might not be flexible enough for varying data.
+
+4.  **Free Scales**: `facet_wrap()` can be used to create plots with different scales for each facet (e.g., free y-axis scales), which can be useful for comparing distributions across groups without being constrained by a single scale. `facet_grid()` does not provide this feature directly.
+
+5.  **Non-Rectangular Grids**: If your facets don't form a regular grid (e.g., if you want to arrange them in a circular or irregular pattern), `facet_wrap()` allows for more flexibility in arranging the facets compared to `facet_grid()`.
+
+However, `facet_grid()` has its own advantages, such as allowing you to facet by multiple variables simultaneously, and providing more control over the layout of the facets.
+
+In summary, `facet_wrap()` is generally more useful when you have a single categorical variable to facet by, and you want a flexible layout that adapts to the number of levels in that variable. It's particularly handy when dealing with a variable number of panels or when you want free scales across facets.
 
 ## Question 4
 
 Recreate the following plot. It facets `mpg2` by class, overlaying a smooth curve fit to the full dataset.
 
-```         
-#> `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
+The code shown below recreates the figure in @fig-q4. The clever trick to use is that the faceting variable (`class`) of `mpg2` dataset can be set to `NULL` , i.e. removed to form another data.frame `mpg3` . This exploits the fact that `ggplot2` uses a missing faceting variable to be represented in each facet of the plot. Thus, there is a common smooth line across facets.
+
+```{r}
+#| label: fig-q4
+#| fig-cap: "Recreating the plot in question no. 4 using facet_wrap() and setting faceting variable to NULL for the smooth line plotting"
+
+mpg2 <- subset(mpg, cyl != 5 & drv %in% c("4", "f") & class != "2seater")
+mpg3 <- mpg2 |> 
+  select(-class)
+
+mpg3 <- mpg2 |> 
+  mutate(class = NULL)
+
+mpg2 |>
+  ggplot(aes(x = displ, y = hwy)) +
+  geom_point() +
+  geom_smooth(data = mpg3, se = FALSE) +
+  facet_wrap(~ class)
 ```
