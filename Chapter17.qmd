@@ -1,8 +1,83 @@
 ---
 title: "Chapter 17"
 subtitle: "Themes"
+author: "Aditya Dahiya"
+date: "2024-03-29"
+format: 
+  html: 
+    code-fold: true
+    code-copy: hover
+    code-link: true
+execute: 
+  echo: true
+  warning: false
+  error: false
+  cache: true
+filters:
+  - social-share
+share:
+  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter16.html"
+  description: "Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
+  twitter: true
+  facebook: true
+  linkedin: true
+  email: true
+  mastodon: true
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
 ---
 
-::: callout-warning
-Solutions for this chapter are under construction.
+::: {.callout-tip appearance="minimal"}
+This chapter has some exercises. I also demonstrate some other features using sample data sets.
 :::
+
+```{r}
+#| label: setup
+
+library(tidyverse)
+library(scales)
+library(ggthemes)
+library(gt)
+```
+
+## **17.1 Introduction**
+
+A demonstration on the use of `legend.position = ""` and `legend.justification = ""` with the function `theme()` function of the ggplot2 is shown in @fig-s1 . As we can see in @fig-s1-4, using both arguments together produces the best result.
+
+```{r}
+#| label: fig-s1
+#| fig-cap: "Using legend.postition inside and legend.justification arguments within the theme() function of ggplot2"
+#| fig-subcap: 
+#|   - "Base Plot"
+#|   - "legend.position = 'bottom'"
+#|   - "legend.position = c(1,1)"
+#|   - "With added legend.justification = c(1, 1)"
+#| layout-nrow: 2
+#| fig-width: 5
+
+g1 <- gt::gtcars |> 
+  ggplot(aes(hp, mpg_h, colour = bdy_style)) +
+  geom_jitter() +
+  labs(
+    x = "Engine Horsepower (hp)",
+    y = "Mileage (miles per gallon)",
+    colour = "Body Style"
+  ) +
+  paletteer::scale_colour_paletteer_d("nbapalettes::clippers_original") +
+  theme_minimal() +
+  theme(plot.subtitle = element_text(hjust = 0.5))
+
+g1 + labs(subtitle = "Base Plot")
+
+g1 + theme(legend.position = "bottom") + labs(subtitle = "legend.position = 'bottom'")
+
+g1 +
+  theme(legend.position = c(1,1)) + 
+  labs(subtitle = "legend.position = c(1,1)")
+
+g1 + 
+  theme(legend.position = c(1,1),
+        legend.justification = c(1, 1)) +
+  labs(subtitle = "With added legend.justification = c(1, 1)")
+```

@@ -159,7 +159,7 @@
     "href": "Chapter17.html",
     "title": "Chapter 17",
     "section": "",
-    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+    "text": "This chapter has some exercises. I also demonstrate some other features using sample data sets.\nCode\nlibrary(tidyverse)\nlibrary(scales)\nlibrary(ggthemes)\nlibrary(gt)"
   },
   {
     "objectID": "Chapter19.html",
@@ -868,5 +868,12 @@
     "title": "Chapter 16",
     "section": "Question 3",
     "text": "Question 3\nWhy is facet_wrap() generally more useful than facet_grid()?\nThe facet_wrap() and facet_grid() are both used for creating multiple plots (facets) based on one or more categorical variables. The choice between them depends on the structure of your data and the specific visualization goals.\nHere are some reasons why facet_wrap() might be considered more useful than facet_grid() in certain situations:\n\nAutomatic Layout: facet_wrap() automatically determines the layout of the facets based on the number of levels in the faceting variable. This means you don’t need to specify the number of rows or columns, making it more convenient, especially when you have many levels in the faceting variable.\nSingle Variable Faceting: If you only have one categorical variable to facet by, facet_wrap() is generally more concise to use than facet_grid(), which requires specifying rows and columns even if you only have one variable.\nVariable Number of Panels: If the number of levels in the faceting variable varies across different subsets of your data, facet_wrap() adapts to this variability by adjusting the layout accordingly. facet_grid() requires specifying the number of rows and columns, which might not be flexible enough for varying data.\nFree Scales: facet_wrap() can be used to create plots with different scales for each facet (e.g., free y-axis scales), which can be useful for comparing distributions across groups without being constrained by a single scale. facet_grid() does not provide this feature directly.\nNon-Rectangular Grids: If your facets don’t form a regular grid (e.g., if you want to arrange them in a circular or irregular pattern), facet_wrap() allows for more flexibility in arranging the facets compared to facet_grid().\n\nHowever, facet_grid() has its own advantages, such as allowing you to facet by multiple variables simultaneously, and providing more control over the layout of the facets.\nIn summary, facet_wrap() is generally more useful when you have a single categorical variable to facet by, and you want a flexible layout that adapts to the number of levels in that variable. It’s particularly handy when dealing with a variable number of panels or when you want free scales across facets."
+  },
+  {
+    "objectID": "Chapter17.html#introduction",
+    "href": "Chapter17.html#introduction",
+    "title": "Chapter 17",
+    "section": "17.1 Introduction",
+    "text": "17.1 Introduction\nA demonstration on the use of legend.position = \"\" and legend.justification = \"\" with the function theme() function of the ggplot2 is shown in Figure 1 . As we can see in Figure 1 (d), using both arguments together produces the best result.\n\n\nCode\ng1 &lt;- gt::gtcars |&gt; \n  ggplot(aes(hp, mpg_h, colour = bdy_style)) +\n  geom_jitter() +\n  labs(\n    x = \"Engine Horsepower (hp)\",\n    y = \"Mileage (miles per gallon)\",\n    colour = \"Body Style\"\n  ) +\n  paletteer::scale_colour_paletteer_d(\"nbapalettes::clippers_original\") +\n  theme_minimal() +\n  theme(plot.subtitle = element_text(hjust = 0.5))\n\ng1 + labs(subtitle = \"Base Plot\")\n\ng1 + theme(legend.position = \"bottom\") + labs(subtitle = \"legend.position = 'bottom'\")\n\ng1 +\n  theme(legend.position = c(1,1)) + \n  labs(subtitle = \"legend.position = c(1,1)\")\n\ng1 + \n  theme(legend.position = c(1,1),\n        legend.justification = c(1, 1)) +\n  labs(subtitle = \"With added legend.justification = c(1, 1)\")\n\n\n\n\n\n\n\n\n(a) Base Plot\n\n\n\n\n\n\n\n(b) legend.position = ‘bottom’\n\n\n\n\n\n\n\n\n\n(c) legend.position = c(1,1)\n\n\n\n\n\n\n\n(d) With added legend.justification = c(1, 1)\n\n\n\n\nFigure 1: Using legend.postition inside and legend.justification arguments within the theme() function of ggplot2"
   }
 ]

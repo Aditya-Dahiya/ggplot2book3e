@@ -426,7 +426,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<div class="cell">
+<div class="cell" data-hash="Chapter16_cache/html/setup_82d67029f450bcb75866b18e158ef532">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -595,7 +595,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="question-4">Question 4</h2>
 <p>Recreate the following plot. It facets <code>mpg2</code> by class, overlaying a smooth curve fit to the full dataset.</p>
 <p>The code shown below recreates the figure in <a href="#fig-q4">Figure&nbsp;3</a>. The clever trick to use is that the faceting variable (<code>class</code>) of <code>mpg2</code> dataset can be set to <code>NULL</code> , i.e.&nbsp;removed to form another data.frame <code>mpg3</code> . This exploits the fact that <code>ggplot2</code> uses a missing faceting variable to be represented in each facet of the plot. Thus, there is a common smooth line across facets.</p>
-<div class="cell">
+<div class="cell" data-hash="Chapter16_cache/html/fig-q4_de8ef6f6096121d086b2734b0d92126f">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mpg2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(mpg, cyl <span class="sc">!=</span> <span class="dv">5</span> <span class="sc">&amp;</span> drv <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"4"</span>, <span class="st">"f"</span>) <span class="sc">&amp;</span> class <span class="sc">!=</span> <span class="st">"2seater"</span>)</span>
