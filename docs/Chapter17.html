@@ -386,6 +386,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><strong>17.1 Introduction</strong></a></li>
+  <li><a href="#complete-themes" id="toc-complete-themes" class="nav-link" data-scroll-target="#complete-themes"><strong>17.2 Complete themes</strong></a>
+  <ul class="collapse">
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><strong>17.2.1 Exercises</strong></a></li>
+  </ul></li>
+  <li><a href="#modifying-theme-components" id="toc-modifying-theme-components" class="nav-link" data-scroll-target="#modifying-theme-components"><strong>17.3 Modifying theme components</strong></a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter17.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -456,7 +461,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Body Style"</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  paletteer<span class="sc">::</span><span class="fu">scale_colour_paletteer_d</span>(<span class="st">"nbapalettes::clippers_original"</span>) <span class="sc">+</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Base Plot"</span>)</span>
@@ -469,10 +474,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> </span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>),</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"With added legend.justification = c(1, 1)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="fl">1.1</span>, <span class="fl">1.1</span>)) <span class="sc">+</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"With added legend.justification = c(1.1, 1.1)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div id="fig-s1" class="cell quarto-layout-panel" data-hash="Chapter17_cache/html/fig-s1_a0f9619cdd4691ee27937b8557a9657e">
+<div id="fig-s1" class="cell quarto-layout-panel" data-hash="Chapter17_cache/html/fig-s1_a2548e11a7a4c3eba98fb069c172ad87">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
@@ -505,7 +510,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="fig-s1-4" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="Chapter17_files/figure-html/fig-s1-4.png" class="img-fluid figure-img" data-ref-parent="fig-s1" width="480"></p>
-<figcaption class="figure-caption">(d) With added legend.justification = c(1, 1)</figcaption>
+<figcaption class="figure-caption">(d) With added legend.justification = c(1.1, 1.1)</figcaption>
 </figure>
 </div>
 </div>
@@ -514,6 +519,158 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
+</section>
+<section id="complete-themes" class="level2">
+<h2 class="anchored" data-anchor-id="complete-themes"><strong>17.2 Complete themes</strong></h2>
+<p>A very good argument to use with <code>theme_*()</code> family of functions is the <code>base_size =</code> argument to fix a base size for all text used in the plot, and <code>base_family =</code> to set the font for the entire plot.</p>
+<section id="exercises" class="level3">
+<h3 class="anchored" data-anchor-id="exercises"><strong>17.2.1 Exercises</strong></h3>
+<section id="question-1" class="level4">
+<h4 class="anchored" data-anchor-id="question-1">Question 1</h4>
+</section>
+<section id="try-out-all-the-themes-in-ggthemes.-which-do-you-like-the-best" class="level4">
+<h4 class="anchored" data-anchor-id="try-out-all-the-themes-in-ggthemes.-which-do-you-like-the-best"><strong>Try out all the themes in <code>ggthemes</code>. Which do you like the best?</strong></h4>
+<p>The various themes of <code>ggthemes</code> are shown in <strong>?@fig-q1</strong>. The best one seems to be <code>theme_clean()</code> as it allows easy customization.</p>
+<div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> g1 <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> ggthemes<span class="sc">::</span><span class="fu">theme_calc</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"theme_calc()"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> ggthemes<span class="sc">::</span><span class="fu">theme_clean</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"theme_clean()"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> ggthemes<span class="sc">::</span><span class="fu">theme_economist</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"theme_economist()"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> ggthemes<span class="sc">::</span><span class="fu">theme_excel_new</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"theme_excel_new()"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> ggthemes<span class="sc">::</span><span class="fu">theme_few</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"theme_few()"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> ggthemes<span class="sc">::</span><span class="fu">theme_gdocs</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"theme_gdocs()"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> ggthemes<span class="sc">::</span><span class="fu">theme_wsj</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"theme_wsj()"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> ggthemes<span class="sc">::</span><span class="fu">theme_solarized_2</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"theme_soloarized_2()"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell quarto-layout-panel" data-hash="Chapter17_cache/html/fig-q1_fcec0136962a277a0f3568fef8394c78">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-q1-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Chapter17_files/figure-html/fig-q1-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;2: <strong>?(caption)</strong></figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-q1-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Chapter17_files/figure-html/fig-q1-2.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;3: <strong>?(caption)</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-q1-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Chapter17_files/figure-html/fig-q1-3.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;4: <strong>?(caption)</strong></figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-q1-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Chapter17_files/figure-html/fig-q1-4.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;5: <strong>?(caption)</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-q1-5" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Chapter17_files/figure-html/fig-q1-5.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;6: <strong>?(caption)</strong></figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-q1-6" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Chapter17_files/figure-html/fig-q1-6.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;7: <strong>?(caption)</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-q1-7" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Chapter17_files/figure-html/fig-q1-7.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;8: <strong>?(caption)</strong></figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-q1-8" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Chapter17_files/figure-html/fig-q1-8.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;9: <strong>?(caption)</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="question-2" class="level4">
+<h4 class="anchored" data-anchor-id="question-2">Question 2</h4>
+<p><strong>What aspects of the default theme do you like? What don’t you like?<br>
+What would you change?</strong></p>
+<p>In ggplot2, the default theme (<code>theme_gray()</code>) has several aspects that align well with Tufte’s principles and are conducive to clear and effective data visualization:</p>
+<ol type="1">
+<li><p><strong>Minimalist Design</strong>: The default theme employs a clean and minimalist design, which is in line with Tufte’s principle of maximizing data-ink ratio. This means that unnecessary elements are minimized, allowing the data to stand out more prominently.</p></li>
+<li><p><strong>Neutral Background</strong>: The light gray background in the default theme provides a neutral canvas for the data to be presented on. This is generally preferable for readability, especially when using a white background, as it reduces contrast and minimizes visual distractions.</p></li>
+<li><p><strong>Simple Grid Lines</strong>: The faint grid lines in the default theme help guide the viewer’s eye across the plot without overpowering the data.</p></li>
+</ol>
+<p>However, there are a few aspects of the default theme that could be improved to better align with Tufte’s principles, which I generally follow,: —</p>
+<ol type="1">
+<li><p><strong>Thinner Axes and Tick Marks</strong>: Tufte suggests using thinner axes and tick marks to further reduce visual clutter and draw attention to the data. The default theme could benefit from thinner lines for both axes and tick marks.</p></li>
+<li><p><strong>Increased Font Size for Labels and Titles</strong>: While the default font size is generally adequate, increasing the font size slightly for axis labels, titles, and annotations can enhance readability, especially when viewing plots from a distance or on smaller screens.</p></li>
+<li><p><strong>Adjustment of Plot Margins</strong>: Tufte emphasizes the importance of maximizing the data-ink ratio by minimizing non-data ink, including unnecessary margins. Adjusting the default plot margins to be more compact could help achieve this goal and allow for more space dedicated to the presentation of data.</p></li>
+</ol>
+<p>Overall, while the default theme in ggplot2 aligns well with Tufte’s principles in many aspects, there are opportunities for further refinement to enhance clarity, simplicity, and effectiveness in data visualization. These suggested changes aim to optimize the balance between aesthetic appeal and functional clarity in accordance with Tufte’s principles.</p>
+</section>
+<section id="question-3" class="level4">
+<h4 class="anchored" data-anchor-id="question-3">Question 3</h4>
+<p><strong>Look at the plots in your favourite scientific journal. What theme do they most resemble? What are the main differences?</strong></p>
+<p>In many scientific journals, especially those focused on data visualization and analysis, the plots often resemble themes that prioritize clarity, simplicity, and effective communication of information. One common theme that many plots in scientific journals resemble is the “classic” theme in ggplot2, which emphasizes clean lines, minimal distractions, and a focus on the data itself.</p>
+<p>The example image for a graph / plot from the journal <strong><em>Nature</em></strong> is given below:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://media.springernature.com/m685/springer-static/image/art%3A10.1038%2Fs41551-017-0079/MediaObjects/41551_2017_Article_BFs415510170079_Fig1_HTML.jpg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Credits: https://media.springernature.com/m685/springer-static/image/art%3A10.1038%2Fs41551-017-0079/MediaObjects/41551_2017_Article_BFs415510170079_Fig1_HTML.jpg</figcaption>
+</figure>
+</div>
+<p>The main differences between the plots in scientific journals and the “classic” ggplot2 theme lie in the specific customizations and adjustments made to suit the needs of the particular journal’s style and the preferences of its audience. Here are some of the main differences that may be observed:</p>
+<ol type="1">
+<li><p><strong>Color Palette</strong>: Scientific journals often have specific guidelines for color usage, particularly for distinguishing between different groups or conditions in the data. While the “classic” ggplot2 theme uses a simple default color palette, plots in scientific journals may employ custom color schemes that adhere to the journal’s style guidelines.</p></li>
+<li><p><strong>Font Choices</strong>: Journals typically have standardized fonts for text, including axis labels, titles, and annotations. While ggplot2 allows for customization of fonts, plots in scientific journals may use fonts that match the journal’s style guide, which may differ from the default fonts in ggplot2.</p></li>
+<li><p><strong>Axis and Tick Mark Styles</strong>: The style and thickness of axes and tick marks may be adjusted in scientific journal plots to match the journal’s aesthetic preferences or to enhance readability. This could include changes such as thinner lines, different line styles, or adjustments to the length and spacing of tick marks.</p></li>
+<li><p><strong>Annotation and Labeling</strong>: Scientific journal plots often include detailed annotations, such as significance indicators, error bars, or additional text descriptions. These annotations may be placed strategically to ensure clarity and precision in conveying the results of the analysis.</p></li>
+<li><p><strong>Plot Aspect Ratio and Size</strong>: The aspect ratio and overall size of plots in scientific journals may be adjusted to fit within the journal’s page layout and to optimize presentation on both digital and print platforms. This could involve resizing plots to ensure they are legible and visually appealing at different scales.</p></li>
+</ol>
+<p>Overall, while plots in scientific journals share similarities with the “classic” ggplot2 theme in their emphasis on clarity and simplicity, they often incorporate customizations to align with the journal’s style guidelines and the preferences of its audience. These customizations aim to enhance the effectiveness of the visual communication of data within the context of the specific publication.</p>
+</section>
+</section>
+</section>
+<section id="modifying-theme-components" class="level2">
+<h2 class="anchored" data-anchor-id="modifying-theme-components"><strong>17.3 Modifying theme components</strong></h2>
 
 
 </section>
