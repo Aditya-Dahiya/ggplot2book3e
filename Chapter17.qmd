@@ -16,7 +16,7 @@ execute:
 filters:
   - social-share
 share:
-  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter16.html"
+  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter17.html"
   description: "Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
   twitter: true
   facebook: true
