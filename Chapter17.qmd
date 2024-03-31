@@ -631,6 +631,7 @@ To systematically explore the effects of `hjust` with a multi-line title in `ggp
 #|   - "hjust = 0.6"
 #|   - "hjust = 0.8"
 #|   - "hjust = 1"
+#| layout-ncol: 2
 
 
 # Create a basic plot with a multi-line title
@@ -653,3 +654,7 @@ for (i in hjust_values) {
 
 
 ```
+
+## **17.5 Saving your output**
+
+The code snippet used to produce @fig-mod-tm demonstrates the use of `ggsave()` function to save images.
