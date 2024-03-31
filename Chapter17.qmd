@@ -96,6 +96,16 @@ The various themes of `ggthemes` are shown in @fig-q1. The best one seems to be 
 
 ```{r}
 #| label: fig-q1
+#| fig-cap: "The various themes in ggthemes package"
+#| fig-subcap: 
+#|   - "theme_calc()"
+#|   - "theme_clean()"
+#|   - "theme_economist()"
+#|   - "theme_excel_new()"
+#|   - "theme_few()"
+#|   - "theme_gdocs()"
+#|   - "theme_wsj()"
+#|   - "theme_solarized_2()"
 #| layout-ncol: 2
 
 g2 <- g1 + theme(legend.position = "bottom")
@@ -163,6 +173,483 @@ The main differences between the plots in scientific journals and the "classic" 
 
 5.  **Plot Aspect Ratio and Size**: The aspect ratio and overall size of plots in scientific journals may be adjusted to fit within the journal's page layout and to optimize presentation on both digital and print platforms. This could involve resizing plots to ensure they are legible and visually appealing at different scales.
 
-Overall, while plots in scientific journals share similarities with the "classic" ggplot2 theme in their emphasis on clarity and simplicity, they often incorporate customizations to align with the journal's style guidelines and the preferences of its audience. These customizations aim to enhance the effectiveness of the visual communication of data within the context of the specific publication.
+Overall, while plots in scientific journals share similarities with the "classic" ggplot2 theme in their emphasis on clarity and simplicity, they often incorporate customization to align with the journal's style guidelines and the preferences of its audience. These customization aim to enhance the effectiveness of the visual communication of data within the context of the specific publication.
 
 ## **17.3 Modifying theme components**
+
+The example in @fig-mod-tm shows heavy customization of the theme elements. The code is also given below.
+
+```{r}
+#| eval: false
+
+# =============================================================================#
+# About the Dataset-------------------------------------------------------------
+# =============================================================================#
+
+# Source URL: https://hdr.undp.org/data-center/documentation-and-downloads
+# Credits: UNDP Human Development Reports
+# Human development, quantified. One of the most widely recognized measures, 
+# the United Nations' Human Development Index amalgamates data on life 
+# expectancy, per capita income, and educational attainment into a singular 
+# value for each country-year. The UN offers downloadable files and an API 
+# encompassing all yearly HDI rankings and sub-indicators spanning from 1990 to
+# 2022. These resources also encompass information from correlated indices like 
+# the Inequality-adjusted Human Development Index, Gender Development Index, and 
+# Gender Inequality Index.
+
+# =============================================================================#
+# Findings ---------------------------------------------------------------------
+# =============================================================================#
+
+# The best performing countries, in terms of HDI improvement between 1990 and 
+# 2022 are: China, Myanmar, Bangladesh, Turkiye, and, Morocco
+# The wrost performing countries, in terms of HDI reduction / least increase
+# between 1990 and 2022 are: Syria, Ukraine, Namibia, Libya, and, San Marino
+
+# =============================================================================#
+# Library Load-in---------------------------------------------------------------
+# =============================================================================#
+
+# Data Wrangling Tools
+library(tidyverse)
+library(janitor)
+library(here)
+library(sf)
+
+# Final plot (ggplot2) tools
+library(scales)
+library(fontawesome)
+library(ggtext)
+library(showtext)
+library(colorspace)
+
+
+# =============================================================================#
+# Data Load-in, EDA & Data Wrangling--------------------------------------------
+# =============================================================================#
+
+# Read in the UNDP data
+url <- "https://hdr.undp.org/sites/default/files/2023-24_HDR/HDR23-24_Composite_indices_complete_time_series.csv"
+
+hdi <- read_csv(url)
+
+# Number of countries to highlight in each
+nos <- 5
+
+# A wide format and housekeeping to filter out relevant variables, and also
+# change names of some countries to easily recognizable names
+dfwide <- hdi |> 
+  select(iso3, 
+         country, 
+         region, 
+         (contains("hdi_") & !(contains("_m_")) & !(contains("_f_")) & !(contains("ihdi")) & !(contains("phdi")) & !(contains("rank"))
+          )
+         ) |> 
+  filter(!(country %in% c("East Asia and the Pacific"))) |> 
+  mutate(country = if_else(country == "T\xfcrkiye", "Turkiye", country),
+         country = if_else(country == "Syrian Arab Republic", "Syria", country))
+
+# Long (tidy) format of the data (needed for plotting facets in ggplot2)
+df1 <- dfwide |> 
+  pivot_longer(
+    cols = contains("hdi"),
+    names_to = "year",
+    values_to = "value"
+  ) |> 
+  mutate(year = parse_number(year))
+
+# Improvement amongst countries
+df_imp <- dfwide |> 
+  mutate(improvement = hdi_2022 - hdi_1990) |> 
+  select(country, improvement)
+
+# Worst off countries
+least_imp <- df_imp |> 
+  slice_min(order_by = improvement, n = nos) |> 
+  pull(country)
+
+# Best improvement countries
+most_imp <- df_imp |> 
+  slice_max(order_by = improvement, n = nos) |> 
+  pull(country)
+
+least_imp
+most_imp
+# A tibble for actual percentage change in HDI - to show in graph
+changes <- bind_rows(
+  df_imp |> 
+    slice_min(order_by = improvement, n = nos),
+  df_imp |> 
+    slice_max(order_by = improvement, n = nos)
+) |> 
+  mutate(
+    improvement = round(100 * improvement, 1)
+  )
+
+# Tibble to actually use in plotting
+plotdf <- df1 |> 
+  mutate(
+    most_improved = if_else(country %in% most_imp, country, NA),
+    least_improved= if_else(country %in% least_imp, country, NA)
+  ) |> 
+  pivot_longer(
+    cols = c(most_improved, least_improved),
+    names_to = "facet_var",
+    values_to = "colour_var"
+  ) |> 
+  mutate(colour_var = fct(colour_var, levels = c(least_imp, most_imp))) |> 
+  left_join(changes)
+# =============================================================================#
+# Options & Visualization Parameters--------------------------------------------
+# =============================================================================#
+
+# Load fonts
+# Font for titles
+font_add_google("Racing Sans One",
+  family = "title_font"
+) 
+
+# Font for the caption
+font_add_google("Saira Extra Condensed",
+  family = "caption_font"
+) 
+
+# Font for plot text
+font_add_google("Jockey One",
+  family = "body_font"
+) 
+
+showtext_auto()
+
+# Define colours
+reds <- paletteer::paletteer_d("RColorBrewer::Reds", direction = -1)[1:nos]
+greens <- paletteer::paletteer_d("RColorBrewer::Greens", direction = -1)[1:nos]
+mypal <- c(reds, greens)
+
+
+bg_col <- "#ffffff"   # Background Colour
+text_col <- "#404040" # Colour for the text
+text_hil <- '#757575' # Colour for highlighted text
+
+# Define Text Size
+ts <- unit(20, units = "cm") # Text Size
+
+# Caption stuff
+sysfonts::font_add(
+  family = "Font Awesome 6 Brands",
+  regular = here::here("docs", "Font Awesome 6 Brands-Regular-400.otf")
+)
+github <- "&#xf09b"
+github_username <- "aditya-dahiya"
+xtwitter <- "&#xe61b"
+xtwitter_username <- "@adityadahiyaias"
+social_caption_1 <- glue::glue("<span style='font-family:\"Font Awesome 6 Brands\";'>{github};</span> <span style='color: {text_hil}'>{github_username}  </span>")
+social_caption_2 <- glue::glue("<span style='font-family:\"Font Awesome 6 Brands\";'>{xtwitter};</span> <span style='color: {text_hil}'>{xtwitter_username}</span>")
+
+
+# Add text to plot--------------------------------------------------------------
+plot_title <- "Human Development Index\n(Changes: 1990 - 2022)"
+plot_caption <- paste0("**Data:** UNDP Human Development Reports", " | ", " **Code:** ", social_caption_1, " | ", " **Graphics:** ", social_caption_2)
+subtitle_text <- "Since the 1990s, HDI has been used for gauging development. While most nations have seen an enhancement in living standards, the pace of improvement varies. This graph illustrates both the top and bottom performers (% change from 1990 to 2022 in brackets)."
+plot_subtitle <- str_wrap(subtitle_text, 90)
+
+# ==============================================================================#
+# Data Visualization------------------------------------------------------------
+# ==============================================================================#
+
+strip_text <- c(
+  "<b style='color:#CB181DFF'>Least Improvement</b>", 
+  "<b style='color:#006D2CFF'>Highest improvement</b>"
+  )
+names(strip_text) <- c("least_improved", "most_improved")
+
+g <- plotdf |> 
+  ggplot(
+    aes(
+      x = year,
+      y = value,
+      group = country,
+      color = colour_var,
+      alpha = is.na(colour_var),
+      linewidth = is.na(colour_var)
+    )
+  ) +
+  geom_line() +
+  ggrepel::geom_text_repel(
+    data = (plotdf |> filter(year == 2022)),
+    mapping = aes(
+      label = if_else(
+        !is.na(colour_var),
+        paste0(colour_var, "\n", improvement, " %"),
+        NA
+      )
+    ),
+    force        = 10,
+    nudge_x      = 2.5,
+    direction    = "y",
+    hjust        = 0,
+    segment.size = 0.2,
+    size = 30,
+    lineheight = 0.25,
+    family = "caption_font",
+    fontface = "bold",
+    box.padding = 0
+  ) +
+  facet_wrap(
+    ~ facet_var,
+    labeller = labeller(facet_var = strip_text)
+  ) +
+  scale_x_continuous(
+    expand = expansion(c(0, 0.35)),
+    breaks = seq(1990, 2022, 8)
+  ) +
+  scale_y_continuous(
+    expand = expansion(0)
+  ) +
+  scale_alpha_discrete(range = c(1, 0.5)) +
+  scale_linewidth_discrete(range = c(2, 0.5)) +
+  scale_colour_manual(
+    values = mypal,
+    na.value = "lightgrey"
+  ) +
+  labs(
+    title = plot_title,
+    subtitle = plot_subtitle,
+    caption = plot_caption,
+    x = NULL,
+    y = "H.D.I  (Human Development Index)"
+  ) +
+  theme_minimal(
+     base_family = "body_font"
+  ) +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_line(
+      linewidth = 0.5,
+      colour = "transparent"
+    ),
+    panel.grid.major.x = element_line(
+      linewidth = 0.5,
+      linetype = 2,
+      colour = text_hil
+    ),
+    axis.line.x = element_line(
+      colour = text_hil,
+      linewidth = 0.5
+    ),
+    axis.line.y = element_line(
+      colour = text_hil,
+      linewidth = 0.5,
+      arrow = arrow(length = unit(0.4, "cm"))
+    ),
+    plot.title.position = "plot",
+    plot.title = element_text(
+      colour = text_hil,
+      hjust = 0.5,
+      family = "title_font",
+      size = 12 * ts,
+      margin = margin(2,0,0.25,0, "cm"),
+      lineheight = 0.25
+    ),
+    plot.subtitle = element_text(
+      hjust = 0.5,
+      lineheight = 0.3,
+      colour = text_hil,
+      size = 5 * ts,
+      margin = margin(0,0,1,0, "cm")
+    ),
+    axis.text = element_text(
+      colour = text_col,
+      hjust = 0.5,
+      margin = margin(0,0,0,0),
+      size = 4 * ts
+    ),
+    axis.title = element_text(
+      colour = text_col,
+      hjust = 0.5,
+      margin = margin(0,0,0,0),
+      size = 4 * ts
+    ),
+    plot.caption = element_textbox(
+      family = "caption_font",
+      colour = text_hil,
+      size = 3 * ts,
+      hjust = 0.5,
+      margin = margin(0.5,0,0.8,0, "cm")
+    ),
+    strip.text = element_markdown(
+      family = "body_font",
+      size = 7 * ts,
+      margin = margin(0,0,0.5,0, "cm")
+    )
+  )
+
+
+# =============================================================================#
+# Image Saving-----------------------------------------------------------------
+# =============================================================================#
+
+ggsave(
+  filename = here::here("docs", "dip_hdi.png"),
+  plot = g,
+  width = 40,
+  height = 45,
+  units = "cm",
+  bg = bg_col
+)
+
+```
+
+![Heavily customized theme elements using element_text(), element_line() and element_rect()](images/dip_hdi.png){#fig-mod-tm}
+
+## **17.4 Theme elements**
+
+### **17.4.6 Exercises**
+
+### Question 1
+
+**Create the ugliest plot possible! (Contributed by Andrew D. Steen, University of Tennessee - Knoxville)**
+
+The example plot, one of the ugliest one can think of, is shown in @fig-qq1
+
+```{r}
+#| label: fig-qq1
+#| fig-cap: "The ugliest possible plot! Everything is too bright and out of order!"
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+
+# Load mtcars dataset
+data(mtcars)
+
+# Create an intentionally ugly plot
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point(color = "red", size = 5, shape = 18) +
+  geom_smooth(method = "lm", color = "blue", fill = "green", alpha = 0.3, size = 2) +
+  scale_x_continuous("Car Weight (1000 lbs)", breaks = seq(0, 6, by = 1), labels = c("0", "1", "2", "3", "4", "5", "6")) +
+  scale_y_continuous("Miles/(US) gallon", breaks = seq(10, 35, by = 5), labels = c("10", "15", "20", "25", "30", "35")) +
+  theme_minimal(base_family = "Comic Sans MS", base_size = 20) +
+  theme(panel.background = element_rect(fill = "black"),
+        panel.grid.major = element_line(color = "purple", size = 1.5),
+        panel.grid.minor = element_line(color = "orange", size = 0.5),
+        axis.line = element_line(color = "yellow", size = 2),
+        axis.title = element_text(color = "red", size = 30, face = "bold"),
+        axis.text = element_text(color = "blue", size = 25, angle = 45, hjust = 1, vjust = 1),
+        axis.ticks = element_line(color = "green", size = 1.5),
+        plot.title = element_text(color = "brown", size = 40, face = "italic", hjust = 0.5),
+        plot.subtitle = element_text(color = "magenta", size = 30, face = "bold", hjust = 0.5),
+        plot.caption = element_text(color = "cyan", size = 20, face = "italic", hjust = 1),
+        legend.title = element_text(color = "orange", size = 20, face = "bold"),
+        legend.text = element_text(color = "purple", size = 15),
+        legend.background = element_rect(fill = "yellow", color = "green", size = 1.5),
+        legend.key = element_rect(fill = "blue", color = "red", size = 2),
+        legend.position = "bottom",
+        legend.direction = "vertical",
+        legend.box = "vertical",
+        legend.key.size = unit(2, "cm"),
+        plot.background = element_rect(fill = "grey"))
+
+```
+
+### Question 2
+
+**`theme_dark()` makes the inside of the plot dark, but not the outside. Change the plot background to black, and then update the text settings so you can still read the labels.**
+
+```{r}
+#| label: fig-qq2
+#| fig-cap: "Customizing the theme_black()"
+#| fig-subcap: 
+#|   - "The base plot"
+#|   - "theme_dark() plot"
+#|   - "Completely black plot background and text colour adjustments"
+
+g1 <- ggplot(mtcars, aes(hp, mpg)) +
+  geom_point() +
+  labs(
+    subtitle = "Miles per gallon vs. Horsepower for cars in 'mtcars' dataset",
+    x = "Engine Horsepower (hp)",
+    y = "Miles per gallon"
+    )
+
+g1 + ggtitle("The Base Plot")
+
+g1 + ggtitle("The theme_dark() plot") + theme_dark()
+
+g1 + ggtitle("Completely black plot background") +
+  theme_dark() +
+  theme(
+    plot.background = element_rect(fill = "black", colour = "black"),
+    plot.title = element_text(colour = "white", face = "bold"),
+    plot.subtitle = element_text(colour = "white"),
+    axis.title = element_text(colour = "white"),
+    axis.text = element_text(colour = "white"),
+    axis.ticks = element_line(colour = "grey50"),
+    panel.grid = element_line(colour = "grey20")
+  )
+```
+
+### Question 3
+
+**Make an elegant theme that uses “linen” as the background colour and a serif font for the text.**
+
+```{r}
+#| label: fig-qq3
+#| fig-cap: "Using linen as plot background and a serif font"
+
+library(showtext)
+font_add_google("Marcellus", "serif_font")
+showtext_auto()
+g1 +
+  ggtitle("A nice serif font and linen background for the plot") +
+  theme_clean(base_family = "serif_font", base_size = 18) +
+  theme(
+    plot.background = element_rect(fill = "linen"),
+    plot.title = element_text(face = "bold", size = 27)
+  )
+```
+
+### Question 4
+
+**Systematically explore the effects of `hjust` when you have a multi-line title. Why doesn’t `vjust` do anything?**
+
+In `ggplot2`, the `hjust` and `vjust` parameters control the horizontal and vertical alignment of text, respectively. However, when you have a multi-line title, **the `vjust` parameter doesn't seem to have any noticeable effect.** This is because `ggplot2` calculates the vertical positioning of multi-line text differently from single-line text.
+
+When you specify a multi-line title, `ggplot2` automatically adjusts the vertical alignment of the text to center it within the available space. This behavior overrides the `vjust` parameter. Instead, `ggplot2` focuses on aligning the entire multi-line text block within the plot title area.
+
+On the other hand, the `hjust` parameter still has a significant impact when you have a multi-line title. It controls the horizontal alignment of the entire text block, shifting it left or right within the title area.
+
+To systematically explore the effects of `hjust` with a multi-line title in `ggplot2`, here's an example code snippet to illustrate this:
+
+```{r}
+#| label: fig-qq4
+#| fig-cap: "The impact of hjsut on multi-line title in ggplot2"
+#| fig-subcap: 
+#|   - "hjust = 0"
+#|   - "hjust = 0.2"
+#|   - "hjust = 0.4"
+#|   - "hjust = 0.6"
+#|   - "hjust = 0.8"
+#|   - "hjust = 1"
+
+
+# Create a basic plot with a multi-line title
+p <- ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  theme_clean(base_size = 16)
+
+# Create a list of hjust values to explore
+hjust_values <- seq(0, 1, by = 0.2)
+
+for (i in hjust_values) {
+  pp <- p + 
+  theme(
+    plot.title = element_text(hjust = i)) +
+    labs(title = glue::glue("Effect of hjust with multi-line\ntitle. [hjust = {i}]"))
+  
+  print(pp)
+}
+
+
+
+```

@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
-
+<meta name="generator" content="quarto-1.4.549">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Aditya Dahiya">
 <meta name="dcterms.date" content="2024-03-29">
-
 <title>Solutions (and Beyond): ggplot2 - Chapter 17</title>
 <style>
 code{white-space: pre-wrap;}
@@ -24,7 +21,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -58,7 +55,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -77,14 +73,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/social-share-0.1.0/social-share.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/social-share-0.1.0/all.css" rel="stylesheet">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/quarto-contrib/social-share-0.1.0/all.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -93,34 +93,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-
-<link rel="stylesheet" href="styles.css">
+}</script><link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="Solutions (and Beyond): ggplot2 - Chapter 17">
 <meta property="og:description" content="Themes">
-<meta property="og:image" content="Chapter17_files/figure-html/fig-s1-1.png">
-<meta property="og:site-name" content="Solutions (and Beyond): ggplot2">
+<meta property="og:site_name" content="Solutions (and Beyond): ggplot2">
 <meta name="twitter:title" content="Solutions (and Beyond): ggplot2 - Chapter 17">
 <meta name="twitter:description" content="Themes">
-<meta name="twitter:image" content="Chapter17_files/figure-html/fig-s1-1.png">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 </head>
-
 <body class="nav-sidebar docked nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./book_logo.jpg" alt="" class="navbar-logo">
-    </a>
+    <img src="./book_logo.jpg" alt="" class="navbar-logo"></a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Solutions (and Beyond): ggplot2</span>
     </a>
@@ -131,70 +123,64 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target="">
- <span class="menu-text">Home</span></a>
+<li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./solutions.html" rel="" target="">
- <span class="menu-text">Chapter-wise Solutions</span></a>
+    <a class="nav-link" href="./solutions.html"> 
+<span class="menu-text">Chapter-wise Solutions</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
- <span class="menu-text">About Me</span></a>
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About Me</span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools ms-auto">
+</div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
     <div class="dropdown">
       <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-github"></i></a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
-          <li>
-            <a class="dropdown-item quarto-navbar-tools ms-auto-item" href="https://github.com/Aditya-Dahiya/ggplot2book3e/">
+<li>
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/Aditya-Dahiya/ggplot2book3e/">
             Source Code
             </a>
           </li>
           <li>
-            <a class="dropdown-item quarto-navbar-tools ms-auto-item" href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues">
+            <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues">
             Report a Bug
             </a>
           </li>
       </ul>
-    </div>
+</div>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
   </div>
 </a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Chapter13.html">The Grammer</a></li><li class="breadcrumb-item"><a href="./Chapter17.html">Chapter 17</a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Chapter13.html">The Grammer</a></li><li class="breadcrumb-item"><a href="./Chapter17.html">Chapter 17</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
-        <div class="mt-2 flex-shrink-0 align-items-center">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item sidebar-item-section">
+<li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text">Getting Started</span></a>
@@ -202,8 +188,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Chapter1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 1</span></a>
@@ -216,7 +202,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
@@ -225,8 +211,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Chapter3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 3</span></a>
@@ -269,7 +255,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
@@ -278,8 +264,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Chapter10.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 10</span></a>
@@ -298,7 +284,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
@@ -307,8 +293,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Chapter13.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 13</span></a>
@@ -339,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
@@ -348,8 +334,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Chapter18.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 18</span></a>
@@ -374,31 +360,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
 </li>
       </ul>
-  </li>
+</li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><strong>17.1 Introduction</strong></a></li>
-  <li><a href="#complete-themes" id="toc-complete-themes" class="nav-link" data-scroll-target="#complete-themes"><strong>17.2 Complete themes</strong></a>
+<li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><strong>17.1 Introduction</strong></a></li>
+  <li>
+<a href="#complete-themes" id="toc-complete-themes" class="nav-link" data-scroll-target="#complete-themes"><strong>17.2 Complete themes</strong></a>
   <ul class="collapse">
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><strong>17.2.1 Exercises</strong></a></li>
-  </ul></li>
-  <li><a href="#modifying-theme-components" id="toc-modifying-theme-components" class="nav-link" data-scroll-target="#modifying-theme-components"><strong>17.3 Modifying theme components</strong></a></li>
+<li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><strong>17.2.1 Exercises</strong></a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter17.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+</li>
+  <li><a href="#modifying-theme-components" id="toc-modifying-theme-components" class="nav-link" data-scroll-target="#modifying-theme-components"><strong>17.3 Modifying theme components</strong></a></li>
+  <li>
+<a href="#theme-elements" id="toc-theme-elements" class="nav-link" data-scroll-target="#theme-elements"><strong>17.4 Theme elements</strong></a>
+  <ul class="collapse">
+<li><a href="#exercises-1" id="toc-exercises-1" class="nav-link" data-scroll-target="#exercises-1"><strong>17.4.6 Exercises</strong></a></li>
+  <li><a href="#question-1-1" id="toc-question-1-1" class="nav-link" data-scroll-target="#question-1-1">Question 1</a></li>
+  <li><a href="#question-2-1" id="toc-question-2-1" class="nav-link" data-scroll-target="#question-2-1">Question 2</a></li>
+  <li><a href="#question-3-1" id="toc-question-3-1" class="nav-link" data-scroll-target="#question-3-1">Question 3</a></li>
+  <li><a href="#question-4" id="toc-question-4" class="nav-link" data-scroll-target="#question-4">Question 4</a></li>
+  </ul>
+</li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter17.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Chapter13.html">The Grammer</a></li><li class="breadcrumb-item"><a href="./Chapter17.html">Chapter 17</a></li></ol></nav><div class="quarto-title">
 <h1 class="title">Chapter 17</h1>
 <p class="subtitle lead">Themes</p>
 </div>
@@ -425,9 +417,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
-</header>
 
-<div class="callout callout-style-simple callout-tip no-icon">
+</header><div class="callout callout-style-simple callout-tip no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
@@ -437,202 +428,214 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div class="cell" data-hash="Chapter17_cache/html/setup_3d31017c013b89ed665f8e7ab45dfcea">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org">scales</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jrnold/ggthemes">ggthemes</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com">gt</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction"><strong>17.1 Introduction</strong></h2>
-<p>A demonstration on the use of <code>legend.position = ""</code> and <code>legend.justification = ""</code> with the function <code>theme()</code> function of the ggplot2 is shown in <a href="#fig-s1">Figure&nbsp;1</a> . As we can see in <a href="#fig-s1-4">Figure&nbsp;1 (d)</a>, using both arguments together produces the best result.</p>
-<div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> gt<span class="sc">::</span>gtcars <span class="sc">|&gt;</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(hp, mpg_h, <span class="at">colour =</span> bdy_style)) <span class="sc">+</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Engine Horsepower (hp)"</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Mileage (miles per gallon)"</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"Body Style"</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  paletteer<span class="sc">::</span><span class="fu">scale_colour_paletteer_d</span>(<span class="st">"nbapalettes::clippers_original"</span>) <span class="sc">+</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Base Plot"</span>)</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"legend.position = 'bottom'"</span>)</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)) <span class="sc">+</span> </span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"legend.position = c(1,1)"</span>)</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>g1 <span class="sc">+</span> </span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>),</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.justification =</span> <span class="fu">c</span>(<span class="fl">1.1</span>, <span class="fl">1.1</span>)) <span class="sc">+</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"With added legend.justification = c(1.1, 1.1)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div id="fig-s1" class="cell quarto-layout-panel" data-hash="Chapter17_cache/html/fig-s1_a2548e11a7a4c3eba98fb069c172ad87">
-<figure class="figure">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-s1-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Chapter17_files/figure-html/fig-s1-1.png" class="img-fluid figure-img" data-ref-parent="fig-s1" width="480"></p>
-<figcaption class="figure-caption">(a) Base Plot</figcaption>
-</figure>
+<section id="introduction" class="level2"><h2 class="anchored" data-anchor-id="introduction"><strong>17.1 Introduction</strong></h2>
+<p>A demonstration on the use of <code>legend.position = ""</code> and <code>legend.justification = ""</code> with the function <code><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme()</a></code> function of the ggplot2 is shown in <a href="#fig-s1" class="quarto-xref">Figure&nbsp;1</a> . As we can see in <a href="#fig-s1-4" class="quarto-xref">Figure&nbsp;1 (d)</a>, using both arguments together produces the best result.</p>
+<div class="cell" data-layout-nrow="2">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="fu">gt</span><span class="fu">::</span><span class="va"><a href="https://gt.rstudio.com/reference/gtcars.html">gtcars</a></span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">hp</span>, <span class="va">mpg_h</span>, colour <span class="op">=</span> <span class="va">bdy_style</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="st">"Engine Horsepower (hp)"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"Mileage (miles per gallon)"</span>,</span>
+<span>    colour <span class="op">=</span> <span class="st">"Body Style"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">paletteer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/paletteer/man/ggplot2-scales-discrete.html">scale_colour_paletteer_d</a></span><span class="op">(</span><span class="st">"nbapalettes::clippers_original"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"Base Plot"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"legend.position = 'bottom'"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g1</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"legend.position = c(1,1)"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g1</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,</span>
+<span>        legend.justification <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.1</span>, <span class="fl">1.1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"With added legend.justification = c(1.1, 1.1)"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-s1" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-s1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-s1" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-s1-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-s1-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-s1-1.png" class="img-fluid figure-img" data-ref-parent="fig-s1" width="480">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-s1-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Base Plot
+</figcaption></figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-s1-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Chapter17_files/figure-html/fig-s1-2.png" class="img-fluid figure-img" data-ref-parent="fig-s1" width="480"></p>
-<figcaption class="figure-caption">(b) legend.position = ‘bottom’</figcaption>
-</figure>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-s1" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-s1-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-s1-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-s1-2.png" class="img-fluid figure-img" data-ref-parent="fig-s1" width="480">
 </div>
-</div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-s1-3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Chapter17_files/figure-html/fig-s1-3.png" class="img-fluid figure-img" data-ref-parent="fig-s1" width="480"></p>
-<figcaption class="figure-caption">(c) legend.position = c(1,1)</figcaption>
-</figure>
-</div>
-</div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-s1-4" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Chapter17_files/figure-html/fig-s1-4.png" class="img-fluid figure-img" data-ref-parent="fig-s1" width="480"></p>
-<figcaption class="figure-caption">(d) With added legend.justification = c(1.1, 1.1)</figcaption>
-</figure>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-s1-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) legend.position = ‘bottom’
+</figcaption></figure>
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1: Using legend.postition inside and legend.justification arguments within the theme() function of ggplot2</figcaption><p></p>
-</figure>
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-s1" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-s1-3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-s1-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-s1-3.png" class="img-fluid figure-img" data-ref-parent="fig-s1" width="480">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-s1-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) legend.position = c(1,1)
+</figcaption></figure>
 </div>
 </div>
-</section>
-<section id="complete-themes" class="level2">
-<h2 class="anchored" data-anchor-id="complete-themes"><strong>17.2 Complete themes</strong></h2>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-s1" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-s1-4" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-s1-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-s1-4.png" class="img-fluid figure-img" data-ref-parent="fig-s1" width="480">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-s1-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(d) With added legend.justification = c(1.1, 1.1)
+</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-s1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Using legend.postition inside and legend.justification arguments within the theme() function of ggplot2
+</figcaption></figure>
+</div>
+</div>
+</section><section id="complete-themes" class="level2"><h2 class="anchored" data-anchor-id="complete-themes"><strong>17.2 Complete themes</strong></h2>
 <p>A very good argument to use with <code>theme_*()</code> family of functions is the <code>base_size =</code> argument to fix a base size for all text used in the plot, and <code>base_family =</code> to set the font for the entire plot.</p>
-<section id="exercises" class="level3">
-<h3 class="anchored" data-anchor-id="exercises"><strong>17.2.1 Exercises</strong></h3>
-<section id="question-1" class="level4">
-<h4 class="anchored" data-anchor-id="question-1">Question 1</h4>
-</section>
-<section id="try-out-all-the-themes-in-ggthemes.-which-do-you-like-the-best" class="level4">
-<h4 class="anchored" data-anchor-id="try-out-all-the-themes-in-ggthemes.-which-do-you-like-the-best"><strong>Try out all the themes in <code>ggthemes</code>. Which do you like the best?</strong></h4>
-<p>The various themes of <code>ggthemes</code> are shown in <strong>?@fig-q1</strong>. The best one seems to be <code>theme_clean()</code> as it allows easy customization.</p>
-<div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> g1 <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> ggthemes<span class="sc">::</span><span class="fu">theme_calc</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"theme_calc()"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> ggthemes<span class="sc">::</span><span class="fu">theme_clean</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"theme_clean()"</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> ggthemes<span class="sc">::</span><span class="fu">theme_economist</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"theme_economist()"</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> ggthemes<span class="sc">::</span><span class="fu">theme_excel_new</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"theme_excel_new()"</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> ggthemes<span class="sc">::</span><span class="fu">theme_few</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"theme_few()"</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> ggthemes<span class="sc">::</span><span class="fu">theme_gdocs</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"theme_gdocs()"</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> ggthemes<span class="sc">::</span><span class="fu">theme_wsj</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"theme_wsj()"</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>g2 <span class="sc">+</span> ggthemes<span class="sc">::</span><span class="fu">theme_solarized_2</span>() <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"theme_soloarized_2()"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell quarto-layout-panel" data-hash="Chapter17_cache/html/fig-q1_fcec0136962a277a0f3568fef8394c78">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-q1-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Chapter17_files/figure-html/fig-q1-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2: <strong>?(caption)</strong></figcaption>
-</figure>
+<section id="exercises" class="level3"><h3 class="anchored" data-anchor-id="exercises"><strong>17.2.1 Exercises</strong></h3>
+<section id="question-1" class="level4"><h4 class="anchored" data-anchor-id="question-1">Question 1</h4>
+</section><section id="try-out-all-the-themes-in-ggthemes.-which-do-you-like-the-best" class="level4"><h4 class="anchored" data-anchor-id="try-out-all-the-themes-in-ggthemes.-which-do-you-like-the-best"><strong>Try out all the themes in <code>ggthemes</code>. Which do you like the best?</strong></h4>
+<p>The various themes of <code>ggthemes</code> are shown in <a href="#fig-q1" class="quarto-xref">Figure&nbsp;2</a>. The best one seems to be <code><a href="https://rdrr.io/pkg/ggthemes/man/theme_clean.html">theme_clean()</a></code> as it allows easy customization.</p>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g2</span> <span class="op">&lt;-</span> <span class="va">g1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g2</span> <span class="op">+</span> <span class="fu">ggthemes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_calc.html">theme_calc</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"theme_calc()"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g2</span> <span class="op">+</span> <span class="fu">ggthemes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_clean.html">theme_clean</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"theme_clean()"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g2</span> <span class="op">+</span> <span class="fu">ggthemes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_economist.html">theme_economist</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"theme_economist()"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g2</span> <span class="op">+</span> <span class="fu">ggthemes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_excel_new.html">theme_excel_new</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"theme_excel_new()"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g2</span> <span class="op">+</span> <span class="fu">ggthemes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_few.html">theme_few</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"theme_few()"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g2</span> <span class="op">+</span> <span class="fu">ggthemes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_gdocs.html">theme_gdocs</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"theme_gdocs()"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g2</span> <span class="op">+</span> <span class="fu">ggthemes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_wsj.html">theme_wsj</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"theme_wsj()"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g2</span> <span class="op">+</span> <span class="fu">ggthemes</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_solarized.html">theme_solarized_2</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"theme_soloarized_2()"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-q1" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-q1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-q1" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-q1-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-q1-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-q1-1.png" class="img-fluid figure-img" data-ref-parent="fig-q1" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-q1-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) theme_calc()
+</figcaption></figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-q1-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Chapter17_files/figure-html/fig-q1-2.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;3: <strong>?(caption)</strong></figcaption>
-</figure>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-q1" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-q1-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-q1-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-q1-2.png" class="img-fluid figure-img" data-ref-parent="fig-q1" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-q1-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) theme_clean()
+</figcaption></figure>
 </div>
 </div>
 </div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-q1-3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Chapter17_files/figure-html/fig-q1-3.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;4: <strong>?(caption)</strong></figcaption>
-</figure>
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-q1" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-q1-3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-q1-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-q1-3.png" class="img-fluid figure-img" data-ref-parent="fig-q1" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-q1-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) theme_economist()
+</figcaption></figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-q1-4" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Chapter17_files/figure-html/fig-q1-4.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;5: <strong>?(caption)</strong></figcaption>
-</figure>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-q1" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-q1-4" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-q1-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-q1-4.png" class="img-fluid figure-img" data-ref-parent="fig-q1" width="672">
 </div>
-</div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-q1-5" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Chapter17_files/figure-html/fig-q1-5.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;6: <strong>?(caption)</strong></figcaption>
-</figure>
-</div>
-</div>
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-q1-6" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Chapter17_files/figure-html/fig-q1-6.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;7: <strong>?(caption)</strong></figcaption>
-</figure>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-q1-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(d) theme_excel_new()
+</figcaption></figure>
 </div>
 </div>
 </div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-q1-7" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Chapter17_files/figure-html/fig-q1-7.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;8: <strong>?(caption)</strong></figcaption>
-</figure>
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-q1" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-q1-5" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-q1-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-q1-5.png" class="img-fluid figure-img" data-ref-parent="fig-q1" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-q1-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(e) theme_few()
+</figcaption></figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-q1-8" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="Chapter17_files/figure-html/fig-q1-8.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;9: <strong>?(caption)</strong></figcaption>
-</figure>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-q1" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-q1-6" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-q1-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-q1-6.png" class="img-fluid figure-img" data-ref-parent="fig-q1" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-q1-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(f) theme_gdocs()
+</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-q1" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-q1-7" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-q1-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-q1-7.png" class="img-fluid figure-img" data-ref-parent="fig-q1" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-q1-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(g) theme_wsj()
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-q1" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-q1-8" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-q1-8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-q1-8.png" class="img-fluid figure-img" data-ref-parent="fig-q1" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-q1-8-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(h) theme_solarized_2()
+</figcaption></figure>
 </div>
 </div>
 </div>
 </div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-q1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The various themes in ggthemes package
+</figcaption></figure>
 </div>
-</section>
-<section id="question-2" class="level4">
-<h4 class="anchored" data-anchor-id="question-2">Question 2</h4>
+</section><section id="question-2" class="level4"><h4 class="anchored" data-anchor-id="question-2">Question 2</h4>
 <p><strong>What aspects of the default theme do you like? What don’t you like?<br>
 What would you change?</strong></p>
-<p>In ggplot2, the default theme (<code>theme_gray()</code>) has several aspects that align well with Tufte’s principles and are conducive to clear and effective data visualization:</p>
+<p>In ggplot2, the default theme (<code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_gray()</a></code>) has several aspects that align well with Tufte’s principles and are conducive to clear and effective data visualization:</p>
 <ol type="1">
 <li><p><strong>Minimalist Design</strong>: The default theme employs a clean and minimalist design, which is in line with Tufte’s principle of maximizing data-ink ratio. This means that unnecessary elements are minimized, allowing the data to stand out more prominently.</p></li>
 <li><p><strong>Neutral Background</strong>: The light gray background in the default theme provides a neutral canvas for the data to be presented on. This is generally preferable for readability, especially when using a white background, as it reduces contrast and minimizes visual distractions.</p></li>
@@ -645,17 +648,13 @@ What would you change?</strong></p>
 <li><p><strong>Adjustment of Plot Margins</strong>: Tufte emphasizes the importance of maximizing the data-ink ratio by minimizing non-data ink, including unnecessary margins. Adjusting the default plot margins to be more compact could help achieve this goal and allow for more space dedicated to the presentation of data.</p></li>
 </ol>
 <p>Overall, while the default theme in ggplot2 aligns well with Tufte’s principles in many aspects, there are opportunities for further refinement to enhance clarity, simplicity, and effectiveness in data visualization. These suggested changes aim to optimize the balance between aesthetic appeal and functional clarity in accordance with Tufte’s principles.</p>
-</section>
-<section id="question-3" class="level4">
-<h4 class="anchored" data-anchor-id="question-3">Question 3</h4>
+</section><section id="question-3" class="level4"><h4 class="anchored" data-anchor-id="question-3">Question 3</h4>
 <p><strong>Look at the plots in your favourite scientific journal. What theme do they most resemble? What are the main differences?</strong></p>
 <p>In many scientific journals, especially those focused on data visualization and analysis, the plots often resemble themes that prioritize clarity, simplicity, and effective communication of information. One common theme that many plots in scientific journals resemble is the “classic” theme in ggplot2, which emphasizes clean lines, minimal distractions, and a focus on the data itself.</p>
 <p>The example image for a graph / plot from the journal <strong><em>Nature</em></strong> is given below:</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://media.springernature.com/m685/springer-static/image/art%3A10.1038%2Fs41551-017-0079/MediaObjects/41551_2017_Article_BFs415510170079_Fig1_HTML.jpg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Credits: https://media.springernature.com/m685/springer-static/image/art%3A10.1038%2Fs41551-017-0079/MediaObjects/41551_2017_Article_BFs415510170079_Fig1_HTML.jpg</figcaption>
-</figure>
+<figure class="figure"><p><img src="https://media.springernature.com/m685/springer-static/image/art%3A10.1038%2Fs41551-017-0079/MediaObjects/41551_2017_Article_BFs415510170079_Fig1_HTML.jpg" class="img-fluid figure-img"></p>
+<figcaption>Credits: https://media.springernature.com/m685/springer-static/image/art%3A10.1038%2Fs41551-017-0079/MediaObjects/41551_2017_Article_BFs415510170079_Fig1_HTML.jpg</figcaption></figure>
 </div>
 <p>The main differences between the plots in scientific journals and the “classic” ggplot2 theme lie in the specific customizations and adjustments made to suit the needs of the particular journal’s style and the preferences of its audience. Here are some of the main differences that may be observed:</p>
 <ol type="1">
@@ -665,18 +664,568 @@ What would you change?</strong></p>
 <li><p><strong>Annotation and Labeling</strong>: Scientific journal plots often include detailed annotations, such as significance indicators, error bars, or additional text descriptions. These annotations may be placed strategically to ensure clarity and precision in conveying the results of the analysis.</p></li>
 <li><p><strong>Plot Aspect Ratio and Size</strong>: The aspect ratio and overall size of plots in scientific journals may be adjusted to fit within the journal’s page layout and to optimize presentation on both digital and print platforms. This could involve resizing plots to ensure they are legible and visually appealing at different scales.</p></li>
 </ol>
-<p>Overall, while plots in scientific journals share similarities with the “classic” ggplot2 theme in their emphasis on clarity and simplicity, they often incorporate customizations to align with the journal’s style guidelines and the preferences of its audience. These customizations aim to enhance the effectiveness of the visual communication of data within the context of the specific publication.</p>
-</section>
-</section>
-</section>
-<section id="modifying-theme-components" class="level2">
-<h2 class="anchored" data-anchor-id="modifying-theme-components"><strong>17.3 Modifying theme components</strong></h2>
+<p>Overall, while plots in scientific journals share similarities with the “classic” ggplot2 theme in their emphasis on clarity and simplicity, they often incorporate customization to align with the journal’s style guidelines and the preferences of its audience. These customization aim to enhance the effectiveness of the visual communication of data within the context of the specific publication.</p>
+</section></section></section><section id="modifying-theme-components" class="level2"><h2 class="anchored" data-anchor-id="modifying-theme-components"><strong>17.3 Modifying theme components</strong></h2>
+<p>The example in <a href="#fig-mod-tm" class="quarto-xref">Figure&nbsp;3</a> shows heavy customization of the theme elements. The code is also given below.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># =============================================================================#</span></span>
+<span><span class="co"># About the Dataset-------------------------------------------------------------</span></span>
+<span><span class="co"># =============================================================================#</span></span>
+<span></span>
+<span><span class="co"># Source URL: https://hdr.undp.org/data-center/documentation-and-downloads</span></span>
+<span><span class="co"># Credits: UNDP Human Development Reports</span></span>
+<span><span class="co"># Human development, quantified. One of the most widely recognized measures, </span></span>
+<span><span class="co"># the United Nations' Human Development Index amalgamates data on life </span></span>
+<span><span class="co"># expectancy, per capita income, and educational attainment into a singular </span></span>
+<span><span class="co"># value for each country-year. The UN offers downloadable files and an API </span></span>
+<span><span class="co"># encompassing all yearly HDI rankings and sub-indicators spanning from 1990 to</span></span>
+<span><span class="co"># 2022. These resources also encompass information from correlated indices like </span></span>
+<span><span class="co"># the Inequality-adjusted Human Development Index, Gender Development Index, and </span></span>
+<span><span class="co"># Gender Inequality Index.</span></span>
+<span></span>
+<span><span class="co"># =============================================================================#</span></span>
+<span><span class="co"># Findings ---------------------------------------------------------------------</span></span>
+<span><span class="co"># =============================================================================#</span></span>
+<span></span>
+<span><span class="co"># The best performing countries, in terms of HDI improvement between 1990 and </span></span>
+<span><span class="co"># 2022 are: China, Myanmar, Bangladesh, Turkiye, and, Morocco</span></span>
+<span><span class="co"># The wrost performing countries, in terms of HDI reduction / least increase</span></span>
+<span><span class="co"># between 1990 and 2022 are: Syria, Ukraine, Namibia, Libya, and, San Marino</span></span>
+<span></span>
+<span><span class="co"># =============================================================================#</span></span>
+<span><span class="co"># Library Load-in---------------------------------------------------------------</span></span>
+<span><span class="co"># =============================================================================#</span></span>
+<span></span>
+<span><span class="co"># Data Wrangling Tools</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sfirke/janitor">janitor</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/">sf</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Final plot (ggplot2) tools</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org">scales</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/fontawesome">fontawesome</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/ggtext/">ggtext</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yixuan/showtext">showtext</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://colorspace.R-Forge.R-project.org/">colorspace</a></span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># =============================================================================#</span></span>
+<span><span class="co"># Data Load-in, EDA &amp; Data Wrangling--------------------------------------------</span></span>
+<span><span class="co"># =============================================================================#</span></span>
+<span></span>
+<span><span class="co"># Read in the UNDP data</span></span>
+<span><span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"https://hdr.undp.org/sites/default/files/2023-24_HDR/HDR23-24_Composite_indices_complete_time_series.csv"</span></span>
+<span></span>
+<span><span class="va">hdi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">url</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Number of countries to highlight in each</span></span>
+<span><span class="va">nos</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
+<span></span>
+<span><span class="co"># A wide format and housekeeping to filter out relevant variables, and also</span></span>
+<span><span class="co"># change names of some countries to easily recognizable names</span></span>
+<span><span class="va">dfwide</span> <span class="op">&lt;-</span> <span class="va">hdi</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">iso3</span>, </span>
+<span>         <span class="va">country</span>, </span>
+<span>         <span class="va">region</span>, </span>
+<span>         <span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"hdi_"</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"_m_"</span><span class="op">)</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"_f_"</span><span class="op">)</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"ihdi"</span><span class="op">)</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"phdi"</span><span class="op">)</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"rank"</span><span class="op">)</span><span class="op">)</span></span>
+<span>          <span class="op">)</span></span>
+<span>         <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">country</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"East Asia and the Pacific"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>country <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">country</span> <span class="op">==</span> <span class="st">"T\xfcrkiye"</span>, <span class="st">"Turkiye"</span>, <span class="va">country</span><span class="op">)</span>,</span>
+<span>         country <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">country</span> <span class="op">==</span> <span class="st">"Syrian Arab Republic"</span>, <span class="st">"Syria"</span>, <span class="va">country</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Long (tidy) format of the data (needed for plotting facets in ggplot2)</span></span>
+<span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="va">dfwide</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span></span>
+<span>    cols <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"hdi"</span><span class="op">)</span>,</span>
+<span>    names_to <span class="op">=</span> <span class="st">"year"</span>,</span>
+<span>    values_to <span class="op">=</span> <span class="st">"value"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Improvement amongst countries</span></span>
+<span><span class="va">df_imp</span> <span class="op">&lt;-</span> <span class="va">dfwide</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>improvement <span class="op">=</span> <span class="va">hdi_2022</span> <span class="op">-</span> <span class="va">hdi_1990</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">improvement</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Worst off countries</span></span>
+<span><span class="va">least_imp</span> <span class="op">&lt;-</span> <span class="va">df_imp</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min</a></span><span class="op">(</span>order_by <span class="op">=</span> <span class="va">improvement</span>, n <span class="op">=</span> <span class="va">nos</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">country</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Best improvement countries</span></span>
+<span><span class="va">most_imp</span> <span class="op">&lt;-</span> <span class="va">df_imp</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span>order_by <span class="op">=</span> <span class="va">improvement</span>, n <span class="op">=</span> <span class="va">nos</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">country</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">least_imp</span></span>
+<span><span class="va">most_imp</span></span>
+<span><span class="co"># A tibble for actual percentage change in HDI - to show in graph</span></span>
+<span><span class="va">changes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows</a></span><span class="op">(</span></span>
+<span>  <span class="va">df_imp</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min</a></span><span class="op">(</span>order_by <span class="op">=</span> <span class="va">improvement</span>, n <span class="op">=</span> <span class="va">nos</span><span class="op">)</span>,</span>
+<span>  <span class="va">df_imp</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span>order_by <span class="op">=</span> <span class="va">improvement</span>, n <span class="op">=</span> <span class="va">nos</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    improvement <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fl">100</span> <span class="op">*</span> <span class="va">improvement</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Tibble to actually use in plotting</span></span>
+<span><span class="va">plotdf</span> <span class="op">&lt;-</span> <span class="va">df1</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    most_improved <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">country</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">most_imp</span>, <span class="va">country</span>, <span class="cn">NA</span><span class="op">)</span>,</span>
+<span>    least_improved<span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">country</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">least_imp</span>, <span class="va">country</span>, <span class="cn">NA</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span></span>
+<span>    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">most_improved</span>, <span class="va">least_improved</span><span class="op">)</span>,</span>
+<span>    names_to <span class="op">=</span> <span class="st">"facet_var"</span>,</span>
+<span>    values_to <span class="op">=</span> <span class="st">"colour_var"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>colour_var <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct.html">fct</a></span><span class="op">(</span><span class="va">colour_var</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">least_imp</span>, <span class="va">most_imp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">changes</span><span class="op">)</span></span>
+<span><span class="co"># =============================================================================#</span></span>
+<span><span class="co"># Options &amp; Visualization Parameters--------------------------------------------</span></span>
+<span><span class="co"># =============================================================================#</span></span>
+<span></span>
+<span><span class="co"># Load fonts</span></span>
+<span><span class="co"># Font for titles</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html">font_add_google</a></span><span class="op">(</span><span class="st">"Racing Sans One"</span>,</span>
+<span>  family <span class="op">=</span> <span class="st">"title_font"</span></span>
+<span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># Font for the caption</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html">font_add_google</a></span><span class="op">(</span><span class="st">"Saira Extra Condensed"</span>,</span>
+<span>  family <span class="op">=</span> <span class="st">"caption_font"</span></span>
+<span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># Font for plot text</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html">font_add_google</a></span><span class="op">(</span><span class="st">"Jockey One"</span>,</span>
+<span>  family <span class="op">=</span> <span class="st">"body_font"</span></span>
+<span><span class="op">)</span> </span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_auto.html">showtext_auto</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Define colours</span></span>
+<span><span class="va">reds</span> <span class="op">&lt;-</span> <span class="fu">paletteer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/paletteer/man/paletteer_d.html">paletteer_d</a></span><span class="op">(</span><span class="st">"RColorBrewer::Reds"</span>, direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">nos</span><span class="op">]</span></span>
+<span><span class="va">greens</span> <span class="op">&lt;-</span> <span class="fu">paletteer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/paletteer/man/paletteer_d.html">paletteer_d</a></span><span class="op">(</span><span class="st">"RColorBrewer::Greens"</span>, direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">nos</span><span class="op">]</span></span>
+<span><span class="va">mypal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">reds</span>, <span class="va">greens</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">bg_col</span> <span class="op">&lt;-</span> <span class="st">"#ffffff"</span>   <span class="co"># Background Colour</span></span>
+<span><span class="va">text_col</span> <span class="op">&lt;-</span> <span class="st">"#404040"</span> <span class="co"># Colour for the text</span></span>
+<span><span class="va">text_hil</span> <span class="op">&lt;-</span> <span class="st">'#757575'</span> <span class="co"># Colour for highlighted text</span></span>
+<span></span>
+<span><span class="co"># Define Text Size</span></span>
+<span><span class="va">ts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">20</span>, units <span class="op">=</span> <span class="st">"cm"</span><span class="op">)</span> <span class="co"># Text Size</span></span>
+<span></span>
+<span><span class="co"># Caption stuff</span></span>
+<span><span class="fu">sysfonts</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add.html">font_add</a></span><span class="op">(</span></span>
+<span>  family <span class="op">=</span> <span class="st">"Font Awesome 6 Brands"</span>,</span>
+<span>  regular <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"docs"</span>, <span class="st">"Font Awesome 6 Brands-Regular-400.otf"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">github</span> <span class="op">&lt;-</span> <span class="st">"&amp;#xf09b"</span></span>
+<span><span class="va">github_username</span> <span class="op">&lt;-</span> <span class="st">"aditya-dahiya"</span></span>
+<span><span class="va">xtwitter</span> <span class="op">&lt;-</span> <span class="st">"&amp;#xe61b"</span></span>
+<span><span class="va">xtwitter_username</span> <span class="op">&lt;-</span> <span class="st">"@adityadahiyaias"</span></span>
+<span><span class="va">social_caption_1</span> <span class="op">&lt;-</span> <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"&lt;span style='font-family:\"Font Awesome 6 Brands\";'&gt;{github};&lt;/span&gt; &lt;span style='color: {text_hil}'&gt;{github_username}  &lt;/span&gt;"</span><span class="op">)</span></span>
+<span><span class="va">social_caption_2</span> <span class="op">&lt;-</span> <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"&lt;span style='font-family:\"Font Awesome 6 Brands\";'&gt;{xtwitter};&lt;/span&gt; &lt;span style='color: {text_hil}'&gt;{xtwitter_username}&lt;/span&gt;"</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Add text to plot--------------------------------------------------------------</span></span>
+<span><span class="va">plot_title</span> <span class="op">&lt;-</span> <span class="st">"Human Development Index\n(Changes: 1990 - 2022)"</span></span>
+<span><span class="va">plot_caption</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"**Data:** UNDP Human Development Reports"</span>, <span class="st">" | "</span>, <span class="st">" **Code:** "</span>, <span class="va">social_caption_1</span>, <span class="st">" | "</span>, <span class="st">" **Graphics:** "</span>, <span class="va">social_caption_2</span><span class="op">)</span></span>
+<span><span class="va">subtitle_text</span> <span class="op">&lt;-</span> <span class="st">"Since the 1990s, HDI has been used for gauging development. While most nations have seen an enhancement in living standards, the pace of improvement varies. This graph illustrates both the top and bottom performers (% change from 1990 to 2022 in brackets)."</span></span>
+<span><span class="va">plot_subtitle</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html">str_wrap</a></span><span class="op">(</span><span class="va">subtitle_text</span>, <span class="fl">90</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ==============================================================================#</span></span>
+<span><span class="co"># Data Visualization------------------------------------------------------------</span></span>
+<span><span class="co"># ==============================================================================#</span></span>
+<span></span>
+<span><span class="va">strip_text</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"&lt;b style='color:#CB181DFF'&gt;Least Improvement&lt;/b&gt;"</span>, </span>
+<span>  <span class="st">"&lt;b style='color:#006D2CFF'&gt;Highest improvement&lt;/b&gt;"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">strip_text</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"least_improved"</span>, <span class="st">"most_improved"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="va">plotdf</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
+<span>      x <span class="op">=</span> <span class="va">year</span>,</span>
+<span>      y <span class="op">=</span> <span class="va">value</span>,</span>
+<span>      group <span class="op">=</span> <span class="va">country</span>,</span>
+<span>      color <span class="op">=</span> <span class="va">colour_var</span>,</span>
+<span>      alpha <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">colour_var</span><span class="op">)</span>,</span>
+<span>      linewidth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">colour_var</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggrepel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggrepel/man/geom_text_repel.html">geom_text_repel</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="op">(</span><span class="va">plotdf</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fl">2022</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
+<span>      label <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span></span>
+<span>        <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">colour_var</span><span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">colour_var</span>, <span class="st">"\n"</span>, <span class="va">improvement</span>, <span class="st">" %"</span><span class="op">)</span>,</span>
+<span>        <span class="cn">NA</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    force        <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>    nudge_x      <span class="op">=</span> <span class="fl">2.5</span>,</span>
+<span>    direction    <span class="op">=</span> <span class="st">"y"</span>,</span>
+<span>    hjust        <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    segment.size <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>    size <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>    lineheight <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>    family <span class="op">=</span> <span class="st">"caption_font"</span>,</span>
+<span>    fontface <span class="op">=</span> <span class="st">"bold"</span>,</span>
+<span>    box.padding <span class="op">=</span> <span class="fl">0</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span></span>
+<span>    <span class="op">~</span> <span class="va">facet_var</span>,</span>
+<span>    labeller <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labeller.html">labeller</a></span><span class="op">(</span>facet_var <span class="op">=</span> <span class="va">strip_text</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span></span>
+<span>    expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html">expansion</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.35</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">2022</span>, <span class="fl">8</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span></span>
+<span>    expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html">expansion</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_alpha.html">scale_alpha_discrete</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_linewidth.html">scale_linewidth_discrete</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span></span>
+<span>    values <span class="op">=</span> <span class="va">mypal</span>,</span>
+<span>    na.value <span class="op">=</span> <span class="st">"lightgrey"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="va">plot_title</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="va">plot_subtitle</span>,</span>
+<span>    caption <span class="op">=</span> <span class="va">plot_caption</span>,</span>
+<span>    x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"H.D.I  (Human Development Index)"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span></span>
+<span>     base_family <span class="op">=</span> <span class="st">"body_font"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>    panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    panel.grid.major.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span></span>
+<span>      linewidth <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>      colour <span class="op">=</span> <span class="st">"transparent"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    panel.grid.major.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span></span>
+<span>      linewidth <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>      linetype <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>      colour <span class="op">=</span> <span class="va">text_hil</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    axis.line.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span></span>
+<span>      colour <span class="op">=</span> <span class="va">text_hil</span>,</span>
+<span>      linewidth <span class="op">=</span> <span class="fl">0.5</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    axis.line.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span></span>
+<span>      colour <span class="op">=</span> <span class="va">text_hil</span>,</span>
+<span>      linewidth <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>      arrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>length <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    plot.title.position <span class="op">=</span> <span class="st">"plot"</span>,</span>
+<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      colour <span class="op">=</span> <span class="va">text_hil</span>,</span>
+<span>      hjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>      family <span class="op">=</span> <span class="st">"title_font"</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">12</span> <span class="op">*</span> <span class="va">ts</span>,</span>
+<span>      margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">0</span>,<span class="fl">0.25</span>,<span class="fl">0</span>, <span class="st">"cm"</span><span class="op">)</span>,</span>
+<span>      lineheight <span class="op">=</span> <span class="fl">0.25</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      hjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>      lineheight <span class="op">=</span> <span class="fl">0.3</span>,</span>
+<span>      colour <span class="op">=</span> <span class="va">text_hil</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">5</span> <span class="op">*</span> <span class="va">ts</span>,</span>
+<span>      margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">0</span>, <span class="st">"cm"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      colour <span class="op">=</span> <span class="va">text_col</span>,</span>
+<span>      hjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>      margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">4</span> <span class="op">*</span> <span class="va">ts</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>      colour <span class="op">=</span> <span class="va">text_col</span>,</span>
+<span>      hjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>      margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">4</span> <span class="op">*</span> <span class="va">ts</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    plot.caption <span class="op">=</span> <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_textbox.html">element_textbox</a></span><span class="op">(</span></span>
+<span>      family <span class="op">=</span> <span class="st">"caption_font"</span>,</span>
+<span>      colour <span class="op">=</span> <span class="va">text_hil</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">3</span> <span class="op">*</span> <span class="va">ts</span>,</span>
+<span>      hjust <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>      margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">0.5</span>,<span class="fl">0</span>,<span class="fl">0.8</span>,<span class="fl">0</span>, <span class="st">"cm"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    strip.text <span class="op">=</span> <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html">element_markdown</a></span><span class="op">(</span></span>
+<span>      family <span class="op">=</span> <span class="st">"body_font"</span>,</span>
+<span>      size <span class="op">=</span> <span class="fl">7</span> <span class="op">*</span> <span class="va">ts</span>,</span>
+<span>      margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0.5</span>,<span class="fl">0</span>, <span class="st">"cm"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># =============================================================================#</span></span>
+<span><span class="co"># Image Saving-----------------------------------------------------------------</span></span>
+<span><span class="co"># =============================================================================#</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave</a></span><span class="op">(</span></span>
+<span>  filename <span class="op">=</span> <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"docs"</span>, <span class="st">"dip_hdi.png"</span><span class="op">)</span>,</span>
+<span>  plot <span class="op">=</span> <span class="va">g</span>,</span>
+<span>  width <span class="op">=</span> <span class="fl">40</span>,</span>
+<span>  height <span class="op">=</span> <span class="fl">45</span>,</span>
+<span>  units <span class="op">=</span> <span class="st">"cm"</span>,</span>
+<span>  bg <span class="op">=</span> <span class="va">bg_col</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="fig-mod-tm" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-mod-tm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/dip_hdi.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mod-tm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Heavily customized theme elements using element_text(), element_line() and element_rect()
+</figcaption></figure>
+</div>
+</section><section id="theme-elements" class="level2"><h2 class="anchored" data-anchor-id="theme-elements"><strong>17.4 Theme elements</strong></h2>
+<section id="exercises-1" class="level3"><h3 class="anchored" data-anchor-id="exercises-1"><strong>17.4.6 Exercises</strong></h3>
+</section><section id="question-1-1" class="level3"><h3 class="anchored" data-anchor-id="question-1-1">Question 1</h3>
+<p><strong>Create the ugliest plot possible! (Contributed by Andrew D. Steen, University of Tennessee - Knoxville)</strong></p>
+<p>The example plot, one of the ugliest one can think of, is shown in <a href="#fig-qq1" class="quarto-xref">Figure&nbsp;4</a></p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Load necessary libraries</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Load mtcars dataset</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create an intentionally ugly plot</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">wt</span>, y <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"red"</span>, size <span class="op">=</span> <span class="fl">5</span>, shape <span class="op">=</span> <span class="fl">18</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, color <span class="op">=</span> <span class="st">"blue"</span>, fill <span class="op">=</span> <span class="st">"green"</span>, alpha <span class="op">=</span> <span class="fl">0.3</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span><span class="st">"Car Weight (1000 lbs)"</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">6</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3"</span>, <span class="st">"4"</span>, <span class="st">"5"</span>, <span class="st">"6"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span><span class="st">"Miles/(US) gallon"</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, by <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"10"</span>, <span class="st">"15"</span>, <span class="st">"20"</span>, <span class="st">"25"</span>, <span class="st">"30"</span>, <span class="st">"35"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"Comic Sans MS"</span>, base_size <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,</span>
+<span>        panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"purple"</span>, size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span>,</span>
+<span>        panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"orange"</span>, size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>        axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"yellow"</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>        axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"red"</span>, size <span class="op">=</span> <span class="fl">30</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
+<span>        axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span>, size <span class="op">=</span> <span class="fl">25</span>, angle <span class="op">=</span> <span class="fl">45</span>, hjust <span class="op">=</span> <span class="fl">1</span>, vjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>        axis.ticks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"green"</span>, size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span>,</span>
+<span>        plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"brown"</span>, size <span class="op">=</span> <span class="fl">40</span>, face <span class="op">=</span> <span class="st">"italic"</span>, hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>        plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"magenta"</span>, size <span class="op">=</span> <span class="fl">30</span>, face <span class="op">=</span> <span class="st">"bold"</span>, hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>        plot.caption <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"cyan"</span>, size <span class="op">=</span> <span class="fl">20</span>, face <span class="op">=</span> <span class="st">"italic"</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>        legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"orange"</span>, size <span class="op">=</span> <span class="fl">20</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
+<span>        legend.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"purple"</span>, size <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
+<span>        legend.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"yellow"</span>, color <span class="op">=</span> <span class="st">"green"</span>, size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span>,</span>
+<span>        legend.key <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"blue"</span>, color <span class="op">=</span> <span class="st">"red"</span>, size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>        legend.position <span class="op">=</span> <span class="st">"bottom"</span>,</span>
+<span>        legend.direction <span class="op">=</span> <span class="st">"vertical"</span>,</span>
+<span>        legend.box <span class="op">=</span> <span class="st">"vertical"</span>,</span>
+<span>        legend.key.size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"cm"</span><span class="op">)</span>,</span>
+<span>        plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-qq1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-qq1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-qq1-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qq1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: The ugliest possible plot! Everything is too bright and out of order!
+</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="question-2-1" class="level3"><h3 class="anchored" data-anchor-id="question-2-1">Question 2</h3>
+<p><strong><code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_dark()</a></code> makes the inside of the plot dark, but not the outside. Change the plot background to black, and then update the text settings so you can still read the labels.</strong></p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">hp</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Miles per gallon vs. Horsepower for cars in 'mtcars' dataset"</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"Engine Horsepower (hp)"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"Miles per gallon"</span></span>
+<span>    <span class="op">)</span></span>
+<span></span>
+<span><span class="va">g1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"The Base Plot"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"The theme_dark() plot"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_dark</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">g1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Completely black plot background"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_dark</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"black"</span>, colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,</span>
+<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"white"</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,</span>
+<span>    plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span>,</span>
+<span>    axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span>,</span>
+<span>    axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span>,</span>
+<span>    axis.ticks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"grey50"</span><span class="op">)</span>,</span>
+<span>    panel.grid <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"grey20"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-qq2" class="cell quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-qq2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="fig-qq2-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-qq2-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-qq2-1.png" class="img-fluid figure-img" data-ref-parent="fig-qq2" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-qq2-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) The base plot
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-qq2-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-qq2-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-qq2-2.png" class="img-fluid figure-img" data-ref-parent="fig-qq2" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-qq2-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) theme_dark() plot
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-qq2-3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-qq2-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-qq2-3.png" class="img-fluid figure-img" data-ref-parent="fig-qq2" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-qq2-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Completely black plot background and text colour adjustments
+</figcaption></figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qq2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Customizing the theme_black()
+</figcaption></figure>
+</div>
+</div>
+</section><section id="question-3-1" class="level3"><h3 class="anchored" data-anchor-id="question-3-1">Question 3</h3>
+<p><strong>Make an elegant theme that uses “linen” as the background colour and a serif font for the text.</strong></p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yixuan/showtext">showtext</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/sysfonts/man/font_add_google.html">font_add_google</a></span><span class="op">(</span><span class="st">"Marcellus"</span>, <span class="st">"serif_font"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/showtext/man/showtext_auto.html">showtext_auto</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">g1</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"A nice serif font and linen background for the plot"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_clean.html">theme_clean</a></span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"serif_font"</span>, base_size <span class="op">=</span> <span class="fl">18</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"linen"</span><span class="op">)</span>,</span>
+<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>face <span class="op">=</span> <span class="st">"bold"</span>, size <span class="op">=</span> <span class="fl">27</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-qq3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-qq3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-qq3-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qq3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Using linen as plot background and a serif font
+</figcaption></figure>
+</div>
+</div>
+</div>
+</section><section id="question-4" class="level3"><h3 class="anchored" data-anchor-id="question-4">Question 4</h3>
+<p><strong>Systematically explore the effects of <code>hjust</code> when you have a multi-line title. Why doesn’t <code>vjust</code> do anything?</strong></p>
+<p>In <code>ggplot2</code>, the <code>hjust</code> and <code>vjust</code> parameters control the horizontal and vertical alignment of text, respectively. However, when you have a multi-line title, <strong>the <code>vjust</code> parameter doesn’t seem to have any noticeable effect.</strong> This is because <code>ggplot2</code> calculates the vertical positioning of multi-line text differently from single-line text.</p>
+<p>When you specify a multi-line title, <code>ggplot2</code> automatically adjusts the vertical alignment of the text to center it within the available space. This behavior overrides the <code>vjust</code> parameter. Instead, <code>ggplot2</code> focuses on aligning the entire multi-line text block within the plot title area.</p>
+<p>On the other hand, the <code>hjust</code> parameter still has a significant impact when you have a multi-line title. It controls the horizontal alignment of the entire text block, shifting it left or right within the title area.</p>
+<p>To systematically explore the effects of <code>hjust</code> with a multi-line title in <code>ggplot2</code>, here’s an example code snippet to illustrate this:</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create a basic plot with a multi-line title</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">wt</span>, y <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/ggthemes/man/theme_clean.html">theme_clean</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create a list of hjust values to explore</span></span>
+<span><span class="va">hjust_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, by <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="va">hjust_values</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">pp</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="va">i</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu">glue</span><span class="fu">::</span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"Effect of hjust with multi-line\ntitle. [hjust = {i}]"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">pp</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-qq4" class="cell quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-qq4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="fig-qq4-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-qq4-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-qq4-1.png" class="img-fluid figure-img" data-ref-parent="fig-qq4" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-qq4-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) hjust = 0
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-qq4-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-qq4-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-qq4-2.png" class="img-fluid figure-img" data-ref-parent="fig-qq4" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-qq4-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) hjust = 0.2
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-qq4-3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-qq4-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-qq4-3.png" class="img-fluid figure-img" data-ref-parent="fig-qq4" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-qq4-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) hjust = 0.4
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-qq4-4" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-qq4-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-qq4-4.png" class="img-fluid figure-img" data-ref-parent="fig-qq4" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-qq4-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(d) hjust = 0.6
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-qq4-5" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-qq4-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-qq4-5.png" class="img-fluid figure-img" data-ref-parent="fig-qq4" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-qq4-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(e) hjust = 0.8
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div id="fig-qq4-6" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-qq4-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter17_files/figure-html/fig-qq4-6.png" class="img-fluid figure-img" data-ref-parent="fig-qq4" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-qq4-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(f) hjust = 1
+</figcaption></figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-qq4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: The impact of hjsut on multi-line title in ggplot2
+</figcaption></figure>
+</div>
+</div>
 
 
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -755,10 +1304,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -768,8 +1316,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -782,6 +1339,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -825,6 +1501,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -850,6 +1527,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -910,7 +1613,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<div class="page-columns page-rows-contents page-layout-article"><div class="social-share"><a href="https://twitter.com/share?url=https://aditya-dahiya.github.io/ggplot2book3e/Chapter16.html&amp;text=Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)" target="_blank" class="twitter"><i class="fab fa-twitter fa-fw fa-lg"></i></a><a href="https://www.linkedin.com/shareArticle?url=https://aditya-dahiya.github.io/ggplot2book3e/Chapter16.html&amp;title=Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)" target="_blank" class="linkedin"><i class="fa-brands fa-linkedin-in fa-fw fa-lg"></i></a>  <a href="mailto:?subject=Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)&amp;body=Check out this link:https://aditya-dahiya.github.io/ggplot2book3e/Chapter16.html" target="_blank" class="email"><i class="fa-solid fa-envelope fa-fw fa-lg"></i></a><a href="https://www.facebook.com/sharer.php?u=https://aditya-dahiya.github.io/ggplot2book3e/Chapter16.html" target="_blank" class="facebook"><i class="fab fa-facebook-f fa-fw fa-lg"></i></a><a href="javascript:void(0);" onclick="var mastodon_instance=prompt('Mastodon Instance / Server Name?'); if(typeof mastodon_instance==='string' &amp;&amp; mastodon_instance.length){this.href='https://'+mastodon_instance+'/share?text=Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e) https://aditya-dahiya.github.io/ggplot2book3e/Chapter16.html'}else{return false;}" target="_blank" class="mastodon"><i class="fa-brands fa-mastodon fa-fw fa-lg"></i></a></div></div>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter17.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><div class="page-columns page-rows-contents page-layout-article"><div class="social-share">
+<a href="https://twitter.com/share?url=https://aditya-dahiya.github.io/ggplot2book3e/Chapter16.html&amp;text=Solutions%20Manual%20(and%20Beyond)%20for%20ggplot2:%20Elegant%20Graphics%20for%20Data%20Analysis%20(3e)" target="_blank" class="twitter"><i class="fab fa-twitter fa-fw fa-lg"></i></a><a href="https://www.linkedin.com/shareArticle?url=https://aditya-dahiya.github.io/ggplot2book3e/Chapter16.html&amp;title=Solutions%20Manual%20(and%20Beyond)%20for%20ggplot2:%20Elegant%20Graphics%20for%20Data%20Analysis%20(3e)" target="_blank" class="linkedin"><i class="fa-brands fa-linkedin-in fa-fw fa-lg"></i></a>  <a href="mailto:?subject=Solutions%20Manual%20(and%20Beyond)%20for%20ggplot2:%20Elegant%20Graphics%20for%20Data%20Analysis%20(3e)&amp;body=Check%20out%20this%20link:https://aditya-dahiya.github.io/ggplot2book3e/Chapter16.html" target="_blank" class="email"><i class="fa-solid fa-envelope fa-fw fa-lg"></i></a><a href="https://www.facebook.com/sharer.php?u=https://aditya-dahiya.github.io/ggplot2book3e/Chapter16.html" target="_blank" class="facebook"><i class="fab fa-facebook-f fa-fw fa-lg"></i></a><a href="javascript:void(0);" onclick="var mastodon_instance=prompt('Mastodon Instance / Server Name?'); if(typeof mastodon_instance==='string' &amp;&amp; mastodon_instance.length){this.href='https://'+mastodon_instance+'/share?text=Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e) https://aditya-dahiya.github.io/ggplot2book3e/Chapter16.html'}else{return false;}" target="_blank" class="mastodon"><i class="fa-brands fa-mastodon fa-fw fa-lg"></i></a>
+</div></div>
 
 
 

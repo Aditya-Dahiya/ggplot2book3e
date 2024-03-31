@@ -11,3 +11,6 @@ lubridate
 scales
 ggthemes
 gt
+sysfonts
+showtextdb
+showtext
