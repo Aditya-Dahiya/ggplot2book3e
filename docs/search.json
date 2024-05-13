@@ -957,5 +957,29 @@
       "Advanced Topics",
       "Chapter 18"
     ]
+  },
+  {
+    "objectID": "Chapter18.html#multiple-components",
+    "href": "Chapter18.html#multiple-components",
+    "title": "Chapter 18",
+    "section": "18.3 Multiple components",
+    "text": "18.3 Multiple components",
+    "crumbs": [
+      "Home",
+      "Advanced Topics",
+      "Chapter 18"
+    ]
+  },
+  {
+    "objectID": "Chapter18.html#exercises-1",
+    "href": "Chapter18.html#exercises-1",
+    "title": "Chapter 18",
+    "section": "18.3.4 Exercises",
+    "text": "18.3.4 Exercises\nQuestion 1\nTo make the best use of space, many examples in this book hide the axes labels and legend. we’ve just copied-and-pasted the same code into multiple places, but it would make more sense to create a reusable function. What would that function look like?\nWe may use a custom function, theme_bookprint() as follows: –\ntheme_bookprint &lt;- function(...){\n  theme(\n    axis.title = element_blank(),\n    legend.position = \"none\",\n    ...\n  )}\nThe following Figure 4 (b) demonstrates the use of this custom function.\nCode# The raw plot\ng1 &lt;- ggplot(mpg, aes(hwy, cty, col = class)) + geom_point()\n\ntheme_bookprint &lt;- function(...){\n  theme(\n    axis.title = element_blank(),\n    legend.position = \"none\",\n    ...\n  )\n}\n\ng1 \n\ng1 +\n  theme_bookprint(axis.text = element_text(face = \"bold\"))\n\n\n\n\n\n\n\n\n\n(a) The default plot\n\n\n\n\n\n\n\n\n\n(b) The plot with theme_bookprint()\n\n\n\n\n\n\nFigure 4: Creating a custom function to hide legend and axes-labels\n\n\nQuestion 2\nExtend the borders() function to also add coord_quickmap() to the plot.\nThe new custom_borders() extending upon the original borders() function will looks like this:\ncustom_borders &lt;- function(...) {\n  list(\n    borders(...),\n    coord_quickmap()\n  )\n}\nThe Figure 5 (b) shows application of the custom_borders() to the world map\nCodecustom_borders &lt;- function(...) {\n  list(\n    borders(...),\n    coord_quickmap()\n  )\n}\n\nggplot() +\n  borders()\n\nggplot() +\n  custom_borders()\n\n\n\n\n\n\n\n\n\n(a) Original World map using geom_polygon\n\n\n\n\n\n\n\n\n\n(b) World map with coord_quickmap\n\n\n\n\n\n\nFigure 5: Extending the borders() function to also add coord_quickmap().\n\n\nQuestion 3\nLook through your own code. What combinations of geoms or scales do you use all the time? How could you extract the pattern into a reusable function?\nIn my plots, I often remove the legend, put axes-labels at the end on axes, and remove margins around the plot titles, subtitles and axes texts. I even remove axis ticks at many times. Further, I like to choose a bacground colour, and change all other text and line colours to its darker versions accordingly. Now, the Figure 6 (b) demonstrates an example of this.\nCodeg2 &lt;- mpg |&gt; \n  ggplot(aes(y = cty, x = displ, colour = manufacturer)) +\n  geom_point()\n\ncustom_plot &lt;- function(title = \"\", subtitle = \"\", \n                        background = \"grey95\", ...){\n  list(\n    labs(title = title, subtitle = subtitle),\n    theme_minimal(base_size = 14, base_family = \"serif\"),\n    theme(\n      legend.position = \"none\",\n      axis.line = element_line(\n        arrow = arrow(),\n        colour = colorspace::darken(background, 0.4)\n      ),\n      axis.text = element_text(\n        colour = colorspace::darken(background, 0.6)\n      ),\n      axis.title = element_text(\n        colour = colorspace::darken(background, 0.6),\n        hjust = 1\n      ),\n      panel.grid.major = element_line(\n        linetype = 3,\n        colour = colorspace::darken(background, 0.3)\n      ),\n      panel.grid.minor = element_blank(),\n      axis.ticks = element_blank(),\n      plot.title = element_text(\n        margin = margin(0,0,5,0),\n        colour = colorspace::darken(background, 0.6)\n      ),\n      plot.subtitle = element_text(\n        margin = margin(0,0,0,0),\n        colour = colorspace::darken(background, 0.6)\n      ),\n      plot.background = element_rect(fill = background, colour = NA),\n      ...\n    )\n  )\n}\n\n\ng2\n\ng2 + custom_plot(\n  \"Mileage vs. Engine displacement\", \n  \"A scatter plot using mpg dataset\",\n  background = \"#d9f7ff\")\n\n\n\n\n\n\n\n\n\n(a) The base plot\n\n\n\n\n\n\n\n\n\n(b) The plot with using custom_plot() re-useable function\n\n\n\n\n\n\nFigure 6: Extracting the commonly used patterns into a reusable function",
+    "crumbs": [
+      "Home",
+      "Advanced Topics",
+      "Chapter 18"
+    ]
   }
 ]

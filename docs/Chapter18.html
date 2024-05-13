@@ -390,12 +390,20 @@ div.csl-indent {
    
   <ul>
 <li>
-<a href="#exercises" id="toc-exercises" class="nav-link active" data-scroll-target="#exercises"><strong>18.2.1 Exercises</strong></a>
+<a href="#exercises" id="toc-exercises" class="nav-link active" data-scroll-target="#exercises">18.2.1 Exercises</a>
   <ul class="collapse">
 <li><a href="#question-1" id="toc-question-1" class="nav-link" data-scroll-target="#question-1">Question 1</a></li>
   <li><a href="#question-2" id="toc-question-2" class="nav-link" data-scroll-target="#question-2">Question 2</a></li>
   <li><a href="#question-3" id="toc-question-3" class="nav-link" data-scroll-target="#question-3">Question 3</a></li>
   <li><a href="#question-4" id="toc-question-4" class="nav-link" data-scroll-target="#question-4">Question 4</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#exercises-1" id="toc-exercises-1" class="nav-link" data-scroll-target="#exercises-1">18.3.4 Exercises</a>
+  <ul class="collapse">
+<li><a href="#question-1-1" id="toc-question-1-1" class="nav-link" data-scroll-target="#question-1-1">Question 1</a></li>
+  <li><a href="#question-2-1" id="toc-question-2-1" class="nav-link" data-scroll-target="#question-2-1">Question 2</a></li>
+  <li><a href="#question-3-1" id="toc-question-3-1" class="nav-link" data-scroll-target="#question-3-1">Question 3</a></li>
   </ul>
 </li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter18.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -437,7 +445,7 @@ div.csl-indent {
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://colorspace.R-Forge.R-project.org/">colorspace</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<section id="exercises" class="level2"><h2 class="anchored" data-anchor-id="exercises"><strong>18.2.1 Exercises</strong></h2>
+<section id="exercises" class="level2"><h2 class="anchored" data-anchor-id="exercises">18.2.1 Exercises</h2>
 <section id="question-1" class="level3"><h3 class="anchored" data-anchor-id="question-1">Question 1</h3>
 <p><strong>Create an object that represents a pink histogram with 100 bins.</strong></p>
 <p>In the following code, <code>pink_hist</code> is an object that represents a pink histogram with 100 bins. This object can be added to any <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> function call.</p>
@@ -663,8 +671,8 @@ Figure&nbsp;2
 <p><strong>Arguments and their purpose:</strong></p>
 <table class="table">
 <colgroup>
-<col style="width: 51%">
-<col style="width: 48%">
+<col style="width: 50%">
+<col style="width: 49%">
 </colgroup>
 <thead><tr class="header">
 <th>Argument to base <code><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme()</a></code> call</th>
@@ -905,6 +913,193 @@ Figure&nbsp;2
 Figure&nbsp;3: Demonstrating the use of our custom created function scale_fill_wesanderson()
 </figcaption></figure>
 </div>
+</div>
+</section></section><section id="exercises-1" class="level2"><h2 class="anchored" data-anchor-id="exercises-1">18.3.4 Exercises</h2>
+<section id="question-1-1" class="level3"><h3 class="anchored" data-anchor-id="question-1-1">Question 1</h3>
+<p><strong>To make the best use of space, many examples in this book hide the axes labels and legend. we’ve just copied-and-pasted the same code into multiple places, but it would make more sense to create a reusable function. What would that function look like?</strong></p>
+<p>We may use a custom function, <code>theme_bookprint()</code> as follows: –</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">theme_bookprint</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>    <span class="va">...</span></span>
+<span>  <span class="op">)</span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The following <a href="#fig-ex3-q1-2" class="quarto-xref">Figure&nbsp;4 (b)</a> demonstrates the use of this custom function.</p>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># The raw plot</span></span>
+<span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">hwy</span>, <span class="va">cty</span>, col <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">theme_bookprint</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>    <span class="va">...</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">g1</span> </span>
+<span></span>
+<span><span class="va">g1</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_bookprint</span><span class="op">(</span>axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-ex3-q1" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ex3-q1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-ex3-q1" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-ex3-q1-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-ex3-q1-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter18_files/figure-html/fig-ex3-q1-1.png" class="img-fluid figure-img" data-ref-parent="fig-ex3-q1" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-ex3-q1-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) The default plot
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-ex3-q1" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-ex3-q1-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-ex3-q1-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter18_files/figure-html/fig-ex3-q1-2.png" class="img-fluid figure-img" data-ref-parent="fig-ex3-q1" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-ex3-q1-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) The plot with theme_bookprint()
+</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ex3-q1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Creating a custom function to hide legend and axes-labels
+</figcaption></figure>
+</div>
+</section><section id="question-2-1" class="level3"><h3 class="anchored" data-anchor-id="question-2-1">Question 2</h3>
+<p><strong>Extend the <code><a href="https://ggplot2.tidyverse.org/reference/borders.html">borders()</a></code> function to also add <code><a href="https://ggplot2.tidyverse.org/reference/coord_map.html">coord_quickmap()</a></code> to the plot.</strong></p>
+<p>The new <code>custom_borders()</code> extending upon the original <code><a href="https://ggplot2.tidyverse.org/reference/borders.html">borders()</a></code> function will looks like this:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">custom_borders</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/borders.html">borders</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <a href="#fig-ex3-q2-2" class="quarto-xref">Figure&nbsp;5 (b)</a> shows application of the <code>custom_borders()</code> to the world map</p>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">custom_borders</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/borders.html">borders</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/borders.html">borders</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">custom_borders</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-ex3-q2" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ex3-q2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-ex3-q2" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-ex3-q2-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-ex3-q2-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter18_files/figure-html/fig-ex3-q2-1.png" class="img-fluid figure-img" data-ref-parent="fig-ex3-q2" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-ex3-q2-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Original World map using geom_polygon
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-ex3-q2" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-ex3-q2-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-ex3-q2-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter18_files/figure-html/fig-ex3-q2-2.png" class="img-fluid figure-img" data-ref-parent="fig-ex3-q2" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-ex3-q2-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) World map with coord_quickmap
+</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ex3-q2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Extending the borders() function to also add coord_quickmap().
+</figcaption></figure>
+</div>
+</section><section id="question-3-1" class="level3"><h3 class="anchored" data-anchor-id="question-3-1">Question 3</h3>
+<p><strong>Look through your own code. What combinations of geoms or scales do you use all the time? How could you extract the pattern into a reusable function?</strong></p>
+<p>In my plots, I often remove the legend, put axes-labels at the end on axes, and remove margins around the plot titles, subtitles and axes texts. I even remove axis ticks at many times. Further, I like to choose a bacground colour, and change all other text and line colours to its darker versions accordingly. Now, the <a href="#fig-ex3-q3-2" class="quarto-xref">Figure&nbsp;6 (b)</a> demonstrates an example of this.</p>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">g2</span> <span class="op">&lt;-</span> <span class="va">mpg</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">cty</span>, x <span class="op">=</span> <span class="va">displ</span>, colour <span class="op">=</span> <span class="va">manufacturer</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">custom_plot</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">title</span> <span class="op">=</span> <span class="st">""</span>, <span class="va">subtitle</span> <span class="op">=</span> <span class="st">""</span>, </span>
+<span>                        <span class="va">background</span> <span class="op">=</span> <span class="st">"grey95"</span>, <span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="va">title</span>, subtitle <span class="op">=</span> <span class="va">subtitle</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span>, base_family <span class="op">=</span> <span class="st">"serif"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>      legend.position <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>      axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span></span>
+<span>        arrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>        colour <span class="op">=</span> <span class="fu">colorspace</span><span class="fu">::</span><span class="fu"><a href="https://colorspace.R-Forge.R-project.org/reference/lighten.html">darken</a></span><span class="op">(</span><span class="va">background</span>, <span class="fl">0.4</span><span class="op">)</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>        colour <span class="op">=</span> <span class="fu">colorspace</span><span class="fu">::</span><span class="fu"><a href="https://colorspace.R-Forge.R-project.org/reference/lighten.html">darken</a></span><span class="op">(</span><span class="va">background</span>, <span class="fl">0.6</span><span class="op">)</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>        colour <span class="op">=</span> <span class="fu">colorspace</span><span class="fu">::</span><span class="fu"><a href="https://colorspace.R-Forge.R-project.org/reference/lighten.html">darken</a></span><span class="op">(</span><span class="va">background</span>, <span class="fl">0.6</span><span class="op">)</span>,</span>
+<span>        hjust <span class="op">=</span> <span class="fl">1</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span></span>
+<span>        linetype <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>        colour <span class="op">=</span> <span class="fu">colorspace</span><span class="fu">::</span><span class="fu"><a href="https://colorspace.R-Forge.R-project.org/reference/lighten.html">darken</a></span><span class="op">(</span><span class="va">background</span>, <span class="fl">0.3</span><span class="op">)</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>      axis.ticks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>      plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>        margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">5</span>,<span class="fl">0</span><span class="op">)</span>,</span>
+<span>        colour <span class="op">=</span> <span class="fu">colorspace</span><span class="fu">::</span><span class="fu"><a href="https://colorspace.R-Forge.R-project.org/reference/lighten.html">darken</a></span><span class="op">(</span><span class="va">background</span>, <span class="fl">0.6</span><span class="op">)</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span></span>
+<span>        margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>,</span>
+<span>        colour <span class="op">=</span> <span class="fu">colorspace</span><span class="fu">::</span><span class="fu"><a href="https://colorspace.R-Forge.R-project.org/reference/lighten.html">darken</a></span><span class="op">(</span><span class="va">background</span>, <span class="fl">0.6</span><span class="op">)</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">background</span>, colour <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,</span>
+<span>      <span class="va">...</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span></span>
+<span><span class="va">g2</span></span>
+<span></span>
+<span><span class="va">g2</span> <span class="op">+</span> <span class="fu">custom_plot</span><span class="op">(</span></span>
+<span>  <span class="st">"Mileage vs. Engine displacement"</span>, </span>
+<span>  <span class="st">"A scatter plot using mpg dataset"</span>,</span>
+<span>  background <span class="op">=</span> <span class="st">"#d9f7ff"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="fig-ex3-q3" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ex3-q3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-ex3-q3" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-ex3-q3-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-ex3-q3-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter18_files/figure-html/fig-ex3-q3-1.png" class="img-fluid figure-img" data-ref-parent="fig-ex3-q3" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-ex3-q3-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) The base plot
+</figcaption></figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-ex3-q3" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-ex3-q3-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-ex3-q3-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter18_files/figure-html/fig-ex3-q3-2.png" class="img-fluid figure-img" data-ref-parent="fig-ex3-q3" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-ex3-q3-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) The plot with using custom_plot() re-useable function
+</figcaption></figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ex3-q3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Extracting the commonly used patterns into a reusable function
+</figcaption></figure>
 </div>
 
 

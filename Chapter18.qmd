@@ -277,7 +277,7 @@ theme(
 **Arguments and their purpose:**
 
 | Argument to base `theme()` call                                                                                                                                                          | Meaning and Purpose                                                                                                                                                                         |
-|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `line = element_line(colour = "black", linewidth = base_line_size, linetype = 1, lineend = "butt")`                                                                                      | Specifies the appearance of lines in the plot, setting the color to black, the line width to the base line size, the line type to solid, and the line end style to "butt".                  |
 | `rect = element_rect(fill = "white", colour = "black", linewidth = base_rect_size, linetype = 1)`                                                                                        | Sets the appearance of rectangles in the plot, defining the fill color as white, the border color as black, the border width as the base rectangle size, and the border line type as solid. |
 | `text = element_text(family = base_family, face = "plain", colour = "black", size = base_size, lineheight = 0.9, hjust = 0.5, vjust = 0.5, angle = 0, margin = margin(), debug = FALSE)` | Defines the appearance of text in the plot, specifying the font family, face, color, size, line height, horizontal and vertical justification, angle, margin, and debug options.            |
@@ -394,4 +394,152 @@ q4_1 +
     palette = "Zissou1",
     type = "continuous"
     )
+```
+
+## 18.3.4 Exercises
+
+### Question 1
+
+**To make the best use of space, many examples in this book hide the axes labels and legend. we’ve just copied-and-pasted the same code into multiple places, but it would make more sense to create a reusable function. What would that function look like?**
+
+We may use a custom function, `theme_bookprint()` as follows: –
+
+``` r
+theme_bookprint <- function(...){
+  theme(
+    axis.title = element_blank(),
+    legend.position = "none",
+    ...
+  )}
+```
+
+The following @fig-ex3-q1-2 demonstrates the use of this custom function.
+
+```{r}
+#| label: fig-ex3-q1
+#| fig-cap: "Creating a custom function to hide legend and axes-labels"
+#| fig-subcap: 
+#|   - "The default plot"
+#|   - "The plot with theme_bookprint()"
+#| layout-ncol: 2
+
+# The raw plot
+g1 <- ggplot(mpg, aes(hwy, cty, col = class)) + geom_point()
+
+theme_bookprint <- function(...){
+  theme(
+    axis.title = element_blank(),
+    legend.position = "none",
+    ...
+  )
+}
+
+g1 
+
+g1 +
+  theme_bookprint(axis.text = element_text(face = "bold"))
+```
+
+### Question 2
+
+**Extend the `borders()` function to also add `coord_quickmap()` to the plot.**
+
+The new `custom_borders()` extending upon the original `borders()` function will looks like this:
+
+``` R
+custom_borders <- function(...) {
+  list(
+    borders(...),
+    coord_quickmap()
+  )
+}
+```
+
+The @fig-ex3-q2-2 shows application of the `custom_borders()` to the world map
+
+```{r}
+#| label: fig-ex3-q2
+#| fig-cap: "Extending the borders() function to also add coord_quickmap()."
+#| fig-subcap: 
+#|   - "Original World map using geom_polygon"
+#|   - "World map with coord_quickmap"
+#| layout-ncol: 2
+
+custom_borders <- function(...) {
+  list(
+    borders(...),
+    coord_quickmap()
+  )
+}
+
+ggplot() +
+  borders()
+
+ggplot() +
+  custom_borders()
+```
+
+### Question 3
+
+**Look through your own code. What combinations of geoms or scales do you use all the time? How could you extract the pattern into a reusable function?**
+
+In my plots, I often remove the legend, put axes-labels at the end on axes, and remove margins around the plot titles, subtitles and axes texts. I even remove axis ticks at many times. Further, I like to choose a bacground colour, and change all other text and line colours to its darker versions accordingly. Now, the @fig-ex3-q3-2 demonstrates an example of this.
+
+```{r}
+#| label: fig-ex3-q3
+#| fig-cap: "Extracting the commonly used patterns into a reusable function"
+#| fig-subcap: 
+#|   - "The base plot"
+#|   - "The plot with using custom_plot() re-useable function"
+#| layout-ncol: 2
+
+g2 <- mpg |> 
+  ggplot(aes(y = cty, x = displ, colour = manufacturer)) +
+  geom_point()
+
+custom_plot <- function(title = "", subtitle = "", 
+                        background = "grey95", ...){
+  list(
+    labs(title = title, subtitle = subtitle),
+    theme_minimal(base_size = 14, base_family = "serif"),
+    theme(
+      legend.position = "none",
+      axis.line = element_line(
+        arrow = arrow(),
+        colour = colorspace::darken(background, 0.4)
+      ),
+      axis.text = element_text(
+        colour = colorspace::darken(background, 0.6)
+      ),
+      axis.title = element_text(
+        colour = colorspace::darken(background, 0.6),
+        hjust = 1
+      ),
+      panel.grid.major = element_line(
+        linetype = 3,
+        colour = colorspace::darken(background, 0.3)
+      ),
+      panel.grid.minor = element_blank(),
+      axis.ticks = element_blank(),
+      plot.title = element_text(
+        margin = margin(0,0,5,0),
+        colour = colorspace::darken(background, 0.6)
+      ),
+      plot.subtitle = element_text(
+        margin = margin(0,0,0,0),
+        colour = colorspace::darken(background, 0.6)
+      ),
+      plot.background = element_rect(fill = background, colour = NA),
+      ...
+    )
+  )
+}
+
+
+g2
+
+g2 + custom_plot(
+  "Mileage vs. Engine displacement", 
+  "A scatter plot using mpg dataset",
+  background = "#d9f7ff")
 ```
