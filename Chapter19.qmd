@@ -1,8 +1,141 @@
 ---
 title: "Chapter 19"
 subtitle: "Internals of ggplot2"
+author: "Aditya Dahiya"
+date: "2024-09-26"
+format: 
+  html: 
+    code-fold: true
+    code-copy: hover
+    code-link: true
+    mermaid:
+      theme: neutral
+execute: 
+  echo: true
+  warning: false
+  error: false
+  cache: true
+filters:
+  - social-share
+share:
+  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter17.html"
+  description: "Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
+  twitter: true
+  facebook: true
+  linkedin: true
+  email: true
+  mastodon: true
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
 ---
 
-::: callout-warning
-Solutions for this chapter are under construction.
+::: {.callout-tip appearance="minimal"}
+This chapter has no exercises. So, I will try to demonstrate some concepts using `mermaid` flowcharts in Quarto
+:::
+
+```{r}
+#| label: setup
+
+library(tidyverse)
+library(scales)
+```
+
+## 19.1 The ggplot2 Plot Rendering Process
+
+This @fig-1 illustrates the 5 key steps involved in rendering a ggplot2 object into an image, generated using Quarto's [native support](https://quarto.org/docs/authoring/diagrams.html#overview) for [`mermaid`](https://mermaid.js.org/) diagrams. (Credits: Code help from [ChatGPT](https://chat.openai.com/) also.)
+
+::: {#fig-1}
+```{mermaid}
+flowchart TD
+    A["1. Create ggplot object"] --> B["2. ggplot_build(): Prepare data for each layer"]
+    B --> C["3. ggplot_gtable(): Convert data to graphical elements (gtable)"]
+    C --> D["4. grid::grid.newpage(): Create new image page"]
+    D --> E["5. grid::grid.draw(): Draw gtable on the image"]
+
+```
+
+A flowchart with 5 steps on how `ggplot2` object is actually drawn into a graphic.
+:::
+
+## 19.2 Steps in the ggplot2 Build Process:
+
+-   **Data Preparation**:
+    -   **ggplot_build()** starts by preparing data for each layer of the plot.
+    -   Each layer can provide its own data, inherit the global data, or use a function to generate data.
+    -   The data is passed through the plot's layout, which organizes coordinate systems and facets (different sections of the plot).
+    -   The **PANEL** column is added to the data, which ensures that each row is linked to a specific plot panel.
+-   **Data Transformation**:
+    -   Any transformations (e.g., log scaling) specified in the scales are applied first to the data.
+    -   Position scales are applied next, such as continuous or discrete scales (e.g., for axes), which may remove out-of-bounds values or adjust data into bins.
+    -   Statistical transformations (e.g., smoothing or regression) are then performed based on the data and layers.
+    -   After this, the geom (geometry) layers adjust the positions and apply any necessary transformations (e.g., jittering).
+    -   Finally, all non-positional aesthetics (e.g., colors, line types) are mapped, and the data is prepared for rendering.
+-   **Final Output**:
+    -   The result of **ggplot_build()** is a structured list with the final prepared data, layout details, trained scales, and the original plot object, now ready for rendering.
+
+::: grid
+::: g-col-6
+::: {#fig-2}
+```{mermaid}
+flowchart TD
+    A{{Data Preparation}} --> B{{Gather Data}}
+    B --> C{{Add PANEL Column}}
+    C --> D{{Data Transformation}}
+    D --> E{{Apply Scale Transformations}}
+    E --> F{{Map Position Aesthetics}}
+    F --> G{{Perform Statistical Transformations}}
+    G --> H{{Adjust Geometry Positions}}
+    H --> I{{Map Non-Positional Aesthetics}}
+    I --> J{{Final Output}}
+
+```
+
+Flowchart illustrating the step-by-step process of data preparation and transformation in ggplot2, leading to the final output of a plot.
+:::
+:::
+
+::: g-col-6
+::: {#fig-3}
+```{mermaid}
+flowchart TD
+    A{{Start}} --> B{{Layer Data Frame}}
+    B --> C{{Add PANEL Column}}
+    C --> D{{Coordinate Transformed Data}}
+    D --> E{{Faceted Data}}
+    E --> F{{Calculated Aesthetics}}
+    F --> G{{Position Mapped Data}}
+    G --> H{{Statistical Transformed Data}}
+    H --> I{{Position Adjusted Data}}
+    I --> J{{"Final Aesthetic Mapped Data (a list object)"}}
+```
+
+This flowchart lists each intermediate step along with the data-frames that are created or transformed.
+:::
+:::
+:::
+
+## **19.3 The `gtable` step**
+
+This section explains how `ggplot_gtable()` converts the output of the build step into a graphical table (`gtable`) for rendering. The @fig-4 illustrates the process of transforming plot data into graphical objects (grobs), assembling panels and legends, and adding final elements like titles and margins to produce a complete plot ready for rendering in `ggplot2`.
+
+::: {#fig-4}
+```{mermaid}
+flowchart TD
+    A("ggplot_gtable()") --> B("Convert Data to Grobs")
+    B --> C("Split Data by PANEL and Group")
+    C --> D("Coordinate Transformation (Normalize Data)")
+    D --> E("Convert Layers to gList of Grobs")
+    E --> F("Facet Collects Grobs per Panel")
+    F --> G("Assemble Panels into gtable")
+    G --> H("Render Axes and Panels")
+    H --> I("Train and Merge Legends")
+    I --> J("Create Key Grobs for Legends")
+    J --> K("Assemble Legend gtable")
+    K --> L("Add Title, Subtitle, Caption, Tag")
+    L --> M("Add Background and Margins")
+    M --> N("Final gtable Object")
+```
+
+Flowchart illustrating the `gtable` step in `ggplot2`, where data is transformed into graphical objects, panels and legends are assembled, and final plot adornments are added, resulting in a fully rendered plot ready for grid-based drawing.
 :::
