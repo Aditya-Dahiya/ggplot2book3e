@@ -373,7 +373,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
 <li><a href="#the-ggplot2-plot-rendering-process" id="toc-the-ggplot2-plot-rendering-process" class="nav-link active" data-scroll-target="#the-ggplot2-plot-rendering-process">19.1 The ggplot2 Plot Rendering Process</a></li>
   <li><a href="#steps-in-the-ggplot2-build-process" id="toc-steps-in-the-ggplot2-build-process" class="nav-link" data-scroll-target="#steps-in-the-ggplot2-build-process">19.2 Steps in the ggplot2 Build Process:</a></li>
-  <li><a href="#the-gtable-step" id="toc-the-gtable-step" class="nav-link" data-scroll-target="#the-gtable-step"><strong>19.3 The <code>gtable</code> step</strong></a></li>
+  <li><a href="#the-gtable-step" id="toc-the-gtable-step" class="nav-link" data-scroll-target="#the-gtable-step">19.3 The <code>gtable</code> step</a></li>
+  <li>
+<a href="#introducing-ggproto" id="toc-introducing-ggproto" class="nav-link" data-scroll-target="#introducing-ggproto">19.4 Introducing <code>ggproto</code></a>
+  <ul class="collapse">
+<li><a href="#what-is-a-ggproto-object" id="toc-what-is-a-ggproto-object" class="nav-link" data-scroll-target="#what-is-a-ggproto-object">What is a ggproto Object?</a></li>
+  <li><a href="#structure-of-ggproto-objects" id="toc-structure-of-ggproto-objects" class="nav-link" data-scroll-target="#structure-of-ggproto-objects">Structure of ggproto Objects</a></li>
+  <li><a href="#key-characteristics" id="toc-key-characteristics" class="nav-link" data-scroll-target="#key-characteristics">Key Characteristics</a></li>
+  <li><a href="#use-in-ggplot2" id="toc-use-in-ggplot2" class="nav-link" data-scroll-target="#use-in-ggplot2">Use in ggplot2</a></li>
+  </ul>
+</li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter19.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
@@ -411,7 +420,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>This chapter has no exercises. So, I will try to demonstrate some concepts using <code>mermaid</code> flowcharts in Quarto</p>
+<p>This chapter has no exercises. So, I will try to summarize some concepts using <code>mermaid</code> flowcharts in Quarto</p>
 </div>
 </div>
 </div>
@@ -563,7 +572,7 @@ Figure&nbsp;3: This flowchart lists each intermediate step along with the data-f
 </div>
 </div>
 </div>
-</section><section id="the-gtable-step" class="level2"><h2 class="anchored" data-anchor-id="the-gtable-step"><strong>19.3 The <code>gtable</code> step</strong></h2>
+</section><section id="the-gtable-step" class="level2"><h2 class="anchored" data-anchor-id="the-gtable-step">19.3 The <code>gtable</code> step</h2>
 <p>This section explains how <code><a href="https://ggplot2.tidyverse.org/reference/ggplot_gtable.html">ggplot_gtable()</a></code> converts the output of the build step into a graphical table (<code>gtable</code>) for rendering. The <a href="#fig-4" class="quarto-xref">Figure&nbsp;4</a> illustrates the process of transforming plot data into graphical objects (grobs), assembling panels and legends, and adding final elements like titles and margins to produce a complete plot ready for rendering in <code>ggplot2</code>.</p>
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>flowchart TD</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    A("ggplot_gtable()") --&gt; B("Convert Data to Grobs")</span>
@@ -611,9 +620,78 @@ Figure&nbsp;3: This flowchart lists each intermediate step along with the data-f
 Figure&nbsp;4: Flowchart illustrating the <code>gtable</code> step in <code>ggplot2</code>, where data is transformed into graphical objects, panels and legends are assembled, and final plot adornments are added, resulting in a fully rendered plot ready for grid-based drawing.
 </figcaption></figure>
 </div>
+</section><section id="introducing-ggproto" class="level2"><h2 class="anchored" data-anchor-id="introducing-ggproto">19.4 Introducing <code>ggproto</code>
+</h2>
+<section id="what-is-a-ggproto-object" class="level3"><h3 class="anchored" data-anchor-id="what-is-a-ggproto-object">What is a ggproto Object?</h3>
+<ul>
+<li>ggproto is a system within ggplot2 that allows for the creation of R objects with both data and methods. It is a way to define classes and objects that encapsulate functionality and state in a more controlled manner.</li>
+<li>
+<code>ggproto</code> objects are similar to object-oriented programming (OOP) concepts, allowing for inheritance, encapsulation, and polymorphism, making it easier to build complex and reusable components.</li>
+</ul></section><section id="structure-of-ggproto-objects" class="level3"><h3 class="anchored" data-anchor-id="structure-of-ggproto-objects">Structure of ggproto Objects</h3>
+<ul>
+<li>A <code>ggproto</code> object is created using the <code><a href="https://ggplot2.tidyverse.org/reference/ggproto.html">ggproto()</a></code> function. It typically includes:
+<ul>
+<li>Fields: These can store data or parameters relevant to the object.</li>
+<li>Methods: These define the functions that can be performed on the object or by the object.</li>
+</ul>
+</li>
+</ul></section><section id="key-characteristics" class="level3"><h3 class="anchored" data-anchor-id="key-characteristics">Key Characteristics</h3>
+<ol type="1">
+<li>
+<strong>Inheritance:</strong>
+<ul>
+<li>
+<code>ggproto</code> allows one object to inherit properties and methods from another. For example, a specific geom (like <code>geom_point</code>) can inherit from a more general geom class, sharing common functionality while allowing for customization.</li>
+</ul>
+</li>
+<li>
+<strong>Encapsulation:</strong>
+<ul>
+<li>Each <code>ggproto</code> object can have its own internal state (data and methods), making it self-contained. This helps manage complexity by organizing related functions and data together.</li>
+</ul>
+</li>
+<li>
+<strong>Polymorphism:</strong>
+<ul>
+<li>Different <code>ggproto</code> objects can have methods with the same name, allowing them to behave differently based on their class. This means you can call the same function on different <code>ggproto</code> objects, and they will respond according to their specific implementation.</li>
+</ul>
+</li>
+</ol></section><section id="use-in-ggplot2" class="level3"><h3 class="anchored" data-anchor-id="use-in-ggplot2">Use in ggplot2</h3>
+<ol type="1">
+<li>
+<strong>Geoms, Stats, and Coordinates:</strong>
+<ul>
+<li>Each component of a plot in ggplot2 (like geoms, stats, and coordinate systems) is represented as a <code>ggproto</code> object. For instance:
+<ul>
+<li>
+<code>geom_point</code> is a <code>ggproto</code> object that defines how to draw points on a plot.</li>
+<li>
+<code>stat_smooth</code> is another <code>ggproto</code> object that defines statistical transformations.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<strong>Customization:</strong>
+<ul>
+<li>Users can create their own custom geoms or stats by defining a new <code>ggproto</code> object that extends the existing ones, making it easy to customize the behavior of plots without altering the core ggplot2 functionality.</li>
+</ul>
+</li>
+<li>
+<strong>Efficiency:</strong>
+<ul>
+<li>
+<code>ggproto</code> objects are efficient in terms of performance because they allow for method dispatching without the overhead of traditional R object systems.</li>
+</ul>
+</li>
+</ol>
+<p>Thus, understanding <code>ggproto</code> is essential for anyone looking to customize or extend the ggplot2 system effectively.</p>
+<blockquote class="blockquote">
+<p><em>Imagine <code>ggproto</code> as the quirky, mad scientist of the ggplot2 lab, mixing up wild potions of plots and graphs. Each <code>ggproto</code> object is like a unique recipe card that says, “Add a dash of data here, sprinkle some fancy methods there,” allowing you to whip up custom visualizations that are both deliciously informative and visually appealing.</em></p>
+</blockquote>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");

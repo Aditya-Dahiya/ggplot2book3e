@@ -31,7 +31,7 @@ bibliography: references.bib
 ---
 
 ::: {.callout-tip appearance="minimal"}
-This chapter has no exercises. So, I will try to demonstrate some concepts using `mermaid` flowcharts in Quarto
+This chapter has no exercises. So, I will try to summarize some concepts using `mermaid` flowcharts in Quarto
 :::
 
 ```{r}
@@ -115,7 +115,7 @@ This flowchart lists each intermediate step along with the data-frames that are 
 :::
 :::
 
-## **19.3 The `gtable` step**
+## 19.3 The `gtable` step
 
 This section explains how `ggplot_gtable()` converts the output of the build step into a graphical table (`gtable`) for rendering. The @fig-4 illustrates the process of transforming plot data into graphical objects (grobs), assembling panels and legends, and adding final elements like titles and margins to produce a complete plot ready for rendering in `ggplot2`.
 
@@ -139,3 +139,40 @@ flowchart TD
 
 Flowchart illustrating the `gtable` step in `ggplot2`, where data is transformed into graphical objects, panels and legends are assembled, and final plot adornments are added, resulting in a fully rendered plot ready for grid-based drawing.
 :::
+
+## 19.4 Introducing `ggproto`
+
+### What is a ggproto Object?
+
+-   ggproto is a system within ggplot2 that allows for the creation of R objects with both data and methods. It is a way to define classes and objects that encapsulate functionality and state in a more controlled manner.
+-   `ggproto` objects are similar to object-oriented programming (OOP) concepts, allowing for inheritance, encapsulation, and polymorphism, making it easier to build complex and reusable components.
+
+### Structure of ggproto Objects
+
+-   A `ggproto` object is created using the `ggproto()` function. It typically includes:
+    -   Fields: These can store data or parameters relevant to the object.
+    -   Methods: These define the functions that can be performed on the object or by the object.
+
+### Key Characteristics
+
+1.  **Inheritance:**
+    -   `ggproto` allows one object to inherit properties and methods from another. For example, a specific geom (like `geom_point`) can inherit from a more general geom class, sharing common functionality while allowing for customization.
+2.  **Encapsulation:**
+    -   Each `ggproto` object can have its own internal state (data and methods), making it self-contained. This helps manage complexity by organizing related functions and data together.
+3.  **Polymorphism:**
+    -   Different `ggproto` objects can have methods with the same name, allowing them to behave differently based on their class. This means you can call the same function on different `ggproto` objects, and they will respond according to their specific implementation.
+
+### Use in ggplot2
+
+1.  **Geoms, Stats, and Coordinates:**
+    -   Each component of a plot in ggplot2 (like geoms, stats, and coordinate systems) is represented as a `ggproto` object. For instance:
+        -   `geom_point` is a `ggproto` object that defines how to draw points on a plot.
+        -   `stat_smooth` is another `ggproto` object that defines statistical transformations.
+2.  **Customization:**
+    -   Users can create their own custom geoms or stats by defining a new `ggproto` object that extends the existing ones, making it easy to customize the behavior of plots without altering the core ggplot2 functionality.
+3.  **Efficiency:**
+    -   `ggproto` objects are efficient in terms of performance because they allow for method dispatching without the overhead of traditional R object systems.
+
+Thus, understanding `ggproto` is essential for anyone looking to customize or extend the ggplot2 system effectively.
+
+> *Imagine `ggproto` as the quirky, mad scientist of the ggplot2 lab, mixing up wild potions of plots and graphs. Each `ggproto` object is like a unique recipe card that says, "Add a dash of data here, sprinkle some fancy methods there," allowing you to whip up custom visualizations that are both deliciously informative and visually appealing.*
