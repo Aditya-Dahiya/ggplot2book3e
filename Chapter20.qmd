@@ -1,8 +1,59 @@
 ---
 title: "Chapter 20"
 subtitle: "Extending ggplot2"
+author: "Aditya Dahiya"
+date: "2024-09-28"
+format: 
+  html: 
+    code-fold: true
+    code-copy: hover
+    code-link: true
+    mermaid:
+      theme: neutral
+execute: 
+  echo: true
+  warning: false
+  error: false
+  cache: true
+filters:
+  - social-share
+share:
+  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter20.html"
+  description: "Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
+  twitter: true
+  facebook: true
+  linkedin: true
+  email: true
+  mastodon: true
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
 ---
 
-::: callout-warning
-Solutions for this chapter are under construction.
+::: {.callout-tip appearance="minimal"}
+This chapter has no exercises. So, I will summarize the key take-aways.
 :::
+
+## 20.1 New Themes
+
+-   **20.1.1 Modifying themes:**
+    -   Extending ggplot2 is easy and makes it flexible. Themes are the simplest extension type, often involving code similar to standard `ggplot2` plot styling.
+    -   It is more practical to modify existing themes than create new ones from scratch.
+    -   Example: `theme_minimal()` is built upon `theme_bw()` using the `%+replace%` operator to change specific elements.
+-   **20.1.2 Complete themes:**
+    -   **Always define themes with `complete = TRUE` to ensure predictable behavior.**
+    -   A complete theme helps users override settings like axis lines in a consistent manner.
+-   **20.1.3 Defining theme elements:**
+    -   Themes in ggplot2 rely on an element tree, which defines each theme element and its inheritance.
+    -   New theme elements can be added using `register_theme_elements()`.
+    -   When defining new theme elements, include your package name as a prefix (e.g., `ggxyz.panel.annotation`) to avoid conflicts with other packages.
+
+## 20.2 New Stats
+
+-   **20.2.1 Creating new stats:**
+    -   Stats offer a powerful way to extend **ggplot2** by focusing on data transformations rather than visuals.
+    -   While users may prefer to work with geoms, many geoms differ because they utilize different stats.
+    -   New stats are defined using ggproto objects, specifically by implementing the **`compute_group()`** method, which handles data transformation for each group.
+    -   It's often a good idea to create both stat\_*() and geom\_*() constructors, as users are more accustomed to geoms.
+-   **20.2.2 Modifying parameters and data:**
+    -   New stats may require additional setup through `setup_params()` and `setup_data()` methods to modify parameters or data before the main computation.
