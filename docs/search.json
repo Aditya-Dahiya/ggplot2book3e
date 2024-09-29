@@ -46,7 +46,12 @@
     "href": "Chapter21.html",
     "title": "Chapter 21",
     "section": "",
-    "text": "Warning\n\n\n\nSolutions for this chapter are under construction."
+    "text": "Warning\n\n\n\nSolutions for this chapter are under construction.",
+    "crumbs": [
+      "Home",
+      "Advanced Topics",
+      "Chapter 21"
+    ]
   },
   {
     "objectID": "Chapter2.html",
@@ -188,7 +193,7 @@
     "href": "Chapter20.html",
     "title": "Chapter 20",
     "section": "",
-    "text": "This chapter has no exercises. So, I will summarize the key take-aways.",
+    "text": "This chapter has no exercises. So, I will summarize the key take-aways. Credits to ChatGPT to help me convert my takeaways to bullet points and a grammatically good english.",
     "crumbs": [
       "Home",
       "Advanced Topics",
@@ -1058,6 +1063,66 @@
     "title": "Chapter 20",
     "section": "20.2 New Stats",
     "text": "20.2 New Stats\n\n20.2.1 Creating new stats:\n\nStats offer a powerful way to extend ggplot2 by focusing on data transformations rather than visuals.\nWhile users may prefer to work with geoms, many geoms differ because they utilize different stats.\nNew stats are defined using ggproto objects, specifically by implementing the compute_group() method, which handles data transformation for each group.\nIt’s often a good idea to create both stat_() and geom_() constructors, as users are more accustomed to geoms.\n\n20.2.2 Modifying parameters and data:\n\nNew stats may require additional setup through setup_params() and setup_data() methods to modify parameters or data before the main computation.",
+    "crumbs": [
+      "Home",
+      "Advanced Topics",
+      "Chapter 20"
+    ]
+  },
+  {
+    "objectID": "Chapter20.html#new-geoms",
+    "href": "Chapter20.html#new-geoms",
+    "title": "Chapter 20",
+    "section": "20.3: New Geoms",
+    "text": "20.3: New Geoms\n\nWhen to Create a New Geom:\n\nCreate a new geom when:\n\nThe stat’s output cannot be meaningfully visualized using any existing geom.\nThe layer combines multiple geoms into a single output.\nThe geom produces grobs that are not supported by any current geoms.\n\nCreating new geoms can seem intimidating, but, basic geom creation can be accomplished without deep knowledge of grid or grobs.\n\nModifying Geom Defaults: Sometimes new geoms are just modified versions of existing geoms with different default parameters. Example: Modify GeomPolygon to produce hollow polygons for a convex hull geom.\n\nGeomPolygonHollow &lt;- ggproto(\"GeomPolygonHollow\", GeomPolygon,\n  default_aes = aes(\n    colour = \"black\", \n    fill = NA, \n    linewidth = 0.5,\n    linetype = 1,\n    alpha = NA\n  )\n)\n\nModifying Geom Data: New geoms may need to transform data before rendering it. The setup_data() method helps in such cases. Example: GeomSpike is a variation of GeomSegment that accepts polar coordinates and transforms them into Cartesian coordinates:\n\nGeomSpike &lt;- ggproto(\"GeomSpike\", GeomSegment,\n  required_aes = c(\"x\", \"y\", \"angle\", \"radius\"),\n  \n  setup_data = function(data, params) {\n    transform(data,\n      xend = x + cos(angle) * radius,\n      yend = y + sin(angle) * radius\n    )\n  }\n)\n\nCombining Multiple Geoms: New geoms can combine outputs from multiple geoms by leveraging draw_layer(), draw_panel(), and draw_group() functions. - Example: GeomBarbell draws a barbell-like structure by combining two points connected by a segment:\n\nGeomBarbell &lt;- ggproto(\"GeomBarbell\", Geom,\n  required_aes = c(\"x\", \"y\", \"xend\", \"yend\"),\n  \n  draw_panel = function(data, panel_params, coord, ...) {\n    point1 &lt;- transform(data)\n    point2 &lt;- transform(data, x = xend, y = yend)\n    \n    grid::gList(\n      GeomSegment$draw_panel(data, panel_params, coord, ...),\n      GeomPoint$draw_panel(point1, panel_params, coord, ...),\n      GeomPoint$draw_panel(point2, panel_params, coord, ...)\n    )\n  }\n)\n\ngeom_barbell &lt;- function(...) {\n  layer(geom = GeomBarbell, ...)\n}",
+    "crumbs": [
+      "Home",
+      "Advanced Topics",
+      "Chapter 20"
+    ]
+  },
+  {
+    "objectID": "Chapter20.html#new-coords",
+    "href": "Chapter20.html#new-coords",
+    "title": "Chapter 20",
+    "section": "20.4 New coords",
+    "text": "20.4 New coords\n\nPrimary Role of coord:\n\nRescale position aesthetics to the [0, 1] range, with optional transformation.\nDefining new coord systems is uncommon as most use cases are covered by existing coord options.\nDevelopers interact with coordinate systems mainly when defining new geoms. draw_*() methods in geoms may need to call the transform() method of the coord to properly handle position data.\nIn most cases, developers should avoid modifying coord internals unless absolutely necessary, as ggplot2 handles most use cases effectively.\n\n\n\nTypes of coord_*() in ggplot2\n\n\n\n\n\n\n\n\nCoord Function\nDescription\nCommon Use Cases\n\n\n\n\ncoord_cartesian()\nPerforms linear scaling without data transformation. Allows zooming.\nDefault for non-transformed data.\n\n\ncoord_fixed()\nMaintains fixed aspect ratio between x and y axes.\nUseful for geometries requiring equal scaling.\n\n\ncoord_flip()\nFlips the x and y axes.\nHorizontal bar plots.\n\n\ncoord_polar()\nProjects data into a circular layout (polar coordinates).\nPie charts, circular bar plots.\n\n\ncoord_quickmap()\nA fast approximation for plotting maps.\nSimple geographic maps.\n\n\ncoord_sf()\nHandles spatial data, supporting cartographic projections.\nGeospatial data visualization.\n\n\ncoord_trans()\nAllows for custom transformations of axes (e.g., log, sqrt).\nLogarithmic or other axis transformations.\n\n\ncoord_equal()\nEnsures equal scaling of units on both axes, but doesn’t enforce a fixed ratio like coord_fixed().\nMaps or plots requiring equal scaling.\n\n\ncoord_map()\nProjects data into a map-based coordinate system (older, replaced by coord_sf() for most uses).\nNon-cartographic map projections.",
+    "crumbs": [
+      "Home",
+      "Advanced Topics",
+      "Chapter 20"
+    ]
+  },
+  {
+    "objectID": "Chapter20.html#new-scales",
+    "href": "Chapter20.html#new-scales",
+    "title": "Chapter 20",
+    "section": "20.5 New scales",
+    "text": "20.5 New scales\n\nConvenient Wrappers for Palettes: A common extension of ggplot2 scales is creating new palette wrappers for aesthetics like color or fill.\nHandling New Aesthetic Types: When introducing new aesthetics (e.g., using width instead of size for lines), custom scales are required to properly scale these new attributes. ggplot2 looks for default scale functions (like scale_width_continuous()) based on the aesthetic name and data type.\nImportance of Default Scales: If a default scale function for the aesthetic isn’t available and no explicit scale is provided, ggplot2 won’t scale the aesthetic, which can result in incorrect plot rendering.",
+    "crumbs": [
+      "Home",
+      "Advanced Topics",
+      "Chapter 20"
+    ]
+  },
+  {
+    "objectID": "Chapter20.html#new-positions",
+    "href": "Chapter20.html#new-positions",
+    "title": "Chapter 20",
+    "section": "20.6 New positions",
+    "text": "20.6 New positions\n\nNarrow Role of Positions:\n\nThe Position ggproto class has a limited scope, modifying only the position aesthetics (e.g., x and y) immediately before the data is passed to drawing functions.\nIt uses compute_layer() and compute_panel() methods, similar to stats, but does not have a compute_group() method.\n\nCustom Position Functions:\n\nDevelopers can create new positions like position_jitternormal() (Pedersen 2024), which introduces perturbations from a normal distribution rather than a uniform one (as seen in position_jitter()).\nThese custom positions use setup_params() and compute_layer() to transform position aesthetics based on parameters such as standard deviations.\n\nConsideration for Defaults: Position constructors are rarely called directly by users. Therefore, it’s crucial to set defaults that handle most use cases, as users expect positions to behave predictably across different layers (e.g., dodging for boxplots and point-clouds). This often requires handling complex edge cases.",
+    "crumbs": [
+      "Home",
+      "Advanced Topics",
+      "Chapter 20"
+    ]
+  },
+  {
+    "objectID": "Chapter20.html#new-facets",
+    "href": "Chapter20.html#new-facets",
+    "title": "Chapter 20",
+    "section": "20.7 New facets",
+    "text": "20.7 New facets\n\nComplexity of Creating New Facets:\n\nFacets in ggplot2 manage panel arrangement, axis attachment, and layout, making them one of the most powerful yet complex features to extend.\nBuilding a new faceting system requires a deep understanding of grid and gtable, but starting from scratch is often unnecessary.\n\nSubclassing FacetWrap or FacetGrid:\n\nFor simpler customizations, developers can subclass existing facets like FacetWrap or FacetGrid and modify specific methods to suit their needs.\n\nKey Methods for Custom Facets:\n\ncompute_layout(): Defines the panel arrangement on the grid and specifies axis limits for each panel.\nmap_data(): Maps data to panels by assigning a PANEL column, indicating which data goes to which panel based on the layout specification.",
     "crumbs": [
       "Home",
       "Advanced Topics",

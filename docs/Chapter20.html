@@ -22,7 +22,61 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -357,6 +411,14 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#new-themes" id="toc-new-themes" class="nav-link active" data-scroll-target="#new-themes">20.1 New Themes</a></li>
   <li><a href="#new-stats" id="toc-new-stats" class="nav-link" data-scroll-target="#new-stats">20.2 New Stats</a></li>
+  <li><a href="#new-geoms" id="toc-new-geoms" class="nav-link" data-scroll-target="#new-geoms">20.3: New Geoms</a></li>
+  <li><a href="#new-coords" id="toc-new-coords" class="nav-link" data-scroll-target="#new-coords">20.4 New coords</a>
+  <ul class="collapse">
+  <li><a href="#types-of-coord_-in-ggplot2" id="toc-types-of-coord_-in-ggplot2" class="nav-link" data-scroll-target="#types-of-coord_-in-ggplot2"><strong>Types of <code>coord_*()</code> in ggplot2</strong></a></li>
+  </ul></li>
+  <li><a href="#new-scales" id="toc-new-scales" class="nav-link" data-scroll-target="#new-scales">20.5 New scales</a></li>
+  <li><a href="#new-positions" id="toc-new-positions" class="nav-link" data-scroll-target="#new-positions">20.6 New positions</a></li>
+  <li><a href="#new-facets" id="toc-new-facets" class="nav-link" data-scroll-target="#new-facets">20.7 New facets</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter20.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -401,7 +463,7 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>This chapter has no exercises. So, I will summarize the key take-aways.</p>
+<p>This chapter has no exercises. So, I will summarize the key take-aways. Credits to <a href="https://chatgpt.com/">ChatGPT</a> to help me convert my takeaways to bullet points and a grammatically good english.</p>
 </div>
 </div>
 </div>
@@ -442,11 +504,194 @@ ul.task-list li input[type="checkbox"] {
 <li>New stats may require additional setup through <code>setup_params()</code> and <code>setup_data()</code> methods to modify parameters or data before the main computation.</li>
 </ul></li>
 </ul>
+</section>
+<section id="new-geoms" class="level2">
+<h2 class="anchored" data-anchor-id="new-geoms">20.3: New Geoms</h2>
+<ul>
+<li>When to Create a New Geom:
+<ul>
+<li>Create a new geom when:
+<ul>
+<li>The stat’s output cannot be meaningfully visualized using any existing geom.</li>
+<li>The layer combines multiple geoms into a single output.</li>
+<li>The geom produces grobs that are not supported by any current geoms.</li>
+</ul></li>
+<li>Creating new geoms can seem intimidating, but, basic geom creation can be accomplished without deep knowledge of grid or grobs.</li>
+</ul></li>
+<li>Modifying Geom Defaults: Sometimes new geoms are just modified versions of existing geoms with different default parameters. Example: Modify <code>GeomPolygon</code> to produce hollow polygons for a convex hull geom.</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>GeomPolygonHollow <span class="ot">&lt;-</span> <span class="fu">ggproto</span>(<span class="st">"GeomPolygonHollow"</span>, GeomPolygon,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">default_aes =</span> <span class="fu">aes</span>(</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"black"</span>, </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="cn">NA</span>, </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">0.5</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="dv">1</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="cn">NA</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Modifying Geom Data: New geoms may need to transform data before rendering it. The <code>setup_data()</code> method helps in such cases. Example: <code>GeomSpike</code> is a variation of <code>GeomSegment</code> that accepts polar coordinates and transforms them into Cartesian coordinates:</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>GeomSpike <span class="ot">&lt;-</span> <span class="fu">ggproto</span>(<span class="st">"GeomSpike"</span>, GeomSegment,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">required_aes =</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"angle"</span>, <span class="st">"radius"</span>),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">setup_data =</span> <span class="cf">function</span>(data, params) {</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">transform</span>(data,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">xend =</span> x <span class="sc">+</span> <span class="fu">cos</span>(angle) <span class="sc">*</span> radius,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">yend =</span> y <span class="sc">+</span> <span class="fu">sin</span>(angle) <span class="sc">*</span> radius</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Combining Multiple Geoms: New geoms can combine outputs from multiple geoms by leveraging <code>draw_layer()</code>, <code>draw_panel()</code>, and <code>draw_group()</code> functions. - Example: <code>GeomBarbell</code> draws a barbell-like structure by combining two points connected by a segment:</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>GeomBarbell <span class="ot">&lt;-</span> <span class="fu">ggproto</span>(<span class="st">"GeomBarbell"</span>, Geom,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">required_aes =</span> <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"xend"</span>, <span class="st">"yend"</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">draw_panel =</span> <span class="cf">function</span>(data, panel_params, coord, ...) {</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    point1 <span class="ot">&lt;-</span> <span class="fu">transform</span>(data)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    point2 <span class="ot">&lt;-</span> <span class="fu">transform</span>(data, <span class="at">x =</span> xend, <span class="at">y =</span> yend)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    grid<span class="sc">::</span><span class="fu">gList</span>(</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      GeomSegment<span class="sc">$</span><span class="fu">draw_panel</span>(data, panel_params, coord, ...),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>      GeomPoint<span class="sc">$</span><span class="fu">draw_panel</span>(point1, panel_params, coord, ...),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      GeomPoint<span class="sc">$</span><span class="fu">draw_panel</span>(point2, panel_params, coord, ...)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>geom_barbell <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">layer</span>(<span class="at">geom =</span> GeomBarbell, ...)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="new-coords" class="level2">
+<h2 class="anchored" data-anchor-id="new-coords">20.4 New coords</h2>
+<ul>
+<li>Primary Role of <code>coord</code>:
+<ul>
+<li>Rescale position aesthetics to the <code>[0, 1]</code> range, with optional transformation.</li>
+<li>Defining new <code>coord</code> systems is uncommon as most use cases are covered by existing <code>coord</code> options.</li>
+<li>Developers interact with coordinate systems mainly when defining new geoms. <code>draw_*()</code> methods in geoms may need to call the <code>transform()</code> method of the <code>coord</code> to properly handle position data.</li>
+<li>In most cases, developers should avoid modifying coord internals unless absolutely necessary, as ggplot2 handles most use cases effectively.</li>
+</ul></li>
+</ul>
+<section id="types-of-coord_-in-ggplot2" class="level3">
+<h3 class="anchored" data-anchor-id="types-of-coord_-in-ggplot2"><strong>Types of <code>coord_*()</code> in ggplot2</strong></h3>
+<table class="table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 51%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Coord Function</th>
+<th>Description</th>
+<th>Common Use Cases</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>coord_cartesian()</code></td>
+<td>Performs linear scaling without data transformation. Allows zooming.</td>
+<td>Default for non-transformed data.</td>
+</tr>
+<tr class="even">
+<td><code>coord_fixed()</code></td>
+<td>Maintains fixed aspect ratio between x and y axes.</td>
+<td>Useful for geometries requiring equal scaling.</td>
+</tr>
+<tr class="odd">
+<td><code>coord_flip()</code></td>
+<td>Flips the x and y axes.</td>
+<td>Horizontal bar plots.</td>
+</tr>
+<tr class="even">
+<td><code>coord_polar()</code></td>
+<td>Projects data into a circular layout (polar coordinates).</td>
+<td>Pie charts, circular bar plots.</td>
+</tr>
+<tr class="odd">
+<td><code>coord_quickmap()</code></td>
+<td>A fast approximation for plotting maps.</td>
+<td>Simple geographic maps.</td>
+</tr>
+<tr class="even">
+<td><code>coord_sf()</code></td>
+<td>Handles spatial data, supporting cartographic projections.</td>
+<td>Geospatial data visualization.</td>
+</tr>
+<tr class="odd">
+<td><code>coord_trans()</code></td>
+<td>Allows for custom transformations of axes (e.g., log, sqrt).</td>
+<td>Logarithmic or other axis transformations.</td>
+</tr>
+<tr class="even">
+<td><code>coord_equal()</code></td>
+<td>Ensures equal scaling of units on both axes, but doesn’t enforce a fixed ratio like <code>coord_fixed()</code>.</td>
+<td>Maps or plots requiring equal scaling.</td>
+</tr>
+<tr class="odd">
+<td><code>coord_map()</code></td>
+<td>Projects data into a map-based coordinate system (older, replaced by <code>coord_sf()</code> for most uses).</td>
+<td>Non-cartographic map projections.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="new-scales" class="level2">
+<h2 class="anchored" data-anchor-id="new-scales">20.5 New scales</h2>
+<ul>
+<li>Convenient Wrappers for Palettes: A common extension of ggplot2 scales is creating new palette wrappers for aesthetics like color or fill.</li>
+<li>Handling New Aesthetic Types: When introducing new aesthetics (e.g., using <code>width</code> instead of <code>size</code> for lines), custom scales are required to properly scale these new attributes. ggplot2 looks for default scale functions (like <code>scale_width_continuous()</code>) based on the aesthetic name and data type.</li>
+<li><strong>Importance of Default Scales:</strong> If a default scale function for the aesthetic isn’t available and no explicit scale is provided, ggplot2 won’t scale the aesthetic, which can result in incorrect plot rendering.</li>
+</ul>
+</section>
+<section id="new-positions" class="level2">
+<h2 class="anchored" data-anchor-id="new-positions">20.6 New positions</h2>
+<ul>
+<li>Narrow Role of Positions:
+<ul>
+<li>The <code>Position</code> ggproto class has a limited scope, modifying only the position aesthetics (e.g., <code>x</code> and <code>y</code>) immediately before the data is passed to drawing functions.</li>
+<li>It uses <code>compute_layer()</code> and <code>compute_panel()</code> methods, similar to stats, but does not have a <code>compute_group()</code> method.</li>
+</ul></li>
+<li>Custom Position Functions:
+<ul>
+<li>Developers can create new positions like <code>position_jitternormal()</code> <span class="citation" data-cites="ggforce-3">(<a href="#ref-ggforce-3" role="doc-biblioref">Pedersen 2024</a>)</span>, which introduces perturbations from a normal distribution rather than a uniform one (as seen in <code>position_jitter()</code>).</li>
+<li>These custom positions use <code>setup_params()</code> and <code>compute_layer()</code> to transform position aesthetics based on parameters such as standard deviations.</li>
+</ul></li>
+<li>Consideration for Defaults: Position constructors are rarely called directly by users. Therefore, <strong>it’s crucial to set defaults that handle most use cases,</strong> as users expect positions to behave predictably across different layers (e.g., dodging for boxplots and point-clouds). This often requires handling complex edge cases.</li>
+</ul>
+</section>
+<section id="new-facets" class="level2">
+<h2 class="anchored" data-anchor-id="new-facets">20.7 New facets</h2>
+<ul>
+<li>Complexity of Creating New Facets:
+<ul>
+<li>Facets in <code>ggplot2</code> manage panel arrangement, axis attachment, and layout, making them one of the most powerful yet complex features to extend.</li>
+<li>Building a new faceting system requires a deep understanding of grid and gtable, but starting from scratch is often unnecessary.</li>
+</ul></li>
+<li>Subclassing <code>FacetWrap</code> or <code>FacetGrid</code>:
+<ul>
+<li>For simpler customizations, developers can subclass existing facets like <code>FacetWrap</code> or <code>FacetGrid</code> and modify specific methods to suit their needs.</li>
+</ul></li>
+<li>Key Methods for Custom Facets:
+<ul>
+<li><code>compute_layout()</code>: Defines the panel arrangement on the grid and specifies axis limits for each panel.</li>
+<li><code>map_data()</code>: Maps data to panels by assigning a <code>PANEL</code> column, indicating which data goes to which panel based on the layout specification.</li>
+</ul></li>
+</ul>
+
 
 
 </section>
 
-</main> <!-- /main -->
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-ggforce-3" class="csl-entry" role="listitem">
+Pedersen, Thomas Lin. 2024. <span>“Ggforce: Accelerating ’Ggplot2’.”</span> <a href="https://CRAN.R-project.org/package=ggforce">https://CRAN.R-project.org/package=ggforce</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

@@ -31,7 +31,7 @@ bibliography: references.bib
 ---
 
 ::: {.callout-tip appearance="minimal"}
-This chapter has no exercises. So, I will summarize the key take-aways.
+This chapter has no exercises. So, I will summarize the key take-aways. Credits to [ChatGPT](https://chatgpt.com/) to help me convert my takeaways to bullet points and a grammatically good english.
 :::
 
 ## 20.1 New Themes
@@ -57,3 +57,112 @@ This chapter has no exercises. So, I will summarize the key take-aways.
     -   It's often a good idea to create both stat\_*() and geom\_*() constructors, as users are more accustomed to geoms.
 -   **20.2.2 Modifying parameters and data:**
     -   New stats may require additional setup through `setup_params()` and `setup_data()` methods to modify parameters or data before the main computation.
+
+## 20.3: New Geoms
+
+-   When to Create a New Geom:
+    -   Create a new geom when:
+        -   The stat’s output cannot be meaningfully visualized using any existing geom.
+        -   The layer combines multiple geoms into a single output.
+        -   The geom produces grobs that are not supported by any current geoms.
+    -   Creating new geoms can seem intimidating, but, basic geom creation can be accomplished without deep knowledge of grid or grobs.
+-   Modifying Geom Defaults: Sometimes new geoms are just modified versions of existing geoms with different default parameters. Example: Modify `GeomPolygon` to produce hollow polygons for a convex hull geom.
+
+``` r
+GeomPolygonHollow <- ggproto("GeomPolygonHollow", GeomPolygon,
+  default_aes = aes(
+    colour = "black", 
+    fill = NA, 
+    linewidth = 0.5,
+    linetype = 1,
+    alpha = NA
+  )
+)
+```
+
+-   Modifying Geom Data: New geoms may need to transform data before rendering it. The `setup_data()` method helps in such cases. Example: `GeomSpike` is a variation of `GeomSegment` that accepts polar coordinates and transforms them into Cartesian coordinates:
+
+``` r
+GeomSpike <- ggproto("GeomSpike", GeomSegment,
+  required_aes = c("x", "y", "angle", "radius"),
+  
+  setup_data = function(data, params) {
+    transform(data,
+      xend = x + cos(angle) * radius,
+      yend = y + sin(angle) * radius
+    )
+  }
+)
+```
+
+-   Combining Multiple Geoms: New geoms can combine outputs from multiple geoms by leveraging `draw_layer()`, `draw_panel()`, and `draw_group()` functions. - Example: `GeomBarbell` draws a barbell-like structure by combining two points connected by a segment:
+
+``` r
+GeomBarbell <- ggproto("GeomBarbell", Geom,
+  required_aes = c("x", "y", "xend", "yend"),
+  
+  draw_panel = function(data, panel_params, coord, ...) {
+    point1 <- transform(data)
+    point2 <- transform(data, x = xend, y = yend)
+    
+    grid::gList(
+      GeomSegment$draw_panel(data, panel_params, coord, ...),
+      GeomPoint$draw_panel(point1, panel_params, coord, ...),
+      GeomPoint$draw_panel(point2, panel_params, coord, ...)
+    )
+  }
+)
+
+geom_barbell <- function(...) {
+  layer(geom = GeomBarbell, ...)
+}
+```
+
+## 20.4 New coords
+
+-   Primary Role of `coord`:
+    -   Rescale position aesthetics to the `[0, 1]` range, with optional transformation.
+    -   Defining new `coord` systems is uncommon as most use cases are covered by existing `coord` options.
+    -   Developers interact with coordinate systems mainly when defining new geoms. `draw_*()` methods in geoms may need to call the `transform()` method of the `coord` to properly handle position data.
+    -   In most cases, developers should avoid modifying coord internals unless absolutely necessary, as ggplot2 handles most use cases effectively.
+
+### **Types of `coord_*()` in ggplot2**
+
+| Coord Function      | Description                                                                                          | Common Use Cases                               |
+|----------------|-------------------------------------|-------------------|
+| `coord_cartesian()` | Performs linear scaling without data transformation. Allows zooming.                                 | Default for non-transformed data.              |
+| `coord_fixed()`     | Maintains fixed aspect ratio between x and y axes.                                                   | Useful for geometries requiring equal scaling. |
+| `coord_flip()`      | Flips the x and y axes.                                                                              | Horizontal bar plots.                          |
+| `coord_polar()`     | Projects data into a circular layout (polar coordinates).                                            | Pie charts, circular bar plots.                |
+| `coord_quickmap()`  | A fast approximation for plotting maps.                                                              | Simple geographic maps.                        |
+| `coord_sf()`        | Handles spatial data, supporting cartographic projections.                                           | Geospatial data visualization.                 |
+| `coord_trans()`     | Allows for custom transformations of axes (e.g., log, sqrt).                                         | Logarithmic or other axis transformations.     |
+| `coord_equal()`     | Ensures equal scaling of units on both axes, but doesn't enforce a fixed ratio like `coord_fixed()`. | Maps or plots requiring equal scaling.         |
+| `coord_map()`       | Projects data into a map-based coordinate system (older, replaced by `coord_sf()` for most uses).    | Non-cartographic map projections.              |
+
+## 20.5 New scales
+
+-   Convenient Wrappers for Palettes: A common extension of ggplot2 scales is creating new palette wrappers for aesthetics like color or fill.
+-   Handling New Aesthetic Types: When introducing new aesthetics (e.g., using `width` instead of `size` for lines), custom scales are required to properly scale these new attributes. ggplot2 looks for default scale functions (like `scale_width_continuous()`) based on the aesthetic name and data type.
+-   **Importance of Default Scales:** If a default scale function for the aesthetic isn’t available and no explicit scale is provided, ggplot2 won't scale the aesthetic, which can result in incorrect plot rendering.
+
+## 20.6 New positions
+
+-   Narrow Role of Positions:
+    -   The `Position` ggproto class has a limited scope, modifying only the position aesthetics (e.g., `x` and `y`) immediately before the data is passed to drawing functions.
+    -   It uses `compute_layer()` and `compute_panel()` methods, similar to stats, but does not have a `compute_group()` method.
+-   Custom Position Functions:
+    -   Developers can create new positions like `position_jitternormal()` [@ggforce-3], which introduces perturbations from a normal distribution rather than a uniform one (as seen in `position_jitter()`).
+    -   These custom positions use `setup_params()` and `compute_layer()` to transform position aesthetics based on parameters such as standard deviations.
+-   Consideration for Defaults: Position constructors are rarely called directly by users. Therefore, **it's crucial to set defaults that handle most use cases,** as users expect positions to behave predictably across different layers (e.g., dodging for boxplots and point-clouds). This often requires handling complex edge cases.
+
+## 20.7 New facets
+
+-   Complexity of Creating New Facets:
+    -   Facets in `ggplot2` manage panel arrangement, axis attachment, and layout, making them one of the most powerful yet complex features to extend.
+    -   Building a new faceting system requires a deep understanding of grid and gtable, but starting from scratch is often unnecessary.
+-   Subclassing `FacetWrap` or `FacetGrid`:
+    -   For simpler customizations, developers can subclass existing facets like `FacetWrap` or `FacetGrid` and modify specific methods to suit their needs.
+-   Key Methods for Custom Facets:
+    -   `compute_layout()`: Defines the panel arrangement on the grid and specifies axis limits for each panel.
+    -   `map_data()`: Maps data to panels by assigning a `PANEL` column, indicating which data goes to which panel based on the layout specification.
