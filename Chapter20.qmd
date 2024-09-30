@@ -129,7 +129,7 @@ geom_barbell <- function(...) {
 ### **Types of `coord_*()` in ggplot2**
 
 | Coord Function      | Description                                                                                          | Common Use Cases                               |
-|----------------|-------------------------------------|-------------------|
+|---------------------|------------------------------------------------------------------------------------------------------|------------------------------------------------|
 | `coord_cartesian()` | Performs linear scaling without data transformation. Allows zooming.                                 | Default for non-transformed data.              |
 | `coord_fixed()`     | Maintains fixed aspect ratio between x and y axes.                                                   | Useful for geometries requiring equal scaling. |
 | `coord_flip()`      | Flips the x and y axes.                                                                              | Horizontal bar plots.                          |

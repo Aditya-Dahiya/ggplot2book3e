@@ -1,8 +1,37 @@
 ---
 title: "Chapter 21"
 subtitle: "A case study"
+author: "Aditya Dahiya"
+date: "2024-09-29"
+format: 
+  html: 
+    code-fold: true
+    code-copy: hover
+    code-link: true
+    mermaid:
+      theme: neutral
+execute: 
+  echo: true
+  warning: false
+  error: false
+  cache: true
+filters:
+  - social-share
+share:
+  permalink: "https://aditya-dahiya.github.io/ggplot2book3e/Chapter21.html"
+  description: "Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)"
+  twitter: true
+  facebook: true
+  linkedin: true
+  email: true
+  mastodon: true
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
 ---
 
 ::: callout-warning
-Solutions for this chapter are under construction.
+There are no exercises in this chapter.
 :::
+
+Possible suggestion: Try a new geom for geom_coinstack() or geom_hexstack()
