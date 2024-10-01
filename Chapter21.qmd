@@ -34,4 +34,428 @@ bibliography: references.bib
 There are no exercises in this chapter.
 :::
 
-Possible suggestion: Try a new geom for geom_coinstack() or geom_hexstack()
+```{r}
+#| label: setup
+#| echo: false
+#| warning: false
+#| error: false
+#| message: false
+
+library(tidyverse)
+library(scales)
+library(grid)
+
+```
+
+Attempting to create a new `geom_wave()` inspired from the code for geom_spring() given in the chapter.
+
+```{r}
+#| label: code-for-geom-wave
+# Defining a wave creating function
+create_wave <- function(x,
+                        y,
+                        xend,
+                        yend,
+                        amplitude = 1,
+                        frequency = 1,
+                        n = 500) {
+  # Validate the input arguments
+  if (amplitude < 0) {
+    rlang::abort("`amplitude` must be non-negative.")
+  }
+  if (frequency <= 0) {
+    rlang::abort("`frequency` must be larger than zero.")
+  }
+  if (n == 0) {
+    rlang::abort("`n` must be greater than zero.")
+  }
+
+  # Calculate the direct length of the wave path
+  length <- sqrt((x - xend)^2 + (y - yend)^2)
+
+  # Calculate the number of points we need
+  n_points <- n
+
+  # Calculate the sequence of x and y offset values
+  x_seq <- seq(x, xend, length.out = n_points)
+  y_seq <- seq(y, yend, length.out = n_points)
+
+  # Create and return the transformed data frame
+  data.frame(
+    x = x_seq,
+    y = y_seq + sin((x_seq - x) * frequency / length) * amplitude
+  )
+}
+
+# A wave Grob
+waveGrob <- function(x0 = unit(0, "npc"),
+                     y0 = unit(0, "npc"),
+                     x1 = unit(1, "npc"),
+                     y1 = unit(1, "npc"),
+                     amplitude = unit(0.1, "npc"),
+                     frequency = 1,
+                     n = 50,
+                     default.units = "npc",
+                     name = NULL,
+                     gp = gpar(),
+                     vp = NULL) {
+  # Use the default unit if the user does not specify one
+  if (!is.unit(x0)) x0 <- unit(x0, default.units)
+  if (!is.unit(x1)) x1 <- unit(x1, default.units)
+  if (!is.unit(y0)) y0 <- unit(y0, default.units)
+  if (!is.unit(y1)) y1 <- unit(y1, default.units)
+  if (!is.unit(amplitude)) amplitude <- unit(amplitude, default.units)
+
+  # Return a gTree of class "wave"
+  gTree(
+    x0 = x0,
+    y0 = y0,
+    x1 = x1,
+    y1 = y1,
+    amplitude = amplitude,
+    frequency = frequency,
+    n = n,
+    name = name,
+    gp = gp,
+    vp = vp,
+    cl = "wave"
+  )
+}
+
+makeContent.wave <- function(x) {
+  # Convert position and amplitude values to absolute units
+  x0 <- convertX(x$x0, "mm", valueOnly = TRUE)
+  x1 <- convertX(x$x1, "mm", valueOnly = TRUE)
+  y0 <- convertY(x$y0, "mm", valueOnly = TRUE)
+  y1 <- convertY(x$y1, "mm", valueOnly = TRUE)
+  amplitude <- convertWidth(x$amplitude, "mm", valueOnly = TRUE)
+
+  # Leave frequency and n untouched
+  frequency <- x$frequency
+  n <- x$n
+
+  # Transform the input data to a data frame containing wave paths
+  waves <- lapply(seq_along(x0), function(i) {
+    cbind(
+      create_wave(
+        x = x0[i],
+        y = y0[i],
+        xend = x1[i],
+        yend = y1[i],
+        amplitude = amplitude[i],
+        frequency = frequency[i],
+        n = n
+      ),
+      id = i
+    )
+  })
+  waves <- do.call(rbind, waves)
+
+  # Construct the grob
+  wave_paths <- polylineGrob(
+    x = waves$x,
+    y = waves$y,
+    id = waves$id,
+    default.units = "mm",
+    gp = x$gp
+  )
+  setChildren(x, gList(wave_paths))
+}
+
+# The GeomWave
+GeomWave <- ggproto("GeomWave", Geom,
+
+  # Check that the user has specified sensible parameters
+  setup_params = function(data, params) {
+    if (is.null(params$n)) {
+      params$n <- 50
+    } else if (params$n <= 0) {
+      rlang::abort("Waves must be defined with `n` greater than 0")
+    }
+    params
+  },
+
+  # Check input data and return grobs
+  draw_panel = function(data,
+                        panel_params,
+                        coord,
+                        n = 50,
+                        lineend = "butt",
+                        na.rm = FALSE) {
+    # Remove missing data, returning early if all are missing
+    data <- remove_missing(
+      df = data,
+      na.rm = na.rm,
+      vars = c("x", "y", "xend", "yend", "linetype", "linewidth"),
+      name = "geom_wave"
+    )
+    if (is.null(data) || nrow(data) == 0) {
+      return(zeroGrob())
+    }
+
+    # Supply the coordinate system for the plot
+    if (!coord$is_linear()) {
+      rlang::warn(
+        "Wave geom only works correctly on linear coordinate systems"
+      )
+    }
+    coord <- coord$transform(data, panel_params)
+
+    # Construct the grob
+    waveGrob(
+      coord$x,
+      coord$y,
+      coord$xend,
+      coord$yend,
+      default.units = "native",
+      amplitude = unit(coord$amplitude, "cm"),
+      frequency = coord$frequency,
+      n = n,
+      gp = gpar(
+        col = alpha(coord$colour, coord$alpha),
+        lwd = coord$linewidth * .pt,
+        lty = coord$linetype,
+        lineend = lineend
+      )
+    )
+  },
+
+  # Specify the default and required aesthetics
+  required_aes = c("x", "y", "xend", "yend"),
+  default_aes = aes(
+    colour = "black",
+    linewidth = 0.5,
+    linetype = 1L,
+    alpha = NA,
+    amplitude = 0.1,
+    frequency = 1
+  )
+)
+
+
+# Constructor wrapper function around WaveGrob
+geom_wave <- function(mapping = NULL,
+                      data = NULL,
+                      stat = "identity",
+                      position = "identity",
+                      ...,
+                      n = 50,
+                      lineend = "butt",
+                      na.rm = FALSE,
+                      show.legend = NA,
+                      inherit.aes = TRUE) {
+  layer(
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomWave,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      n = n,
+      lineend = lineend,
+      na.rm = na.rm,
+      ...
+    )
+  )
+}
+
+
+# And the stat_* constructor function
+# The StatWave
+StatWave <- ggproto("StatWave", Stat,
+  setup_data = function(data, params) {
+    if (anyDuplicated(data$group)) {
+      data$group <- paste(data$group, seq_len(nrow(data)), sep = "-")
+    }
+    data
+  },
+  compute_panel = function(data, scales, n = 50) {
+    cols_to_keep <- setdiff(names(data), c("x", "y", "xend", "yend"))
+    waves <- lapply(seq_len(nrow(data)), function(i) {
+      wave_path <- create_wave(
+        data$x[i],
+        data$y[i],
+        data$xend[i],
+        data$yend[i],
+        data$amplitude[i],
+        data$frequency[i],
+        n
+      )
+      cbind(wave_path, unclass(data[i, cols_to_keep]))
+    })
+    do.call(rbind, waves)
+  },
+  required_aes = c("x", "y", "xend", "yend"),
+  optional_aes = c("amplitude", "frequency")
+)
+
+
+# Constructor wrapper function around StatWave
+stat_wave <- function(mapping = NULL,
+                      data = NULL,
+                      geom = "wave",
+                      position = "identity",
+                      ...,
+                      n = 50,
+                      na.rm = FALSE,
+                      show.legend = NA,
+                      inherit.aes = TRUE) {
+  layer(
+    data = data,
+    mapping = mapping,
+    stat = StatWave,
+    geom = geom,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      n = n,
+      na.rm = na.rm,
+      ...
+    )
+  )
+}
+
+# Scales
+scale_amplitude_continuous <- function(..., range = c(0.05, 0.2)) {
+  continuous_scale(
+    aesthetics = "amplitude",
+    scale_name = "amplitude_c",
+    palette = scales::rescale_pal(range),
+    ...
+  )
+}
+scale_amplitude <- scale_amplitude_continuous
+scale_amplitude_discrete <- function(...) {
+  rlang::abort("Amplitude cannot be used with discrete data")
+}
+scale_frequency_continuous <- function(...,
+                                       range = c(1, 5),
+                                       unit = "cm") {
+  continuous_scale(
+    aesthetics = "frequency",
+    scale_name = "frequency_c",
+    palette = scales::rescale_pal(range),
+    ...
+  )
+}
+scale_frequency <- scale_frequency_continuous
+scale_frequency_discrete <- function(...) {
+  rlang::abort("Frequency cannot be used with discrete data")
+}
+
+draw_key_wave <- function(data, params, size) {
+  waveGrob(
+    x0 = 0,
+    y0 = 0,
+    x1 = 1,
+    y1 = 1,
+    amplitude = unit(data$amplitude, "cm"),
+    frequency = data$frequency,
+    gp = gpar(
+      col = alpha(data$colour %||% "black", data$alpha),
+      lwd = (data$size %||% 0.5) * .pt,
+      lty = data$linetype %||% 1
+    ),
+    vp = viewport(clip = "on")
+  )
+}
+GeomWave$draw_key <- draw_key_wave
+```
+
+Demonstration:
+
+This code creates a sample dataset `df` with 10 observations, each representing a wave with specific amplitude and frequency. The `group` column distinguishes between two groups, A and B.
+
+The ggplot call maps the `amplitude` and `frequency` columns to aesthetics, allowing the waves to vary in amplitude and frequency. The `colour` aesthetic maps the `group` column to different colors.
+
+The resulting plot displays 5 waves in two different colors, demonstrating how `geom_wave` and `stat_wave` can be used to visualize wave-like patterns with varying amplitude and frequency.
+
+Note: You can adjust the `range` argument in `scale_amplitude_continuous` and `scale_frequency_continuous` to change the scaling of the amplitude and frequency aesthetics.
+
+```{r}
+#| label: fig-2
+# Create a sample dataset
+set.seed(123)
+df <- data.frame(
+  x = rep(0, 10),
+  y = rep(0, 10),
+  xend = sample(1:10),
+  yend = sample(1:10),
+  amplitude = round(runif(n = 10), 2),
+  frequency = sample(1:10),
+  group = rep(c("A", "B"), each = 5)
+)
+df
+
+# Plot 5 waves in two different colours
+ggplot(df, aes(
+  x = x, y = y, xend = xend, yend = yend,
+  amplitude = amplitude, frequency = frequency,
+  colour = group
+)) +
+  geom_wave() +
+  scale_amplitude_continuous(range = c(0.1, 0.5)) +
+  scale_frequency_continuous(range = c(1, 100)) +
+  scale_color_manual(values = c("blue", "red")) +
+  theme_grey() +
+  labs(
+    title = "Waves with varying amplitude and frequency",
+    subtitle = "Group A (blue) and Group B (red)"
+  )
+
+```
+
+Another data set attempt
+
+```{r}
+#| label: fig-3
+
+# Create a data frame with the diversing directions (angles)
+waves_data <- tibble(
+  # All waves start at origin (0, 0)
+  x = 0, 
+  y = 0,
+
+  # 10 angles, evenly spaced around the circle
+  angle = seq(0, pi / 2, length.out = 10),
+
+  # Set a constant length for arrows (or vary if desired)
+  length = 1
+) |>
+  mutate(
+    # Generate the xend and yend coordinates
+    x_end = length * cos(angle),
+    y_end = length * sin(angle),
+    amplitude = sample(1:10, replace = F),
+    frequency = sample(1:10, replace = F),
+    group = rep(c("A", "B"), each = 5)
+  ) |>
+  select(-length, -angle)
+
+waves_data |>
+  ggplot(
+    aes(
+      x = x, y = y, xend = x_end, yend = y_end,
+      amplitude = amplitude, frequency = frequency,
+      colour = group
+    )
+  ) +
+  geom_wave() +
+  scale_amplitude_continuous(range = c(0.1, 0.5)) +
+  scale_frequency_continuous(range = c(1, 1000)) +
+  scale_color_manual(values = c("blue", "red")) +
+  theme_grey() +
+  labs(
+    title = "Waves with varying amplitude and frequency",
+    subtitle = "Group A (blue) and Group B (red)"
+  ) +
+  theme(
+    legend.key.size = unit(15, "mm"),
+    legend.position = "bottom",
+    legend.direction = "vertical"
+  )
+
+```
