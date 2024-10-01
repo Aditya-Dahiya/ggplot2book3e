@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.549">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Aditya Dahiya">
 <meta name="dcterms.date" content="2024-09-29">
-
 <title>Solutions (and Beyond): ggplot2 - Chapter 21</title>
 <style>
 code{white-space: pre-wrap;}
@@ -22,8 +19,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
-
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
@@ -43,8 +73,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <link href="site_libs/quarto-contrib/social-share-0.1.0/social-share.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/social-share-0.1.0/all.css" rel="stylesheet">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/quarto-contrib/social-share-0.1.0/all.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -69,10 +98,7 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-
-<link rel="stylesheet" href="styles.css">
+}</script><link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="Solutions (and Beyond): ggplot2 - Chapter 21">
 <meta property="og:description" content="A case study">
 <meta property="og:site_name" content="Solutions (and Beyond): ggplot2">
@@ -80,17 +106,13 @@ ul.task-list li input[type="checkbox"] {
 <meta name="twitter:description" content="A case study">
 <meta name="twitter:card" content="summary">
 </head>
-
 <body class="nav-sidebar docked nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./book_logo.jpg" alt="" class="navbar-logo">
-    </a>
+    <img src="./book_logo.jpg" alt="" class="navbar-logo"></a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Solutions (and Beyond): ggplot2</span>
     </a>
@@ -101,7 +123,7 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
@@ -114,12 +136,12 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">About Me</span></a>
   </li>  
 </ul>
-          </div> <!-- /navcollapse -->
+</div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
     <div class="dropdown">
       <a href="" title="" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label=""><i class="bi bi-github"></i></a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quarto-navigation-tool-dropdown-0">
-          <li>
+<li>
             <a class="dropdown-item quarto-navbar-tools-item" href="https://github.com/Aditya-Dahiya/ggplot2book3e/">
             Source Code
             </a>
@@ -130,7 +152,7 @@ ul.task-list li input[type="checkbox"] {
             </a>
           </li>
       </ul>
-    </div>
+</div>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -138,9 +160,7 @@ ul.task-list li input[type="checkbox"] {
 </a>
 </div>
       </div> <!-- /container-fluid -->
-    </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -151,20 +171,16 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-        <div class="mt-2 flex-shrink-0 align-items-center">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item sidebar-item-section">
+<li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
  <span class="menu-text">Getting Started</span></a>
@@ -172,8 +188,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Chapter1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 1</span></a>
@@ -186,7 +202,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
@@ -195,8 +211,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Chapter3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 3</span></a>
@@ -239,7 +255,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
@@ -248,8 +264,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Chapter10.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 10</span></a>
@@ -268,7 +284,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
@@ -277,8 +293,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Chapter13.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 13</span></a>
@@ -309,7 +325,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
@@ -318,8 +334,8 @@ ul.task-list li input[type="checkbox"] {
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Chapter18.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Chapter 18</span></a>
@@ -344,20 +360,32 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
       </ul>
-  </li>
+</li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">On this page</h2>
+   
+  <ul>
+<li>
+<a href="#creating-a-new-ggplot2-extension-geom_wave" id="toc-creating-a-new-ggplot2-extension-geom_wave" class="nav-link active" data-scroll-target="#creating-a-new-ggplot2-extension-geom_wave">Creating a new ggplot2 extension: <code>geom_wave()</code></a>
+  <ul class="collapse">
+<li><a href="#step-1" id="toc-step-1" class="nav-link" data-scroll-target="#step-1">Step 1</a></li>
+  <li><a href="#step-2" id="toc-step-2" class="nav-link" data-scroll-target="#step-2">Step 2</a></li>
+  <li><a href="#step-3" id="toc-step-3" class="nav-link" data-scroll-target="#step-3">Step 3</a></li>
+  <li><a href="#step-4" id="toc-step-4" class="nav-link" data-scroll-target="#step-4">Step 4</a></li>
+  <li><a href="#step-5" id="toc-step-5" class="nav-link" data-scroll-target="#step-5">Step 5</a></li>
+  <li><a href="#step-6" id="toc-step-6" class="nav-link" data-scroll-target="#step-6">Step 6</a></li>
+  <li><a href="#step-7" id="toc-step-7" class="nav-link" data-scroll-target="#step-7">Step 7</a></li>
+  </ul>
+</li>
+  <li><a href="#demonstration-of-the-newly-created-extension" id="toc-demonstration-of-the-newly-created-extension" class="nav-link" data-scroll-target="#demonstration-of-the-newly-created-extension">Demonstration of the newly created extension</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter21.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Chapter18.html">Advanced Topics</a></li><li class="breadcrumb-item"><a href="./Chapter21.html">Chapter 21</a></li></ol></nav>
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Chapter18.html">Advanced Topics</a></li><li class="breadcrumb-item"><a href="./Chapter21.html">Chapter 21</a></li></ol></nav><div class="quarto-title">
 <h1 class="title">Chapter 21</h1>
 <p class="subtitle lead">A case study</p>
 </div>
@@ -385,10 +413,7 @@ ul.task-list li input[type="checkbox"] {
   
 
 
-</header>
-
-
-<div class="callout callout-style-default callout-warning callout-titled">
+</header><div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -398,15 +423,1373 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>There are no exercises in this chapter.</p>
+<p>There are no exercises in this chapter. Instead, I use the code and teachings of this chapter to make a custom <code>ggplot2</code> extension.</p>
 </div>
 </div>
-<p>Possible suggestion: Try a new geom for geom_coinstack() or geom_hexstack()</p>
+<section id="creating-a-new-ggplot2-extension-geom_wave" class="level2"><h2 class="anchored" data-anchor-id="creating-a-new-ggplot2-extension-geom_wave">Creating a new ggplot2 extension: <code>geom_wave()</code>
+</h2>
+<p>The provided code defines a ggplot2 extension which allows users to create <strong>wave-like geoms.</strong> These set of functions and geoms to create and customize wave patterns. The main functions are:</p>
+<ul>
+<li><p><code>geom_wave()</code>: Creates a wave geom.</p></li>
+<li><p><code>stat_wave()</code>: Computes wave paths for a given dataset.</p></li>
+<li><p><code>scale_amplitude_continuous()</code> and <code>scale_frequency_continuous()</code>: Scales for amplitude and frequency of the drawn waves.</p></li>
+</ul>
+<p>The complete code: —</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Loading libaries</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org">scales</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">grid</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com">gt</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Defining a wave creating function</span></span>
+<span><span class="va">create_wave</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>,</span>
+<span>                        <span class="va">y</span>,</span>
+<span>                        <span class="va">xend</span>,</span>
+<span>                        <span class="va">yend</span>,</span>
+<span>                        <span class="va">amplitude</span> <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                        <span class="va">frequency</span> <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                        <span class="va">n</span> <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># Validate the input arguments</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">amplitude</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"`amplitude` must be non-negative."</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">frequency</span> <span class="op">&lt;=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"`frequency` must be larger than zero."</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">n</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"`n` must be greater than zero."</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span>  <span class="co"># Calculate the direct length of the wave path</span></span>
+<span>  <span class="va">length</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">xend</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="op">(</span><span class="va">y</span> <span class="op">-</span> <span class="va">yend</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Calculate the number of points we need</span></span>
+<span>  <span class="va">n_points</span> <span class="op">&lt;-</span> <span class="va">n</span></span>
+<span></span>
+<span>  <span class="co"># Calculate the sequence of x and y offset values</span></span>
+<span>  <span class="va">x_seq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">xend</span>, length.out <span class="op">=</span> <span class="va">n_points</span><span class="op">)</span></span>
+<span>  <span class="va">y_seq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">yend</span>, length.out <span class="op">=</span> <span class="va">n_points</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Create and return the transformed data frame</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">x_seq</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">y_seq</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="op">(</span><span class="va">x_seq</span> <span class="op">-</span> <span class="va">x</span><span class="op">)</span> <span class="op">*</span> <span class="va">frequency</span> <span class="op">/</span> <span class="op">(</span><span class="va">length</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="va">amplitude</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># A wave Grob</span></span>
+<span><span class="va">waveGrob</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x0</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"npc"</span><span class="op">)</span>,</span>
+<span>                     <span class="va">y0</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"npc"</span><span class="op">)</span>,</span>
+<span>                     <span class="va">x1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"npc"</span><span class="op">)</span>,</span>
+<span>                     <span class="va">y1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"npc"</span><span class="op">)</span>,</span>
+<span>                     <span class="va">amplitude</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="st">"npc"</span><span class="op">)</span>,</span>
+<span>                     <span class="va">frequency</span> <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                     <span class="va">n</span> <span class="op">=</span> <span class="fl">5000</span>,</span>
+<span>                     <span class="va">default.units</span> <span class="op">=</span> <span class="st">"npc"</span>,</span>
+<span>                     <span class="va">name</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                     <span class="va">gp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html">gpar</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                     <span class="va">vp</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="co"># Use the default unit if the user does not specify one</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html">is.unit</a></span><span class="op">(</span><span class="va">x0</span><span class="op">)</span><span class="op">)</span> <span class="va">x0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="va">x0</span>, <span class="va">default.units</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html">is.unit</a></span><span class="op">(</span><span class="va">x1</span><span class="op">)</span><span class="op">)</span> <span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="va">x1</span>, <span class="va">default.units</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html">is.unit</a></span><span class="op">(</span><span class="va">y0</span><span class="op">)</span><span class="op">)</span> <span class="va">y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="va">y0</span>, <span class="va">default.units</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html">is.unit</a></span><span class="op">(</span><span class="va">y1</span><span class="op">)</span><span class="op">)</span> <span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">default.units</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html">is.unit</a></span><span class="op">(</span><span class="va">amplitude</span><span class="op">)</span><span class="op">)</span> <span class="va">amplitude</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="va">amplitude</span>, <span class="va">default.units</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Return a gTree of class "wave"</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">gTree</a></span><span class="op">(</span></span>
+<span>    x0 <span class="op">=</span> <span class="va">x0</span>,</span>
+<span>    y0 <span class="op">=</span> <span class="va">y0</span>,</span>
+<span>    x1 <span class="op">=</span> <span class="va">x1</span>,</span>
+<span>    y1 <span class="op">=</span> <span class="va">y1</span>,</span>
+<span>    amplitude <span class="op">=</span> <span class="va">amplitude</span>,</span>
+<span>    frequency <span class="op">=</span> <span class="va">frequency</span>,</span>
+<span>    n <span class="op">=</span> <span class="va">n</span>,</span>
+<span>    name <span class="op">=</span> <span class="va">name</span>,</span>
+<span>    gp <span class="op">=</span> <span class="va">gp</span>,</span>
+<span>    vp <span class="op">=</span> <span class="va">vp</span>,</span>
+<span>    cl <span class="op">=</span> <span class="st">"wave"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">makeContent.wave</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="co"># Convert position and amplitude values to absolute units</span></span>
+<span>  <span class="va">x0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.convert.html">convertX</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">x0</span>, <span class="st">"mm"</span>, valueOnly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.convert.html">convertX</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">x1</span>, <span class="st">"mm"</span>, valueOnly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.convert.html">convertY</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">y0</span>, <span class="st">"mm"</span>, valueOnly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.convert.html">convertY</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">y1</span>, <span class="st">"mm"</span>, valueOnly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">amplitude</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.convert.html">convertWidth</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">amplitude</span>, <span class="st">"mm"</span>, valueOnly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Leave frequency and n untouched</span></span>
+<span>  <span class="va">frequency</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">$</span><span class="va">frequency</span></span>
+<span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">$</span><span class="va">n</span></span>
+<span></span>
+<span>  <span class="co"># Transform the input data to a data frame containing wave paths</span></span>
+<span>  <span class="va">waves</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">x0</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span></span>
+<span>      <span class="fu">create_wave</span><span class="op">(</span></span>
+<span>        x <span class="op">=</span> <span class="va">x0</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        y <span class="op">=</span> <span class="va">y0</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        xend <span class="op">=</span> <span class="va">x1</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        yend <span class="op">=</span> <span class="va">y1</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        amplitude <span class="op">=</span> <span class="va">amplitude</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        frequency <span class="op">=</span> <span class="va">frequency</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        n <span class="op">=</span> <span class="va">n</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      id <span class="op">=</span> <span class="va">i</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  <span class="va">waves</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">waves</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Construct the grob</span></span>
+<span>  <span class="va">wave_paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.lines.html">polylineGrob</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">waves</span><span class="op">$</span><span class="va">x</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">waves</span><span class="op">$</span><span class="va">y</span>,</span>
+<span>    id <span class="op">=</span> <span class="va">waves</span><span class="op">$</span><span class="va">id</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"mm"</span>,</span>
+<span>    gp <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">gp</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/grid/grid.add.html">setChildren</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">gList</a></span><span class="op">(</span><span class="va">wave_paths</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="co"># The GeomWave</span></span>
+<span><span class="va">GeomWave</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggproto.html">ggproto</a></span><span class="op">(</span><span class="st">"GeomWave"</span>, <span class="va">Geom</span>,</span>
+<span></span>
+<span>  <span class="co"># Check that the user has specified sensible parameters</span></span>
+<span>  setup_params <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">params</span><span class="op">$</span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">50</span></span>
+<span>    <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">n</span> <span class="op">&lt;=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"Waves must be defined with `n` greater than 0"</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="va">params</span></span>
+<span>  <span class="op">}</span>,</span>
+<span></span>
+<span>  <span class="co"># Check input data and return grobs</span></span>
+<span>  draw_panel <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>,</span>
+<span>                        <span class="va">panel_params</span>,</span>
+<span>                        <span class="va">coord</span>,</span>
+<span>                        <span class="va">n</span> <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>                        <span class="va">lineend</span> <span class="op">=</span> <span class="st">"butt"</span>,</span>
+<span>                        <span class="va">na.rm</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="co"># Remove missing data, returning early if all are missing</span></span>
+<span>    <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/remove_missing.html">remove_missing</a></span><span class="op">(</span></span>
+<span>      df <span class="op">=</span> <span class="va">data</span>,</span>
+<span>      na.rm <span class="op">=</span> <span class="va">na.rm</span>,</span>
+<span>      vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"xend"</span>, <span class="st">"yend"</span>, <span class="st">"linetype"</span>, <span class="st">"linewidth"</span><span class="op">)</span>,</span>
+<span>      name <span class="op">=</span> <span class="st">"geom_wave"</span></span>
+<span>    <span class="op">)</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">||</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/zeroGrob.html">zeroGrob</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span></span>
+<span>    <span class="co"># Supply the coordinate system for the plot</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="va">coord</span><span class="op">$</span><span class="fu">is_linear</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">warn</a></span><span class="op">(</span></span>
+<span>        <span class="st">"Wave geom only works correctly on linear coordinate systems"</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="va">coord</span> <span class="op">&lt;-</span> <span class="va">coord</span><span class="op">$</span><span class="fu">transform</span><span class="op">(</span><span class="va">data</span>, <span class="va">panel_params</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="co"># Construct the grob</span></span>
+<span>    <span class="fu">waveGrob</span><span class="op">(</span></span>
+<span>      <span class="va">coord</span><span class="op">$</span><span class="va">x</span>,</span>
+<span>      <span class="va">coord</span><span class="op">$</span><span class="va">y</span>,</span>
+<span>      <span class="va">coord</span><span class="op">$</span><span class="va">xend</span>,</span>
+<span>      <span class="va">coord</span><span class="op">$</span><span class="va">yend</span>,</span>
+<span>      default.units <span class="op">=</span> <span class="st">"native"</span>,</span>
+<span>      amplitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="va">coord</span><span class="op">$</span><span class="va">amplitude</span>, <span class="st">"cm"</span><span class="op">)</span>,</span>
+<span>      frequency <span class="op">=</span> <span class="va">coord</span><span class="op">$</span><span class="va">frequency</span>,</span>
+<span>      n <span class="op">=</span> <span class="va">n</span>,</span>
+<span>      gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html">gpar</a></span><span class="op">(</span></span>
+<span>        col <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/alpha.html">alpha</a></span><span class="op">(</span><span class="va">coord</span><span class="op">$</span><span class="va">colour</span>, <span class="va">coord</span><span class="op">$</span><span class="va">alpha</span><span class="op">)</span>,</span>
+<span>        lwd <span class="op">=</span> <span class="va">coord</span><span class="op">$</span><span class="va">linewidth</span> <span class="op">*</span> <span class="va">.pt</span>,</span>
+<span>        lty <span class="op">=</span> <span class="va">coord</span><span class="op">$</span><span class="va">linetype</span>,</span>
+<span>        lineend <span class="op">=</span> <span class="va">lineend</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">}</span>,</span>
+<span></span>
+<span>  <span class="co"># Specify the default and required aesthetics</span></span>
+<span>  required_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"xend"</span>, <span class="st">"yend"</span><span class="op">)</span>,</span>
+<span>  default_aes <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
+<span>    colour <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>    linewidth <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    linetype <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>    amplitude <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>    frequency <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Constructor wrapper function around WaveGrob</span></span>
+<span><span class="va">geom_wave</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                      <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                      <span class="va">stat</span> <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span>                      <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span>                      <span class="va">...</span>,</span>
+<span>                      <span class="va">n</span> <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>                      <span class="va">lineend</span> <span class="op">=</span> <span class="st">"butt"</span>,</span>
+<span>                      <span class="va">na.rm</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                      <span class="va">show.legend</span> <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>                      <span class="va">inherit.aes</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/layer.html">layer</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">data</span>,</span>
+<span>    mapping <span class="op">=</span> <span class="va">mapping</span>,</span>
+<span>    stat <span class="op">=</span> <span class="va">stat</span>,</span>
+<span>    geom <span class="op">=</span> <span class="va">GeomWave</span>,</span>
+<span>    position <span class="op">=</span> <span class="va">position</span>,</span>
+<span>    show.legend <span class="op">=</span> <span class="va">show.legend</span>,</span>
+<span>    inherit.aes <span class="op">=</span> <span class="va">inherit.aes</span>,</span>
+<span>    params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>      n <span class="op">=</span> <span class="va">n</span>,</span>
+<span>      lineend <span class="op">=</span> <span class="va">lineend</span>,</span>
+<span>      na.rm <span class="op">=</span> <span class="va">na.rm</span>,</span>
+<span>      <span class="va">...</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># And the stat_* constructor function</span></span>
+<span><span class="co"># The StatWave</span></span>
+<span><span class="va">StatWave</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggproto.html">ggproto</a></span><span class="op">(</span><span class="st">"StatWave"</span>, <span class="va">Stat</span>,</span>
+<span>  setup_data <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html">anyDuplicated</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">data</span><span class="op">$</span><span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">group</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="va">data</span></span>
+<span>  <span class="op">}</span>,</span>
+<span>  compute_panel <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">scales</span>, <span class="va">n</span> <span class="op">=</span> <span class="fl">50</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">cols_to_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"xend"</span>, <span class="st">"yend"</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">waves</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">wave_path</span> <span class="op">&lt;-</span> <span class="fu">create_wave</span><span class="op">(</span></span>
+<span>        <span class="va">data</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        <span class="va">data</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        <span class="va">data</span><span class="op">$</span><span class="va">xend</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        <span class="va">data</span><span class="op">$</span><span class="va">yend</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        <span class="va">data</span><span class="op">$</span><span class="va">amplitude</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        <span class="va">data</span><span class="op">$</span><span class="va">frequency</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        <span class="va">n</span></span>
+<span>      <span class="op">)</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">wave_path</span>, <span class="fu"><a href="https://rdrr.io/r/base/class.html">unclass</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span><span class="va">i</span>, <span class="va">cols_to_keep</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">}</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">waves</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>,</span>
+<span>  required_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"xend"</span>, <span class="st">"yend"</span><span class="op">)</span>,</span>
+<span>  optional_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"amplitude"</span>, <span class="st">"frequency"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Constructor wrapper function around StatWave</span></span>
+<span><span class="va">stat_wave</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                      <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                      <span class="va">geom</span> <span class="op">=</span> <span class="st">"wave"</span>,</span>
+<span>                      <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span>                      <span class="va">...</span>,</span>
+<span>                      <span class="va">n</span> <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>                      <span class="va">na.rm</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                      <span class="va">show.legend</span> <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>                      <span class="va">inherit.aes</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/layer.html">layer</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">data</span>,</span>
+<span>    mapping <span class="op">=</span> <span class="va">mapping</span>,</span>
+<span>    stat <span class="op">=</span> <span class="va">StatWave</span>,</span>
+<span>    geom <span class="op">=</span> <span class="va">geom</span>,</span>
+<span>    position <span class="op">=</span> <span class="va">position</span>,</span>
+<span>    show.legend <span class="op">=</span> <span class="va">show.legend</span>,</span>
+<span>    inherit.aes <span class="op">=</span> <span class="va">inherit.aes</span>,</span>
+<span>    params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>      n <span class="op">=</span> <span class="va">n</span>,</span>
+<span>      na.rm <span class="op">=</span> <span class="va">na.rm</span>,</span>
+<span>      <span class="va">...</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Scales</span></span>
+<span><span class="va">scale_amplitude_continuous</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span>, <span class="va">range</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/continuous_scale.html">continuous_scale</a></span><span class="op">(</span></span>
+<span>    aesthetics <span class="op">=</span> <span class="st">"amplitude"</span>,</span>
+<span>    scale_name <span class="op">=</span> <span class="st">"amplitude_c"</span>,</span>
+<span>    palette <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pal_rescale.html">rescale_pal</a></span><span class="op">(</span><span class="va">range</span><span class="op">)</span>,</span>
+<span>    <span class="va">...</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">scale_amplitude</span> <span class="op">&lt;-</span> <span class="va">scale_amplitude_continuous</span></span>
+<span><span class="va">scale_amplitude_discrete</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"Amplitude cannot be used with discrete data"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">scale_frequency_continuous</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span>,</span>
+<span>                                       <span class="va">range</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,</span>
+<span>                                       <span class="va">unit</span> <span class="op">=</span> <span class="st">"cm"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/continuous_scale.html">continuous_scale</a></span><span class="op">(</span></span>
+<span>    aesthetics <span class="op">=</span> <span class="st">"frequency"</span>,</span>
+<span>    scale_name <span class="op">=</span> <span class="st">"frequency_c"</span>,</span>
+<span>    palette <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pal_rescale.html">rescale_pal</a></span><span class="op">(</span><span class="va">range</span><span class="op">)</span>,</span>
+<span>    <span class="va">...</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">scale_frequency</span> <span class="op">&lt;-</span> <span class="va">scale_frequency_continuous</span></span>
+<span><span class="va">scale_frequency_discrete</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"Frequency cannot be used with discrete data"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">draw_key_wave</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span>, <span class="va">size</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">waveGrob</span><span class="op">(</span></span>
+<span>    x0 <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    y0 <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    x1 <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    y1 <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    amplitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">amplitude</span>, <span class="st">"cm"</span><span class="op">)</span>,</span>
+<span>    frequency <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">frequency</span>,</span>
+<span>    gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html">gpar</a></span><span class="op">(</span></span>
+<span>      col <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/alpha.html">alpha</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">colour</span> <span class="op"><a href="https://rlang.r-lib.org/reference/op-null-default.html">%||%</a></span> <span class="st">"black"</span>, <span class="va">data</span><span class="op">$</span><span class="va">alpha</span><span class="op">)</span>,</span>
+<span>      lwd <span class="op">=</span> <span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">size</span> <span class="op"><a href="https://rlang.r-lib.org/reference/op-null-default.html">%||%</a></span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">*</span> <span class="va">.pt</span>,</span>
+<span>      lty <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">linetype</span> <span class="op"><a href="https://rlang.r-lib.org/reference/op-null-default.html">%||%</a></span> <span class="fl">1</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    vp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/viewport.html">viewport</a></span><span class="op">(</span>clip <span class="op">=</span> <span class="st">"on"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">GeomWave</span><span class="op">$</span><span class="va">draw_key</span> <span class="op">&lt;-</span> <span class="va">draw_key_wave</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="step-1" class="level3"><h3 class="anchored" data-anchor-id="step-1">Step 1</h3>
+<p>First, a function named <code>create_wave</code> is defined to generate a wave-like path between two points <code>(x, y)</code> and <code>(xend, yend)</code> on a plot. The wave’s characteristics, such as amplitude, frequency, and number of points (<code>n</code>), are taken as input, and validation checks are performed on the parameters. The output is a data frame with transformed <code>x</code> and <code>y</code> coordinates, where the sine function is applied to create the wave effect.</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Defining a wave creating function</span></span>
+<span><span class="va">create_wave</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>,</span>
+<span>                        <span class="va">y</span>,</span>
+<span>                        <span class="va">xend</span>,</span>
+<span>                        <span class="va">yend</span>,</span>
+<span>                        <span class="va">amplitude</span> <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                        <span class="va">frequency</span> <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                        <span class="va">n</span> <span class="op">=</span> <span class="fl">500</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># Validate the input arguments</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">amplitude</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"`amplitude` must be non-negative."</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">frequency</span> <span class="op">&lt;=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"`frequency` must be larger than zero."</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="va">n</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"`n` must be greater than zero."</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span>  <span class="co"># Calculate the direct length of the wave path</span></span>
+<span>  <span class="va">length</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">xend</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="op">(</span><span class="va">y</span> <span class="op">-</span> <span class="va">yend</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Calculate the number of points we need</span></span>
+<span>  <span class="va">n_points</span> <span class="op">&lt;-</span> <span class="va">n</span></span>
+<span></span>
+<span>  <span class="co"># Calculate the sequence of x and y offset values</span></span>
+<span>  <span class="va">x_seq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">xend</span>, length.out <span class="op">=</span> <span class="va">n_points</span><span class="op">)</span></span>
+<span>  <span class="va">y_seq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">yend</span>, length.out <span class="op">=</span> <span class="va">n_points</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Create and return the transformed data frame</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">x_seq</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">y_seq</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="op">(</span><span class="va">x_seq</span> <span class="op">-</span> <span class="va">x</span><span class="op">)</span> <span class="op">*</span> <span class="va">frequency</span> <span class="op">/</span> <span class="op">(</span><span class="va">length</span> <span class="op">*</span> <span class="va">pi</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="va">amplitude</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="step-2" class="level3"><h3 class="anchored" data-anchor-id="step-2">Step 2</h3>
+<p>A function <code>waveGrob</code> is defined to create a graphical object (grob) representing a wave between two coordinates (<code>x0, y0</code> and <code>x1, y1</code>) using <code>grid</code> graphics. Various parameters such as amplitude, frequency, and number of points are included, with default units being set to “npc” (normalized parent coordinates) if not specified. The function returns a <code>gTree</code> object, which is assigned the class “wave”.</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># A wave Grob</span></span>
+<span><span class="va">waveGrob</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x0</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"npc"</span><span class="op">)</span>,</span>
+<span>                     <span class="va">y0</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"npc"</span><span class="op">)</span>,</span>
+<span>                     <span class="va">x1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"npc"</span><span class="op">)</span>,</span>
+<span>                     <span class="va">y1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"npc"</span><span class="op">)</span>,</span>
+<span>                     <span class="va">amplitude</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="st">"npc"</span><span class="op">)</span>,</span>
+<span>                     <span class="va">frequency</span> <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                     <span class="va">n</span> <span class="op">=</span> <span class="fl">500</span>,</span>
+<span>                     <span class="va">default.units</span> <span class="op">=</span> <span class="st">"npc"</span>,</span>
+<span>                     <span class="va">name</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                     <span class="va">gp</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html">gpar</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                     <span class="va">vp</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="co"># Use the default unit if the user does not specify one</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html">is.unit</a></span><span class="op">(</span><span class="va">x0</span><span class="op">)</span><span class="op">)</span> <span class="va">x0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="va">x0</span>, <span class="va">default.units</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html">is.unit</a></span><span class="op">(</span><span class="va">x1</span><span class="op">)</span><span class="op">)</span> <span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="va">x1</span>, <span class="va">default.units</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html">is.unit</a></span><span class="op">(</span><span class="va">y0</span><span class="op">)</span><span class="op">)</span> <span class="va">y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="va">y0</span>, <span class="va">default.units</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html">is.unit</a></span><span class="op">(</span><span class="va">y1</span><span class="op">)</span><span class="op">)</span> <span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="va">y1</span>, <span class="va">default.units</span><span class="op">)</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html">is.unit</a></span><span class="op">(</span><span class="va">amplitude</span><span class="op">)</span><span class="op">)</span> <span class="va">amplitude</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="va">amplitude</span>, <span class="va">default.units</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Return a gTree of class "wave"</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">gTree</a></span><span class="op">(</span></span>
+<span>    x0 <span class="op">=</span> <span class="va">x0</span>,</span>
+<span>    y0 <span class="op">=</span> <span class="va">y0</span>,</span>
+<span>    x1 <span class="op">=</span> <span class="va">x1</span>,</span>
+<span>    y1 <span class="op">=</span> <span class="va">y1</span>,</span>
+<span>    amplitude <span class="op">=</span> <span class="va">amplitude</span>,</span>
+<span>    frequency <span class="op">=</span> <span class="va">frequency</span>,</span>
+<span>    n <span class="op">=</span> <span class="va">n</span>,</span>
+<span>    name <span class="op">=</span> <span class="va">name</span>,</span>
+<span>    gp <span class="op">=</span> <span class="va">gp</span>,</span>
+<span>    vp <span class="op">=</span> <span class="va">vp</span>,</span>
+<span>    cl <span class="op">=</span> <span class="st">"wave"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="step-3" class="level3"><h3 class="anchored" data-anchor-id="step-3">Step 3</h3>
+<p>The function <code>makeContent.wave</code> is designed to generate the graphical content for a “wave” grob (<strong>gr</strong>aphical <strong>ob</strong>ject) by converting positions (<code>x0, y0, x1, y1</code>) and amplitude to absolute units (in millimeters). A wave path is created for each segment using the previously defined <code>create_wave</code> function. The results are combined and passed to <code>polylineGrob</code> to create the wave paths, which are then set as children of the original grob object using <code>setChildren</code>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">makeContent.wave</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  </span>
+<span>  <span class="co"># Convert position and amplitude values to absolute units</span></span>
+<span>  <span class="va">x0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.convert.html">convertX</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">x0</span>, <span class="st">"mm"</span>, valueOnly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.convert.html">convertX</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">x1</span>, <span class="st">"mm"</span>, valueOnly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">y0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.convert.html">convertY</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">y0</span>, <span class="st">"mm"</span>, valueOnly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.convert.html">convertY</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">y1</span>, <span class="st">"mm"</span>, valueOnly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">amplitude</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.convert.html">convertWidth</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">amplitude</span>, <span class="st">"mm"</span>, valueOnly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Leave frequency and n untouched</span></span>
+<span>  <span class="va">frequency</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">$</span><span class="va">frequency</span></span>
+<span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">$</span><span class="va">n</span></span>
+<span></span>
+<span>  <span class="co"># Transform the input data to a data frame containing wave paths</span></span>
+<span>  <span class="va">waves</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">x0</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span></span>
+<span>      <span class="fu">create_wave</span><span class="op">(</span></span>
+<span>        x <span class="op">=</span> <span class="va">x0</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        y <span class="op">=</span> <span class="va">y0</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        xend <span class="op">=</span> <span class="va">x1</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        yend <span class="op">=</span> <span class="va">y1</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        amplitude <span class="op">=</span> <span class="va">amplitude</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        frequency <span class="op">=</span> <span class="va">frequency</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        n <span class="op">=</span> <span class="va">n</span></span>
+<span>      <span class="op">)</span>,</span>
+<span>      id <span class="op">=</span> <span class="va">i</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span>  <span class="va">waves</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">waves</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Construct the grob</span></span>
+<span>  <span class="va">wave_paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/grid/grid.lines.html">polylineGrob</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">waves</span><span class="op">$</span><span class="va">x</span>,</span>
+<span>    y <span class="op">=</span> <span class="va">waves</span><span class="op">$</span><span class="va">y</span>,</span>
+<span>    id <span class="op">=</span> <span class="va">waves</span><span class="op">$</span><span class="va">id</span>,</span>
+<span>    default.units <span class="op">=</span> <span class="st">"mm"</span>,</span>
+<span>    gp <span class="op">=</span> <span class="va">x</span><span class="op">$</span><span class="va">gp</span></span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/grid/grid.add.html">setChildren</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/grid/grid.grob.html">gList</a></span><span class="op">(</span><span class="va">wave_paths</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="step-4" class="level3"><h3 class="anchored" data-anchor-id="step-4">Step 4</h3>
+<p>The <code>GeomWave</code> is defined as a <code>ggproto</code> object that extends <code>ggplot2</code> to create wave-like geometries. It validates parameters through <code>setup_params</code>, ensuring that <code>n</code> (number of points) is greater than zero. In the <code>draw_panel</code> function, missing data is removed, and the coordinate system is transformed before constructing the wave grob using <code>waveGrob</code>. The constructor function <code>geom_wave</code> wraps this geometry into a convenient layer for use in <code>ggplot2</code>, with default aesthetics like color, amplitude, and frequency provided.</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># The GeomWave</span></span>
+<span><span class="va">GeomWave</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggproto.html">ggproto</a></span><span class="op">(</span><span class="st">"GeomWave"</span>, <span class="va">Geom</span>,</span>
+<span></span>
+<span>  <span class="co"># Check that the user has specified sensible parameters</span></span>
+<span>  setup_params <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">params</span><span class="op">$</span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">50</span></span>
+<span>    <span class="op">}</span> <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">params</span><span class="op">$</span><span class="va">n</span> <span class="op">&lt;=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"Waves must be defined with `n` greater than 0"</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="va">params</span></span>
+<span>  <span class="op">}</span>,</span>
+<span></span>
+<span>  <span class="co"># Check input data and return grobs</span></span>
+<span>  draw_panel <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>,</span>
+<span>                        <span class="va">panel_params</span>,</span>
+<span>                        <span class="va">coord</span>,</span>
+<span>                        <span class="va">n</span> <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>                        <span class="va">lineend</span> <span class="op">=</span> <span class="st">"butt"</span>,</span>
+<span>                        <span class="va">na.rm</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="co"># Remove missing data, returning early if all are missing</span></span>
+<span>    <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/remove_missing.html">remove_missing</a></span><span class="op">(</span></span>
+<span>      df <span class="op">=</span> <span class="va">data</span>,</span>
+<span>      na.rm <span class="op">=</span> <span class="va">na.rm</span>,</span>
+<span>      vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"xend"</span>, <span class="st">"yend"</span>, <span class="st">"linetype"</span>, <span class="st">"linewidth"</span><span class="op">)</span>,</span>
+<span>      name <span class="op">=</span> <span class="st">"geom_wave"</span></span>
+<span>    <span class="op">)</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">||</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/zeroGrob.html">zeroGrob</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span></span>
+<span>    <span class="co"># Supply the coordinate system for the plot</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="va">coord</span><span class="op">$</span><span class="fu">is_linear</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">warn</a></span><span class="op">(</span></span>
+<span>        <span class="st">"Wave geom only works correctly on linear coordinate systems"</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="va">coord</span> <span class="op">&lt;-</span> <span class="va">coord</span><span class="op">$</span><span class="fu">transform</span><span class="op">(</span><span class="va">data</span>, <span class="va">panel_params</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="co"># Construct the grob</span></span>
+<span>    <span class="fu">waveGrob</span><span class="op">(</span></span>
+<span>      <span class="va">coord</span><span class="op">$</span><span class="va">x</span>,</span>
+<span>      <span class="va">coord</span><span class="op">$</span><span class="va">y</span>,</span>
+<span>      <span class="va">coord</span><span class="op">$</span><span class="va">xend</span>,</span>
+<span>      <span class="va">coord</span><span class="op">$</span><span class="va">yend</span>,</span>
+<span>      default.units <span class="op">=</span> <span class="st">"native"</span>,</span>
+<span>      amplitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="va">coord</span><span class="op">$</span><span class="va">amplitude</span>, <span class="st">"cm"</span><span class="op">)</span>,</span>
+<span>      frequency <span class="op">=</span> <span class="va">coord</span><span class="op">$</span><span class="va">frequency</span>,</span>
+<span>      n <span class="op">=</span> <span class="va">n</span>,</span>
+<span>      gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html">gpar</a></span><span class="op">(</span></span>
+<span>        col <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/alpha.html">alpha</a></span><span class="op">(</span><span class="va">coord</span><span class="op">$</span><span class="va">colour</span>, <span class="va">coord</span><span class="op">$</span><span class="va">alpha</span><span class="op">)</span>,</span>
+<span>        lwd <span class="op">=</span> <span class="va">coord</span><span class="op">$</span><span class="va">linewidth</span> <span class="op">*</span> <span class="va">.pt</span>,</span>
+<span>        lty <span class="op">=</span> <span class="va">coord</span><span class="op">$</span><span class="va">linetype</span>,</span>
+<span>        lineend <span class="op">=</span> <span class="va">lineend</span></span>
+<span>      <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">}</span>,</span>
+<span></span>
+<span>  <span class="co"># Specify the default and required aesthetics</span></span>
+<span>  required_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"xend"</span>, <span class="st">"yend"</span><span class="op">)</span>,</span>
+<span>  default_aes <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
+<span>    colour <span class="op">=</span> <span class="st">"black"</span>,</span>
+<span>    linewidth <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>    linetype <span class="op">=</span> <span class="fl">1L</span>,</span>
+<span>    alpha <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>    amplitude <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>    frequency <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Constructor wrapper function around WaveGrob</span></span>
+<span><span class="va">geom_wave</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                      <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                      <span class="va">stat</span> <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span>                      <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span>                      <span class="va">...</span>,</span>
+<span>                      <span class="va">n</span> <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>                      <span class="va">lineend</span> <span class="op">=</span> <span class="st">"butt"</span>,</span>
+<span>                      <span class="va">na.rm</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                      <span class="va">show.legend</span> <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>                      <span class="va">inherit.aes</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/layer.html">layer</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">data</span>,</span>
+<span>    mapping <span class="op">=</span> <span class="va">mapping</span>,</span>
+<span>    stat <span class="op">=</span> <span class="va">stat</span>,</span>
+<span>    geom <span class="op">=</span> <span class="va">GeomWave</span>,</span>
+<span>    position <span class="op">=</span> <span class="va">position</span>,</span>
+<span>    show.legend <span class="op">=</span> <span class="va">show.legend</span>,</span>
+<span>    inherit.aes <span class="op">=</span> <span class="va">inherit.aes</span>,</span>
+<span>    params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>      n <span class="op">=</span> <span class="va">n</span>,</span>
+<span>      lineend <span class="op">=</span> <span class="va">lineend</span>,</span>
+<span>      na.rm <span class="op">=</span> <span class="va">na.rm</span>,</span>
+<span>      <span class="va">...</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="step-5" class="level3"><h3 class="anchored" data-anchor-id="step-5">Step 5</h3>
+<p>The <code>StatWave</code> is defined as a <code>ggproto</code> object to compute the wave paths for each row of data in the <code>ggplot2</code> layer. In the <code>setup_data</code> function, groups are ensured to be unique by appending row numbers, while the <code>compute_panel</code> function generates the wave path using the <code>create_wave</code> function for each data point. The <code>stat_wave</code> constructor function provides a wrapper around <code>StatWave</code> for use in <code>ggplot2</code>, allowing wave geometries to be added as a statistical transformation, with options for amplitude, frequency, and the number of points (<code>n</code>). This complements the <strong>geom_wave()</strong> and allows use of <strong>StatWave</strong> with other geoms such as <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> as shown later in <a href="#fig-stat" class="quarto-xref">Figure&nbsp;2</a>.</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># And the stat_* constructor function</span></span>
+<span><span class="co"># The StatWave</span></span>
+<span><span class="va">StatWave</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggproto.html">ggproto</a></span><span class="op">(</span><span class="st">"StatWave"</span>, <span class="va">Stat</span>,</span>
+<span>  setup_data <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html">anyDuplicated</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">data</span><span class="op">$</span><span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">group</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span>, sep <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="va">data</span></span>
+<span>  <span class="op">}</span>,</span>
+<span>  compute_panel <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">scales</span>, <span class="va">n</span> <span class="op">=</span> <span class="fl">50</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">cols_to_keep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"xend"</span>, <span class="st">"yend"</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="va">waves</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="va">wave_path</span> <span class="op">&lt;-</span> <span class="fu">create_wave</span><span class="op">(</span></span>
+<span>        <span class="va">data</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        <span class="va">data</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        <span class="va">data</span><span class="op">$</span><span class="va">xend</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        <span class="va">data</span><span class="op">$</span><span class="va">yend</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        <span class="va">data</span><span class="op">$</span><span class="va">amplitude</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        <span class="va">data</span><span class="op">$</span><span class="va">frequency</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,</span>
+<span>        <span class="va">n</span></span>
+<span>      <span class="op">)</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">wave_path</span>, <span class="fu"><a href="https://rdrr.io/r/base/class.html">unclass</a></span><span class="op">(</span><span class="va">data</span><span class="op">[</span><span class="va">i</span>, <span class="va">cols_to_keep</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">}</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">waves</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>,</span>
+<span>  required_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"xend"</span>, <span class="st">"yend"</span><span class="op">)</span>,</span>
+<span>  optional_aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"amplitude"</span>, <span class="st">"frequency"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Constructor wrapper function around StatWave</span></span>
+<span><span class="va">stat_wave</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mapping</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                      <span class="va">data</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                      <span class="va">geom</span> <span class="op">=</span> <span class="st">"wave"</span>,</span>
+<span>                      <span class="va">position</span> <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span>                      <span class="va">...</span>,</span>
+<span>                      <span class="va">n</span> <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>                      <span class="va">na.rm</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                      <span class="va">show.legend</span> <span class="op">=</span> <span class="cn">NA</span>,</span>
+<span>                      <span class="va">inherit.aes</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/layer.html">layer</a></span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="va">data</span>,</span>
+<span>    mapping <span class="op">=</span> <span class="va">mapping</span>,</span>
+<span>    stat <span class="op">=</span> <span class="va">StatWave</span>,</span>
+<span>    geom <span class="op">=</span> <span class="va">geom</span>,</span>
+<span>    position <span class="op">=</span> <span class="va">position</span>,</span>
+<span>    show.legend <span class="op">=</span> <span class="va">show.legend</span>,</span>
+<span>    inherit.aes <span class="op">=</span> <span class="va">inherit.aes</span>,</span>
+<span>    params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>      n <span class="op">=</span> <span class="va">n</span>,</span>
+<span>      na.rm <span class="op">=</span> <span class="va">na.rm</span>,</span>
+<span>      <span class="va">...</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="step-6" class="level3"><h3 class="anchored" data-anchor-id="step-6">Step 6</h3>
+<p>Several scale functions are defined to handle the mapping of <code>amplitude</code> and <code>frequency</code> to continuous data in <code>ggplot2</code>. The <code>scale_amplitude_continuous</code> and <code>scale_frequency_continuous</code> functions create continuous scales for amplitude and frequency, rescaling the values within specified ranges. Discrete scales for both amplitude and frequency are restricted, and an error is raised if attempted, indicating these aesthetics cannot be used with discrete data.</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Scales</span></span>
+<span><span class="va">scale_amplitude_continuous</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span>, <span class="va">range</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/continuous_scale.html">continuous_scale</a></span><span class="op">(</span></span>
+<span>    aesthetics <span class="op">=</span> <span class="st">"amplitude"</span>,</span>
+<span>    scale_name <span class="op">=</span> <span class="st">"amplitude_c"</span>,</span>
+<span>    palette <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pal_rescale.html">rescale_pal</a></span><span class="op">(</span><span class="va">range</span><span class="op">)</span>,</span>
+<span>    <span class="va">...</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">scale_amplitude</span> <span class="op">&lt;-</span> <span class="va">scale_amplitude_continuous</span></span>
+<span><span class="va">scale_amplitude_discrete</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"Amplitude cannot be used with discrete data"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">scale_frequency_continuous</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span>,</span>
+<span>                                       <span class="va">range</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span><span class="op">)</span>,</span>
+<span>                                       <span class="va">unit</span> <span class="op">=</span> <span class="st">"cm"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/continuous_scale.html">continuous_scale</a></span><span class="op">(</span></span>
+<span>    aesthetics <span class="op">=</span> <span class="st">"frequency"</span>,</span>
+<span>    scale_name <span class="op">=</span> <span class="st">"frequency_c"</span>,</span>
+<span>    palette <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/pal_rescale.html">rescale_pal</a></span><span class="op">(</span><span class="va">range</span><span class="op">)</span>,</span>
+<span>    <span class="va">...</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">scale_frequency</span> <span class="op">&lt;-</span> <span class="va">scale_frequency_continuous</span></span>
+<span><span class="va">scale_frequency_discrete</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/abort.html">abort</a></span><span class="op">(</span><span class="st">"Frequency cannot be used with discrete data"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="step-7" class="level3"><h3 class="anchored" data-anchor-id="step-7">Step 7</h3>
+<p>A function <code>draw_key_wave</code> is defined to create a key (legend) representation for the <code>GeomWave</code> geometry. It utilizes the <code>waveGrob</code> function to draw a wave in the legend, with parameters such as amplitude, frequency, color, line width, and line type being set based on the provided <code>data</code>. The function is then assigned to the <code>GeomWave$draw_key</code> property to define how wave keys will be rendered in the plot’s legend.</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">draw_key_wave</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">params</span>, <span class="va">size</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">waveGrob</span><span class="op">(</span></span>
+<span>    x0 <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    y0 <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    x1 <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    y1 <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    amplitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">amplitude</span>, <span class="st">"cm"</span><span class="op">)</span>,</span>
+<span>    frequency <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">frequency</span>,</span>
+<span>    gp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/gpar.html">gpar</a></span><span class="op">(</span></span>
+<span>      col <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/alpha.html">alpha</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">colour</span> <span class="op"><a href="https://rlang.r-lib.org/reference/op-null-default.html">%||%</a></span> <span class="st">"black"</span>, <span class="va">data</span><span class="op">$</span><span class="va">alpha</span><span class="op">)</span>,</span>
+<span>      lwd <span class="op">=</span> <span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">size</span> <span class="op"><a href="https://rlang.r-lib.org/reference/op-null-default.html">%||%</a></span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">*</span> <span class="va">.pt</span>,</span>
+<span>      lty <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">linetype</span> <span class="op"><a href="https://rlang.r-lib.org/reference/op-null-default.html">%||%</a></span> <span class="fl">1</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    vp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/viewport.html">viewport</a></span><span class="op">(</span>clip <span class="op">=</span> <span class="st">"on"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">GeomWave</span><span class="op">$</span><span class="va">draw_key</span> <span class="op">&lt;-</span> <span class="va">draw_key_wave</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="demonstration-of-the-newly-created-extension" class="level2"><h2 class="anchored" data-anchor-id="demonstration-of-the-newly-created-extension">Demonstration of the newly created extension</h2>
+<p>The following code creates a sample dataset <code>df</code> with 10 observations, each representing a wave with specific amplitude and frequency. The <code>group</code> column distinguishes between two groups, A and B.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create a data frame with the diversing directions (angles)</span></span>
+<span><span class="va">waves_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>  <span class="co"># All waves start at origin (0, 0)</span></span>
+<span>  x <span class="op">=</span> <span class="fl">0</span>, </span>
+<span>  y <span class="op">=</span> <span class="fl">0</span>,</span>
+<span></span>
+<span>  <span class="co"># 10 angles, evenly spaced around the circle</span></span>
+<span>  angle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">pi</span> <span class="op">/</span> <span class="fl">2</span>, length.out <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
+<span></span>
+<span>  <span class="co"># Set a constant length for arrows (or vary if desired)</span></span>
+<span>  length <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    <span class="co"># Generate the xend and yend coordinates</span></span>
+<span>    x_end <span class="op">=</span> <span class="va">length</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">angle</span><span class="op">)</span>,</span>
+<span>    y_end <span class="op">=</span> <span class="va">length</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">angle</span><span class="op">)</span>,</span>
+<span>    amplitude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, replace <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>,</span>
+<span>    frequency <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, replace <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>,</span>
+<span>    group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">length</span>, <span class="op">-</span><span class="va">angle</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">waves_data</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_header.html">tab_header</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Raw Data for the geom_wave() extension"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>decimals <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/fmt_number.html">fmt_number</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">x_end</span>, <span class="va">y_end</span><span class="op">)</span>,</span>
+<span>    decimals <span class="op">=</span> <span class="fl">2</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/cols_width.html">cols_width</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://gt.rstudio.com/reference/px.html">px</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">gtExtras</span><span class="fu">::</span><span class="fu"><a href="https://jthomasmock.github.io/gtExtras/reference/gt_theme_nytimes.html">gt_theme_nytimes</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://gt.rstudio.com/reference/cols_align.html">cols_align</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"center"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div id="tbl-1" class="cell quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Raw data for the geom_wave() created randomly
+</figcaption><div aria-describedby="tbl-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="iydemetbhc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+#iydemetbhc table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#iydemetbhc thead, #iydemetbhc tbody, #iydemetbhc tfoot, #iydemetbhc tr, #iydemetbhc td, #iydemetbhc th {
+  border-style: none;
+}
+
+#iydemetbhc p {
+  margin: 0;
+  padding: 0;
+}
+
+#iydemetbhc .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#iydemetbhc .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#iydemetbhc .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#iydemetbhc .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#iydemetbhc .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#iydemetbhc .gt_bottom_border {
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#iydemetbhc .gt_col_headings {
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: none;
+  border-bottom-width: 1px;
+  border-bottom-color: #334422;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#iydemetbhc .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 12px;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#iydemetbhc .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 12px;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#iydemetbhc .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#iydemetbhc .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#iydemetbhc .gt_column_spanner {
+  border-bottom-style: none;
+  border-bottom-width: 1px;
+  border-bottom-color: #334422;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#iydemetbhc .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#iydemetbhc .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#iydemetbhc .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#iydemetbhc .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#iydemetbhc .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#iydemetbhc .gt_row {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#iydemetbhc .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#iydemetbhc .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#iydemetbhc .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#iydemetbhc .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#iydemetbhc .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#iydemetbhc .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#iydemetbhc .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#iydemetbhc .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#iydemetbhc .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#iydemetbhc .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#iydemetbhc .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#iydemetbhc .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#iydemetbhc .gt_table_body {
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #FFFFFF;
+}
+
+#iydemetbhc .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#iydemetbhc .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#iydemetbhc .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#iydemetbhc .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#iydemetbhc .gt_left {
+  text-align: left;
+}
+
+#iydemetbhc .gt_center {
+  text-align: center;
+}
+
+#iydemetbhc .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#iydemetbhc .gt_font_normal {
+  font-weight: normal;
+}
+
+#iydemetbhc .gt_font_bold {
+  font-weight: bold;
+}
+
+#iydemetbhc .gt_font_italic {
+  font-style: italic;
+}
+
+#iydemetbhc .gt_super {
+  font-size: 65%;
+}
+
+#iydemetbhc .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#iydemetbhc .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#iydemetbhc .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#iydemetbhc .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#iydemetbhc .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#iydemetbhc .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#iydemetbhc .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#iydemetbhc .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#iydemetbhc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table do-not-create-environment cell table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_heading">
+<th colspan="7" class="gt_heading gt_title gt_font_normal gt_bottom_border" style="font-family: 'Libre Franklin'; font-weight: 800">Raw Data for the geom_wave() extension</th>
+</tr>
+<tr class="odd gt_col_headings">
+<th id="x" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" style="color: #A9A9A9; font-family: 'Source Sans Pro'; text-transform: uppercase" scope="col">x</th>
+<th id="y" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" style="color: #A9A9A9; font-family: 'Source Sans Pro'; text-transform: uppercase" scope="col">y</th>
+<th id="x_end" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" style="color: #A9A9A9; font-family: 'Source Sans Pro'; text-transform: uppercase" scope="col">x_end</th>
+<th id="y_end" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" style="color: #A9A9A9; font-family: 'Source Sans Pro'; text-transform: uppercase" scope="col">y_end</th>
+<th id="amplitude" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" style="color: #A9A9A9; font-family: 'Source Sans Pro'; text-transform: uppercase" scope="col">amplitude</th>
+<th id="frequency" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" style="color: #A9A9A9; font-family: 'Source Sans Pro'; text-transform: uppercase" scope="col">frequency</th>
+<th id="group" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" style="color: #A9A9A9; font-family: 'Source Sans Pro'; text-transform: uppercase" scope="col">group</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_center" headers="x" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="y" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="x_end" style="font-family: 'Source Sans Pro'; font-weight: 400">1.00</td>
+<td class="gt_row gt_center" headers="y_end" style="font-family: 'Source Sans Pro'; font-weight: 400">0.00</td>
+<td class="gt_row gt_center" headers="amplitude" style="font-family: 'Source Sans Pro'; font-weight: 400">1</td>
+<td class="gt_row gt_center" headers="frequency" style="font-family: 'Source Sans Pro'; font-weight: 400">8</td>
+<td class="gt_row gt_center" headers="group" style="font-family: 'Source Sans Pro'; font-weight: 400">A</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="x" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="y" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="x_end" style="font-family: 'Source Sans Pro'; font-weight: 400">0.98</td>
+<td class="gt_row gt_center" headers="y_end" style="font-family: 'Source Sans Pro'; font-weight: 400">0.17</td>
+<td class="gt_row gt_center" headers="amplitude" style="font-family: 'Source Sans Pro'; font-weight: 400">5</td>
+<td class="gt_row gt_center" headers="frequency" style="font-family: 'Source Sans Pro'; font-weight: 400">7</td>
+<td class="gt_row gt_center" headers="group" style="font-family: 'Source Sans Pro'; font-weight: 400">A</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="x" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="y" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="x_end" style="font-family: 'Source Sans Pro'; font-weight: 400">0.94</td>
+<td class="gt_row gt_center" headers="y_end" style="font-family: 'Source Sans Pro'; font-weight: 400">0.34</td>
+<td class="gt_row gt_center" headers="amplitude" style="font-family: 'Source Sans Pro'; font-weight: 400">10</td>
+<td class="gt_row gt_center" headers="frequency" style="font-family: 'Source Sans Pro'; font-weight: 400">4</td>
+<td class="gt_row gt_center" headers="group" style="font-family: 'Source Sans Pro'; font-weight: 400">A</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="x" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="y" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="x_end" style="font-family: 'Source Sans Pro'; font-weight: 400">0.87</td>
+<td class="gt_row gt_center" headers="y_end" style="font-family: 'Source Sans Pro'; font-weight: 400">0.50</td>
+<td class="gt_row gt_center" headers="amplitude" style="font-family: 'Source Sans Pro'; font-weight: 400">8</td>
+<td class="gt_row gt_center" headers="frequency" style="font-family: 'Source Sans Pro'; font-weight: 400">1</td>
+<td class="gt_row gt_center" headers="group" style="font-family: 'Source Sans Pro'; font-weight: 400">A</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="x" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="y" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="x_end" style="font-family: 'Source Sans Pro'; font-weight: 400">0.77</td>
+<td class="gt_row gt_center" headers="y_end" style="font-family: 'Source Sans Pro'; font-weight: 400">0.64</td>
+<td class="gt_row gt_center" headers="amplitude" style="font-family: 'Source Sans Pro'; font-weight: 400">2</td>
+<td class="gt_row gt_center" headers="frequency" style="font-family: 'Source Sans Pro'; font-weight: 400">5</td>
+<td class="gt_row gt_center" headers="group" style="font-family: 'Source Sans Pro'; font-weight: 400">A</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="x" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="y" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="x_end" style="font-family: 'Source Sans Pro'; font-weight: 400">0.64</td>
+<td class="gt_row gt_center" headers="y_end" style="font-family: 'Source Sans Pro'; font-weight: 400">0.77</td>
+<td class="gt_row gt_center" headers="amplitude" style="font-family: 'Source Sans Pro'; font-weight: 400">4</td>
+<td class="gt_row gt_center" headers="frequency" style="font-family: 'Source Sans Pro'; font-weight: 400">10</td>
+<td class="gt_row gt_center" headers="group" style="font-family: 'Source Sans Pro'; font-weight: 400">B</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="x" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="y" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="x_end" style="font-family: 'Source Sans Pro'; font-weight: 400">0.50</td>
+<td class="gt_row gt_center" headers="y_end" style="font-family: 'Source Sans Pro'; font-weight: 400">0.87</td>
+<td class="gt_row gt_center" headers="amplitude" style="font-family: 'Source Sans Pro'; font-weight: 400">6</td>
+<td class="gt_row gt_center" headers="frequency" style="font-family: 'Source Sans Pro'; font-weight: 400">2</td>
+<td class="gt_row gt_center" headers="group" style="font-family: 'Source Sans Pro'; font-weight: 400">B</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="x" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="y" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="x_end" style="font-family: 'Source Sans Pro'; font-weight: 400">0.34</td>
+<td class="gt_row gt_center" headers="y_end" style="font-family: 'Source Sans Pro'; font-weight: 400">0.94</td>
+<td class="gt_row gt_center" headers="amplitude" style="font-family: 'Source Sans Pro'; font-weight: 400">9</td>
+<td class="gt_row gt_center" headers="frequency" style="font-family: 'Source Sans Pro'; font-weight: 400">6</td>
+<td class="gt_row gt_center" headers="group" style="font-family: 'Source Sans Pro'; font-weight: 400">B</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_center" headers="x" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="y" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="x_end" style="font-family: 'Source Sans Pro'; font-weight: 400">0.17</td>
+<td class="gt_row gt_center" headers="y_end" style="font-family: 'Source Sans Pro'; font-weight: 400">0.98</td>
+<td class="gt_row gt_center" headers="amplitude" style="font-family: 'Source Sans Pro'; font-weight: 400">7</td>
+<td class="gt_row gt_center" headers="frequency" style="font-family: 'Source Sans Pro'; font-weight: 400">9</td>
+<td class="gt_row gt_center" headers="group" style="font-family: 'Source Sans Pro'; font-weight: 400">B</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_center" headers="x" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="y" style="font-family: 'Source Sans Pro'; font-weight: 400">0</td>
+<td class="gt_row gt_center" headers="x_end" style="font-family: 'Source Sans Pro'; font-weight: 400">0.00</td>
+<td class="gt_row gt_center" headers="y_end" style="font-family: 'Source Sans Pro'; font-weight: 400">1.00</td>
+<td class="gt_row gt_center" headers="amplitude" style="font-family: 'Source Sans Pro'; font-weight: 400">3</td>
+<td class="gt_row gt_center" headers="frequency" style="font-family: 'Source Sans Pro'; font-weight: 400">3</td>
+<td class="gt_row gt_center" headers="group" style="font-family: 'Source Sans Pro'; font-weight: 400">B</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>The following ggplot call maps the <code>amplitude</code> and <code>frequency</code> columns to aesthetics, allowing the waves to vary in amplitude and frequency. The <code>colour</code> aesthetic maps the <code>group</code> column to different colors. The resulting plot displays 5 waves in two different colors, demonstrating how <code>geom_wave</code> and <code>stat_wave</code> can be used to visualize wave-like patterns with varying amplitude and frequency. You can adjust the <code>range</code> argument in <code>scale_amplitude_continuous</code> and <code>scale_frequency_continuous</code> to change the scaling of the amplitude and frequency aesthetics.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">waves_data</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
+<span>      x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, xend <span class="op">=</span> <span class="va">x_end</span>, yend <span class="op">=</span> <span class="va">y_end</span>,</span>
+<span>      amplitude <span class="op">=</span> <span class="va">amplitude</span>, frequency <span class="op">=</span> <span class="va">frequency</span>,</span>
+<span>      colour <span class="op">=</span> <span class="va">group</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_wave</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_amplitude_continuous</span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_frequency_continuous</span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1000</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"red"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_grey</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span>clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Waves with varying amplitude and frequency"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Using the geom_wave() with amplitude and frequency as aesthetics"</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"X-Variable"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"Y-Variable"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    legend.key.size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
+<span>    legend.direction <span class="op">=</span> <span class="st">"horizontal"</span>,</span>
+<span>    legend.box <span class="op">=</span> <span class="st">"vertical"</span>,</span>
+<span>    legend.position <span class="op">=</span> <span class="st">"bottom"</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter21_files/figure-html/fig-2-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Demonstrating the geom_wave()
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>We could also use other geoms, such as <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> with StatWave for the same dataset, as shown below in <a href="#fig-stat" class="quarto-xref">Figure&nbsp;2</a>, but as expected, the limitations of using a stat is inability to modulate the aesthetics not listed in geom_point().</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">waves_data</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span></span>
+<span>      x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, xend <span class="op">=</span> <span class="va">x_end</span>, yend <span class="op">=</span> <span class="va">y_end</span>,</span>
+<span>      amplitude <span class="op">=</span> <span class="va">amplitude</span>, frequency <span class="op">=</span> <span class="va">frequency</span>,</span>
+<span>      colour <span class="op">=</span> <span class="va">group</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">stat_wave</span><span class="op">(</span></span>
+<span>    geom <span class="op">=</span> <span class="st">"point"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_amplitude_continuous</span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_frequency_continuous</span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1000</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"blue"</span>, <span class="st">"red"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_grey</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># coord_fixed(clip = "off") +</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Waves with varying amplitude and frequency"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Using the geom_wave() with amplitude and frequency as aesthetics"</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"X-Variable"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"Y-Variable"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span></span>
+<span>    legend.key.size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"mm"</span><span class="op">)</span>,</span>
+<span>    legend.direction <span class="op">=</span> <span class="st">"horizontal"</span>,</span>
+<span>    legend.box <span class="op">=</span> <span class="st">"vertical"</span>,</span>
+<span>    legend.position <span class="op">=</span> <span class="st">"bottom"</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-stat" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-stat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Chapter21_files/figure-html/fig-stat-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-stat-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Demonstrating the StatWave with geom_point()
+</figcaption></figure>
+</div>
+</div>
+</div>
 
 
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -794,8 +2177,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><ul><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter21.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><div class="page-columns page-rows-contents page-layout-article"><div class="social-share"><a href="https://twitter.com/share?url=https://aditya-dahiya.github.io/ggplot2book3e/Chapter21.html&amp;text=Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)" target="_blank" class="twitter"><i class="fab fa-twitter fa-fw fa-lg"></i></a><a href="https://www.linkedin.com/shareArticle?url=https://aditya-dahiya.github.io/ggplot2book3e/Chapter21.html&amp;title=Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)" target="_blank" class="linkedin"><i class="fa-brands fa-linkedin-in fa-fw fa-lg"></i></a>  <a href="mailto:?subject=Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e)&amp;body=Check out this link:https://aditya-dahiya.github.io/ggplot2book3e/Chapter21.html" target="_blank" class="email"><i class="fa-solid fa-envelope fa-fw fa-lg"></i></a><a href="https://www.facebook.com/sharer.php?u=https://aditya-dahiya.github.io/ggplot2book3e/Chapter21.html" target="_blank" class="facebook"><i class="fab fa-facebook-f fa-fw fa-lg"></i></a><a href="javascript:void(0);" onclick="var mastodon_instance=prompt('Mastodon Instance / Server Name?'); if(typeof mastodon_instance==='string' &amp;&amp; mastodon_instance.length){this.href='https://'+mastodon_instance+'/share?text=Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e) https://aditya-dahiya.github.io/ggplot2book3e/Chapter21.html'}else{return false;}" target="_blank" class="mastodon"><i class="fa-brands fa-mastodon fa-fw fa-lg"></i></a></div></div>
-
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/edit/main/Chapter21.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Aditya-Dahiya/ggplot2book3e/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer><div class="page-columns page-rows-contents page-layout-article"><div class="social-share">
+<a href="https://twitter.com/share?url=https://aditya-dahiya.github.io/ggplot2book3e/Chapter21.html&amp;text=Solutions%20Manual%20(and%20Beyond)%20for%20ggplot2:%20Elegant%20Graphics%20for%20Data%20Analysis%20(3e)" target="_blank" class="twitter"><i class="fab fa-twitter fa-fw fa-lg"></i></a><a href="https://www.linkedin.com/shareArticle?url=https://aditya-dahiya.github.io/ggplot2book3e/Chapter21.html&amp;title=Solutions%20Manual%20(and%20Beyond)%20for%20ggplot2:%20Elegant%20Graphics%20for%20Data%20Analysis%20(3e)" target="_blank" class="linkedin"><i class="fa-brands fa-linkedin-in fa-fw fa-lg"></i></a>  <a href="mailto:?subject=Solutions%20Manual%20(and%20Beyond)%20for%20ggplot2:%20Elegant%20Graphics%20for%20Data%20Analysis%20(3e)&amp;body=Check%20out%20this%20link:https://aditya-dahiya.github.io/ggplot2book3e/Chapter21.html" target="_blank" class="email"><i class="fa-solid fa-envelope fa-fw fa-lg"></i></a><a href="https://www.facebook.com/sharer.php?u=https://aditya-dahiya.github.io/ggplot2book3e/Chapter21.html" target="_blank" class="facebook"><i class="fab fa-facebook-f fa-fw fa-lg"></i></a><a href="javascript:void(0);" onclick="var mastodon_instance=prompt('Mastodon Instance / Server Name?'); if(typeof mastodon_instance==='string' &amp;&amp; mastodon_instance.length){this.href='https://'+mastodon_instance+'/share?text=Solutions Manual (and Beyond) for ggplot2: Elegant Graphics for Data Analysis (3e) https://aditya-dahiya.github.io/ggplot2book3e/Chapter21.html'}else{return false;}" target="_blank" class="mastodon"><i class="fa-brands fa-mastodon fa-fw fa-lg"></i></a>
+</div></div>
 
 
 
